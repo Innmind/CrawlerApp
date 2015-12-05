@@ -1,0 +1,8 @@
+tools:
+    external_code_coverage:
+        runs: 2
+filter:
+    excluded_paths:
+        - src/CrawlerBundle/Tests/*
+        - app/*
+        - web/*

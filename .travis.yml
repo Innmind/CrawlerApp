@@ -1,0 +1,14 @@
+language: php
+php:
+    - 5.5
+    - 5.6
+    - 7.0
+before_script:
+    - neo4j-community-2.2.5/bin/neo4j start
+    - composer install --prefer-source
+script: phpunit -c app --coverage-clover=coverage.clover
+after_script:
+    - if [ "$TRAVIS_PHP_VERSION" != "7.0" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+    - if [ "$TRAVIS_PHP_VERSION" != "7.0" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+notifications:
+    slack: innmind:nAiLaAi6RU4wGEAdL6FuKdyF
