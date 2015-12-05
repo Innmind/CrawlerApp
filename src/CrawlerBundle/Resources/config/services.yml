@@ -1,4 +1,27 @@
+imports:
+    - { resource: parsers.yml }
+
 services:
-#    crawler.example:
-#        class: CrawlerBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    crawler:
+        class: Innmind\Crawler\Crawler
+        arguments:
+            - @http
+            - @parser
+            - @event_dispatcher
+
+    parser:
+        class: Innmind\Crawler\Parser
+        public: false
+
+    http:
+        class: GuzzleHttp\Client
+        public: false
+
+    resolver:
+        class: Innmind\UrlResolver\UrlResolver
+        arguments:
+            - [http, https, ftp, sftp]
+
+    dom_factory:
+        class: Innmind\Crawler\DomCrawlerFactory
+        public: false
