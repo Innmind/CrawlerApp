@@ -984,17 +984,17 @@
         },
         {
             "name": "innmind/crawler",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "target-dir": "Innmind/Crawler",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Crawler.git",
-                "reference": "023228da9b69a8f881ef70c8f3e10b5cea27d76e"
+                "reference": "4e51ba853cd2e9729f9e9d43442a16dc513b9d19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/023228da9b69a8f881ef70c8f3e10b5cea27d76e",
-                "reference": "023228da9b69a8f881ef70c8f3e10b5cea27d76e",
+                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/4e51ba853cd2e9729f9e9d43442a16dc513b9d19",
+                "reference": "4e51ba853cd2e9729f9e9d43442a16dc513b9d19",
                 "shasum": ""
             },
             "require": {
@@ -1029,7 +1029,7 @@
             "keywords": [
                 "crawler"
             ],
-            "time": "2015-11-01 15:08:45"
+            "time": "2015-12-07 08:36:39"
         },
         {
             "name": "innmind/math",
