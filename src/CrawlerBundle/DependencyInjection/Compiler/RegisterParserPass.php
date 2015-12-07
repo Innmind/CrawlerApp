@@ -13,11 +13,32 @@ class RegisterParserPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $parser = $container->getDefinition('parser');
-        $parsers = $container->findTaggedServiceIds('parser');
+        $definition = $container->getDefinition('parser');
+        $ids = $container->findTaggedServiceIds('parser');
+        $priorities = [];
 
-        foreach ($parsers as $id => $tags) {
-            $parser->addMethodCall('addPass', [new Reference($id)]);
+        foreach ($ids as $id => $tags) {
+            foreach ($tags as $tag => $attributes) {
+                $priority = 0;
+
+                if (isset($attributes['priority'])) {
+                    $priority = $attributes['priority'];
+                }
+
+                if (!isset($priorities[$priority])) {
+                    $priorities[$priority] = [];
+                }
+
+                $priorities[$priority][] = $id;
+            }
+        }
+
+        krsort($priorities);
+
+        foreach ($priorities as $priority => $parsers) {
+            foreach ($parsers as $parser) {
+                $definition->addMethodCall('addPass', [new Reference($parser)]);
+            }
         }
     }
 }
