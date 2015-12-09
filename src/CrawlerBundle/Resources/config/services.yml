@@ -25,3 +25,25 @@ services:
     dom_factory:
         class: Innmind\Crawler\DomCrawlerFactory
         public: false
+
+    resource_factory:
+        class: CrawlerBundle\ResourceFactory
+        public: false
+        arguments:
+            - @event_dispatcher
+
+    publisher:
+        class: CrawlerBundle\Publisher
+        arguments:
+            - @innmind_rest.client
+            - @crawler
+            - @logger
+            - @resource_factory
+        tags:
+            - { name: monolog.logger, channel: crawling }
+
+    serializer:
+        class: Symfony\Component\Serializer\Serializer
+        arguments:
+            - []
+            - []

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "dc22ede5b89a83470e266f6643bb80b7",
-    "content-hash": "12494f6db4226b2b28946d0c647c20fa",
+    "hash": "8e9d92650fc160268e5c12ec72460a2f",
+    "content-hash": "57eb32c8d54998098e2f8d11916b016f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1071,6 +1071,170 @@
                 "math"
             ],
             "time": "2015-10-26 19:57:40"
+        },
+        {
+            "name": "innmind/rest-bundle",
+            "version": "2.0.0",
+            "target-dir": "Innmind/RestBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/RestBundle.git",
+                "reference": "0228323de4cdd45449d9ac49f475849efc5da9c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/RestBundle/zipball/0228323de4cdd45449d9ac49f475849efc5da9c5",
+                "reference": "0228323de4cdd45449d9ac49f475849efc5da9c5",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~5.0",
+                "innmind/rest-client": "~2",
+                "innmind/rest-server": "~2",
+                "innmind/url-resolver": "^1.0",
+                "php": ">=5.5",
+                "symfony/config": "~2.7",
+                "symfony/console": "~2.7",
+                "symfony/dependency-injection": "~2.7",
+                "symfony/filesystem": "~2.7",
+                "symfony/framework-bundle": "~2.7",
+                "symfony/http-kernel": "~2.7"
+            },
+            "require-dev": {
+                "innmind/neo4j-onm": "~1.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Innmind\\RestBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "This Bundle wraps the innmind rest server library",
+            "homepage": "http://github.com/Innmind/RestBundle",
+            "keywords": [
+                "api",
+                "rest"
+            ],
+            "time": "2015-11-22 13:00:18"
+        },
+        {
+            "name": "innmind/rest-client",
+            "version": "2.0.0",
+            "target-dir": "Innmind/Rest/Client",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/rest-client.git",
+                "reference": "6a9641a42c1273728d5b5c02ac544653b81d8157"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/6a9641a42c1273728d5b5c02ac544653b81d8157",
+                "reference": "6a9641a42c1273728d5b5c02ac544653b81d8157",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~5",
+                "innmind/url-resolver": "^1.0",
+                "php": ">=5.5",
+                "symfony/event-dispatcher": "~2.7",
+                "symfony/filesystem": "~2.7",
+                "symfony/serializer": "~2.7",
+                "symfony/validator": "~2.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Innmind\\Rest\\Client": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to consume REST APIs",
+            "homepage": "http://github.com/Innmind/rest-client",
+            "keywords": [
+                "api",
+                "client",
+                "rest"
+            ],
+            "time": "2015-11-21 17:23:10"
+        },
+        {
+            "name": "innmind/rest-server",
+            "version": "2.0.2",
+            "target-dir": "Innmind/Rest/Server",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/rest-server.git",
+                "reference": "0c4278b6a32ac48412f4431f0bfa41f8cd9ff964"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/rest-server/zipball/0c4278b6a32ac48412f4431f0bfa41f8cd9ff964",
+                "reference": "0c4278b6a32ac48412f4431f0bfa41f8cd9ff964",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "psr/log": "^1.0",
+                "symfony/config": "~2.7",
+                "symfony/dependency-injection": "^2.7",
+                "symfony/event-dispatcher": "~2.7",
+                "symfony/framework-bundle": "^2.7",
+                "symfony/http-foundation": "~2.7",
+                "symfony/http-kernel": "^2.7",
+                "symfony/options-resolver": "~2.7",
+                "symfony/property-access": "~2.7",
+                "symfony/routing": "~2.7",
+                "symfony/serializer": "~2.7",
+                "symfony/validator": "~2.7",
+                "symfony/yaml": "~2.7",
+                "willdurand/negotiation": "~2"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.5",
+                "innmind/neo4j-onm": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Innmind\\Rest\\Server": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to easily expose REST APIs",
+            "homepage": "http://github.com/Innmind/rest-server",
+            "keywords": [
+                "api",
+                "rest"
+            ],
+            "time": "2015-12-04 06:54:04"
         },
         {
             "name": "innmind/url-resolver",
@@ -2443,6 +2607,55 @@
                 "templating"
             ],
             "time": "2015-11-05 12:49:06"
+        },
+        {
+            "name": "willdurand/negotiation",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/Negotiation.git",
+                "reference": "a8ce6da7acdf07351ccd6a9359c571ebc0725a21"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/a8ce6da7acdf07351ccd6a9359c571ebc0725a21",
+                "reference": "a8ce6da7acdf07351ccd6a9359c571ebc0725a21",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Negotiation\\": "src/Negotiation"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "will+git@drnd.me"
+                }
+            ],
+            "description": "Content Negotiation tools for PHP provided as a standalone library.",
+            "homepage": "http://williamdurand.fr/Negotiation/",
+            "keywords": [
+                "accept",
+                "content",
+                "format",
+                "header",
+                "negotiation"
+            ],
+            "time": "2015-11-21 14:23:02"
         }
     ],
     "packages-dev": [
