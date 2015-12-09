@@ -28,6 +28,3 @@ monolog:
             verbosity_levels:
                 VERBOSITY_VERBOSE: INFO
                 VERBOSITY_VERY_VERBOSE: DEBUG
-
-#swiftmailer:
-#    delivery_address: me@example.com
