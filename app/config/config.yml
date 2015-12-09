@@ -45,3 +45,23 @@ swiftmailer:
 
 innmind_rest:
     server: []
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     %rabbitmq_host%
+            port:     %rabbitmq_port%
+            user:     %rabbitmq_user%
+            password: %rabbitmq_password%
+            vhost:    '/'
+            lazy:     true
+            connection_timeout: 3
+            read_write_timeout: 3
+            keepalive: false
+            heartbeat: 0
+    consumers:
+        crawling:
+            connection:       default
+            exchange_options: {name: 'crawling', type: direct}
+            queue_options:    {name: 'crawling'}
+            callback:         consumer.crawler
