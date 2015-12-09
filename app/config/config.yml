@@ -35,14 +35,6 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
-monolog:
-    handlers:
-        crawling:
-            level: info
-            type: stream
-            path: %kernel.logs_dir%/crawling.log
-            channels: [crawling]
-
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"

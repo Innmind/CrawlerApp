@@ -13,6 +13,11 @@ web_profiler:
 
 monolog:
     handlers:
+        crawling:
+            level: info
+            type: stream
+            path: %kernel.logs_dir%/crawling.log
+            channels: [crawling]
         main:
             type:   stream
             path:   "%kernel.logs_dir%/%kernel.environment%.log"
