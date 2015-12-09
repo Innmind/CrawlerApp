@@ -1,5 +1,6 @@
 imports:
     - { resource: parsers.yml }
+    - { resource: listeners.yml }
 
 services:
     crawler:

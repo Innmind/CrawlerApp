@@ -1,0 +1,5 @@
+services:
+    listener.resource_build.alternates:
+        class: CrawlerBundle\EventListener\ResourceBuild\AlternatesListener
+        tags:
+            - { name: kernel.event_subscriber }
