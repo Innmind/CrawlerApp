@@ -55,15 +55,13 @@ class AlternatesListener implements EventSubscriberInterface
 
         $alternates = [];
 
-        foreach ($resource->get('alternates') as $langs) {
-            foreach ($langs as $lang => $links) {
-                foreach ($links as $link) {
-                    $alternate = new HttpResource;
-                    $alternate
-                        ->set('url', $link)
-                        ->set('language', $lang);
-                    $alternates[] = $alternate;
-                }
+        foreach ($resource->get('alternates') as $lang => $links) {
+            foreach ($links as $link) {
+                $alternate = new HttpResource;
+                $alternate
+                    ->set('url', $link)
+                    ->set('language', $lang);
+                $alternates[] = $alternate;
             }
         }
 
