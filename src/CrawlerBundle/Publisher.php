@@ -99,16 +99,15 @@ class Publisher
         $resources = $this->client->getServer($server)->getResources();
 
         foreach ($resources as $endpoint => $definition) {
-            if (!$definition->hasMeta('content-types')) {
+            if (!$definition->hasMeta('content-type')) {
                 continue;
             }
 
-            $types = $definition->getMeta('content-types');
+            $type = $definition->getMeta('content-type');
+            $type = str_replace('*', '.*', $type);
 
-            foreach ($types as $type) {
-                if (strpos($resource->getContentType(), $type) !== false) {
-                    return $endpoint;
-                }
+            if ((bool) preg_match("#^$type$#", $resource->getContentType()) === true) {
+                return $endpoint;
             }
         }
 

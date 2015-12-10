@@ -64,7 +64,7 @@ class PublisherTest extends \PHPUnit_Framework_TestCase
             ->willReturn(true);
         $def
             ->method('getMeta')
-            ->willReturn(['image/']);
+            ->willReturn('image/*');
         $def
             ->method('getProperties')
             ->willReturn([]);
