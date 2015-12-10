@@ -3,3 +3,8 @@ services:
         class: CrawlerBundle\EventListener\ResourceBuild\AlternatesListener
         tags:
             - { name: kernel.event_subscriber }
+
+    listener.resource_build.images:
+        class: CrawlerBundle\EventListener\ResourceBuild\ImagesListener
+        tags:
+            - { name: kernel.event_subscriber }
