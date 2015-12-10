@@ -53,3 +53,4 @@ services:
         class: CrawlerBundle\Consumer\CrawlerConsumer
         arguments:
             - @publisher
+            - @logger
