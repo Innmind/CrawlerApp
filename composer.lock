@@ -707,17 +707,17 @@
         },
         {
             "name": "innmind/rest-bundle",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "target-dir": "Innmind/RestBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/RestBundle.git",
-                "reference": "0228323de4cdd45449d9ac49f475849efc5da9c5"
+                "reference": "6154a98c7d6467374a9617ab0b12945e3d047460"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/RestBundle/zipball/0228323de4cdd45449d9ac49f475849efc5da9c5",
-                "reference": "0228323de4cdd45449d9ac49f475849efc5da9c5",
+                "url": "https://api.github.com/repos/Innmind/RestBundle/zipball/6154a98c7d6467374a9617ab0b12945e3d047460",
+                "reference": "6154a98c7d6467374a9617ab0b12945e3d047460",
                 "shasum": ""
             },
             "require": {
@@ -758,21 +758,21 @@
                 "api",
                 "rest"
             ],
-            "time": "2015-11-22 13:00:18"
+            "time": "2015-12-12 15:30:57"
         },
         {
             "name": "innmind/rest-client",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "target-dir": "Innmind/Rest/Client",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/rest-client.git",
-                "reference": "6a9641a42c1273728d5b5c02ac544653b81d8157"
+                "reference": "0cd56cfe8760b5b23dcc119df535734a4b09390c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/6a9641a42c1273728d5b5c02ac544653b81d8157",
-                "reference": "6a9641a42c1273728d5b5c02ac544653b81d8157",
+                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/0cd56cfe8760b5b23dcc119df535734a4b09390c",
+                "reference": "0cd56cfe8760b5b23dcc119df535734a4b09390c",
                 "shasum": ""
             },
             "require": {
@@ -807,7 +807,7 @@
                 "client",
                 "rest"
             ],
-            "time": "2015-11-21 17:23:10"
+            "time": "2015-12-12 15:40:11"
         },
         {
             "name": "innmind/rest-server",
@@ -1158,16 +1158,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.2",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "5f727f8859ceb0f6ccf5d5e73a382b501abf5d43"
+                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5f727f8859ceb0f6ccf5d5e73a382b501abf5d43",
-                "reference": "5f727f8859ceb0f6ccf5d5e73a382b501abf5d43",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/d762ee5b099a29044603cd4649851e81aa66cb47",
+                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47",
                 "shasum": ""
             },
             "require": {
@@ -1202,7 +1202,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2015-12-09 17:01:19"
+            "time": "2015-12-10 14:48:13"
         },
         {
             "name": "psr/log",
@@ -2298,59 +2298,6 @@
             ],
             "description": "This bundle generates code for you",
             "time": "2015-12-08 18:08:03"
-        },
-        {
-            "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.1,<0.9.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.4-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "lib/swift_required.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Corbyn"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.org",
-            "keywords": [
-                "email",
-                "mail",
-                "mailer"
-            ],
-            "time": "2015-06-06 14:19:39"
         },
         {
             "name": "symfony/phpunit-bridge",
