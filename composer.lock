@@ -617,17 +617,17 @@
         },
         {
             "name": "innmind/crawler",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "target-dir": "Innmind/Crawler",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Crawler.git",
-                "reference": "4e51ba853cd2e9729f9e9d43442a16dc513b9d19"
+                "reference": "85d2e0680c5b695827cdbcb47d9bee1c46c42cc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/4e51ba853cd2e9729f9e9d43442a16dc513b9d19",
-                "reference": "4e51ba853cd2e9729f9e9d43442a16dc513b9d19",
+                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/85d2e0680c5b695827cdbcb47d9bee1c46c42cc6",
+                "reference": "85d2e0680c5b695827cdbcb47d9bee1c46c42cc6",
                 "shasum": ""
             },
             "require": {
@@ -662,7 +662,7 @@
             "keywords": [
                 "crawler"
             ],
-            "time": "2015-12-07 08:36:39"
+            "time": "2015-12-12 18:23:48"
         },
         {
             "name": "innmind/math",
@@ -762,17 +762,17 @@
         },
         {
             "name": "innmind/rest-client",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "target-dir": "Innmind/Rest/Client",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/rest-client.git",
-                "reference": "0cd56cfe8760b5b23dcc119df535734a4b09390c"
+                "reference": "26dc339fb988cfb8b4973bfcd98d5ade47c293fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/0cd56cfe8760b5b23dcc119df535734a4b09390c",
-                "reference": "0cd56cfe8760b5b23dcc119df535734a4b09390c",
+                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/26dc339fb988cfb8b4973bfcd98d5ade47c293fe",
+                "reference": "26dc339fb988cfb8b4973bfcd98d5ade47c293fe",
                 "shasum": ""
             },
             "require": {
@@ -807,7 +807,7 @@
                 "client",
                 "rest"
             ],
-            "time": "2015-12-12 15:40:11"
+            "time": "2015-12-12 16:51:26"
         },
         {
             "name": "innmind/rest-server",
@@ -871,17 +871,17 @@
         },
         {
             "name": "innmind/url-resolver",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "target-dir": "Innmind/UrlResolver",
             "source": {
                 "type": "git",
-                "url": "git@github.com:Innmind/url-resolver.git",
-                "reference": "fcebee2e6878fe7018b2581da70ce5d9f1bd1e6d"
+                "url": "https://github.com/Innmind/url-resolver.git",
+                "reference": "510b640e7495712ca3ae0817934205574459c08c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/url-resolver/zipball/fcebee2e6878fe7018b2581da70ce5d9f1bd1e6d",
-                "reference": "fcebee2e6878fe7018b2581da70ce5d9f1bd1e6d",
+                "url": "https://api.github.com/repos/Innmind/url-resolver/zipball/510b640e7495712ca3ae0817934205574459c08c",
+                "reference": "510b640e7495712ca3ae0817934205574459c08c",
                 "shasum": ""
             },
             "require": {
@@ -912,7 +912,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2015-09-21 06:42:40"
+            "time": "2015-12-12 17:01:56"
         },
         {
             "name": "ircmaxell/password-compat",
