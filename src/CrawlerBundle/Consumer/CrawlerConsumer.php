@@ -39,6 +39,7 @@ class CrawlerConsumer implements ConsumerInterface
                 [
                     'url' => $data['url'],
                     'server' => $data['server'],
+                    'message' => $e->getMessage(),
                 ]
             );
 
