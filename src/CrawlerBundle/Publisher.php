@@ -97,18 +97,48 @@ class Publisher
     protected function findBest($server, HttpResource $resource)
     {
         $resources = $this->client->getServer($server)->getResources();
+        $accepts = [];
 
         foreach ($resources as $endpoint => $definition) {
-            if (!$definition->hasMeta('content_type')) {
+            if (!$definition->hasMeta('accept')) {
                 continue;
             }
 
-            $type = $definition->getMeta('content_type');
+            $accepts[$endpoint] = $definition->getMeta('accept');
+        }
+
+        $matches = [];
+        $contentType = $resource->getContentType();
+
+        foreach ($accepts as $endpoint => $accept) {
+            if (!isset($accept['type'])) {
+                continue;
+            }
+
+            $type = $accept['type'];
             $type = str_replace('*', '.*', $type);
 
-            if ((bool) preg_match("#^$type$#", $resource->getContentType()) === true) {
-                return $endpoint;
+            if ((bool) preg_match("#^$type$#", $contentType) === true) {
+                $matches[] = [
+                    'endpoint' => $endpoint,
+                    'quality' => isset($accept['quality']) ? $accept['quality'] : 0,
+                ];
             }
+        }
+
+        usort($matches, function($a, $b) {
+            $a = $a['quality'];
+            $b = $b['quality'];
+
+            if ($a === $b) {
+                return 0;
+            }
+
+            return $a > $b ? -1 : 1;
+        });
+
+        if (isset($matches[0])) {
+            return $matches[0]['endpoint'];
         }
 
         throw new EndpointNotFoundException(sprintf(
