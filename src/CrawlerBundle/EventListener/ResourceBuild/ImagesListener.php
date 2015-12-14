@@ -58,8 +58,8 @@ class ImagesListener implements EventSubscriberInterface
         foreach ($resource->get('images') as $couple) {
             $image = new HttpResource;
             $image
-                ->set('url', $couple[0])
-                ->set('description', $couple[1]);
+                ->set('url', (string) $couple[0])
+                ->set('description', (string) $couple[1]);
             $images[] = $image;
         }
 
