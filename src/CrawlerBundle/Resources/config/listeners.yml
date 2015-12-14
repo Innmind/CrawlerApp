@@ -13,3 +13,8 @@ services:
         class: CrawlerBundle\EventListener\ResourceBuild\ResourceListener
         tags:
             - { name: kernel.event_subscriber }
+
+    listener.resource_build.link_remover:
+        class: CrawlerBundle\EventListener\ResourceBuild\LinkRemoverListener
+        tags:
+            - { name: kernel.event_subscriber }
