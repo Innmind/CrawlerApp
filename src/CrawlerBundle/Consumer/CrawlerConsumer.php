@@ -28,7 +28,7 @@ class CrawlerConsumer implements ConsumerInterface
 
             $this->publisher->publish(
                 $data['url'],
-                $data['host'],
+                $data['server'],
                 $data['uuid']
             );
 
@@ -38,7 +38,7 @@ class CrawlerConsumer implements ConsumerInterface
                 'Resource fail to be crawled',
                 [
                     'url' => $data['url'],
-                    'host' => $data['host'],
+                    'server' => $data['server'],
                 ]
             );
 
