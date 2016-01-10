@@ -4,7 +4,6 @@ namespace CrawlerBundle\EventListener\ResourceBuild;
 
 use CrawlerBundle\Events;
 use CrawlerBundle\Event\ResourcePropertyBuildEvent;
-use Innmind\Rest\Client\HttpResource;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ResourceListener implements EventSubscriberInterface
