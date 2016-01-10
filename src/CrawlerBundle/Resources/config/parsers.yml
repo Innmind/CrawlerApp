@@ -132,6 +132,7 @@ services:
         arguments:
             - @resolver
             - @dom_factory
+            - true
         tags:
             - { name: parser }
 
