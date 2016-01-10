@@ -34,7 +34,7 @@ class CrawlerConsumerTest extends \PHPUnit_Framework_TestCase
         $message = new AMQPMessage;
         $message->body = serialize([
             'url' => 'good',
-            'host' => 'foo',
+            'server' => 'http://foo',
             'uuid' => '42',
         ]);
 
@@ -46,7 +46,7 @@ class CrawlerConsumerTest extends \PHPUnit_Framework_TestCase
         $message = new AMQPMessage;
         $message->body = serialize([
             'url' => 'fail',
-            'host' => 'foo',
+            'server' => 'http://foo',
             'uuid' => '42',
         ]);
 
