@@ -1,0 +1,41 @@
+imports:
+    - { resource: 'crawler/parser.yml' }
+
+services:
+    crawler:
+        class: Innmind\Crawler\Crawler
+        arguments:
+            - '@crawler.transport'
+            - '@crawler.parser'
+
+    crawler.transport:
+        class: Innmind\HttpTransport\GuzzleTransport
+        public: false
+        arguments:
+            - '@guzzle'
+            - '@crawler.transport.translator'
+
+    crawler.transport.translator:
+        class: Innmind\Http\Translator\Response\Psr7Translator
+        public: false
+        arguments:
+            - '@http.header.factories'
+
+    crawler.url_resolver:
+        class: Innmind\Crawler\UrlResolver
+        public: false
+        arguments:
+            - '@url_resolver'
+
+    crawler.parser: '@crawler.parser.default'
+
+    guzzle:
+        class: GuzzleHttp\Client
+        public: false
+
+    http.header.factories:
+        class: Innmind\Http\Factory\Header\TryFactory
+        public: false
+        factory:
+            - Innmind\Http\Factory\Header\Factories
+            - default

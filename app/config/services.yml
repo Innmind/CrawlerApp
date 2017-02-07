@@ -1,9 +1,16 @@
-# Learn more about services, parameters and containers at
-# http://symfony.com/doc/current/service_container.html
-parameters:
-#    parameter_name: value
+imports:
+    - { resource: 'services/crawler.yml' }
+    - { resource: 'services/html.yml' }
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+   clock:
+      class: Innmind\TimeContinuum\TimeContinuum\Earth
+      arguments:
+         - '@clock.timezone.paris'
+
+   clock.timezone.paris:
+      class: Innmind\TimeContinuum\Timezone\Earth\Europe\Paris
+      public: false
+
+   url_resolver:
+      class: Innmind\UrlResolver\UrlResolver
