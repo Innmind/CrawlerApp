@@ -25,6 +25,8 @@ services:
             - '@crawler.parser.html.links'
             - '@crawler.parser.html.rss'
             - '@crawler.parser.html.theme_color'
+            - '@crawler.parser.image.dimension'
+            - '@crawler.parser.image.weight'
 
     crawler.parser.alternates:
         class: Innmind\Crawler\Parser\AlternatesParser
