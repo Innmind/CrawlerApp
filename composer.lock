@@ -672,16 +672,16 @@
         },
         {
             "name": "innmind/crawler",
-            "version": "2.1.1",
+            "version": "2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Crawler.git",
-                "reference": "3264265f2458e0d01e6b09b230381bb349284ee2"
+                "reference": "4298c2ca3094f2466789d747c58212a88e96e8c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/3264265f2458e0d01e6b09b230381bb349284ee2",
-                "reference": "3264265f2458e0d01e6b09b230381bb349284ee2",
+                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/4298c2ca3094f2466789d747c58212a88e96e8c3",
+                "reference": "4298c2ca3094f2466789d747c58212a88e96e8c3",
                 "shasum": ""
             },
             "require": {
@@ -696,6 +696,9 @@
                 "innmind/time-continuum": "^1.0",
                 "innmind/url-resolver": "^2.0",
                 "php": "~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.6"
             },
             "type": "library",
             "autoload": {
@@ -719,7 +722,7 @@
             "keywords": [
                 "crawler"
             ],
-            "time": "2016-11-23 07:23:40"
+            "time": "2017-02-08 07:14:47"
         },
         {
             "name": "innmind/event-bus",
@@ -765,16 +768,16 @@
         },
         {
             "name": "innmind/filesystem",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Filesystem.git",
-                "reference": "9388f96664448bfe26d54044b4f4d09c2a2f9868"
+                "reference": "beb08b207db9ff83857c0c1aabc2d728ecbd782e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/9388f96664448bfe26d54044b4f4d09c2a2f9868",
-                "reference": "9388f96664448bfe26d54044b4f4d09c2a2f9868",
+                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/beb08b207db9ff83857c0c1aabc2d728ecbd782e",
+                "reference": "beb08b207db9ff83857c0c1aabc2d728ecbd782e",
                 "shasum": ""
             },
             "require": {
@@ -783,6 +786,9 @@
                 "php": ">=7.0",
                 "symfony/filesystem": "^3.0",
                 "symfony/finder": "~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.6"
             },
             "type": "library",
             "autoload": {
@@ -806,7 +812,7 @@
             "keywords": [
                 "filesystem"
             ],
-            "time": "2016-11-06 15:46:51"
+            "time": "2017-02-08 07:25:44"
         },
         {
             "name": "innmind/html",
