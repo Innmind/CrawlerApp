@@ -1,0 +1,28 @@
+services:
+    robots: '@robots.cache'
+
+    robots.cache:
+        class: AppBundle\RobotsTxt\CacheParser
+        public: false
+        arguments:
+            - '@robots.default'
+            - '@robots.walker'
+            - '@filesystem.robots'
+
+    robots.default:
+        class: Innmind\RobotsTxt\Parser
+        public: false
+        arguments:
+            - '@crawler.transport'
+            - '@robots.walker'
+            - 'Innmind Robot'
+
+    robots.walker:
+        class: Innmind\RobotsTxt\Parser\Walker
+        public: false
+
+    filesystem.robots:
+        class: Innmind\Filesystem\Adapter\FilesystemAdapter
+        public: false
+        arguments:
+            - '/tmp/robots_txt'

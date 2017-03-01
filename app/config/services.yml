@@ -1,6 +1,7 @@
 imports:
     - { resource: 'services/crawler.yml' }
     - { resource: 'services/html.yml' }
+    - { resource: 'services/robots.yml' }
 
 services:
    clock:
