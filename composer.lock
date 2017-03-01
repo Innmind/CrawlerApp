@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d62342e477223b2ed776d5131f052781",
-    "content-hash": "e6f0b45a3ac2c242458871c078ed40cd",
+    "hash": "d1723bf2636e00634807a568084ff78c",
+    "content-hash": "dd2792f5b537b28a1ce285a95de59590",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1053,6 +1053,42 @@
                 "math"
             ],
             "time": "2017-02-12 14:32:46"
+        },
+        {
+            "name": "innmind/robots-txt",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Robots.txt.git",
+                "reference": "cb6672cc50281d5714f97b2dc499d0545f5a454b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Robots.txt/zipball/cb6672cc50281d5714f97b2dc499d0545f5a454b",
+                "reference": "cb6672cc50281d5714f97b2dc499d0545f5a454b",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/http-transport": "~2.0",
+                "innmind/immutable": "~2.0",
+                "innmind/url": "~2.0",
+                "php": "~7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\RobotsTxt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Robots.txt parser",
+            "time": "2017-02-27 14:20:01"
         },
         {
             "name": "innmind/time-continuum",

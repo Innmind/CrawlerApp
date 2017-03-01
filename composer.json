@@ -23,7 +23,8 @@
         "symfony/polyfill-apcu": "^1.0",
         "sensio/distribution-bundle": "^5.0",
         "incenteev/composer-parameter-handler": "^2.0",
-        "innmind/crawler": "~3.0"
+        "innmind/crawler": "~3.0",
+        "innmind/robots-txt": "~2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
