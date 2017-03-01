@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "871df60537a59fc4d48402f5b055a8ab",
-    "content-hash": "4fe74a31b13a7b9866c5ede56970b20f",
+    "hash": "c92043cc1fbb021bab573f44d50b2885",
+    "content-hash": "b238838087d42424f849acbc6d5121a4",
     "packages": [
         {
             "name": "doctrine/annotations",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "bd4461328621bde0ae6b1b2675fbc6aca4ceb558"
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/bd4461328621bde0ae6b1b2675fbc6aca4ceb558",
-                "reference": "bd4461328621bde0ae6b1b2675fbc6aca4ceb558",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/54cacc9b81758b14e3ce750f205a393d52339e97",
+                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,7 @@
             },
             "require-dev": {
                 "doctrine/cache": "1.*",
-                "phpunit/phpunit": "^5.6.1"
+                "phpunit/phpunit": "^5.7"
             },
             "type": "library",
             "extra": {
@@ -73,7 +73,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2016-12-30 15:59:45"
+            "time": "2017-02-24 16:22:25"
         },
         {
             "name": "doctrine/cache",
@@ -408,21 +408,21 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.2.2",
+            "version": "6.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "ebf29dee597f02f09f4d5bbecc68230ea9b08f60"
+                "reference": "8d6c6cc55186db87b7dc5009827429ba4e9dc006"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/ebf29dee597f02f09f4d5bbecc68230ea9b08f60",
-                "reference": "ebf29dee597f02f09f4d5bbecc68230ea9b08f60",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/8d6c6cc55186db87b7dc5009827429ba4e9dc006",
+                "reference": "8d6c6cc55186db87b7dc5009827429ba4e9dc006",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/promises": "^1.0",
-                "guzzlehttp/psr7": "^1.3.1",
+                "guzzlehttp/psr7": "^1.4",
                 "php": ">=5.5"
             },
             "require-dev": {
@@ -466,7 +466,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-10-08 15:01:37"
+            "time": "2017-02-28 22:50:30"
         },
         {
             "name": "guzzlehttp/promises",
@@ -521,16 +521,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.3.1",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "5c6447c9df362e8f8093bda8f5d8873fe5c7f65b"
+                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/5c6447c9df362e8f8093bda8f5d8873fe5c7f65b",
-                "reference": "5c6447c9df362e8f8093bda8f5d8873fe5c7f65b",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/0d6c7ca039329247e4f0f8f8f6506810e8248855",
+                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855",
                 "shasum": ""
             },
             "require": {
@@ -566,16 +566,23 @@
                     "name": "Michael Dowling",
                     "email": "mtdowling@gmail.com",
                     "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Tobias Schultze",
+                    "homepage": "https://github.com/Tobion"
                 }
             ],
-            "description": "PSR-7 message implementation",
+            "description": "PSR-7 message implementation that also provides common utility methods",
             "keywords": [
                 "http",
                 "message",
+                "request",
+                "response",
                 "stream",
-                "uri"
+                "uri",
+                "url"
             ],
-            "time": "2016-06-24 23:00:38"
+            "time": "2017-02-27 10:51:17"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -630,27 +637,29 @@
         },
         {
             "name": "innmind/colour",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Colour.git",
-                "reference": "a0c63daa929b78f26c0fd4f8a1fc5b3b407e9542"
+                "reference": "955a1fec4dc6b59a191020d6ec13d79a285b4e3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Colour/zipball/a0c63daa929b78f26c0fd4f8a1fc5b3b407e9542",
-                "reference": "a0c63daa929b78f26c0fd4f8a1fc5b3b407e9542",
+                "url": "https://api.github.com/repos/Innmind/Colour/zipball/955a1fec4dc6b59a191020d6ec13d79a285b4e3e",
+                "reference": "955a1fec4dc6b59a191020d6ec13d79a285b4e3e",
                 "shasum": ""
             },
             "require": {
-                "innmind/immutable": "^1.9",
+                "innmind/immutable": "~2.0",
                 "php": "~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\Colour\\": "src/",
-                    "Tests\\Innmind\\Colour\\": "tests/"
+                    "Innmind\\Colour\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -668,43 +677,42 @@
             "keywords": [
                 "colour"
             ],
-            "time": "2016-09-09 08:23:15"
+            "time": "2017-02-12 14:18:07"
         },
         {
             "name": "innmind/crawler",
-            "version": "2.1.3",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Crawler.git",
-                "reference": "4298c2ca3094f2466789d747c58212a88e96e8c3"
+                "reference": "30c45fe56d995b67f17010062c05a6fb9b1d4b9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/4298c2ca3094f2466789d747c58212a88e96e8c3",
-                "reference": "4298c2ca3094f2466789d747c58212a88e96e8c3",
+                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/30c45fe56d995b67f17010062c05a6fb9b1d4b9e",
+                "reference": "30c45fe56d995b67f17010062c05a6fb9b1d4b9e",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.2",
-                "innmind/colour": "^1.0",
-                "innmind/filesystem": "^1.3",
-                "innmind/html": "^1.1",
-                "innmind/http": "~1.3",
-                "innmind/http-transport": "^1.0",
-                "innmind/immutable": "^1.9",
-                "innmind/math": "^2.1",
+                "innmind/colour": "~2.0",
+                "innmind/filesystem": "~2.0",
+                "innmind/html": "~2.0",
+                "innmind/http": "~2.0",
+                "innmind/http-transport": "~2.0",
+                "innmind/immutable": "~2.1",
+                "innmind/math": "~3.0",
                 "innmind/time-continuum": "^1.0",
-                "innmind/url-resolver": "^2.0",
-                "php": "~7.0"
+                "innmind/url-resolver": "~3.0",
+                "php": "~7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.6"
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\Crawler\\": "src/",
-                    "Tests\\Innmind\\Crawler\\": "tests/"
+                    "Innmind\\Crawler\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -722,25 +730,28 @@
             "keywords": [
                 "crawler"
             ],
-            "time": "2017-02-08 07:14:47"
+            "time": "2017-03-01 11:49:48"
         },
         {
             "name": "innmind/event-bus",
-            "version": "1.1.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/EventBus.git",
-                "reference": "aeababc97470120eeed80ad78ab642fd1d2b68f5"
+                "reference": "483d6051ecc13e9c3577c4f9586f0ad87be5094f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/EventBus/zipball/aeababc97470120eeed80ad78ab642fd1d2b68f5",
-                "reference": "aeababc97470120eeed80ad78ab642fd1d2b68f5",
+                "url": "https://api.github.com/repos/Innmind/EventBus/zipball/483d6051ecc13e9c3577c4f9586f0ad87be5094f",
+                "reference": "483d6051ecc13e9c3577c4f9586f0ad87be5094f",
                 "shasum": ""
             },
             "require": {
-                "innmind/immutable": "^1.8",
-                "php": ">=7.0"
+                "innmind/immutable": "~2.0",
+                "php": "~7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
@@ -764,37 +775,36 @@
                 "dispatcher",
                 "event"
             ],
-            "time": "2017-01-27 07:02:30"
+            "time": "2017-02-12 11:50:52"
         },
         {
             "name": "innmind/filesystem",
-            "version": "1.5.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Filesystem.git",
-                "reference": "beb08b207db9ff83857c0c1aabc2d728ecbd782e"
+                "reference": "c650e8109814613af7d7adcbbcdf379f5111db17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/beb08b207db9ff83857c0c1aabc2d728ecbd782e",
-                "reference": "beb08b207db9ff83857c0c1aabc2d728ecbd782e",
+                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/c650e8109814613af7d7adcbbcdf379f5111db17",
+                "reference": "c650e8109814613af7d7adcbbcdf379f5111db17",
                 "shasum": ""
             },
             "require": {
-                "innmind/event-bus": "^1.0",
-                "innmind/immutable": "^1.5",
-                "php": ">=7.0",
+                "innmind/event-bus": "~2.0",
+                "innmind/immutable": "~2.0",
+                "php": "~7.1",
                 "symfony/filesystem": "^3.0",
                 "symfony/finder": "~3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.6"
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\Filesystem\\": "src/",
-                    "Tests\\Innmind\\Filesystem\\": "tests/"
+                    "Innmind\\Filesystem\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -812,33 +822,35 @@
             "keywords": [
                 "filesystem"
             ],
-            "time": "2017-02-08 07:25:44"
+            "time": "2017-02-12 15:10:55"
         },
         {
             "name": "innmind/html",
-            "version": "1.1.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Html.git",
-                "reference": "a786c47f0d348fd36c5db060b56a4238b7ced9d0"
+                "reference": "310651d345c2f2953d6878ccc0dd92bc5983be3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Html/zipball/a786c47f0d348fd36c5db060b56a4238b7ced9d0",
-                "reference": "a786c47f0d348fd36c5db060b56a4238b7ced9d0",
+                "url": "https://api.github.com/repos/Innmind/Html/zipball/310651d345c2f2953d6878ccc0dd92bc5983be3e",
+                "reference": "310651d345c2f2953d6878ccc0dd92bc5983be3e",
                 "shasum": ""
             },
             "require": {
-                "innmind/url": "^1.0",
-                "innmind/xml": "^2.0",
-                "php": "~7.0",
+                "innmind/url": "~2.0",
+                "innmind/xml": "~3.0",
+                "php": "~7.1",
                 "symfony/dom-crawler": "^3.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\Html\\": "src/",
-                    "Tests\\Innmind\\Html\\": "tests/"
+                    "Innmind\\Html\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -856,36 +868,36 @@
             "keywords": [
                 "html"
             ],
-            "time": "2016-11-05 16:11:03"
+            "time": "2017-02-12 16:48:44"
         },
         {
             "name": "innmind/http",
-            "version": "1.5.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Http.git",
-                "reference": "79521bf0c3c4e0386aa21d4c3349ffb280af76ea"
+                "reference": "99ba8b4faed0e300a90f2da646162424332cb8a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Http/zipball/79521bf0c3c4e0386aa21d4c3349ffb280af76ea",
-                "reference": "79521bf0c3c4e0386aa21d4c3349ffb280af76ea",
+                "url": "https://api.github.com/repos/Innmind/Http/zipball/99ba8b4faed0e300a90f2da646162424332cb8a2",
+                "reference": "99ba8b4faed0e300a90f2da646162424332cb8a2",
                 "shasum": ""
             },
             "require": {
-                "innmind/filesystem": "~1.1",
-                "innmind/immutable": "~1.6",
-                "innmind/url": "^1.0",
-                "php": ">=7.0"
+                "innmind/filesystem": "~2.0",
+                "innmind/immutable": "~2.1",
+                "innmind/url": "~2.0",
+                "php": "~7.1"
             },
             "require-dev": {
+                "phpunit/phpunit": "~6.0",
                 "psr/http-message": "^1.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\Http\\": "src/",
-                    "Tests\\Innmind\\Http\\": "tests/"
+                    "Innmind\\Http\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -904,34 +916,36 @@
                 "Value Object",
                 "http"
             ],
-            "time": "2017-02-01 06:40:17"
+            "time": "2017-02-14 07:08:30"
         },
         {
             "name": "innmind/http-transport",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/HttpTransport.git",
-                "reference": "07ccef0006f1938b071364068ef12fdccea9d4fe"
+                "reference": "f19266b038e63f6f7ce3b13117eeed0f9958d0bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpTransport/zipball/07ccef0006f1938b071364068ef12fdccea9d4fe",
-                "reference": "07ccef0006f1938b071364068ef12fdccea9d4fe",
+                "url": "https://api.github.com/repos/Innmind/HttpTransport/zipball/f19266b038e63f6f7ce3b13117eeed0f9958d0bb",
+                "reference": "f19266b038e63f6f7ce3b13117eeed0f9958d0bb",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.2",
-                "innmind/http": "^1.4",
-                "php": "~7.0",
+                "innmind/http": "~2.0",
+                "php": "~7.1",
                 "psr/log": "^1.0",
                 "ramsey/uuid": "^3.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\HttpTransport\\": "src/",
-                    "Tests\\Innmind\\HttpTransport\\": "tests/"
+                    "Innmind\\HttpTransport\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -950,20 +964,20 @@
                 "client",
                 "http"
             ],
-            "time": "2016-11-15 07:30:34"
+            "time": "2017-02-14 07:25:18"
         },
         {
             "name": "innmind/immutable",
-            "version": "1.12.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Immutable.git",
-                "reference": "ff9fcfd98acd9982959b6b9f8460425e66982965"
+                "reference": "d1bc6896351e9917ec4dc54fe5a0c8d2565fa25a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Immutable/zipball/ff9fcfd98acd9982959b6b9f8460425e66982965",
-                "reference": "ff9fcfd98acd9982959b6b9f8460425e66982965",
+                "url": "https://api.github.com/repos/Innmind/Immutable/zipball/d1bc6896351e9917ec4dc54fe5a0c8d2565fa25a",
+                "reference": "d1bc6896351e9917ec4dc54fe5a0c8d2565fa25a",
                 "shasum": ""
             },
             "require": {
@@ -994,31 +1008,33 @@
                 "immutable",
                 "wrapper"
             ],
-            "time": "2017-02-05 10:33:02"
+            "time": "2017-02-19 17:18:07"
         },
         {
             "name": "innmind/math",
-            "version": "2.1.1",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Math.git",
-                "reference": "592c81b0cdedbd2b230df72c48ec82790a6077c1"
+                "reference": "204ccf57a41fa29b494d60e1fec99323e7e24279"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Math/zipball/592c81b0cdedbd2b230df72c48ec82790a6077c1",
-                "reference": "592c81b0cdedbd2b230df72c48ec82790a6077c1",
+                "url": "https://api.github.com/repos/Innmind/Math/zipball/204ccf57a41fa29b494d60e1fec99323e7e24279",
+                "reference": "204ccf57a41fa29b494d60e1fec99323e7e24279",
                 "shasum": ""
             },
             "require": {
-                "innmind/immutable": "~1.9",
+                "innmind/immutable": "~2.0",
                 "php": "~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\Math\\": "src/",
-                    "Tests\\Innmind\\Math\\": "tests/"
+                    "Innmind\\Math\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1036,7 +1052,7 @@
             "keywords": [
                 "math"
             ],
-            "time": "2016-09-16 10:39:15"
+            "time": "2017-02-12 14:32:46"
         },
         {
             "name": "innmind/time-continuum",
@@ -1081,28 +1097,30 @@
         },
         {
             "name": "innmind/url",
-            "version": "1.0.4",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Url.git",
-                "reference": "a491e5ec0febe99787fc1141221229e79e1850a4"
+                "reference": "e3e9ab8abb41f3fa28f72ad6240e781677ae419b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Url/zipball/a491e5ec0febe99787fc1141221229e79e1850a4",
-                "reference": "a491e5ec0febe99787fc1141221229e79e1850a4",
+                "url": "https://api.github.com/repos/Innmind/Url/zipball/e3e9ab8abb41f3fa28f72ad6240e781677ae419b",
+                "reference": "e3e9ab8abb41f3fa28f72ad6240e781677ae419b",
                 "shasum": ""
             },
             "require": {
-                "innmind/immutable": "^1.5",
-                "league/uri": "^4.2",
+                "innmind/immutable": "~2.0",
+                "league/uri": "~5.0",
                 "php": "~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\Url\\": "src/",
-                    "Tests\\Innmind\\Url\\": "tests/"
+                    "Innmind\\Url\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1120,32 +1138,34 @@
             "keywords": [
                 "url"
             ],
-            "time": "2016-11-11 15:47:41"
+            "time": "2017-02-12 16:35:07"
         },
         {
             "name": "innmind/url-resolver",
-            "version": "2.0.0",
-            "target-dir": "Innmind/UrlResolver",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/url-resolver.git",
-                "reference": "9ef55f5964330ad80b1d2974eaa3cb63208fac31"
+                "reference": "c4e787bc3843ec6b7eb1db42e596830171235e02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/url-resolver/zipball/9ef55f5964330ad80b1d2974eaa3cb63208fac31",
-                "reference": "9ef55f5964330ad80b1d2974eaa3cb63208fac31",
+                "url": "https://api.github.com/repos/Innmind/url-resolver/zipball/c4e787bc3843ec6b7eb1db42e596830171235e02",
+                "reference": "c4e787bc3843ec6b7eb1db42e596830171235e02",
                 "shasum": ""
             },
             "require": {
-                "innmind/immutable": "~1.0",
+                "innmind/immutable": "~2.0",
                 "jeremykendall/php-domain-parser": "~3.0",
                 "php": "~7.0"
             },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Innmind\\UrlResolver": ""
+                "psr-4": {
+                    "Innmind\\UrlResolver\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1165,32 +1185,34 @@
                 "uri",
                 "url"
             ],
-            "time": "2016-02-07 13:47:17"
+            "time": "2017-02-12 14:03:10"
         },
         {
             "name": "innmind/xml",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/XML.git",
-                "reference": "05a22a02a6ee565d4f4e86dc57e8603240fc3501"
+                "reference": "81e89dd1f25ba2f5854b2c2fa41118d11736de51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/XML/zipball/05a22a02a6ee565d4f4e86dc57e8603240fc3501",
-                "reference": "05a22a02a6ee565d4f4e86dc57e8603240fc3501",
+                "url": "https://api.github.com/repos/Innmind/XML/zipball/81e89dd1f25ba2f5854b2c2fa41118d11736de51",
+                "reference": "81e89dd1f25ba2f5854b2c2fa41118d11736de51",
                 "shasum": ""
             },
             "require": {
-                "innmind/filesystem": "^1.3",
-                "innmind/immutable": "^1.9",
-                "php": "~7.0"
+                "innmind/filesystem": "~2.0",
+                "innmind/immutable": "~2.0",
+                "php": "~7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Innmind\\Xml\\": "src/",
-                    "Tests\\Innmind\\Xml\\": "tests/"
+                    "Innmind\\Xml\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1208,7 +1230,7 @@
             "keywords": [
                 "xml"
             ],
-            "time": "2016-11-05 15:59:42"
+            "time": "2017-02-12 15:31:27"
         },
         {
             "name": "jeremykendall/php-domain-parser",
@@ -1274,16 +1296,74 @@
         },
         {
             "name": "league/uri",
-            "version": "4.2.2",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri.git",
-                "reference": "a2e73bad7e60c3bc61b649680fb8b46876e342e3"
+                "reference": "ef6f413061bd4a9926c4c4394a5f5d384bfd8487"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri/zipball/a2e73bad7e60c3bc61b649680fb8b46876e342e3",
-                "reference": "a2e73bad7e60c3bc61b649680fb8b46876e342e3",
+                "url": "https://api.github.com/repos/thephpleague/uri/zipball/ef6f413061bd4a9926c4c4394a5f5d384bfd8487",
+                "reference": "ef6f413061bd4a9926c4c4394a5f5d384bfd8487",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-intl": "*",
+                "ext-mbstring": "*",
+                "league/uri-manipulations": "^1.0",
+                "league/uri-schemes": "^1.0",
+                "php": ">=7.0"
+            },
+            "type": "metapackage",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://nyamsprod.com"
+                }
+            ],
+            "description": "URI manipulation library",
+            "homepage": "http://uri.thephpleague.com",
+            "keywords": [
+                "data-uri",
+                "file-uri",
+                "ftp",
+                "http",
+                "https",
+                "middleware",
+                "parse_url",
+                "psr-7",
+                "rfc3986",
+                "rfc3987",
+                "uri",
+                "url",
+                "ws"
+            ],
+            "time": "2017-02-06 08:50:02"
+        },
+        {
+            "name": "league/uri-components",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/uri-components.git",
+                "reference": "84a5c0a58f028f3a81f6b8c655f8f5db7e4e66f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/uri-components/zipball/84a5c0a58f028f3a81f6b8c655f8f5db7e4e66f6",
+                "reference": "84a5c0a58f028f3a81f6b8c655f8f5db7e4e66f6",
                 "shasum": ""
             },
             "require": {
@@ -1291,23 +1371,142 @@
                 "ext-intl": "*",
                 "ext-mbstring": "*",
                 "jeremykendall/php-domain-parser": "^3.0",
-                "php": ">=5.5.9",
-                "psr/http-message": "^1.0"
+                "php": ">=7.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^1.9",
-                "phpunit/phpunit": "^4.0",
-                "zendframework/zend-diactoros": "^1.3"
+                "friendsofphp/php-cs-fixer": "^1.0",
+                "phpunit/phpunit": "^6.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "League\\Uri\\": "src"
+                    "League\\Uri\\Components\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://nyamsprod.com"
+                }
+            ],
+            "description": "URI components manipulation library",
+            "homepage": "http://uri.thephpleague.com",
+            "keywords": [
+                "authority",
+                "components",
+                "fragment",
+                "host",
+                "path",
+                "port",
+                "query",
+                "rfc3986",
+                "scheme",
+                "uri",
+                "url",
+                "userinfo"
+            ],
+            "time": "2017-02-06 08:35:30"
+        },
+        {
+            "name": "league/uri-interfaces",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/uri-interfaces.git",
+                "reference": "dcc0be58e8b35a726274249e5eee053be1a56b66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/dcc0be58e8b35a726274249e5eee053be1a56b66",
+                "reference": "dcc0be58e8b35a726274249e5eee053be1a56b66",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Uri\\Interfaces\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://nyamsprod.com"
+                }
+            ],
+            "description": "Common interface for URI representation",
+            "homepage": "http://github.com/thephpleague/uri-interfaces",
+            "keywords": [
+                "rfc3986",
+                "rfc3987",
+                "uri",
+                "url"
+            ],
+            "time": "2017-01-04 08:02:42"
+        },
+        {
+            "name": "league/uri-manipulations",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/uri-manipulations.git",
+                "reference": "3db42474cb68546ec9180d76dbf9807a8e1bcf98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/uri-manipulations/zipball/3db42474cb68546ec9180d76dbf9807a8e1bcf98",
+                "reference": "3db42474cb68546ec9180d76dbf9807a8e1bcf98",
+                "shasum": ""
+            },
+            "require": {
+                "league/uri-components": "^1.0",
+                "league/uri-interfaces": "^1.0",
+                "php": ">=7.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.9",
+                "guzzlehttp/psr7": "^1.2",
+                "league/uri-schemes": "^1.0",
+                "phpunit/phpunit": "^6.0"
+            },
+            "suggest": {
+                "league/uri-schemes": "Allow manipulating URI objects"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Uri\\Modifiers\\": "src"
                 },
                 "files": [
                     "src/functions_include.php"
@@ -1325,9 +1524,135 @@
                 }
             ],
             "description": "URI manipulation library",
+            "homepage": "http://url.thephpleague.com",
+            "keywords": [
+                "formatter",
+                "manipulation",
+                "manipulations",
+                "middlewares",
+                "modifiers",
+                "psr-7",
+                "references",
+                "rfc3986",
+                "rfc3987",
+                "uri",
+                "url"
+            ],
+            "time": "2017-02-06 07:57:03"
+        },
+        {
+            "name": "league/uri-parser",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/uri-parser.git",
+                "reference": "86d0d40761bd43dc31b8e47ee5035abbe9a90e33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/uri-parser/zipball/86d0d40761bd43dc31b8e47ee5035abbe9a90e33",
+                "reference": "86d0d40761bd43dc31b8e47ee5035abbe9a90e33",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.9",
+                "phpbench/phpbench": "^0.12.2",
+                "phpunit/phpunit": "^6.0"
+            },
+            "suggest": {
+                "league/uri-schemes": "Allow validating and normalizing URI parsing results"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Uri\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://nyamsprod.com"
+                }
+            ],
+            "description": "userland URI parser RFC 3986 compliant",
+            "homepage": "https://github.com/thephpleague/uri-parser",
+            "keywords": [
+                "parse_url",
+                "parser",
+                "rfc3986",
+                "uri",
+                "url"
+            ],
+            "time": "2017-03-01 10:38:20"
+        },
+        {
+            "name": "league/uri-schemes",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/uri-schemes.git",
+                "reference": "158886cc6a272088104e23198631ee26d9d5721f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/uri-schemes/zipball/158886cc6a272088104e23198631ee26d9d5721f",
+                "reference": "158886cc6a272088104e23198631ee26d9d5721f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-intl": "*",
+                "ext-mbstring": "*",
+                "league/uri-interfaces": "^1.0",
+                "league/uri-parser": "^1.0",
+                "php": ">=7.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.0",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Uri\\Schemes\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://nyamsprod.com"
+                }
+            ],
+            "description": "URI manipulation library",
             "homepage": "http://uri.thephpleague.com",
             "keywords": [
                 "data-uri",
+                "file",
                 "ftp",
                 "http",
                 "https",
@@ -1336,9 +1661,10 @@
                 "rfc3986",
                 "uri",
                 "url",
-                "ws"
+                "ws",
+                "wss"
             ],
-            "time": "2016-12-12 11:36:42"
+            "time": "2017-03-01 11:04:10"
         },
         {
             "name": "monolog/monolog",
@@ -1420,16 +1746,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.4",
+            "version": "v2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
+                "reference": "b5ea1ef3d8ff10c307ba8c5945c2f134e503278f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
-                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/b5ea1ef3d8ff10c307ba8c5945c2f134e503278f",
+                "reference": "b5ea1ef3d8ff10c307ba8c5945c2f134e503278f",
                 "shasum": ""
             },
             "require": {
@@ -1464,7 +1790,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-11-07 23:38:38"
+            "time": "2017-02-27 17:11:23"
         },
         {
             "name": "psr/cache",
@@ -1745,16 +2071,16 @@
         },
         {
             "name": "sensiolabs/security-checker",
-            "version": "v4.0.0",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/security-checker.git",
-                "reference": "116027b57b568ed61b7b1c80eeb4f6ee9e8c599c"
+                "reference": "f2ce0035fc512287978510ca1740cd111d60f89f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/116027b57b568ed61b7b1c80eeb4f6ee9e8c599c",
-                "reference": "116027b57b568ed61b7b1c80eeb4f6ee9e8c599c",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/f2ce0035fc512287978510ca1740cd111d60f89f",
+                "reference": "f2ce0035fc512287978510ca1740cd111d60f89f",
                 "shasum": ""
             },
             "require": {
@@ -1785,7 +2111,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
-            "time": "2016-09-23 18:09:57"
+            "time": "2017-02-18 17:53:25"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -2186,16 +2512,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "6306409b3836ed2936c7b0454f00711d0128748c"
+                "reference": "141569be5b33a7cf0d141fb88422649fe11b0c47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/6306409b3836ed2936c7b0454f00711d0128748c",
-                "reference": "6306409b3836ed2936c7b0454f00711d0128748c",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/141569be5b33a7cf0d141fb88422649fe11b0c47",
+                "reference": "141569be5b33a7cf0d141fb88422649fe11b0c47",
                 "shasum": ""
             },
             "require": {
@@ -2325,20 +2651,20 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-02-06 13:15:43"
+            "time": "2017-02-17 00:00:43"
         },
         {
             "name": "twig/twig",
-            "version": "v2.1.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "9062992538bc5855a683c6737257bfa18d25a4b8"
+                "reference": "29bb02dde09ff56291d30f7687eb8696918023af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9062992538bc5855a683c6737257bfa18d25a4b8",
-                "reference": "9062992538bc5855a683c6737257bfa18d25a4b8",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/29bb02dde09ff56291d30f7687eb8696918023af",
+                "reference": "29bb02dde09ff56291d30f7687eb8696918023af",
                 "shasum": ""
             },
             "require": {
@@ -2346,13 +2672,14 @@
                 "symfony/polyfill-mbstring": "~1.0"
             },
             "require-dev": {
+                "psr/container": "^1.0",
                 "symfony/debug": "~2.7",
                 "symfony/phpunit-bridge": "~3.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -2387,7 +2714,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-01-11 19:39:01"
+            "time": "2017-02-27 00:16:20"
         }
     ],
     "packages-dev": [
@@ -2698,35 +3025,35 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.5",
+            "version": "4.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "c19cfc7cbb0e9338d8c469c7eedecc2a428b0971"
+                "reference": "09e2277d14ea467e5a984010f501343ef29ffc69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c19cfc7cbb0e9338d8c469c7eedecc2a428b0971",
-                "reference": "c19cfc7cbb0e9338d8c469c7eedecc2a428b0971",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/09e2277d14ea467e5a984010f501343ef29ffc69",
+                "reference": "09e2277d14ea467e5a984010f501343ef29ffc69",
                 "shasum": ""
             },
             "require": {
+                "ext-dom": "*",
+                "ext-xmlwriter": "*",
                 "php": "^5.6 || ^7.0",
-                "phpunit/php-file-iterator": "~1.3",
-                "phpunit/php-text-template": "~1.2",
-                "phpunit/php-token-stream": "^1.4.2",
-                "sebastian/code-unit-reverse-lookup": "~1.0",
+                "phpunit/php-file-iterator": "^1.3",
+                "phpunit/php-text-template": "^1.2",
+                "phpunit/php-token-stream": "^1.4.2 || ^2.0",
+                "sebastian/code-unit-reverse-lookup": "^1.0",
                 "sebastian/environment": "^1.3.2 || ^2.0",
-                "sebastian/version": "~1.0|~2.0"
+                "sebastian/version": "^1.0 || ^2.0"
             },
             "require-dev": {
-                "ext-xdebug": ">=2.1.4",
-                "phpunit/phpunit": "^5.4"
+                "ext-xdebug": "^2.1.4",
+                "phpunit/phpunit": "^5.7"
             },
             "suggest": {
-                "ext-dom": "*",
-                "ext-xdebug": ">=2.4.0",
-                "ext-xmlwriter": "*"
+                "ext-xdebug": "^2.5.1"
             },
             "type": "library",
             "extra": {
@@ -2757,7 +3084,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-20 15:06:43"
+            "time": "2017-03-01 09:12:17"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2849,25 +3176,30 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260"
+                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/38e9124049cf1a164f1e4537caf19c99bf1eb260",
-                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
+                "reference": "3dcf38ca72b158baf0bc245e9184d3fdffa9c46f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": "^5.3.3 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4|~5"
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
             "autoload": {
                 "classmap": [
                     "src/"
@@ -2889,20 +3221,20 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2017-02-26 11:10:40"
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.9",
+            "version": "1.4.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b"
+                "reference": "e03f8f67534427a787e21a385a67ec3ca6978ea7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/3b402f65a4cc90abf6e1104e388b896ce209631b",
-                "reference": "3b402f65a4cc90abf6e1104e388b896ce209631b",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/e03f8f67534427a787e21a385a67ec3ca6978ea7",
+                "reference": "e03f8f67534427a787e21a385a67ec3ca6978ea7",
                 "shasum": ""
             },
             "require": {
@@ -2938,20 +3270,20 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2016-11-15 14:06:22"
+            "time": "2017-02-27 10:12:30"
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.11",
+            "version": "5.7.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab"
+                "reference": "4906b8faf23e42612182fd212eb6f4c0f2954b57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a6ad2472daba76b0689042b7709f86d4f06bcaab",
-                "reference": "a6ad2472daba76b0689042b7709f86d4f06bcaab",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4906b8faf23e42612182fd212eb6f4c0f2954b57",
+                "reference": "4906b8faf23e42612182fd212eb6f4c0f2954b57",
                 "shasum": ""
             },
             "require": {
@@ -2975,7 +3307,7 @@
                 "sebastian/global-state": "^1.1",
                 "sebastian/object-enumerator": "~2.0",
                 "sebastian/resource-operations": "~1.0",
-                "sebastian/version": "~1.0|~2.0",
+                "sebastian/version": "~1.0.3|~2.0",
                 "symfony/yaml": "~2.1|~3.0"
             },
             "conflict": {
@@ -3020,7 +3352,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-02-05 15:31:31"
+            "time": "2017-02-19 07:22:16"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3412,16 +3744,16 @@
         },
         {
             "name": "sebastian/object-enumerator",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/object-enumerator.git",
-                "reference": "96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35"
+                "reference": "1311872ac850040a79c3c058bea3e22d0f09cbb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35",
-                "reference": "96f8a3f257b69e8128ad74d3a7fd464bcbaa3b35",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/1311872ac850040a79c3c058bea3e22d0f09cbb7",
+                "reference": "1311872ac850040a79c3c058bea3e22d0f09cbb7",
                 "shasum": ""
             },
             "require": {
@@ -3454,7 +3786,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2016-11-19 07:35:10"
+            "time": "2017-02-18 15:18:39"
         },
         {
             "name": "sebastian/recursion-context",
