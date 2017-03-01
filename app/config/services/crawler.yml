@@ -2,7 +2,7 @@ imports:
     - { resource: 'crawler/parser.yml' }
 
 services:
-    crawler: '@crawler.robots_aware'
+    crawler: '@crawler.xml_reader_aware'
 
     crawler.default:
         class: Innmind\Crawler\Crawler
@@ -16,6 +16,12 @@ services:
             - '@robots'
             - '@crawler.default'
             - %user_agent%
+
+    crawler.xml_reader_aware:
+        class: AppBundle\Crawler\XmlReaderAwareCrawler
+        arguments:
+            - '@html.reader.cache'
+            - '@crawler.robots_aware'
 
     crawler.transport:
         class: Innmind\HttpTransport\GuzzleTransport
