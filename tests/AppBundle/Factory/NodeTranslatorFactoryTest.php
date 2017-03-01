@@ -5,8 +5,9 @@ namespace Tests\AppBundle\Factory;
 
 use AppBundle\Factory\NodeTranslatorFactory;
 use Innmind\Xml\Translator\NodeTranslator;
+use PHPUnit\Framework\TestCase;
 
-class NodeTranslatorFactoryTest extends \PHPUnit_Framework_TestCase
+class NodeTranslatorFactoryTest extends TestCase
 {
     public function testMake()
     {
