@@ -2,11 +2,20 @@ imports:
     - { resource: 'crawler/parser.yml' }
 
 services:
-    crawler:
+    crawler: '@crawler.robots_aware'
+
+    crawler.default:
         class: Innmind\Crawler\Crawler
         arguments:
             - '@crawler.transport'
             - '@crawler.parser'
+
+    crawler.robots_aware:
+        class: AppBundle\Crawler\RobotsAwareCrawler
+        arguments:
+            - '@robots'
+            - '@crawler.default'
+            - %user_agent%
 
     crawler.transport:
         class: Innmind\HttpTransport\GuzzleTransport

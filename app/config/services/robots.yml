@@ -15,7 +15,7 @@ services:
         arguments:
             - '@crawler.transport'
             - '@robots.walker'
-            - 'Innmind Robot'
+            - %user_agent%
 
     robots.walker:
         class: Innmind\RobotsTxt\Parser\Walker
