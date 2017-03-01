@@ -67,15 +67,12 @@ services:
     crawler.parser.http.content_type:
         class: Innmind\Crawler\Parser\Http\ContentTypeParser
         public: false
-        arguments:
-            - '@clock'
 
     crawler.parser.http.alternates:
         class: Innmind\Crawler\Parser\Http\AlternatesParser
         public: false
         arguments:
             - '@crawler.url_resolver'
-            - '@clock'
 
     crawler.parser.http.cache:
         class: Innmind\Crawler\Parser\Http\CacheParser
@@ -88,38 +85,28 @@ services:
         public: false
         arguments:
             - '@crawler.url_resolver'
-            - '@clock'
 
     crawler.parser.http.charset:
         class: Innmind\Crawler\Parser\Http\CharsetParser
         public: false
-        arguments:
-            - '@clock'
 
     crawler.parser.http.languages:
         class: Innmind\Crawler\Parser\Http\LanguagesParser
         public: false
-        arguments:
-            - '@clock'
 
     crawler.parser.image.dimension:
         class: Innmind\Crawler\Parser\Image\DimensionParser
         public: false
-        arguments:
-            - '@clock'
 
     crawler.parser.image.weight:
         class: Innmind\Crawler\Parser\Image\WeightParser
         public: false
-        arguments:
-            - '@clock'
 
     crawler.parser.html.alternates:
         class: Innmind\Crawler\Parser\Html\AlternatesParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
             - '@crawler.url_resolver'
 
     crawler.parser.html.anchors:
@@ -127,35 +114,30 @@ services:
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.android:
         class: Innmind\Crawler\Parser\Html\AndroidParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.author:
         class: Innmind\Crawler\Parser\Html\AuthorParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.base:
         class: Innmind\Crawler\Parser\Html\BaseParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.canonical:
         class: Innmind\Crawler\Parser\Html\CanonicalParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
             - '@crawler.url_resolver'
 
     crawler.parser.html.charset:
@@ -163,35 +145,30 @@ services:
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.citations:
         class: Innmind\Crawler\Parser\Html\CitationsParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.content:
         class: Innmind\Crawler\Parser\Html\ContentParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.description:
         class: Innmind\Crawler\Parser\Html\DescriptionParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.images:
         class: Innmind\Crawler\Parser\Html\ImagesParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
             - '@crawler.url_resolver'
 
     crawler.parser.html.ios:
@@ -199,28 +176,24 @@ services:
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.journal:
         class: Innmind\Crawler\Parser\Html\JournalParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.languages:
         class: Innmind\Crawler\Parser\Html\LanguagesParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.links:
         class: Innmind\Crawler\Parser\Html\LinksParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
             - '@crawler.url_resolver'
 
     crawler.parser.html.rss:
@@ -228,7 +201,6 @@ services:
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
             - '@crawler.url_resolver'
 
     crawler.parser.html.theme_color:
@@ -236,39 +208,33 @@ services:
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.title:
         class: Innmind\Crawler\Parser\Html\TitleParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.open_graph.image:
         class: Innmind\Crawler\Parser\Html\OpenGraph\ImageParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.open_graph.title:
         class: Innmind\Crawler\Parser\Html\OpenGraph\TitleParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.open_graph.type:
         class: Innmind\Crawler\Parser\Html\OpenGraph\TypeParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
 
     crawler.parser.html.open_graph.url:
         class: Innmind\Crawler\Parser\Html\OpenGraph\UrlParser
         public: false
         arguments:
             - '@html.reader'
-            - '@clock'
