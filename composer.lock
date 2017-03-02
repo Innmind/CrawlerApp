@@ -1133,16 +1133,16 @@
         },
         {
             "name": "innmind/url",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Url.git",
-                "reference": "e3e9ab8abb41f3fa28f72ad6240e781677ae419b"
+                "reference": "7274a972d967edbe3cca0a141708c095eb78c27e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Url/zipball/e3e9ab8abb41f3fa28f72ad6240e781677ae419b",
-                "reference": "e3e9ab8abb41f3fa28f72ad6240e781677ae419b",
+                "url": "https://api.github.com/repos/Innmind/Url/zipball/7274a972d967edbe3cca0a141708c095eb78c27e",
+                "reference": "7274a972d967edbe3cca0a141708c095eb78c27e",
                 "shasum": ""
             },
             "require": {
@@ -1174,7 +1174,7 @@
             "keywords": [
                 "url"
             ],
-            "time": "2017-02-12 16:35:07"
+            "time": "2017-03-01 14:55:17"
         },
         {
             "name": "innmind/url-resolver",
