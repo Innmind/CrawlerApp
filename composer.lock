@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d1723bf2636e00634807a568084ff78c",
-    "content-hash": "dd2792f5b537b28a1ce285a95de59590",
+    "hash": "a179933471a38121d715cf6fca091a90",
+    "content-hash": "aee53d4d2eb0200858f5c43be3675a1f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1055,6 +1055,110 @@
             "time": "2017-02-12 14:32:46"
         },
         {
+            "name": "innmind/rest-client",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/rest-client.git",
+                "reference": "a4704d91e2040cd427904a547db52c6bd1dda0b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/a4704d91e2040cd427904a547db52c6bd1dda0b0",
+                "reference": "a4704d91e2040cd427904a547db52c6bd1dda0b0",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.2",
+                "innmind/filesystem": "~2.0",
+                "innmind/http": "~2.0",
+                "innmind/http-transport": "~2.0",
+                "innmind/immutable": "~2.0",
+                "innmind/specification": "^1.0",
+                "innmind/url-resolver": "~3.0",
+                "php": "~7.1",
+                "symfony/serializer": "~3.0",
+                "willdurand/negotiation": "^2.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Rest\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to consume REST APIs",
+            "homepage": "http://github.com/Innmind/rest-client",
+            "keywords": [
+                "api",
+                "client",
+                "rest"
+            ],
+            "time": "2017-02-14 07:40:12"
+        },
+        {
+            "name": "innmind/rest-client-bundle",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/RestClientBundle.git",
+                "reference": "96f048ca2cdb8d5958363df2ab2649c9d1dc34e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/RestClientBundle/zipball/96f048ca2cdb8d5958363df2ab2649c9d1dc34e5",
+                "reference": "96f048ca2cdb8d5958363df2ab2649c9d1dc34e5",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/rest-client": "~4.0",
+                "php": "~7.1",
+                "symfony/config": "~3.0",
+                "symfony/dependency-injection": "~3.0",
+                "symfony/http-kernel": "~3.0",
+                "symfony/yaml": "~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Rest\\ClientBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to consume REST APIs",
+            "homepage": "http://github.com/Innmind/RestClientBundle",
+            "keywords": [
+                "api",
+                "client",
+                "rest"
+            ],
+            "time": "2017-02-19 12:49:36"
+        },
+        {
             "name": "innmind/robots-txt",
             "version": "2.0.0",
             "source": {
@@ -1089,6 +1193,48 @@
             ],
             "description": "Robots.txt parser",
             "time": "2017-02-27 14:20:01"
+        },
+        {
+            "name": "innmind/specification",
+            "version": "1.0.0",
+            "target-dir": "Innmind/Specification",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Specification.git",
+                "reference": "fc38adfba1872513109b148eab77a088b27fc1a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Specification/zipball/fc38adfba1872513109b148eab77a088b27fc1a1",
+                "reference": "fc38adfba1872513109b148eab77a088b27fc1a1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Innmind\\Specification": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Interfaces allowing to compose a tree of specifications",
+            "homepage": "http://github.com/Innmind/Specification",
+            "keywords": [
+                "ddd",
+                "specification"
+            ],
+            "time": "2016-03-19 15:43:59"
         },
         {
             "name": "innmind/time-continuum",
@@ -2751,6 +2897,58 @@
                 "templating"
             ],
             "time": "2017-02-27 00:16:20"
+        },
+        {
+            "name": "willdurand/negotiation",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/Negotiation.git",
+                "reference": "1f210db45723b21edd69f39794662b8d64656b93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/1f210db45723b21edd69f39794662b8d64656b93",
+                "reference": "1f210db45723b21edd69f39794662b8d64656b93",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Negotiation\\": "src/Negotiation"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "will+git@drnd.me"
+                }
+            ],
+            "description": "Content Negotiation tools for PHP provided as a standalone library.",
+            "homepage": "http://williamdurand.fr/Negotiation/",
+            "keywords": [
+                "accept",
+                "content",
+                "format",
+                "header",
+                "negotiation"
+            ],
+            "time": "2016-10-14 09:17:47"
         }
     ],
     "packages-dev": [

@@ -11,6 +11,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Innmind\Rest\ClientBundle\InnmindRestClientBundle,
             new AppBundle\AppBundle(),
         ];
 

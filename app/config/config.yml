@@ -18,7 +18,7 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: false }
-    #serializer:      { enable_annotations: true }
+    serializer: ~
     default_locale:  "%locale%"
     trusted_hosts:   ~
     trusted_proxies: ~
@@ -31,3 +31,10 @@ framework:
     assets: ~
     php_errors:
         log: true
+
+innmind_rest_client:
+    content_type:
+        json:
+            priority: 0
+            media_types:
+                application/json: 0
