@@ -1056,16 +1056,16 @@
         },
         {
             "name": "innmind/rest-client",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/rest-client.git",
-                "reference": "a4704d91e2040cd427904a547db52c6bd1dda0b0"
+                "reference": "c4a894b7e78cedc8c36b55e21df4cf27b641f594"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/a4704d91e2040cd427904a547db52c6bd1dda0b0",
-                "reference": "a4704d91e2040cd427904a547db52c6bd1dda0b0",
+                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/c4a894b7e78cedc8c36b55e21df4cf27b641f594",
+                "reference": "c4a894b7e78cedc8c36b55e21df4cf27b641f594",
                 "shasum": ""
             },
             "require": {
@@ -1106,7 +1106,7 @@
                 "client",
                 "rest"
             ],
-            "time": "2017-02-14 07:40:12"
+            "time": "2017-03-02 10:23:07"
         },
         {
             "name": "innmind/rest-client-bundle",
