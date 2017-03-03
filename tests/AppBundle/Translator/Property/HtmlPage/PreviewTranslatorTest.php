@@ -89,7 +89,11 @@ class PreviewTranslatorTest extends TestCase
             $this->createMock(MediaTypeInterface::class),
             $attributes->put(
                 'preview',
-                new Attribute('preview', Url::fromString('http://some.photo'))
+                new Attribute(
+                    'preview',
+                    (new Set(UrlInterface::class))
+                        ->add(Url::fromString('http://some.photo'))
+                )
             ),
             $this->createMock(StreamInterface::class)
         );

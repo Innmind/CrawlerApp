@@ -19,6 +19,7 @@ final class PreviewTranslator implements PropertyTranslatorInterface
         return (string) $resource
             ->attributes()
             ->get('preview')
-            ->content();
+            ->content()
+            ->current();
     }
 }
