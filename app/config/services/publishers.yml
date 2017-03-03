@@ -31,6 +31,7 @@ services:
                 main_content: '@resource_translator.property.html.main_content'
                 theme_colour: '@resource_translator.property.html.theme_colour'
                 title: '@resource_translator.property.html.title'
+                preview: '@resource_translator.property.html.preview'
         factory:
             - AppBundle\Factory\PropertyDelegationTranslatorFactory
             - make
@@ -93,4 +94,8 @@ services:
 
     resource_translator.property.html.title:
         class: AppBundle\Translator\PropertyTranslator\HtmlPage\TitleTranslator
+        public: false
+
+    resource_translator.property.html.preview:
+        class: AppBundle\Translator\PropertyTranslator\HtmlPage\PreviewTranslator
         public: false
