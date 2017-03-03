@@ -25,7 +25,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "innmind/crawler": "~3.0",
         "innmind/robots-txt": "~2.0",
-        "innmind/rest-client-bundle": "~2.0"
+        "innmind/rest-client-bundle": "~2.0",
+        "php-amqplib/rabbitmq-bundle": "^1.12"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
