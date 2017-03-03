@@ -2,6 +2,7 @@ imports:
     - { resource: 'services/crawler.yml' }
     - { resource: 'services/html.yml' }
     - { resource: 'services/robots.yml' }
+    - { resource: 'services/publishers.yml' }
 
 services:
    clock:
