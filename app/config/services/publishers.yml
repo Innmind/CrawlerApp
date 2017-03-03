@@ -12,7 +12,7 @@ services:
             - '@resource_translator.property.delegation'
 
     resource_translator.property.delegation:
-        class: AppBundle\Translator\PropertyTranslator\DelegationTranslator
+        class: AppBundle\Translator\Property\DelegationTranslator
         public: false
         arguments:
             -
@@ -37,65 +37,65 @@ services:
             - make
 
     resource_translator.property.host:
-        class: AppBundle\Translator\PropertyTranslator\HostTranslator
+        class: AppBundle\Translator\Property\HostTranslator
         public: false
 
     resource_translator.property.path:
-        class: AppBundle\Translator\PropertyTranslator\PathTranslator
+        class: AppBundle\Translator\Property\PathTranslator
         public: false
 
     resource_translator.property.query:
-        class: AppBundle\Translator\PropertyTranslator\QueryTranslator
+        class: AppBundle\Translator\Property\QueryTranslator
         public: false
 
     resource_translator.property.languages:
-        class: AppBundle\Translator\PropertyTranslator\LanguagesTranslator
+        class: AppBundle\Translator\Property\LanguagesTranslator
         public: false
 
     resource_translator.property.charset:
-        class: AppBundle\Translator\PropertyTranslator\CharsetTranslator
+        class: AppBundle\Translator\Property\CharsetTranslator
         public: false
 
     resource_translator.property.image.dimension:
-        class: AppBundle\Translator\PropertyTranslator\Image\DimensionTranslator
+        class: AppBundle\Translator\Property\Image\DimensionTranslator
         public: false
 
     resource_translator.property.image.weight:
-        class: AppBundle\Translator\PropertyTranslator\Image\WeightTranslator
+        class: AppBundle\Translator\Property\Image\WeightTranslator
         public: false
 
     resource_translator.property.html.anchors:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\AnchorsTranslator
+        class: AppBundle\Translator\Property\HtmlPage\AnchorsTranslator
         public: false
 
     resource_translator.property.html.android:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\AndroidAppLinkTranslator
+        class: AppBundle\Translator\Property\HtmlPage\AndroidAppLinkTranslator
         public: false
 
     resource_translator.property.html.description:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\DescriptionTranslator
+        class: AppBundle\Translator\Property\HtmlPage\DescriptionTranslator
         public: false
 
     resource_translator.property.html.ios:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\IosAppLinkTranslator
+        class: AppBundle\Translator\Property\HtmlPage\IosAppLinkTranslator
         public: false
 
     resource_translator.property.html.journal:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\IsJournalTranslator
+        class: AppBundle\Translator\Property\HtmlPage\IsJournalTranslator
         public: false
 
     resource_translator.property.html.main_content:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\MainContentTranslator
+        class: AppBundle\Translator\Property\HtmlPage\MainContentTranslator
         public: false
 
     resource_translator.property.html.theme_colour:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\ThemeColourTranslator
+        class: AppBundle\Translator\Property\HtmlPage\ThemeColourTranslator
         public: false
 
     resource_translator.property.html.title:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\TitleTranslator
+        class: AppBundle\Translator\Property\HtmlPage\TitleTranslator
         public: false
 
     resource_translator.property.html.preview:
-        class: AppBundle\Translator\PropertyTranslator\HtmlPage\PreviewTranslator
+        class: AppBundle\Translator\Property\HtmlPage\PreviewTranslator
         public: false
