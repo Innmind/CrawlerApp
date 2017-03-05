@@ -1,5 +1,5 @@
 services:
-    publisher: '@publisher.canonical_aware'
+    publisher: '@publisher.alternates_aware'
 
     publisher.default:
         class: AppBundle\Publisher\Publisher
@@ -13,6 +13,13 @@ services:
         public: false
         arguments:
             - '@publisher.default'
+            - '@old_sound_rabbit_mq.crawl_producer'
+
+    publisher.alternates_aware:
+        class: AppBundle\Publisher\AlternatesAwarePublisher
+        public: false
+        arguments:
+            - '@publisher.canonical_aware'
             - '@old_sound_rabbit_mq.crawl_producer'
 
     resource_translator:
