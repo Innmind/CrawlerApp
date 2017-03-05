@@ -3,6 +3,7 @@ imports:
     - { resource: 'services/html.yml' }
     - { resource: 'services/robots.yml' }
     - { resource: 'services/publishers.yml' }
+    - { resource: 'services/delayers.yml' }
 
 services:
     clock:

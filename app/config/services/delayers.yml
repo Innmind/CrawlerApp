@@ -1,0 +1,9 @@
+services:
+    delayer: '@delayer.robots_aware'
+
+    delayer.robots_aware:
+        class: AppBundle\Delayer\RobotsTxtAwareDelayer
+        public: false
+        arguments:
+            - '@robots'
+            - '%user_agent%'
