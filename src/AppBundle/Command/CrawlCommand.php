@@ -23,6 +23,7 @@ use Innmind\Immutable\{
 };
 use Symfony\Component\Console\{
     Input\InputArgument,
+    Input\InputOption,
     Input\InputInterface,
     Output\OutputInterface
 };
@@ -37,7 +38,8 @@ final class CrawlCommand extends ContainerAwareCommand
     {
         $this
             ->setName('crawl')
-            ->addArgument('url', InputArgument::REQUIRED);
+            ->addArgument('url', InputArgument::REQUIRED)
+            ->addOption('publish-to', null, InputOption::VALUE_REQUIRED, '', false);
     }
 
     /**
@@ -110,5 +112,14 @@ final class CrawlCommand extends ContainerAwareCommand
                         ));
                 }
             });
+
+        if ($input->getOption('publish-to')) {
+            $this
+                ->getContainer()
+                ->get('publisher')(
+                    $resource,
+                    Url::fromString($input->getOption('publish-to'))
+                );
+        }
     }
 }
