@@ -1,5 +1,5 @@
 services:
-    robots: '@robots.cache'
+    robots: '@robots.keep_in_memory'
 
     robots.cache:
         class: AppBundle\RobotsTxt\CacheParser
@@ -16,6 +16,12 @@ services:
             - '@crawler.transport'
             - '@robots.walker'
             - '%user_agent%'
+
+    robots.keep_in_memory:
+        class: AppBundle\RobotsTxt\KeepInMemoryParser
+        public: false
+        arguments:
+            - '@robots.cache'
 
     robots.walker:
         class: Innmind\RobotsTxt\Parser\Walker
