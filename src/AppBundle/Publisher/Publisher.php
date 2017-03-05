@@ -6,8 +6,11 @@ namespace AppBundle\Publisher;
 use AppBundle\{
     PublisherInterface,
     Reference,
+    Negotiator,
+    MediaType,
     Translator\HttpResourceTranslator,
-    Exception\ResourceCannotBePublishedException
+    Exception\ResourceCannotBePublishedException,
+    Exception\MediaTypeDoesntMatchAnyException
 };
 use Innmind\Rest\Client\{
     ClientInterface,
@@ -20,11 +23,9 @@ use Innmind\Http\{
     Message\Method,
     ProtocolVersion
 };
-use Innmind\Filesystem\MediaType\MediaType;
-use Innmind\Immutable\Map;
-use Negotiation\{
-    Negotiator,
-    Accept
+use Innmind\Immutable\{
+    Map,
+    Set
 };
 
 final class Publisher implements PublisherInterface
@@ -59,32 +60,41 @@ final class Publisher implements PublisherInterface
             throw new ResourceCannotBePublishedException($resource);
         }
 
-        $mediaTypes = $definitions->reduce(
-            [],
-            function(array $carry, string $name, Definition $definition): array {
-                return array_merge(
-                    $carry,
-                    $definition->metas()->get('allowed_media_types')
-                );
-            }
-        );
-        $mediaType = new MediaType(
-            $resource->mediaType()->topLevel(),
-            $resource->mediaType()->subType()
-        );
-        $best = $this->negotiator->getBest(
-            (string) $mediaType,
-            $mediaTypes
-        );
+        $mediaTypes = $definitions
+            ->reduce(
+                new Set('string'),
+                function(Set $carry, string $name, Definition $definition): Set {
+                    foreach ($definition->metas()->get('allowed_media_types') as $value) {
+                        $carry = $carry->add($value);
+                    }
 
-        if (!$best instanceof Accept) {
+                    return $carry;
+                }
+            )
+            ->reduce(
+                new Set(MediaType::class),
+                function(Set $carry, string $mediaType): Set {
+                    return $carry->add(MediaType::fromString($mediaType));
+                }
+            );
+
+        try {
+            $mediaType = new MediaType(
+                $resource->mediaType()->topLevel(),
+                $resource->mediaType()->subType()
+            );
+            $best = $this->negotiator->best(
+                $mediaType,
+                $mediaTypes
+            );
+        } catch (MediaTypeDoesntMatchAnyException $e) {
             throw new ResourceCannotBePublishedException($resource);
         }
 
         $definition = $definitions
             ->filter(function(string $name, Definition $definition) use ($best): bool {
                 return in_array(
-                    $best->getValue(),
+                    (string) $best,
                     $definition->metas()->get('allowed_media_types')
                 );
             })

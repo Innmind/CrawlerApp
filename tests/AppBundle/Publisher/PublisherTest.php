@@ -177,7 +177,7 @@ class PublisherTest extends TestCase
                 (new Map('string', Definition::class))
                     ->put(
                         'foo',
-                        new Definition(
+                        $definition = new Definition(
                             'foo',
                             $this->createMock(UrlInterface::class),
                             new Identity('uuid'),
@@ -189,7 +189,7 @@ class PublisherTest extends TestCase
                     )
                     ->put(
                         'bar',
-                        $definition = new Definition(
+                        new Definition(
                             'bar',
                             $this->createMock(UrlInterface::class),
                             new Identity('uuid'),
@@ -204,7 +204,7 @@ class PublisherTest extends TestCase
             ->expects($this->once())
             ->method('create')
             ->with($this->callback(function(HttpResource $resource): bool {
-                return $resource->name() === 'bar' &&
+                return $resource->name() === 'foo' &&
                     $resource->properties()->size() === 0;
             }))
             ->willReturn(
@@ -212,7 +212,7 @@ class PublisherTest extends TestCase
             );
         $resource = new CrawledResource(
             $this->createMock(UrlInterface::class),
-            MediaType::fromString('text/html'),
+            MediaType::fromString('image/png'),
             new Map('string', AttributeInterface::class),
             $this->createMock(StreamInterface::class)
         );
