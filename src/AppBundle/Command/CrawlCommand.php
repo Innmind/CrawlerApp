@@ -14,7 +14,10 @@ use Innmind\Http\{
     Header\HeaderValue
 };
 use Innmind\Url\Url;
-use Innmind\Crawler\HttpResource\AttributeInterface;
+use Innmind\Crawler\HttpResource\{
+    AttributeInterface,
+    AttributesInterface
+};
 use Innmind\Immutable\{
     Map,
     Set,
@@ -78,6 +81,19 @@ final class CrawlCommand extends ContainerAwareCommand
             ->attributes()
             ->foreach(function(string $name, AttributeInterface $attribute) use ($output): void {
                 switch (true) {
+                    case $attribute instanceof AttributesInterface:
+                        $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
+                        $attribute
+                            ->content()
+                            ->foreach(function($key, AttributeInterface $value) use ($output): void {
+                                $output->writeln(sprintf(
+                                    '    <fg=yellow>%s</>: <fg=cyan>%s</>',
+                                    $key,
+                                    $value->content()
+                                ));
+                            });
+                        break;
+
                     case $attribute->content() instanceof MapInterface:
                         $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
                         $attribute
