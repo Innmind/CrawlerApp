@@ -779,16 +779,16 @@
         },
         {
             "name": "innmind/filesystem",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Filesystem.git",
-                "reference": "c650e8109814613af7d7adcbbcdf379f5111db17"
+                "reference": "82744e1a0f29dffe3ff10a90e292267fb8dff168"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/c650e8109814613af7d7adcbbcdf379f5111db17",
-                "reference": "c650e8109814613af7d7adcbbcdf379f5111db17",
+                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/82744e1a0f29dffe3ff10a90e292267fb8dff168",
+                "reference": "82744e1a0f29dffe3ff10a90e292267fb8dff168",
                 "shasum": ""
             },
             "require": {
@@ -822,7 +822,7 @@
             "keywords": [
                 "filesystem"
             ],
-            "time": "2017-02-12 15:10:55"
+            "time": "2017-03-05 15:52:26"
         },
         {
             "name": "innmind/html",
@@ -1110,19 +1110,20 @@
         },
         {
             "name": "innmind/rest-client-bundle",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/RestClientBundle.git",
-                "reference": "ef32ec2eb4170f6e9072aaa68f888868dcc654da"
+                "reference": "4c68f9075c49fd7c3f108e7b2d0f000b7684ce7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/RestClientBundle/zipball/ef32ec2eb4170f6e9072aaa68f888868dcc654da",
-                "reference": "ef32ec2eb4170f6e9072aaa68f888868dcc654da",
+                "url": "https://api.github.com/repos/Innmind/RestClientBundle/zipball/4c68f9075c49fd7c3f108e7b2d0f000b7684ce7a",
+                "reference": "4c68f9075c49fd7c3f108e7b2d0f000b7684ce7a",
                 "shasum": ""
             },
             "require": {
+                "innmind/filesystem": "~2.1",
                 "innmind/rest-client": "~4.0",
                 "php": "~7.1",
                 "symfony/config": "~3.0",
@@ -1156,7 +1157,7 @@
                 "client",
                 "rest"
             ],
-            "time": "2017-03-05 11:19:20"
+            "time": "2017-03-05 16:04:01"
         },
         {
             "name": "innmind/robots-txt",
