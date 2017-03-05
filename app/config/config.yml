@@ -37,3 +37,7 @@ old_sound_rabbit_mq:
             keepalive: true
             heartbeat: 60
             use_socket: true
+    producers:
+        crawl:
+            connection:       default
+            exchange_options: {name: 'crawl', type: direct}
