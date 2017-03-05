@@ -1,9 +1,19 @@
 services:
-    publisher:
+    publisher: '@publisher.canonical_aware'
+
+    publisher.default:
         class: AppBundle\Publisher\Publisher
+        public: false
         arguments:
             - '@innmind_rest_client'
             - '@resource_translator'
+
+    publisher.canonical_aware:
+        class: AppBundle\Publisher\CanonicalAwarePublisher
+        public: false
+        arguments:
+            - '@publisher.default'
+            - '@old_sound_rabbit_mq.crawl_producer'
 
     resource_translator:
         class: AppBundle\Translator\HttpResourceTranslator
