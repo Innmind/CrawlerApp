@@ -14,7 +14,7 @@ services:
         class: AppBundle\Crawler\RobotsAwareCrawler
         arguments:
             - '@robots'
-            - '@crawler.default'
+            - '@crawler.delayer_aware'
             - %user_agent%
 
     crawler.xml_reader_aware:
@@ -22,6 +22,13 @@ services:
         arguments:
             - '@html.reader.cache'
             - '@crawler.robots_aware'
+
+    crawler.delayer_aware:
+        class: AppBundle\Crawler\DelayerAwareCrawler
+        public: false
+        arguments:
+            - '@delayer'
+            - '@crawler.default'
 
     crawler.transport: '@crawler.transport.throw_on_server_error'
 
