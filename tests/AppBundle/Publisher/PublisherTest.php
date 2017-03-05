@@ -21,7 +21,6 @@ use Innmind\Rest\Client\{
     IdentityInterface
 };
 use Innmind\Crawler\{
-    CrawlerInterface,
     HttpResource as CrawledResource,
     HttpResource\AttributeInterface,
     HttpResource\Attribute
@@ -43,13 +42,11 @@ class PublisherTest extends TestCase
 {
     private $publisher;
     private $client;
-    private $crawler;
 
     public function setUp()
     {
         $this->publisher = new Publisher(
             $this->client = $this->createMock(ClientInterface::class),
-            $this->crawler = $this->createMock(CrawlerInterface::class),
             new HttpResourceTranslator(
                 $this->createMock(PropertyTranslatorInterface::class)
             )
@@ -69,23 +66,6 @@ class PublisherTest extends TestCase
      */
     public function testThrowWhenNoApiResourceForCrawledResource()
     {
-        $resource = $this->createMock(UrlInterface::class);
-        $this
-            ->crawler
-            ->expects($this->once())
-            ->method('execute')
-            ->with($this->callback(function(RequestInterface $request) use ($resource): bool {
-                return (string) $request->method() === 'GET' &&
-                    $request->url() === $resource;
-            }))
-            ->willReturn(
-                new CrawledResource(
-                    $this->createMock(UrlInterface::class),
-                    $this->createMock(MediaTypeInterface::class),
-                    new Map('string', AttributeInterface::class),
-                    $this->createMock(StreamInterface::class)
-                )
-            );
         $this
             ->client
             ->expects($this->once())
@@ -117,6 +97,12 @@ class PublisherTest extends TestCase
                         )
                     )
             );
+        $resource = new CrawledResource(
+            $this->createMock(UrlInterface::class),
+            $this->createMock(MediaTypeInterface::class),
+            new Map('string', AttributeInterface::class),
+            $this->createMock(StreamInterface::class)
+        );
 
         ($this->publisher)($resource, Url::fromString('http://some.server/'));
     }
@@ -126,23 +112,6 @@ class PublisherTest extends TestCase
      */
     public function testThrowWhenNoApiResourceMatchingCrawledMediaType()
     {
-        $resource = $this->createMock(UrlInterface::class);
-        $this
-            ->crawler
-            ->expects($this->once())
-            ->method('execute')
-            ->with($this->callback(function(RequestInterface $request) use ($resource): bool {
-                return (string) $request->method() === 'GET' &&
-                    $request->url() === $resource;
-            }))
-            ->willReturn(
-                new CrawledResource(
-                    $this->createMock(UrlInterface::class),
-                    MediaType::fromString('text/html'),
-                    new Map('string', AttributeInterface::class),
-                    $this->createMock(StreamInterface::class)
-                )
-            );
         $this
             ->client
             ->expects($this->once())
@@ -175,29 +144,18 @@ class PublisherTest extends TestCase
                         )
                     )
             );
+        $resource = new CrawledResource(
+            $this->createMock(UrlInterface::class),
+            MediaType::fromString('text/html'),
+            new Map('string', AttributeInterface::class),
+            $this->createMock(StreamInterface::class)
+        );
 
         ($this->publisher)($resource, Url::fromString('http://some.server/'));
     }
 
     public function testInvokation()
     {
-        $resource = $this->createMock(UrlInterface::class);
-        $this
-            ->crawler
-            ->expects($this->once())
-            ->method('execute')
-            ->with($this->callback(function(RequestInterface $request) use ($resource): bool {
-                return (string) $request->method() === 'GET' &&
-                    $request->url() === $resource;
-            }))
-            ->willReturn(
-                new CrawledResource(
-                    $this->createMock(UrlInterface::class),
-                    MediaType::fromString('text/html'),
-                    new Map('string', AttributeInterface::class),
-                    $this->createMock(StreamInterface::class)
-                )
-            );
         $this
             ->client
             ->expects($this->once())
@@ -252,6 +210,12 @@ class PublisherTest extends TestCase
             ->willReturn(
                 $identity = $this->createMock(IdentityInterface::class)
             );
+        $resource = new CrawledResource(
+            $this->createMock(UrlInterface::class),
+            MediaType::fromString('text/html'),
+            new Map('string', AttributeInterface::class),
+            $this->createMock(StreamInterface::class)
+        );
 
         $reference = ($this->publisher)($resource, Url::fromString('http://some.server/'));
 

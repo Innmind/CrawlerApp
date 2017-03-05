@@ -11,11 +11,9 @@ use AppBundle\{
 };
 use Innmind\Rest\Client\{
     ClientInterface,
-    Definition\HttpResource as Definition,
-    HttpResource,
-    HttpResource\Property
+    Definition\HttpResource as Definition
 };
-use Innmind\Crawler\CrawlerInterface;
+use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
 use Innmind\Http\{
     Message\Request,
@@ -32,32 +30,22 @@ use Negotiation\{
 final class Publisher implements PublisherInterface
 {
     private $client;
-    private $crawler;
     private $translator;
     private $negotiator;
 
     public function __construct(
         ClientInterface $client,
-        CrawlerInterface $crawler,
         HttpResourceTranslator $translator
     ) {
         $this->client = $client;
-        $this->crawler = $crawler;
         $this->translator = $translator;
         $this->negotiator = new Negotiator;
     }
 
     public function __invoke(
-        UrlInterface $resource,
+        HttpResource $resource,
         UrlInterface $server
     ): Reference {
-        $crawledResource = $this->crawler->execute(
-            new Request(
-                $resource,
-                new Method(Method::GET),
-                new ProtocolVersion(1, 1)
-            )
-        );
         $server = $this->client->server((string) $server);
         $definitions = $server
             ->capabilities()
@@ -68,7 +56,7 @@ final class Publisher implements PublisherInterface
             });
 
         if ($definitions->size() === 0) {
-            throw new ResourceCannotBePublishedException($crawledResource);
+            throw new ResourceCannotBePublishedException($resource);
         }
 
         $mediaTypes = $definitions->reduce(
@@ -81,8 +69,8 @@ final class Publisher implements PublisherInterface
             }
         );
         $mediaType = new MediaType(
-            $crawledResource->mediaType()->topLevel(),
-            $crawledResource->mediaType()->subType()
+            $resource->mediaType()->topLevel(),
+            $resource->mediaType()->subType()
         );
         $best = $this->negotiator->getBest(
             (string) $mediaType,
@@ -90,7 +78,7 @@ final class Publisher implements PublisherInterface
         );
 
         if (!$best instanceof Accept) {
-            throw new ResourceCannotBePublishedException($crawledResource);
+            throw new ResourceCannotBePublishedException($resource);
         }
 
         $definition = $definitions
@@ -104,7 +92,7 @@ final class Publisher implements PublisherInterface
 
         return new Reference(
             $server->create(
-                $this->translator->translate($crawledResource, $definition)
+                $this->translator->translate($resource, $definition)
             ),
             $definition
         );

@@ -3,7 +3,6 @@ services:
         class: AppBundle\Publisher\Publisher
         arguments:
             - '@innmind_rest_client'
-            - '@crawler'
             - '@resource_translator'
 
     resource_translator:
