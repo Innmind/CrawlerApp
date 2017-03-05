@@ -5,14 +5,14 @@ imports:
     - { resource: 'services/publishers.yml' }
 
 services:
-   clock:
-      class: Innmind\TimeContinuum\TimeContinuum\Earth
-      arguments:
-         - '@clock.timezone.paris'
+    clock:
+        class: Innmind\TimeContinuum\TimeContinuum\Earth
+        arguments:
+            - '@clock.timezone.paris'
 
-   clock.timezone.paris:
-      class: Innmind\TimeContinuum\Timezone\Earth\Europe\Paris
-      public: false
+    clock.timezone.paris:
+        class: Innmind\TimeContinuum\Timezone\Earth\Europe\Paris
+        public: false
 
-   url_resolver:
-      class: Innmind\UrlResolver\UrlResolver
+    url_resolver:
+        class: Innmind\UrlResolver\UrlResolver
