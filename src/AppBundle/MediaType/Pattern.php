@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace AppBundle;
+namespace AppBundle\MediaType;
 
 use AppBundle\Exception\InvalidArgumentException;
 use Innmind\Filesystem\Exception\InvalidMediaTypeStringException;
@@ -10,7 +10,7 @@ use Innmind\Immutable\{
     Map
 };
 
-final class MediaType
+final class Pattern
 {
     private $topLevel;
     private $subType;

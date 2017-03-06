@@ -6,8 +6,8 @@ namespace AppBundle\Publisher;
 use AppBundle\{
     PublisherInterface,
     Reference,
-    Negotiator,
-    MediaType,
+    MediaType\Negotiator,
+    MediaType\Pattern,
     Translator\HttpResourceTranslator,
     Exception\ResourceCannotBePublishedException,
     Exception\MediaTypeDoesntMatchAnyException
@@ -72,14 +72,14 @@ final class Publisher implements PublisherInterface
                 }
             )
             ->reduce(
-                new Set(MediaType::class),
+                new Set(Pattern::class),
                 function(Set $carry, string $mediaType): Set {
-                    return $carry->add(MediaType::fromString($mediaType));
+                    return $carry->add(Pattern::fromString($mediaType));
                 }
             );
 
         try {
-            $mediaType = new MediaType(
+            $mediaType = new Pattern(
                 $resource->mediaType()->topLevel(),
                 $resource->mediaType()->subType()
             );

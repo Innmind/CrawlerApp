@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace AppBundle;
+namespace AppBundle\MediaType;
 
 use AppBundle\Exception\MediaTypeDoesntMatchAnyException;
 use Innmind\Immutable\SetInterface;
@@ -9,12 +9,12 @@ use Innmind\Immutable\SetInterface;
 final class Negotiator
 {
     /**
-     * @param SetInterface<MediaType> $available
+     * @param SetInterface<Pattern> $available
      */
-    public function best(MediaType $mediaType, SetInterface $available): MediaType
+    public function best(Pattern $mediaType, SetInterface $available): Pattern
     {
         $available = $available
-            ->filter(function(MediaType $possibility) use ($mediaType): bool {
+            ->filter(function(Pattern $possibility) use ($mediaType): bool {
                 if (
                     $possibility->topLevel() === '*' &&
                     $possibility->subType() === '*'
@@ -32,7 +32,7 @@ final class Negotiator
 
                 return $possibility->subType() === $mediaType->subType();
             })
-            ->sort(function(MediaType $a, MediaType $b): int {
+            ->sort(function(Pattern $a, Pattern $b): int {
                 return $b->quality() <=> $a->quality();
             });
 
