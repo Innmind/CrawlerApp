@@ -4,7 +4,10 @@ declare(strict_types = 1);
 namespace AppBundle\MediaType;
 
 use AppBundle\Exception\InvalidArgumentException;
-use Innmind\Filesystem\Exception\InvalidMediaTypeStringException;
+use Innmind\Filesystem\{
+    MediaTypeInterface,
+    Exception\InvalidMediaTypeStringException
+};
 use Innmind\Immutable\{
     Str,
     Map
@@ -53,6 +56,26 @@ final class Pattern
             $this->subType,
             $this->quality !== 1.0 ? '; q='.$this->quality : ''
         );
+    }
+
+    public function matches(MediaTypeInterface $mediaType): bool
+    {
+        if (
+            $this->topLevel() === '*' &&
+            $this->subType() === '*'
+        ) {
+            return true;
+        }
+
+        if ($this->topLevel() !== $mediaType->topLevel()) {
+            return false;
+        }
+
+        if ($this->subType() === '*') {
+            return true;
+        }
+
+        return $this->subType() === $mediaType->subType();
     }
 
     /**

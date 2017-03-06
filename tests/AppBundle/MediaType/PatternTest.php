@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Tests\AppBundle\MediaType;
 
 use AppBundle\MediaType\Pattern;
+use Innmind\Filesystem\MediaType\MediaType;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
 
@@ -64,5 +65,31 @@ class PatternTest extends TestCase
     public function testThrowWhenInvalidString()
     {
         Pattern::fromString('foo');
+    }
+
+    /**
+     * @dataProvider cases
+     */
+    public function testMatches(bool $expected, string $pattern, string $media)
+    {
+        $this->assertSame(
+            $expected,
+            Pattern::fromString($pattern)->matches(
+                MediaType::fromString($media)
+            )
+        );
+    }
+
+    public function cases(): array
+    {
+        return [
+            [true, '*/*', 'text/html'],
+            [true, '*/*', 'application/json'],
+            [true, 'application/*', 'application/json'],
+            [true, 'application/*', 'application/octet-stream'],
+            [true, 'application/octet-stream', 'application/octet-stream'],
+            [false, 'application/*', 'image/png'],
+            [false, 'image/jpeg', 'image/png'],
+        ];
     }
 }
