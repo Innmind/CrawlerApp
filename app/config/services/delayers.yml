@@ -1,5 +1,5 @@
 services:
-    delayer: '@delayer.robots_aware'
+    delayer: '@delayer.threshold'
 
     delayer.robots_aware:
         class: AppBundle\Delayer\RobotsTxtAwareDelayer
@@ -7,3 +7,18 @@ services:
         arguments:
             - '@robots'
             - '%user_agent%'
+
+    delayer.fixed:
+        class: AppBundle\Delayer\FixDelayer
+        public: false
+        arguments:
+            - 10000 # 10 seconds
+
+    delayer.threshold:
+        class: AppBundle\Delayer\ThresholdDelayer
+        public: false
+        arguments:
+            - '@delayer.robots_aware'
+            - '@delayer.fixed'
+            - '@clock'
+            - 1000 # 1 second
