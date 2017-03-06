@@ -4,42 +4,28 @@ declare(strict_types = 1);
 namespace AppBundle\MediaType;
 
 use AppBundle\Exception\MediaTypeDoesntMatchAnyException;
+use Innmind\Filesystem\MediaTypeInterface;
 use Innmind\Immutable\SetInterface;
 
 final class Negotiator
 {
     /**
-     * @param SetInterface<Pattern> $available
+     * @param SetInterface<Pattern> $patterns
      */
-    public function best(Pattern $mediaType, SetInterface $available): Pattern
+    public function best(MediaTypeInterface $mediaType, SetInterface $pattterns): Pattern
     {
-        $available = $available
-            ->filter(function(Pattern $possibility) use ($mediaType): bool {
-                if (
-                    $possibility->topLevel() === '*' &&
-                    $possibility->subType() === '*'
-                ) {
-                    return true;
-                }
-
-                if ($possibility->topLevel() !== $mediaType->topLevel()) {
-                    return false;
-                }
-
-                if ($possibility->subType() === '*') {
-                    return true;
-                }
-
-                return $possibility->subType() === $mediaType->subType();
+        $pattterns = $pattterns
+            ->filter(function(Pattern $pattern) use ($mediaType): bool {
+                return $pattern->matches($mediaType);
             })
             ->sort(function(Pattern $a, Pattern $b): int {
                 return $b->quality() <=> $a->quality();
             });
 
-        if ($available->size() === 0) {
+        if ($pattterns->size() === 0) {
             throw new MediaTypeDoesntMatchAnyException;
         }
 
-        return $available->first();
+        return $pattterns->first();
     }
 }

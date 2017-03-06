@@ -79,12 +79,8 @@ final class Publisher implements PublisherInterface
             );
 
         try {
-            $mediaType = new Pattern(
-                $resource->mediaType()->topLevel(),
-                $resource->mediaType()->subType()
-            );
             $best = $this->negotiator->best(
-                $mediaType,
+                $resource->mediaType(),
                 $mediaTypes
             );
         } catch (MediaTypeDoesntMatchAnyException $e) {
