@@ -18,3 +18,11 @@ services:
 
     url_resolver:
         class: Innmind\UrlResolver\UrlResolver
+
+    crawl_consumer:
+        class: AppBundle\Consumer\CrawlConsumer
+        public: false
+        arguments:
+            - '@crawler'
+            - '@publisher'
+            - '%user_agent%'

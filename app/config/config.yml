@@ -41,3 +41,9 @@ old_sound_rabbit_mq:
         crawl:
             connection:       default
             exchange_options: {name: 'crawl', type: direct}
+    consumers:
+        crawl:
+            connection:       default
+            exchange_options: {name: 'crawl', type: direct}
+            queue_options:    {name: 'crawl'}
+            callback:         crawl_consumer
