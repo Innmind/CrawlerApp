@@ -6,3 +6,4 @@ filter:
         - tests/*
         - var/*
         - bin/*
+        - app/*
