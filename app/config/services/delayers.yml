@@ -19,6 +19,15 @@ services:
         public: false
         arguments:
             - '@delayer.robots_aware'
-            - '@delayer.fixed'
+            - '@delayer.tracer_aware'
             - '@clock'
             - 1000 # 1 second
+
+    delayer.tracer_aware:
+        class: AppBundle\Delayer\TracerAwareDelayer
+        public: false
+        arguments:
+            - '@tracer'
+            - '@delayer.fixed'
+            - '@clock'
+            - 5 # 5 seconds
