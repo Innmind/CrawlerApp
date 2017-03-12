@@ -11,7 +11,8 @@ use Innmind\Filesystem\{
     AdapterInterface,
     Directory,
     File,
-    Stream\StringStream
+    Stream\StringStream,
+    Stream\NullStream
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
@@ -50,7 +51,7 @@ final class CrawlTracer implements CrawlTracerInterface
             $filesystem->add(
                 new File(
                     self::URLS,
-                    new StringStream('')
+                    new NullStream
                 )
             );
         }
