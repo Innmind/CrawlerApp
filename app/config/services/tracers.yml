@@ -1,0 +1,13 @@
+services:
+    tracer:
+        class: AppBundle\CrawlTracer\CrawlTracer
+        public: false
+        arguments:
+            - '@filesystem.tracer'
+            - '@clock'
+
+    filesystem.tracer:
+        class: Innmind\Filesystem\Adapter\FilesystemAdapter
+        public: false
+        arguments:
+            - '/tmp/crawl_tracer'

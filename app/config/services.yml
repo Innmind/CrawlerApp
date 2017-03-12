@@ -4,6 +4,7 @@ imports:
     - { resource: 'services/robots.yml' }
     - { resource: 'services/publishers.yml' }
     - { resource: 'services/delayers.yml' }
+    - { resource: 'services/tracers.yml' }
 
 services:
     clock:
