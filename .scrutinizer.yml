@@ -3,6 +3,4 @@ tools:
         runs: 1
 filter:
     excluded_paths:
-        - src/CrawlerBundle/Tests/*
-        - app/*
-        - web/*
+        - tests/*

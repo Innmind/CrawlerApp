@@ -1,32 +1,39 @@
 {
-    "name": "innmind/crawler-app",
-    "description": "Holds a rabbitmq consumer that crawls web pages and publish the data to an api",
-    "license": "MIT",
+    "name": "baptouuuu/app",
+    "license": "proprietary",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "CrawlerBundle\\": "src/CrawlerBundle/"
+            "": "src/"
         },
-        "files": [
-            "app/AppKernel.php"
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "require": {
-        "php": ">=5.6",
-        "symfony/symfony": "2.8.*",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~5.0",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "innmind/crawler": "^1.0",
-        "innmind/rest-bundle": "^2.0",
-        "oldsound/rabbitmq-bundle": "^1.7"
+        "php": "~7.1",
+        "symfony/symfony": "~3.2",
+        "symfony/monolog-bundle": "^3.0.2",
+        "symfony/polyfill-apcu": "^1.0",
+        "sensio/distribution-bundle": "^5.0",
+        "incenteev/composer-parameter-handler": "^2.0",
+        "innmind/crawler": "~3.0",
+        "innmind/robots-txt": "~2.0",
+        "innmind/rest-client-bundle": "~2.0",
+        "php-amqplib/rabbitmq-bundle": "^1.12"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
-        "symfony/phpunit-bridge": "~2.7"
+        "sensio/generator-bundle": "^3.0",
+        "phpunit/phpunit": "~6.0"
     },
     "scripts": {
-        "post-install-cmd": [
+        "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
@@ -34,24 +41,24 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-        ]
-    },
-    "config": {
-        "bin-dir": "bin"
+            "@symfony-scripts"
+        ],
+        "test" : "bin/simple-phpunit"
     },
     "extra": {
         "symfony-app-dir": "app",
+        "symfony-bin-dir": "bin",
+        "symfony-var-dir": "var",
         "symfony-web-dir": "web",
+        "symfony-tests-dir": "tests",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
-        }
+        },
+        "branch-alias": null
     }
 }

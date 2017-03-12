@@ -1,7 +1,7 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: "@CrawlerBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -10,40 +10,40 @@ parameters:
 
 framework:
     secret:          "%secret%"
-    router:
-        resource: "%kernel.root_dir%/config/routing.yml"
-        strict_requirements: ~
-    form:            ~
-    csrf_protection: ~
-    validation:      { enable_annotations: true }
+    serializer: ~
     default_locale:  "%locale%"
-    trusted_hosts:   ~
-    trusted_proxies: ~
-    session:
-        # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
-    fragments:       ~
-    http_method_override: true
+    php_errors:
+        log: true
 
-innmind_rest:
-    server: []
+innmind_rest_client:
+    content_type:
+        json:
+            priority: 0
+            media_types:
+                application/json: 0
 
 old_sound_rabbit_mq:
     connections:
         default:
-            host:     %rabbitmq_host%
-            port:     %rabbitmq_port%
-            user:     %rabbitmq_user%
-            password: %rabbitmq_password%
-            vhost:    '/'
-            lazy:     true
+            host: '%rabbitmq_host%'
+            port: '%rabbitmq_port%'
+            user: '%rabbitmq_user%'
+            password: '%rabbitmq_password%'
+            vhost: '%rabbitmq_vhost%'
+            lazy:     false
             connection_timeout: 3
-            read_write_timeout: 3
-            keepalive: false
-            heartbeat: 0
-    consumers:
-        crawling:
+            read_write_timeout: 120
+
+            keepalive: true
+            heartbeat: 60
+            use_socket: false
+    producers:
+        crawl:
             connection:       default
-            exchange_options: {name: 'crawling', type: direct}
-            queue_options:    {name: 'crawling'}
-            callback:         consumer.crawler
+            exchange_options: {name: 'crawl', type: direct}
+    consumers:
+        crawl:
+            connection:       default
+            exchange_options: {name: 'crawl', type: direct}
+            queue_options:    {name: 'crawl'}
+            callback:         crawl_consumer

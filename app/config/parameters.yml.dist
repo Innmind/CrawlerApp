@@ -3,9 +3,10 @@
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
     # A secret key that's used to generate certain security-related tokens
-    secret:            leFIsTgtmaqPzwYuwVAFVZhlvJPxnm
-
-    rabbitmq_host: localhost
+    secret:            ThisTokenIsNotSoSecretChangeIt
+    user_agent: 'Innmind Robot'
+    rabbitmq_host: 'localhost'
     rabbitmq_port: 5672
-    rabbitmq_user: guest
-    rabbitmq_password: guest
+    rabbitmq_user: 'guest'
+    rabbitmq_password: 'guest'
+    rabbitmq_vhost: '/'

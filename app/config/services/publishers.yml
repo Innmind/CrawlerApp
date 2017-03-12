@@ -1,0 +1,131 @@
+services:
+    publisher: '@publisher.links_aware'
+
+    publisher.default:
+        class: AppBundle\Publisher\Publisher
+        public: false
+        arguments:
+            - '@innmind_rest_client'
+            - '@resource_translator'
+
+    publisher.canonical_aware:
+        class: AppBundle\Publisher\CanonicalAwarePublisher
+        public: false
+        arguments:
+            - '@publisher.default'
+            - '@old_sound_rabbit_mq.crawl_producer'
+
+    publisher.alternates_aware:
+        class: AppBundle\Publisher\AlternatesAwarePublisher
+        public: false
+        arguments:
+            - '@publisher.canonical_aware'
+            - '@old_sound_rabbit_mq.crawl_producer'
+
+    publisher.images_aware:
+        class: AppBundle\Publisher\ImagesAwarePublisher
+        public: false
+        arguments:
+            - '@publisher.alternates_aware'
+            - '@old_sound_rabbit_mq.crawl_producer'
+
+    publisher.links_aware:
+        class: AppBundle\Publisher\LinksAwarePublisher
+        public: false
+        arguments:
+            - '@publisher.images_aware'
+            - '@old_sound_rabbit_mq.crawl_producer'
+
+    resource_translator:
+        class: AppBundle\Translator\HttpResourceTranslator
+        arguments:
+            - '@resource_translator.property.delegation'
+
+    resource_translator.property.delegation:
+        class: AppBundle\Translator\Property\DelegationTranslator
+        public: false
+        arguments:
+            -
+                host: '@resource_translator.property.host'
+                path: '@resource_translator.property.path'
+                query: '@resource_translator.property.query'
+                languages: '@resource_translator.property.languages'
+                charset: '@resource_translator.property.charset'
+                dimension: '@resource_translator.property.image.dimension'
+                weight: '@resource_translator.property.image.weight'
+                anchors: '@resource_translator.property.html.anchors'
+                android_app_link: '@resource_translator.property.html.android'
+                ios_app_link: '@resource_translator.property.html.ios'
+                description: '@resource_translator.property.html.description'
+                is_journal: '@resource_translator.property.html.journal'
+                main_content: '@resource_translator.property.html.main_content'
+                theme_colour: '@resource_translator.property.html.theme_colour'
+                title: '@resource_translator.property.html.title'
+                preview: '@resource_translator.property.html.preview'
+        factory:
+            - AppBundle\Factory\PropertyDelegationTranslatorFactory
+            - make
+
+    resource_translator.property.host:
+        class: AppBundle\Translator\Property\HostTranslator
+        public: false
+
+    resource_translator.property.path:
+        class: AppBundle\Translator\Property\PathTranslator
+        public: false
+
+    resource_translator.property.query:
+        class: AppBundle\Translator\Property\QueryTranslator
+        public: false
+
+    resource_translator.property.languages:
+        class: AppBundle\Translator\Property\LanguagesTranslator
+        public: false
+
+    resource_translator.property.charset:
+        class: AppBundle\Translator\Property\CharsetTranslator
+        public: false
+
+    resource_translator.property.image.dimension:
+        class: AppBundle\Translator\Property\Image\DimensionTranslator
+        public: false
+
+    resource_translator.property.image.weight:
+        class: AppBundle\Translator\Property\Image\WeightTranslator
+        public: false
+
+    resource_translator.property.html.anchors:
+        class: AppBundle\Translator\Property\HtmlPage\AnchorsTranslator
+        public: false
+
+    resource_translator.property.html.android:
+        class: AppBundle\Translator\Property\HtmlPage\AndroidAppLinkTranslator
+        public: false
+
+    resource_translator.property.html.description:
+        class: AppBundle\Translator\Property\HtmlPage\DescriptionTranslator
+        public: false
+
+    resource_translator.property.html.ios:
+        class: AppBundle\Translator\Property\HtmlPage\IosAppLinkTranslator
+        public: false
+
+    resource_translator.property.html.journal:
+        class: AppBundle\Translator\Property\HtmlPage\IsJournalTranslator
+        public: false
+
+    resource_translator.property.html.main_content:
+        class: AppBundle\Translator\Property\HtmlPage\MainContentTranslator
+        public: false
+
+    resource_translator.property.html.theme_colour:
+        class: AppBundle\Translator\Property\HtmlPage\ThemeColourTranslator
+        public: false
+
+    resource_translator.property.html.title:
+        class: AppBundle\Translator\Property\HtmlPage\TitleTranslator
+        public: false
+
+    resource_translator.property.html.preview:
+        class: AppBundle\Translator\Property\HtmlPage\PreviewTranslator
+        public: false
