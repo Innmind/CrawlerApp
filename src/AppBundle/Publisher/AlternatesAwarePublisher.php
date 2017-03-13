@@ -44,8 +44,11 @@ final class AlternatesAwarePublisher implements PublisherInterface
                         ->foreach(function(UrlInterface $url) use ($language, $reference, $server): void {
                             $this->producer->publish(serialize([
                                 'resource' => (string) $url,
-                                'alternate_of' => (string) $reference->identity(),
-                                'language' => $language,
+                                'origin' => (string) $reference->identity(),
+                                'relationship' => 'alternate',
+                                'attributes' => [
+                                    'language' => $language,
+                                ],
                                 'definition' => $reference->definition()->name(),
                                 'server' => (string) $server,
                             ]));

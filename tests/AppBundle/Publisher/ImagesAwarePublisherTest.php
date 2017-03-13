@@ -137,8 +137,11 @@ class ImagesAwarePublisherTest extends TestCase
             ->method('publish')
             ->with(serialize([
                 'resource' => 'http://example.com/foo',
-                'referenced_in' => 'some identity',
-                'description' => 'some desc',
+                'origin' => 'some identity',
+                'relationship' => 'referrer',
+                'attributes' => [
+                    'description' => 'some desc',
+                ],
                 'definition' => 'foo',
                 'server' => 'http://server.url/',
             ]));

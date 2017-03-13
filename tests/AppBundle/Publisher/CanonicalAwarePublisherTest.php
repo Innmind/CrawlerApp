@@ -168,7 +168,8 @@ class CanonicalAwarePublisherTest extends TestCase
             ->method('publish')
             ->with(serialize([
                 'resource' => 'http://example.com/foo',
-                'canonical_of' => 'some identity',
+                'origin' => 'some identity',
+                'relationship' => 'canonical',
                 'definition' => 'foo',
                 'server' => 'http://server.url/',
             ]));

@@ -179,7 +179,8 @@ class LinksAwarePublisherTest extends TestCase
             ->method('publish')
             ->with(serialize([
                 'resource' => 'http://example.com/foo',
-                'referenced_in' => 'some identity',
+                'origin' => 'some identity',
+                'relationship' => 'referrer',
                 'definition' => 'foo',
                 'server' => 'http://server.url/',
             ]));

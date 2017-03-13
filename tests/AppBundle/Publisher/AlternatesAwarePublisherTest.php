@@ -184,8 +184,11 @@ class AlternatesAwarePublisherTest extends TestCase
             ->method('publish')
             ->with(serialize([
                 'resource' => 'http://example.com/foo',
-                'alternate_of' => 'some identity',
-                'language' => 'en',
+                'origin' => 'some identity',
+                'relationship' => 'alternate',
+                'attributes' => [
+                    'language' => 'en',
+                ],
                 'definition' => 'foo',
                 'server' => 'http://server.url/',
             ]));

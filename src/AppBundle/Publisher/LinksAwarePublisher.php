@@ -41,7 +41,8 @@ final class LinksAwarePublisher implements PublisherInterface
                 ->foreach(function(UrlInterface $url) use ($reference, $server): void {
                     $this->producer->publish(serialize([
                         'resource' => (string) $url,
-                        'referenced_in' => (string) $reference->identity(),
+                        'origin' => (string) $reference->identity(),
+                        'relationship' => 'referrer',
                         'definition' => $reference->definition()->name(),
                         'server' => (string) $server,
                     ]));
