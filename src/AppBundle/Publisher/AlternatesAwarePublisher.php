@@ -41,10 +41,10 @@ final class AlternatesAwarePublisher implements PublisherInterface
                         ->filter(function(UrlInterface $url) use ($resource): bool {
                             return (string) $url !== (string) $resource->url();
                         })
-                        ->foreach(function(UrlInterface $url) use ($language, $resource, $reference, $server): void {
+                        ->foreach(function(UrlInterface $url) use ($language, $reference, $server): void {
                             $this->producer->publish(serialize([
                                 'resource' => (string) $url,
-                                'alternate_of' => (string) $resource->url(),
+                                'alternate_of' => (string) $reference->identity(),
                                 'language' => $language,
                                 'definition' => $reference->definition()->name(),
                                 'server' => (string) $server,

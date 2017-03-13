@@ -38,10 +38,10 @@ final class LinksAwarePublisher implements PublisherInterface
                 ->filter(function(UrlInterface $url) use ($resource): bool {
                     return (string) $url !== (string) $resource->url();
                 })
-                ->foreach(function(UrlInterface $url) use ($resource, $reference, $server): void {
+                ->foreach(function(UrlInterface $url) use ($reference, $server): void {
                     $this->producer->publish(serialize([
                         'resource' => (string) $url,
-                        'referenced_in' => (string) $resource->url(),
+                        'referenced_in' => (string) $reference->identity(),
                         'definition' => $reference->definition()->name(),
                         'server' => (string) $server,
                     ]));

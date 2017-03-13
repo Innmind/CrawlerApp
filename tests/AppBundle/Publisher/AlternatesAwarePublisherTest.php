@@ -163,7 +163,7 @@ class AlternatesAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $identity = $this->createMock(IdentityInterface::class),
                     new Definition(
                         'foo',
                         $this->createMock(UrlInterface::class),
@@ -174,13 +174,17 @@ class AlternatesAwarePublisherTest extends TestCase
                     )
                 )
             );
+        $identity
+            ->expects($this->once())
+            ->method('__toString')
+            ->willReturn('some identity');
         $this
             ->producer
             ->expects($this->once())
             ->method('publish')
             ->with(serialize([
                 'resource' => 'http://example.com/foo',
-                'alternate_of' => 'http://example.com/',
+                'alternate_of' => 'some identity',
                 'language' => 'en',
                 'definition' => 'foo',
                 'server' => 'http://server.url/',

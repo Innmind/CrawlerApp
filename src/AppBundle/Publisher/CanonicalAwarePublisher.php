@@ -36,7 +36,7 @@ final class CanonicalAwarePublisher implements PublisherInterface
         ) {
             $this->producer->publish(serialize([
                 'resource' => (string) $resource->attributes()->get('canonical')->content(),
-                'canonical_of' => (string) $resource->url(),
+                'canonical_of' => (string) $reference->identity(),
                 'definition' => $reference->definition()->name(),
                 'server' => (string) $server,
             ]));

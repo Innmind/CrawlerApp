@@ -147,7 +147,7 @@ class CanonicalAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $identity = $this->createMock(IdentityInterface::class),
                     new Definition(
                         'foo',
                         $this->createMock(UrlInterface::class),
@@ -158,13 +158,17 @@ class CanonicalAwarePublisherTest extends TestCase
                     )
                 )
             );
+        $identity
+            ->expects($this->once())
+            ->method('__toString')
+            ->willReturn('some identity');
         $this
             ->producer
             ->expects($this->once())
             ->method('publish')
             ->with(serialize([
                 'resource' => 'http://example.com/foo',
-                'canonical_of' => 'http://example.com/',
+                'canonical_of' => 'some identity',
                 'definition' => 'foo',
                 'server' => 'http://server.url/',
             ]));

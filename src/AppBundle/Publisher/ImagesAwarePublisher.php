@@ -35,10 +35,10 @@ final class ImagesAwarePublisher implements PublisherInterface
                 ->attributes()
                 ->get('images')
                 ->content()
-                ->foreach(function(UrlInterface $image, string $description) use ($resource, $reference, $server): void {
+                ->foreach(function(UrlInterface $image, string $description) use ($reference, $server): void {
                     $this->producer->publish(serialize([
                         'resource' => (string) $image,
-                        'referenced_in' => (string) $resource->url(),
+                        'referenced_in' => (string) $reference->identity(),
                         'description' => $description,
                         'definition' => $reference->definition()->name(),
                         'server' => (string) $server,
