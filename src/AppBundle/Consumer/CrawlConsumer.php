@@ -100,7 +100,7 @@ final class CrawlConsumer implements ConsumerInterface
                         $server
                     ),
                     $data['relationship'],
-                    $data['attributes']
+                    $data['attributes'] ?? []
                 );
             }
         } catch (ClientErrorException $e) {
