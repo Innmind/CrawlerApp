@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "466e11cc9b8bbffd47c62b612736fd31",
-    "content-hash": "8460a0c2fbfe3504ac0bd3ac179af5ab",
+    "hash": "9a07f5656fd5d9220ab1ae8848e03b1b",
+    "content-hash": "563bd0ae73cc21eb4e6d0b12be7bee6b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1056,16 +1056,16 @@
         },
         {
             "name": "innmind/rest-client",
-            "version": "4.0.3",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/rest-client.git",
-                "reference": "8e554fcc01803d54f6d69b64cbfb75f06d758e9e"
+                "reference": "6ef87df2c2ca862ce4dee4b697b65cc330fa7f4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/8e554fcc01803d54f6d69b64cbfb75f06d758e9e",
-                "reference": "8e554fcc01803d54f6d69b64cbfb75f06d758e9e",
+                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/6ef87df2c2ca862ce4dee4b697b65cc330fa7f4b",
+                "reference": "6ef87df2c2ca862ce4dee4b697b65cc330fa7f4b",
                 "shasum": ""
             },
             "require": {
@@ -1106,25 +1106,25 @@
                 "client",
                 "rest"
             ],
-            "time": "2017-03-12 14:22:43"
+            "time": "2017-03-19 10:51:22"
         },
         {
             "name": "innmind/rest-client-bundle",
-            "version": "2.3.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/RestClientBundle.git",
-                "reference": "d31fc5567af155712d54400b3a00b979874b13c0"
+                "reference": "93ad34e038822249bf9b3a9c19a8b964b1fb9b2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/RestClientBundle/zipball/d31fc5567af155712d54400b3a00b979874b13c0",
-                "reference": "d31fc5567af155712d54400b3a00b979874b13c0",
+                "url": "https://api.github.com/repos/Innmind/RestClientBundle/zipball/93ad34e038822249bf9b3a9c19a8b964b1fb9b2f",
+                "reference": "93ad34e038822249bf9b3a9c19a8b964b1fb9b2f",
                 "shasum": ""
             },
             "require": {
                 "innmind/filesystem": "~2.2",
-                "innmind/rest-client": "~4.0",
+                "innmind/rest-client": "~5.0",
                 "php": "~7.1",
                 "symfony/config": "~3.0",
                 "symfony/dependency-injection": "~3.0",
@@ -1157,7 +1157,7 @@
                 "client",
                 "rest"
             ],
-            "time": "2017-03-12 12:46:55"
+            "time": "2017-03-19 11:11:42"
         },
         {
             "name": "innmind/robots-txt",
