@@ -1,6 +1,7 @@
 {
     "name": "innmind/crawler-app",
     "license": "proprietary",
+    "desrciption": "Crawl the web and publish the graph to an api",
     "type": "project",
     "autoload": {
         "psr-4": {
