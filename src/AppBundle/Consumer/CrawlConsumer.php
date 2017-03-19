@@ -6,11 +6,13 @@ namespace AppBundle\Consumer;
 use AppBundle\{
     PublisherInterface,
     Linker,
+    Reference,
     Exception\ResourceCannotBePublishedException,
     Exception\UrlCannotBeCrawledException,
     Exception\CantLinkResourceAcrossServersException
 };
 use Innmind\Crawler\CrawlerInterface;
+use Innmind\Rest\Client\Identity;
 use Innmind\Http\{
     Message\Request,
     Message\Method,
