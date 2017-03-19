@@ -93,12 +93,12 @@ final class CrawlConsumer implements ConsumerInterface
 
             if (isset($data['relationship'])) {
                 ($this->link)(
-                    $reference,
                     new Reference(
                         new Identity($data['origin']),
                         $data['definition'],
                         $server
                     ),
+                    $reference,
                     $data['relationship'],
                     $data['attributes']
                 );
