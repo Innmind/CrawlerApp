@@ -25,6 +25,7 @@ services:
         arguments:
             - '@crawler'
             - '@publisher'
+            - '@linker'
             - '%user_agent%'
 
     linker:
