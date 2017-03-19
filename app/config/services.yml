@@ -5,6 +5,7 @@ imports:
     - { resource: 'services/publishers.yml' }
     - { resource: 'services/delayers.yml' }
     - { resource: 'services/tracers.yml' }
+    - { resource: 'services/linkers.yml' }
 
 services:
     clock:
@@ -27,9 +28,3 @@ services:
             - '@publisher'
             - '@linker'
             - '%user_agent%'
-
-    linker:
-        class: AppBundle\Linker\Linker
-        public: false
-        arguments:
-            - '@innmind_rest_client'
