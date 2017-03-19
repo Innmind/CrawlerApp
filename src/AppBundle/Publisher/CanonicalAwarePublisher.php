@@ -38,8 +38,8 @@ final class CanonicalAwarePublisher implements PublisherInterface
                 'resource' => (string) $resource->attributes()->get('canonical')->content(),
                 'origin' => (string) $reference->identity(),
                 'relationship' => 'canonical',
-                'definition' => $reference->definition()->name(),
-                'server' => (string) $server,
+                'definition' => $reference->definition(),
+                'server' => (string) $reference->server(),
             ]));
         }
 

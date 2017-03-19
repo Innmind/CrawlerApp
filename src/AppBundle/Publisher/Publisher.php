@@ -100,7 +100,8 @@ final class Publisher implements PublisherInterface
             $server->create(
                 $this->translator->translate($resource, $definition)
             ),
-            $definition
+            $definition->name(),
+            $server->url()
         );
     }
 }

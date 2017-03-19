@@ -36,12 +36,12 @@ final class AlternatesAwarePublisher implements PublisherInterface
                 ->attributes()
                 ->get('alternates')
                 ->content()
-                ->foreach(function(string $language, SetInterface $urls) use ($resource, $reference, $server): void {
+                ->foreach(function(string $language, SetInterface $urls) use ($resource, $reference): void {
                     $urls
                         ->filter(function(UrlInterface $url) use ($resource): bool {
                             return (string) $url !== (string) $resource->url();
                         })
-                        ->foreach(function(UrlInterface $url) use ($language, $reference, $server): void {
+                        ->foreach(function(UrlInterface $url) use ($language, $reference): void {
                             $this->producer->publish(serialize([
                                 'resource' => (string) $url,
                                 'origin' => (string) $reference->identity(),
@@ -49,8 +49,8 @@ final class AlternatesAwarePublisher implements PublisherInterface
                                 'attributes' => [
                                     'language' => $language,
                                 ],
-                                'definition' => $reference->definition()->name(),
-                                'server' => (string) $server,
+                                'definition' => $reference->definition(),
+                                'server' => (string) $reference->server(),
                             ]));
                         });
                 });

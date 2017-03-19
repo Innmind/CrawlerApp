@@ -69,6 +69,7 @@ class HttpResourceTranslatorTest extends TestCase
                     )
                 ),
             new Map('scalar', 'variable'),
+            new Map('string', 'string'),
             false
         );
         $propertyTranslator = $this->createMock(PropertyTranslatorInterface::class);

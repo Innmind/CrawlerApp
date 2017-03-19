@@ -93,6 +93,7 @@ class PublisherTest extends TestCase
                             new Identity('uuid'),
                             new Map('string', PropertyDefinition::class),
                             new Map('scalar', 'variable'),
+                            new Map('string', 'string'),
                             false
                         )
                     )
@@ -140,6 +141,7 @@ class PublisherTest extends TestCase
                             new Map('string', PropertyDefinition::class),
                             (new Map('scalar', 'variable'))
                                 ->put('allowed_media_types', ['image/*']),
+                            new Map('string', 'string'),
                             false
                         )
                     )
@@ -156,6 +158,7 @@ class PublisherTest extends TestCase
 
     public function testInvokation()
     {
+        $serverUrl = Url::fromString('http://some.server/');
         $this
             ->client
             ->expects($this->once())
@@ -170,6 +173,10 @@ class PublisherTest extends TestCase
             ->willReturn(
                 $capabilities = $this->createMock(CapabilitiesInterface::class)
             );
+        $server
+            ->expects($this->once())
+            ->method('url')
+            ->willReturn($serverUrl);
         $capabilities
             ->expects($this->once())
             ->method('definitions')
@@ -184,6 +191,7 @@ class PublisherTest extends TestCase
                             new Map('string', PropertyDefinition::class),
                             (new Map('scalar', 'variable'))
                                 ->put('allowed_media_types', ['image/*']),
+                            new Map('string', 'string'),
                             false
                         )
                     )
@@ -196,6 +204,7 @@ class PublisherTest extends TestCase
                             new Map('string', PropertyDefinition::class),
                             (new Map('scalar', 'variable'))
                                 ->put('allowed_media_types', ['text/html']),
+                            new Map('string', 'string'),
                             false
                         )
                     )
@@ -217,10 +226,11 @@ class PublisherTest extends TestCase
             $this->createMock(StreamInterface::class)
         );
 
-        $reference = ($this->publisher)($resource, Url::fromString('http://some.server/'));
+        $reference = ($this->publisher)($resource, $serverUrl);
 
         $this->assertInstanceOf(Reference::class, $reference);
         $this->assertSame($identity, $reference->identity());
-        $this->assertSame($definition, $reference->definition());
+        $this->assertSame('foo', $reference->definition());
+        $this->assertSame($serverUrl, $reference->server());
     }
 }

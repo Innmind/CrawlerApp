@@ -21,12 +21,7 @@ use Innmind\Filesystem\{
     MediaTypeInterface,
     StreamInterface
 };
-use Innmind\Rest\Client\{
-    IdentityInterface,
-    Definition\HttpResource as Definition,
-    Definition\Identity,
-    Definition\Property as PropertyDefinition
-};
+use Innmind\Rest\Client\IdentityInterface;
 use Innmind\Immutable\{
     Map,
     Set
@@ -73,14 +68,8 @@ class LinksAwarePublisherTest extends TestCase
             ->willReturn(
                 $expected = new Reference(
                     $this->createMock(IdentityInterface::class),
-                    new Definition(
-                        'foo',
-                        $this->createMock(UrlInterface::class),
-                        new Identity('uuid'),
-                        new Map('string', PropertyDefinition::class),
-                        new Map('scalar', 'variable'),
-                        false
-                    )
+                    'foo',
+                    $server
                 )
             );
         $this
@@ -116,14 +105,8 @@ class LinksAwarePublisherTest extends TestCase
             ->willReturn(
                 $expected = new Reference(
                     $this->createMock(IdentityInterface::class),
-                    new Definition(
-                        'foo',
-                        $this->createMock(UrlInterface::class),
-                        new Identity('uuid'),
-                        new Map('string', PropertyDefinition::class),
-                        new Map('scalar', 'variable'),
-                        false
-                    )
+                    'foo',
+                    $server
                 )
             );
         $this
@@ -159,14 +142,8 @@ class LinksAwarePublisherTest extends TestCase
             ->willReturn(
                 $expected = new Reference(
                     $identity = $this->createMock(IdentityInterface::class),
-                    new Definition(
-                        'foo',
-                        $this->createMock(UrlInterface::class),
-                        new Identity('uuid'),
-                        new Map('string', PropertyDefinition::class),
-                        new Map('scalar', 'variable'),
-                        false
-                    )
+                    'foo',
+                    $server
                 )
             );
         $identity
