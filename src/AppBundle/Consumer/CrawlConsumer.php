@@ -5,8 +5,10 @@ namespace AppBundle\Consumer;
 
 use AppBundle\{
     PublisherInterface,
+    Linker
     Exception\ResourceCannotBePublishedException,
-    Exception\UrlCannotBeCrawledException
+    Exception\UrlCannotBeCrawledException,
+    Exception\CantLinkResourceAcrossServersException
 };
 use Innmind\Crawler\CrawlerInterface;
 use Innmind\Http\{
@@ -35,15 +37,18 @@ final class CrawlConsumer implements ConsumerInterface
 {
     private $crawler;
     private $publisher;
+    private $link;
     private $userAgent;
 
     public function __construct(
         CrawlerInterface $crawler,
         PublisherInterface $publisher,
+        Linker $linker
         string $userAgent
     ) {
         $this->crawler = $crawler;
         $this->publisher = $publisher;
+        $this->link = $linker;
         $this->userAgent = $userAgent;
     }
 
@@ -81,12 +86,28 @@ final class CrawlConsumer implements ConsumerInterface
         }
 
         try {
-            ($this->publisher)($resource, Url::fromString($data['server']));
+            $server = Url::fromString($data['server']);
+            $reference = ($this->publisher)($resource, $server);
+
+            if (isset($data['relationship'])) {
+                ($this->link)(
+                    $reference,
+                    new Reference(
+                        new Identity($data['origin'])
+                        $data['definition'],
+                        $server
+                    ),
+                    $data['relationship'],
+                    $data['attributes']
+                );
+            }
         } catch (ClientErrorException $e) {
             if ($e->response()->statusCode()->value() !== 409) {
                 throw $e;
             }
         } catch (ResourceCannotBePublishedException $e) {
+            //pass
+        } catch (CantLinkResourceAcrossServersException $e) {
             //pass
         }
 
