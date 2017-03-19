@@ -5,7 +5,7 @@ namespace AppBundle\Consumer;
 
 use AppBundle\{
     PublisherInterface,
-    Linker
+    Linker,
     Exception\ResourceCannotBePublishedException,
     Exception\UrlCannotBeCrawledException,
     Exception\CantLinkResourceAcrossServersException
