@@ -36,7 +36,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 final class CrawlConsumer implements ConsumerInterface
 {
     private $crawler;
-    private $publisher;
+    private $publish;
     private $link;
     private $userAgent;
 
@@ -47,7 +47,7 @@ final class CrawlConsumer implements ConsumerInterface
         string $userAgent
     ) {
         $this->crawler = $crawler;
-        $this->publisher = $publisher;
+        $this->publish = $publisher;
         $this->link = $linker;
         $this->userAgent = $userAgent;
     }
@@ -87,7 +87,7 @@ final class CrawlConsumer implements ConsumerInterface
 
         try {
             $server = Url::fromString($data['server']);
-            $reference = ($this->publisher)($resource, $server);
+            $reference = ($this->publish)($resource, $server);
 
             if (isset($data['relationship'])) {
                 ($this->link)(
