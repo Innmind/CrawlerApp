@@ -43,7 +43,7 @@ final class CrawlConsumer implements ConsumerInterface
     public function __construct(
         CrawlerInterface $crawler,
         PublisherInterface $publisher,
-        Linker $linker
+        Linker $linker,
         string $userAgent
     ) {
         $this->crawler = $crawler;
