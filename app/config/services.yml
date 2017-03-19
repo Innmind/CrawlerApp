@@ -26,3 +26,9 @@ services:
             - '@crawler'
             - '@publisher'
             - '%user_agent%'
+
+    linker:
+        class: AppBundle\Linker
+        public: false
+        arguments:
+            - '@innmind_rest_client'
