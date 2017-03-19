@@ -62,6 +62,8 @@ services:
                 theme_colour: '@resource_translator.property.html.theme_colour'
                 title: '@resource_translator.property.html.title'
                 preview: '@resource_translator.property.html.preview'
+                author: '@resource_translator.property.html.author'
+                citations: '@resource_translator.property.html.citations'
         factory:
             - AppBundle\Factory\PropertyDelegationTranslatorFactory
             - make
@@ -128,4 +130,12 @@ services:
 
     resource_translator.property.html.preview:
         class: AppBundle\Translator\Property\HtmlPage\PreviewTranslator
+        public: false
+
+    resource_translator.property.html.author:
+        class: AppBundle\Translator\Property\HtmlPage\AuthorTranslator
+        public: false
+
+    resource_translator.property.html.citations:
+        class: AppBundle\Translator\Property\HtmlPage\CitationsTranslator
         public: false
