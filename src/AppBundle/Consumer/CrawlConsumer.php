@@ -93,7 +93,7 @@ final class CrawlConsumer implements ConsumerInterface
                 ($this->link)(
                     $reference,
                     new Reference(
-                        new Identity($data['origin'])
+                        new Identity($data['origin']),
                         $data['definition'],
                         $server
                     ),
