@@ -1,9 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace AppBundle;
+namespace AppBundle\Linker;
 
 use AppBundle\{
+    LinkerInterface,
     Reference,
     Exception\CantLinkResourceAcrossServersException
 };
@@ -18,7 +19,7 @@ use Innmind\Immutable\{
     Set
 };
 
-final class Linker
+final class Linker implements LinkerInterface
 {
     private $client;
 

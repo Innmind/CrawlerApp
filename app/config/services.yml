@@ -29,7 +29,7 @@ services:
             - '%user_agent%'
 
     linker:
-        class: AppBundle\Linker
+        class: AppBundle\Linker\Linker
         public: false
         arguments:
             - '@innmind_rest_client'

@@ -1,10 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\AppBundle;
+namespace Tests\AppBundle\Linker;
 
 use AppBundle\{
-    Linker,
+    Linker\Linker,
+    LinkerInterface,
     Reference
 };
 use Innmind\Rest\Client\{
@@ -19,6 +20,16 @@ use PHPUnit\Framework\TestCase;
 
 class LinkerTest extends TestCase
 {
+    public function testInterface()
+    {
+        $this->assertInstanceOf(
+            LinkerInterface::class,
+            new Linker(
+                $this->createMock(ClientInterface::class)
+            )
+        );
+    }
+
     /**
      * @expectedException AppBundle\Exception\CantLinkResourceAcrossServersException
      */
