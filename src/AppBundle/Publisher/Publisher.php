@@ -18,15 +18,7 @@ use Innmind\Rest\Client\{
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
-use Innmind\Http\{
-    Message\Request,
-    Message\Method,
-    ProtocolVersion
-};
-use Innmind\Immutable\{
-    Map,
-    Set
-};
+use Innmind\Immutable\Set;
 
 final class Publisher implements PublisherInterface
 {

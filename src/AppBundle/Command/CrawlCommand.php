@@ -109,7 +109,7 @@ final class CrawlCommand extends ContainerAwareCommand
 
                     case $attribute->content() instanceof SetInterface:
                         $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
-                        $values = $attribute
+                        $attribute
                             ->content()
                             ->foreach(
                                 function($value) use ($output): void {
