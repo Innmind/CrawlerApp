@@ -34,6 +34,7 @@ final class ReferrerLinker implements LinkerInterface
                 'web.resource',
                 $target->server()
             );
+            $attributes = [];
         }
 
         ($this->linker)($source, $target, $relationship, $attributes);

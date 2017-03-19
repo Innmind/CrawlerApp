@@ -82,7 +82,7 @@ class ReferrerLinkerTest extends TestCase
                         $altered->server() === $target->server();
                 }),
                 'referrer',
-                ['foo' => 'bar']
+                []
             );
 
         $this->assertNull($linker($source, $target, 'referrer', ['foo' => 'bar']));
