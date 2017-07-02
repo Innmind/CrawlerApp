@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e2f5fdf3914e73a7215b51e45badb2bc",
-    "content-hash": "c52c213a535afb4a89426ad6be913842",
+    "hash": "d6fa2df02f23f9e2931fd1872bcb6ca1",
+    "content-hash": "95bb8dda9d3f18c0c38243bdacd18c30",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -941,6 +941,98 @@
             "time": "2017-03-12 12:38:40"
         },
         {
+            "name": "innmind/homeostasis",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Homeostasis.git",
+                "reference": "cb129d9912c7d9dee545438d51a01740677f75cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Homeostasis/zipball/cb129d9912c7d9dee545438d51a01740677f75cc",
+                "reference": "cb129d9912c7d9dee545438d51a01740677f75cc",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/filesystem": "^2.2",
+                "innmind/immutable": "^2.3",
+                "innmind/log-reader": "^1.0",
+                "innmind/math": "^4.1",
+                "innmind/server-status": "^1.0",
+                "innmind/time-continuum": "^1.0",
+                "php": "~7.1",
+                "symfony/filesystem": "^3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Homeostasis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "App health regulator",
+            "homepage": "http://github.com/Innmind/Homeostasis",
+            "time": "2017-06-25 15:05:34"
+        },
+        {
+            "name": "innmind/homeostasis-bundle",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/HomeostasisBundle.git",
+                "reference": "2ed7ffe8a363a9fae318c2b35440d99bd586f533"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/HomeostasisBundle/zipball/2ed7ffe8a363a9fae318c2b35440d99bd586f533",
+                "reference": "2ed7ffe8a363a9fae318c2b35440d99bd586f533",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/homeostasis": "^1.0",
+                "php": "~7.1",
+                "symfony/config": "~3.0",
+                "symfony/dependency-injection": "~3.0",
+                "symfony/http-kernel": "~3.0",
+                "symfony/yaml": "~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\HomeostasisBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "App health regulator bundle",
+            "homepage": "http://github.com/Innmind/HomeostasisBundle",
+            "time": "2017-06-29 07:25:34"
+        },
+        {
             "name": "innmind/html",
             "version": "2.0.0",
             "source": {
@@ -1125,6 +1217,52 @@
                 "wrapper"
             ],
             "time": "2017-05-21 08:46:58"
+        },
+        {
+            "name": "innmind/log-reader",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/LogReader.git",
+                "reference": "a655065ec733354b3684ed06c71deeac862949cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/LogReader/zipball/a655065ec733354b3684ed06c71deeac862949cb",
+                "reference": "a655065ec733354b3684ed06c71deeac862949cb",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/filesystem": "^2.2",
+                "innmind/http": "^2.0",
+                "innmind/immutable": "^2.3",
+                "innmind/time-continuum": "^1.0",
+                "innmind/url": "^2.0",
+                "php": "~7.1",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\LogReader\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Parse log files",
+            "homepage": "http://github.com/Innmind/LogReader",
+            "time": "2017-05-27 16:02:06"
         },
         {
             "name": "innmind/math",
@@ -1313,6 +1451,49 @@
             ],
             "description": "Robots.txt parser",
             "time": "2017-02-27 14:20:01"
+        },
+        {
+            "name": "innmind/server-status",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/ServerStatus.git",
+                "reference": "a855244b72dbd3e217b8f238fc463ca12e4af7ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/ServerStatus/zipball/a855244b72dbd3e217b8f238fc463ca12e4af7ce",
+                "reference": "a855244b72dbd3e217b8f238fc463ca12e4af7ce",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "~2.3",
+                "innmind/time-continuum": "^1.0",
+                "php": "~7.1",
+                "symfony/process": "^3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Server\\Status\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to access various components of the operating system",
+            "homepage": "http://github.com/Innmind/ServerStatus",
+            "time": "2017-05-26 14:25:49"
         },
         {
             "name": "innmind/specification",
