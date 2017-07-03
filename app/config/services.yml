@@ -6,6 +6,7 @@ imports:
     - { resource: 'services/delayers.yml' }
     - { resource: 'services/tracers.yml' }
     - { resource: 'services/linkers.yml' }
+    - { resource: 'services/homeostasis.yml' }
 
 services:
     clock:

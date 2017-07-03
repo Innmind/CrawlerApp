@@ -28,7 +28,9 @@
         "innmind/robots-txt": "~2.0",
         "innmind/rest-client-bundle": "~3.0",
         "php-amqplib/rabbitmq-bundle": "^1.12",
-        "innmind/homeostasis-bundle": "^1.0"
+        "innmind/homeostasis-bundle": "^1.0",
+        "innmind/server-control": "^1.1",
+        "innmind/server-status": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

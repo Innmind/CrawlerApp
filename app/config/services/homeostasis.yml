@@ -1,0 +1,10 @@
+services:
+    homeostasis.actuator.provision_consumers:
+        class: AppBundle\Homeostasis\Actuator\ProvisionConsumers
+        public: false
+        arguments:
+            - '@homeostasis.server.status'
+            - '@homeostasis.server.control'
+            - '@logger'
+            - '%kernel.root_dir%/../bin'
+            - '%kernel.environment%'

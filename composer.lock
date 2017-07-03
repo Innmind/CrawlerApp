@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d6fa2df02f23f9e2931fd1872bcb6ca1",
-    "content-hash": "95bb8dda9d3f18c0c38243bdacd18c30",
+    "hash": "56b772c1c9f3dab5980d3bdad781ddd0",
+    "content-hash": "e8733d41f5f208bfda9278d17b75c08e",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1451,6 +1451,50 @@
             ],
             "description": "Robots.txt parser",
             "time": "2017-02-27 14:20:01"
+        },
+        {
+            "name": "innmind/server-control",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/ServerControl.git",
+                "reference": "8c16fdea2e6774ea88003e3d36f80ab7a846e9cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/ServerControl/zipball/8c16fdea2e6774ea88003e3d36f80ab7a846e9cf",
+                "reference": "8c16fdea2e6774ea88003e3d36f80ab7a846e9cf",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/filesystem": "^2.2",
+                "innmind/immutable": "^2.3",
+                "innmind/url": "^2.0",
+                "php": "~7.1",
+                "symfony/process": "^3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Server\\Control\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Allows to control the server from php",
+            "homepage": "http://github.com/Innmind/ServerControl",
+            "time": "2017-07-02 10:56:22"
         },
         {
             "name": "innmind/server-status",
