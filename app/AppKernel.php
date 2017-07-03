@@ -13,6 +13,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle,
             new Innmind\Rest\ClientBundle\InnmindRestClientBundle,
+            new Innmind\HomeostasisBundle\InnmindHomeostasisBundle,
             new AppBundle\AppBundle(),
         ];
 
