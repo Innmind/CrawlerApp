@@ -1,0 +1,7 @@
+services:
+    listener.regulate:
+        class: AppBundle\EventListener\Regulate
+        arguments:
+            - '@innmind.homeostasis.regulator'
+        tags:
+            - {name: kernel.event_subscriber}

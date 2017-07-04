@@ -22,6 +22,9 @@ innmind_rest_client:
             media_types:
                 application/json: 0
 
+innmind_homeostasis:
+    actuator: homeostasis.actuator.provision_consumers
+
 old_sound_rabbit_mq:
     connections:
         default:
