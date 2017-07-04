@@ -8,7 +8,8 @@ use AppBundle\{
     PublisherInterface,
     Translator\HttpResourceTranslator,
     Translator\PropertyTranslatorInterface,
-    Reference
+    Reference,
+    Exception\ResourceCannotBePublishedException
 };
 use Innmind\Rest\Client\{
     ClientInterface,
@@ -61,9 +62,6 @@ class PublisherTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException AppBundle\Exception\ResourceCannotBePublishedException
-     */
     public function testThrowWhenNoApiResourceForCrawledResource()
     {
         $this
@@ -105,12 +103,14 @@ class PublisherTest extends TestCase
             $this->createMock(StreamInterface::class)
         );
 
-        ($this->publisher)($resource, Url::fromString('http://some.server/'));
+        try {
+            ($this->publisher)($resource, Url::fromString('http://some.server/'));
+            $this->fail('it should throw');
+        } catch (ResourceCannotBePublishedException $e) {
+            $this->assertSame($resource, $e->resource());
+        }
     }
 
-    /**
-     * @expectedException AppBundle\Exception\ResourceCannotBePublishedException
-     */
     public function testThrowWhenNoApiResourceMatchingCrawledMediaType()
     {
         $this
@@ -153,7 +153,12 @@ class PublisherTest extends TestCase
             $this->createMock(StreamInterface::class)
         );
 
-        ($this->publisher)($resource, Url::fromString('http://some.server/'));
+        try {
+            ($this->publisher)($resource, Url::fromString('http://some.server/'));
+            $this->fail('it should throw');
+        } catch (ResourceCannotBePublishedException $e) {
+            $this->assertSame($resource, $e->resource());
+        }
     }
 
     public function testInvokation()

@@ -5,7 +5,8 @@ namespace Tests\AppBundle\Crawler;
 
 use AppBundle\{
     Crawler\TracerAwareCrawler,
-    CrawlTracerInterface
+    CrawlTracerInterface,
+    Exception\UrlCannotBeCrawledException
 };
 use Innmind\Crawler\{
     CrawlerInterface,
@@ -34,9 +35,6 @@ class TracerAwareCrawlerTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException AppBundle\Exception\UrlCannotBeCrawledException
-     */
     public function testThrowWhenResourceAlreadyCrawled()
     {
         $crawler = new TracerAwareCrawler(
@@ -58,7 +56,12 @@ class TracerAwareCrawlerTest extends TestCase
             ->method('url')
             ->willReturn($url);
 
-        $crawler->execute($request);
+        try {
+            $crawler->execute($request);
+            $this->fail('it should throw');
+        } catch (UrlCannotBeCrawledException $e) {
+            $this->assertSame($url, $e->url());
+        }
     }
 
     public function testCrawl()

@@ -16,6 +16,7 @@ use Innmind\Rest\Client\Identity;
 use Innmind\Http\{
     Message\Request,
     Message\Method,
+    Message\StatusCode,
     ProtocolVersion,
     Headers,
     Header\HeaderInterface,
@@ -54,7 +55,7 @@ final class CrawlConsumer implements ConsumerInterface
         $this->userAgent = $userAgent;
     }
 
-    public function execute(AMQPMessage $message)
+    public function execute(AMQPMessage $message): bool
     {
         $data = unserialize($message->body);
 
@@ -104,7 +105,9 @@ final class CrawlConsumer implements ConsumerInterface
                 );
             }
         } catch (ClientErrorException $e) {
-            if ($e->response()->statusCode()->value() !== 409) {
+            $code = $e->response()->statusCode()->value();
+
+            if ($code !== StatusCode::codes()->get('CONFLICT')) {
                 throw $e;
             }
         } catch (ResourceCannotBePublishedException $e) {

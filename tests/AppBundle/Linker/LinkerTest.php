@@ -6,7 +6,8 @@ namespace Tests\AppBundle\Linker;
 use AppBundle\{
     Linker\Linker,
     LinkerInterface,
-    Reference
+    Reference,
+    Exception\CantLinkResourceAcrossServersException
 };
 use Innmind\Rest\Client\{
     ClientInterface,
@@ -30,9 +31,6 @@ class LinkerTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException AppBundle\Exception\CantLinkResourceAcrossServersException
-     */
     public function testThrowWhenLinkingResourcesOnDifferentServers()
     {
         $linker = new Linker(
@@ -42,20 +40,26 @@ class LinkerTest extends TestCase
             ->expects($this->never())
             ->method('server');
 
-        $linker(
-            new Reference(
-                $this->createMock(IdentityInterface::class),
-                'foo',
-                Url::fromString('foo')
-            ),
-            new Reference(
-                $this->createMock(IdentityInterface::class),
-                'foo',
-                Url::fromString('bar')
-            ),
-            'some rel',
-            []
-        );
+        try {
+            $linker(
+                $source = new Reference(
+                    $this->createMock(IdentityInterface::class),
+                    'foo',
+                    Url::fromString('foo')
+                ),
+                $target = new Reference(
+                    $this->createMock(IdentityInterface::class),
+                    'foo',
+                    Url::fromString('bar')
+                ),
+                'some rel',
+                []
+            );
+            $this->fail('it should throw');
+        } catch (CantLinkResourceAcrossServersException $e) {
+            $this->assertSame($source, $e->source());
+            $this->assertSame($target, $e->target());
+        }
     }
 
     public function testInvokation()

@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Tests\AppBundle\Crawler;
 
-use AppBundle\Crawler\RobotsAwareCrawler;
+use AppBundle\{
+    Crawler\RobotsAwareCrawler,
+    Exception\UrlCannotBeCrawledException
+};
 use Innmind\RobotsTxt\{
     ParserInterface,
     RobotsTxtInterface,
@@ -126,9 +129,6 @@ class RobotsAwareCrawlerTest extends TestCase
         $this->assertSame($expected, $resource);
     }
 
-    /**
-     * @expectedException AppBundle\Exception\UrlCannotBeCrawledException
-     */
     public function testThrowWhenRobotsDisallows()
     {
         $request = $this->createMock(RequestInterface::class);
@@ -156,6 +156,11 @@ class RobotsAwareCrawlerTest extends TestCase
             ->expects($this->never())
             ->method('execute');
 
-        $this->crawler->execute($request);
+        try {
+            $this->crawler->execute($request);
+            $this->fail('it should throw');
+        } catch (UrlCannotBeCrawledException $e) {
+            $this->assertSame($url, $e->url());
+        }
     }
 }
