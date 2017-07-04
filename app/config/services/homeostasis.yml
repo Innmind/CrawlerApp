@@ -19,6 +19,8 @@ services:
     homeostasis.server.status.factory:
         class: Innmind\Server\Status\ServerFactory
         public: false
+        arguments:
+            - '@clock'
 
     homeostasis.server.control:
         class: Innmind\Server\Control\Server
