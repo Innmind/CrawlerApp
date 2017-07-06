@@ -80,53 +80,7 @@ final class CrawlCommand extends ContainerAwareCommand
         $resource
             ->attributes()
             ->foreach(function(string $name, AttributeInterface $attribute) use ($output): void {
-                switch (true) {
-                    case $attribute instanceof AttributesInterface:
-                        $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
-                        $attribute
-                            ->content()
-                            ->foreach(function($key, AttributeInterface $value) use ($output): void {
-                                $output->writeln(sprintf(
-                                    '    <fg=yellow>%s</>: <fg=cyan>%s</>',
-                                    $key,
-                                    $value->content()
-                                ));
-                            });
-                        break;
-
-                    case $attribute->content() instanceof MapInterface:
-                        $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
-                        $attribute
-                            ->content()
-                            ->foreach(function($key, $value) use ($output): void {
-                                $output->writeln(sprintf(
-                                    '    <fg=yellow>%s</>: <fg=cyan>%s</>',
-                                    $key,
-                                    $value
-                                ));
-                            });
-                        break;
-
-                    case $attribute->content() instanceof SetInterface:
-                        $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
-                        $attribute
-                            ->content()
-                            ->foreach(
-                                function($value) use ($output): void {
-                                    $output->writeln(sprintf(
-                                        '    <fg=cyan>%s</>', $value
-                                    ));
-                                }
-                            );
-                        break;
-
-                    default:
-                        $output->writeln(sprintf(
-                            '<fg=yellow>%s</>: <fg=cyan>%s</>',
-                            $name,
-                            $attribute->content()
-                        ));
-                }
+                $this->print($output, $name, $attribute);
             });
 
         if ($input->getOption('publish-to')) {
@@ -136,6 +90,57 @@ final class CrawlCommand extends ContainerAwareCommand
                     $resource,
                     Url::fromString($input->getOption('publish-to'))
                 );
+        }
+    }
+
+    private function print(
+        OutputInterface $output,
+        string $name,
+        AttributeInterface $attribute,
+        int $level = 0
+    ): void {
+        switch (true) {
+            case $attribute instanceof AttributesInterface:
+                $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
+                $attribute
+                    ->content()
+                    ->foreach(function($key, AttributeInterface $value) use ($output, $level): void {
+                        $this->print($output, $key, $value, $level + 1);
+                    });
+                break;
+
+            case $attribute->content() instanceof MapInterface:
+                $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
+                $attribute
+                    ->content()
+                    ->foreach(function($key, $value) use ($output, $level): void {
+                        $output->writeln(str_repeat('    ', $level + 1).sprintf(
+                            '<fg=yellow>%s</>: <fg=cyan>%s</>',
+                            $key,
+                            $value
+                        ));
+                    });
+                break;
+
+            case $attribute->content() instanceof SetInterface:
+                $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
+                $attribute
+                    ->content()
+                    ->foreach(
+                        function($value) use ($output, $level): void {
+                            $output->writeln(str_repeat('    ', $level + 1).sprintf(
+                                '<fg=cyan>%s</>', $value
+                            ));
+                        }
+                    );
+                break;
+
+            default:
+                $output->writeln(str_repeat('    ', $level).sprintf(
+                    '<fg=yellow>%s</>: <fg=cyan>%s</>',
+                    $name,
+                    $attribute->content()
+                ));
         }
     }
 }
