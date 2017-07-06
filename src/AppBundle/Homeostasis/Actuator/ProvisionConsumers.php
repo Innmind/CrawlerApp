@@ -37,7 +37,8 @@ final class ProvisionConsumers implements Actuator
         $this->status = $status;
         $this->control = $control;
         $this->logger = $logger;
-        $this->spawn = (new Command('php ./console'))
+        $this->spawn = Command::background('php')
+            ->withArgument('./console')
             ->withOption('env', $environment)
             ->withArgument('rabbitmq:consumer')
             ->withArgument('crawl')
