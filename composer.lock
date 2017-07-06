@@ -942,16 +942,16 @@
         },
         {
             "name": "innmind/homeostasis",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Homeostasis.git",
-                "reference": "7ad2673f13c70ba02881d1890467079b2cfb5fcd"
+                "reference": "ef7230fb77dc76a55d2c3f06dd8c794f9020944b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Homeostasis/zipball/7ad2673f13c70ba02881d1890467079b2cfb5fcd",
-                "reference": "7ad2673f13c70ba02881d1890467079b2cfb5fcd",
+                "url": "https://api.github.com/repos/Innmind/Homeostasis/zipball/ef7230fb77dc76a55d2c3f06dd8c794f9020944b",
+                "reference": "ef7230fb77dc76a55d2c3f06dd8c794f9020944b",
                 "shasum": ""
             },
             "require": {
@@ -985,7 +985,7 @@
             ],
             "description": "App health regulator",
             "homepage": "http://github.com/Innmind/Homeostasis",
-            "time": "2017-07-02 14:54:21"
+            "time": "2017-07-06 13:00:42"
         },
         {
             "name": "innmind/homeostasis-bundle",
