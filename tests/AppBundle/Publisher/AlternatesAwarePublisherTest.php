@@ -11,7 +11,9 @@ use AppBundle\{
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
     HttpResource\AttributeInterface,
-    HttpResource\Attribute
+    HttpResource\Attribute,
+    HttpResource\Alternates,
+    HttpResource\Alternate
 };
 use Innmind\Url\{
     UrlInterface,
@@ -89,11 +91,49 @@ class AlternatesAwarePublisherTest extends TestCase
             (new Map('string', AttributeInterface::class))
                 ->put(
                     'alternates',
-                    new Attribute(
-                        'alternates',
-                        (new Map('string', SetInterface::class))
-                            ->put('en', (new Set(UrlInterface::class))->add($url))
+                    new Alternates(
+                        (new Map('string', AttributeInterface::class))
+                            ->put(
+                                'en',
+                                new Alternate(
+                                    'en',
+                                    (new Set(UrlInterface::class))->add($url)
+                                )
+                            )
                     )
+                ),
+            $this->createMock(StreamInterface::class)
+        );
+        $server = $this->createMock(UrlInterface::class);
+        $this
+            ->inner
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($resource, $server)
+            ->willReturn(
+                $expected = new Reference(
+                    $this->createMock(IdentityInterface::class),
+                    'foo',
+                    $server
+                )
+            );
+        $this
+            ->producer
+            ->expects($this->never())
+            ->method('publish');
+
+        $this->assertSame($expected, ($this->publisher)($resource, $server));
+    }
+
+    public function testDoesntPublishWhenNotCorrectAttributeInstance()
+    {
+        $resource = new CrawledResource(
+            $url = Url::fromString('http://example.com/'),
+            $this->createMock(MediaTypeInterface::class),
+            (new Map('string', AttributeInterface::class))
+                ->put(
+                    'alternates',
+                    $this->createMock(AttributeInterface::class)
                 ),
             $this->createMock(StreamInterface::class)
         );
@@ -126,13 +166,15 @@ class AlternatesAwarePublisherTest extends TestCase
             (new Map('string', AttributeInterface::class))
                 ->put(
                     'alternates',
-                    new Attribute(
-                        'alternates',
-                        (new Map('string', SetInterface::class))
+                    new Alternates(
+                        (new Map('string', AttributeInterface::class))
                             ->put(
                                 'en',
-                                (new Set(UrlInterface::class))
-                                    ->add(Url::fromString('http://example.com/foo'))
+                                new Alternate(
+                                    'en',
+                                    (new Set(UrlInterface::class))
+                                        ->add(Url::fromString('http://example.com/foo'))
+                                )
                             )
                     )
                 ),

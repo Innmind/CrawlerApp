@@ -7,7 +7,11 @@ use AppBundle\{
     PublisherInterface,
     Reference
 };
-use Innmind\Crawler\HttpResource;
+use Innmind\Crawler\{
+    HttpResource,
+    HttpResource\Alternates,
+    HttpResource\Alternate
+};
 use Innmind\Url\UrlInterface;
 use Innmind\Immutable\SetInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
@@ -31,13 +35,17 @@ final class AlternatesAwarePublisher implements PublisherInterface
     ): Reference {
         $reference = ($this->publisher)($resource, $server);
 
-        if ($resource->attributes()->contains('alternates')) {
+        if (
+            $resource->attributes()->contains('alternates') &&
+            $resource->attributes()->get('alternates') instanceof Alternates
+        ) {
             $resource
                 ->attributes()
                 ->get('alternates')
                 ->content()
-                ->foreach(function(string $language, SetInterface $urls) use ($resource, $reference): void {
-                    $urls
+                ->foreach(function(string $language, Alternate $alternate) use ($resource, $reference): void {
+                    $alternate
+                        ->content()
                         ->filter(function(UrlInterface $url) use ($resource): bool {
                             return (string) $url !== (string) $resource->url();
                         })
