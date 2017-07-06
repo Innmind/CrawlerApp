@@ -9,7 +9,6 @@ class AppKernel extends Kernel
     {
         $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle,
             new Innmind\Rest\ClientBundle\InnmindRestClientBundle,
