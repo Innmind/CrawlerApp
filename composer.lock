@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "56b772c1c9f3dab5980d3bdad781ddd0",
+    "hash": "22e4965561e8a39324114a423e96346f",
     "content-hash": "e8733d41f5f208bfda9278d17b75c08e",
     "packages": [
         {
@@ -1454,16 +1454,16 @@
         },
         {
             "name": "innmind/server-control",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/ServerControl.git",
-                "reference": "8c16fdea2e6774ea88003e3d36f80ab7a846e9cf"
+                "reference": "5e8dc56871d591a09c7d4d1bb54bf96dfedab1b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/ServerControl/zipball/8c16fdea2e6774ea88003e3d36f80ab7a846e9cf",
-                "reference": "8c16fdea2e6774ea88003e3d36f80ab7a846e9cf",
+                "url": "https://api.github.com/repos/Innmind/ServerControl/zipball/5e8dc56871d591a09c7d4d1bb54bf96dfedab1b4",
+                "reference": "5e8dc56871d591a09c7d4d1bb54bf96dfedab1b4",
                 "shasum": ""
             },
             "require": {
@@ -1494,7 +1494,7 @@
             ],
             "description": "Allows to control the server from php",
             "homepage": "http://github.com/Innmind/ServerControl",
-            "time": "2017-07-02 10:56:22"
+            "time": "2017-07-06 16:16:14"
         },
         {
             "name": "innmind/server-status",
