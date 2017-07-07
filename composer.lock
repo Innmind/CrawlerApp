@@ -797,16 +797,16 @@
         },
         {
             "name": "innmind/crawler",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Crawler.git",
-                "reference": "e5c7a0ae224b9112eb8e48cc7a2f40524d739afc"
+                "reference": "9441a1e5fac8a1db75547582b24cb15c5af4864c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/e5c7a0ae224b9112eb8e48cc7a2f40524d739afc",
-                "reference": "e5c7a0ae224b9112eb8e48cc7a2f40524d739afc",
+                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/9441a1e5fac8a1db75547582b24cb15c5af4864c",
+                "reference": "9441a1e5fac8a1db75547582b24cb15c5af4864c",
                 "shasum": ""
             },
             "require": {
@@ -846,7 +846,7 @@
             "keywords": [
                 "crawler"
             ],
-            "time": "2017-07-06 07:00:42"
+            "time": "2017-07-07 06:40:12"
         },
         {
             "name": "innmind/event-bus",
@@ -1669,16 +1669,16 @@
         },
         {
             "name": "innmind/url-resolver",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/url-resolver.git",
-                "reference": "c4e787bc3843ec6b7eb1db42e596830171235e02"
+                "reference": "b6d65e647bf9d9e117776878973f5f0497d8a0ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/url-resolver/zipball/c4e787bc3843ec6b7eb1db42e596830171235e02",
-                "reference": "c4e787bc3843ec6b7eb1db42e596830171235e02",
+                "url": "https://api.github.com/repos/Innmind/url-resolver/zipball/b6d65e647bf9d9e117776878973f5f0497d8a0ea",
+                "reference": "b6d65e647bf9d9e117776878973f5f0497d8a0ea",
                 "shasum": ""
             },
             "require": {
@@ -1712,7 +1712,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-02-12 14:03:10"
+            "time": "2017-07-07 07:10:10"
         },
         {
             "name": "innmind/xml",
