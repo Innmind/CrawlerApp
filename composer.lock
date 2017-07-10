@@ -1128,16 +1128,16 @@
         },
         {
             "name": "innmind/http-transport",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/HttpTransport.git",
-                "reference": "f19266b038e63f6f7ce3b13117eeed0f9958d0bb"
+                "reference": "1d1a1267dc413ed4d149646a05a270fa9ffde2dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpTransport/zipball/f19266b038e63f6f7ce3b13117eeed0f9958d0bb",
-                "reference": "f19266b038e63f6f7ce3b13117eeed0f9958d0bb",
+                "url": "https://api.github.com/repos/Innmind/HttpTransport/zipball/1d1a1267dc413ed4d149646a05a270fa9ffde2dd",
+                "reference": "1d1a1267dc413ed4d149646a05a270fa9ffde2dd",
                 "shasum": ""
             },
             "require": {
@@ -1172,7 +1172,7 @@
                 "client",
                 "http"
             ],
-            "time": "2017-02-14 07:25:18"
+            "time": "2017-07-10 05:45:17"
         },
         {
             "name": "innmind/immutable",
@@ -1454,16 +1454,16 @@
         },
         {
             "name": "innmind/server-control",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/ServerControl.git",
-                "reference": "5e8dc56871d591a09c7d4d1bb54bf96dfedab1b4"
+                "reference": "e4e1e269aa23aa554afc4eb679cb67511ed3555d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/ServerControl/zipball/5e8dc56871d591a09c7d4d1bb54bf96dfedab1b4",
-                "reference": "5e8dc56871d591a09c7d4d1bb54bf96dfedab1b4",
+                "url": "https://api.github.com/repos/Innmind/ServerControl/zipball/e4e1e269aa23aa554afc4eb679cb67511ed3555d",
+                "reference": "e4e1e269aa23aa554afc4eb679cb67511ed3555d",
                 "shasum": ""
             },
             "require": {
@@ -1494,7 +1494,7 @@
             ],
             "description": "Allows to control the server from php",
             "homepage": "http://github.com/Innmind/ServerControl",
-            "time": "2017-07-06 16:16:14"
+            "time": "2017-07-10 06:01:41"
         },
         {
             "name": "innmind/server-status",
