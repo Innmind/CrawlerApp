@@ -797,16 +797,16 @@
         },
         {
             "name": "innmind/crawler",
-            "version": "3.2.2",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Crawler.git",
-                "reference": "9441a1e5fac8a1db75547582b24cb15c5af4864c"
+                "reference": "4f99da138af183847da6f389e176154ca1eb8de4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/9441a1e5fac8a1db75547582b24cb15c5af4864c",
-                "reference": "9441a1e5fac8a1db75547582b24cb15c5af4864c",
+                "url": "https://api.github.com/repos/Innmind/Crawler/zipball/4f99da138af183847da6f389e176154ca1eb8de4",
+                "reference": "4f99da138af183847da6f389e176154ca1eb8de4",
                 "shasum": ""
             },
             "require": {
@@ -846,7 +846,7 @@
             "keywords": [
                 "crawler"
             ],
-            "time": "2017-07-07 06:40:12"
+            "time": "2017-07-10 06:24:34"
         },
         {
             "name": "innmind/event-bus",
