@@ -13,7 +13,6 @@ use Innmind\Crawler\{
     HttpResource\Alternate
 };
 use Innmind\Url\UrlInterface;
-use Innmind\Immutable\SetInterface;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
 final class AlternatesAwarePublisher implements PublisherInterface
