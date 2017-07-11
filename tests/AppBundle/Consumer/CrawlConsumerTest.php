@@ -24,6 +24,7 @@ use Innmind\Filesystem\{
 };
 use Innmind\Rest\Client\IdentityInterface;
 use Innmind\HttpTransport\Exception\{
+    ConnectException,
     ClientErrorException,
     ServerErrorException
 };
@@ -95,6 +96,39 @@ class CrawlConsumerTest extends TestCase
                 'definition',
                 $this->createMock(UrlInterface::class)
             ));
+        $linker
+            ->expects($this->never())
+            ->method('__invoke');
+
+        $this->assertTrue($consumer->execute($message));
+    }
+
+    public function testExecuteWhenCantConnectToHostOnCrawl()
+    {
+        $consumer = new CrawlConsumer(
+            $crawler = $this->createMock(CrawlerInterface::class),
+            $publisher = $this->createMock(PublisherInterface::class),
+            $linker = $this->createMock(LinkerInterface::class),
+            'ua'
+        );
+        $message = new AMQPMessage(serialize([
+            'resource' => 'foo',
+            'origin' => 'origin',
+            'definition' => 'definition',
+            'server' => 'server',
+        ]));
+        $crawler
+            ->expects($this->once())
+            ->method('execute')
+            ->will($this->throwException(
+                new ConnectException(
+                    $this->createMock(RequestInterface::class),
+                    new \Exception
+                )
+            ));
+        $publisher
+            ->expects($this->never())
+            ->method('__invoke');
         $linker
             ->expects($this->never())
             ->method('__invoke');

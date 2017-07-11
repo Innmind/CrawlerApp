@@ -26,6 +26,7 @@ use Innmind\Http\{
 };
 use Innmind\Url\Url;
 use Innmind\HttpTransport\Exception\{
+    ConnectException,
     ClientErrorException,
     ServerErrorException
 };
@@ -80,6 +81,8 @@ final class CrawlConsumer implements ConsumerInterface
                     )
                 )
             );
+        } catch (ConnectException $e) {
+            return true;
         } catch (ClientErrorException $e) {
             return true;
         } catch (ServerErrorException $e) {
