@@ -1128,16 +1128,16 @@
         },
         {
             "name": "innmind/http-transport",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/HttpTransport.git",
-                "reference": "1d1a1267dc413ed4d149646a05a270fa9ffde2dd"
+                "reference": "cf25a3f81d87557f86a85030b7ef14eb78e0b177"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpTransport/zipball/1d1a1267dc413ed4d149646a05a270fa9ffde2dd",
-                "reference": "1d1a1267dc413ed4d149646a05a270fa9ffde2dd",
+                "url": "https://api.github.com/repos/Innmind/HttpTransport/zipball/cf25a3f81d87557f86a85030b7ef14eb78e0b177",
+                "reference": "cf25a3f81d87557f86a85030b7ef14eb78e0b177",
                 "shasum": ""
             },
             "require": {
@@ -1172,7 +1172,7 @@
                 "client",
                 "http"
             ],
-            "time": "2017-07-10 05:45:17"
+            "time": "2017-07-11 06:00:57"
         },
         {
             "name": "innmind/immutable",
