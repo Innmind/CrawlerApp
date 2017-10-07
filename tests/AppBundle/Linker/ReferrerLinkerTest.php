@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Linker;
 
 use AppBundle\{
     Linker\ReferrerLinker,
-    LinkerInterface,
+    Linker,
     Reference
 };
 use Innmind\Rest\Client\Identity;
@@ -17,9 +17,9 @@ class ReferrerLinkerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            LinkerInterface::class,
+            Linker::class,
             new ReferrerLinker(
-                $this->createMock(LinkerInterface::class)
+                $this->createMock(Linker::class)
             )
         );
     }
@@ -27,7 +27,7 @@ class ReferrerLinkerTest extends TestCase
     public function testDoesntAlterWhenNotReferrer()
     {
         $linker = new ReferrerLinker(
-            $inner = $this->createMock(LinkerInterface::class)
+            $inner = $this->createMock(Linker::class)
         );
         $source = new Reference(
             $this->createMock(Identity::class),
@@ -55,7 +55,7 @@ class ReferrerLinkerTest extends TestCase
     public function testAlterWhenReferrer()
     {
         $linker = new ReferrerLinker(
-            $inner = $this->createMock(LinkerInterface::class)
+            $inner = $this->createMock(Linker::class)
         );
         $source = new Reference(
             $this->createMock(Identity::class),

@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Translator\Property;
 
 use AppBundle\Translator\{
     Property\DelegationTranslator,
-    PropertyTranslatorInterface
+    PropertyTranslator
 };
 use Innmind\Rest\Client\Definition\{
     Property,
@@ -36,14 +36,14 @@ class DelegationTranslatorTest extends TestCase
     public function setUp()
     {
         $this->translator = new DelegationTranslator(
-            (new Map('string', PropertyTranslatorInterface::class))
+            (new Map('string', PropertyTranslator::class))
                 ->put(
                     'host',
-                    $this->host = $this->createMock(PropertyTranslatorInterface::class)
+                    $this->host = $this->createMock(PropertyTranslator::class)
                 )
                 ->put(
                     'foo',
-                    $this->foo = $this->createMock(PropertyTranslatorInterface::class)
+                    $this->foo = $this->createMock(PropertyTranslator::class)
                 )
         );
         $this->knownProperty = new Property(
@@ -65,7 +65,7 @@ class DelegationTranslatorTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            PropertyTranslatorInterface::class,
+            PropertyTranslator::class,
             $this->translator
         );
     }

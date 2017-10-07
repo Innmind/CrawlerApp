@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Linker;
 
 use AppBundle\{
     Linker\Linker,
-    LinkerInterface,
+    Linker as LinkerInterface,
     Reference,
     Exception\CantLinkResourceAcrossServersException
 };

@@ -5,7 +5,7 @@ namespace Tests\AppBundle\CrawlTracer;
 
 use AppBundle\{
     CrawlTracer\CrawlTracer,
-    CrawlTracerInterface
+    CrawlTracer as CrawlTracerInterface
 };
 use Innmind\Filesystem\{
     Adapter,

@@ -3,11 +3,11 @@ declare(strict_types = 1);
 
 namespace AppBundle\Translator\Property\HtmlPage;
 
-use AppBundle\Translator\PropertyTranslatorInterface;
+use AppBundle\Translator\PropertyTranslator;
 use Innmind\Crawler\HttpResource;
 use Innmind\Rest\Client\Definition\Property;
 
-final class PreviewTranslator implements PropertyTranslatorInterface
+final class PreviewTranslator implements PropertyTranslator
 {
     public function supports(HttpResource $resource, Property $property): bool
     {

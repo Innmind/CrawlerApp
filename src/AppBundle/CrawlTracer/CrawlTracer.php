@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace AppBundle\CrawlTracer;
 
 use AppBundle\{
-    CrawlTracerInterface,
+    CrawlTracer as CrawlTracerInterface,
     Exception\HostNeverHitException
 };
 use Innmind\Filesystem\{

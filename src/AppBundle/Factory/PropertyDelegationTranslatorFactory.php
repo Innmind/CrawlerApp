@@ -5,7 +5,7 @@ namespace AppBundle\Factory;
 
 use AppBundle\Translator\{
     Property\DelegationTranslator,
-    PropertyTranslatorInterface
+    PropertyTranslator
 };
 use Innmind\Immutable\Map;
 
@@ -13,7 +13,7 @@ final class PropertyDelegationTranslatorFactory
 {
     public static function make(array $translators): DelegationTranslator
     {
-        $map = new Map('string', PropertyTranslatorInterface::class);
+        $map = new Map('string', PropertyTranslator::class);
 
         foreach ($translators as $key => $translator) {
             $map = $map->put($key, $translator);

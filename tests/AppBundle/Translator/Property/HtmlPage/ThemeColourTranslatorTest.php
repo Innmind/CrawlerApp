@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Translator\Property\HtmlPage;
 
 use AppBundle\Translator\{
     Property\HtmlPage\ThemeColourTranslator,
-    PropertyTranslatorInterface
+    PropertyTranslator
 };
 use Innmind\Rest\Client\Definition\{
     Property,
@@ -46,7 +46,7 @@ class ThemeColourTranslatorTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            PropertyTranslatorInterface::class,
+            PropertyTranslator::class,
             $this->translator
         );
     }

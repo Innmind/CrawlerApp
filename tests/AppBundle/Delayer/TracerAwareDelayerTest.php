@@ -5,8 +5,8 @@ namespace Tests\AppBundle\Delayer;
 
 use AppBundle\{
     Delayer\TracerAwareDelayer,
-    DelayerInterface,
-    CrawlTracerInterface,
+    Delayer,
+    CrawlTracer,
     Exception\HostNeverHitException
 };
 use Innmind\TimeContinuum\{
@@ -26,10 +26,10 @@ class TracerAwareDelayerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            DelayerInterface::class,
+            Delayer::class,
             new TracerAwareDelayer(
-                $this->createMock(CrawlTracerInterface::class),
-                $this->createMock(DelayerInterface::class),
+                $this->createMock(CrawlTracer::class),
+                $this->createMock(Delayer::class),
                 $this->createMock(TimeContinuumInterface::class),
                 5
             )
@@ -39,8 +39,8 @@ class TracerAwareDelayerTest extends TestCase
     public function testDelay()
     {
         $delayer = new TracerAwareDelayer(
-            $tracer = $this->createMock(CrawlTracerInterface::class),
-            $inner = $this->createMock(DelayerInterface::class),
+            $tracer = $this->createMock(CrawlTracer::class),
+            $inner = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
             5
         );
@@ -86,8 +86,8 @@ class TracerAwareDelayerTest extends TestCase
     public function testDoesntDelayWhenHitAfterThreshold()
     {
         $delayer = new TracerAwareDelayer(
-            $tracer = $this->createMock(CrawlTracerInterface::class),
-            $inner = $this->createMock(DelayerInterface::class),
+            $tracer = $this->createMock(CrawlTracer::class),
+            $inner = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
             5
         );
@@ -132,8 +132,8 @@ class TracerAwareDelayerTest extends TestCase
     public function testDoesntDelayWhenNeverHit()
     {
         $delayer = new TracerAwareDelayer(
-            $tracer = $this->createMock(CrawlTracerInterface::class),
-            $inner = $this->createMock(DelayerInterface::class),
+            $tracer = $this->createMock(CrawlTracer::class),
+            $inner = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
             5
         );

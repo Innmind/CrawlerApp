@@ -5,9 +5,9 @@ namespace Tests\AppBundle\Publisher;
 
 use AppBundle\{
     Publisher\Publisher,
-    PublisherInterface,
+    Publisher as PublisherInterface,
     Translator\HttpResourceTranslator,
-    Translator\PropertyTranslatorInterface,
+    Translator\PropertyTranslator,
     Reference,
     Exception\ResourceCannotBePublishedException
 };
@@ -44,7 +44,7 @@ class PublisherTest extends TestCase
         $this->publisher = new Publisher(
             $this->client = $this->createMock(Client::class),
             new HttpResourceTranslator(
-                $this->createMock(PropertyTranslatorInterface::class)
+                $this->createMock(PropertyTranslator::class)
             )
         );
     }

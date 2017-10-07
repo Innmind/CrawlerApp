@@ -8,7 +8,7 @@ use Innmind\Url\UrlInterface;
 /**
  * Makes the app wait a certain time before crawling a resource
  */
-interface DelayerInterface
+interface Delayer
 {
     public function __invoke(UrlInterface $url): void;
 }

@@ -16,7 +16,7 @@ final class HttpResourceTranslator
 {
     private $translator;
 
-    public function __construct(PropertyTranslatorInterface $translator)
+    public function __construct(PropertyTranslator $translator)
     {
         $this->translator = $translator;
     }

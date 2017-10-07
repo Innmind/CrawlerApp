@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace AppBundle\Linker;
 
 use AppBundle\{
-    LinkerInterface,
+    Linker as LinkerInterface,
     Reference,
     Exception\CantLinkResourceAcrossServersException
 };

@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Delayer;
 
 use AppBundle\{
     Delayer\FixDelayer,
-    DelayerInterface
+    Delayer
 };
 use Innmind\Url\UrlInterface;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +15,7 @@ class FixDelayerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            DelayerInterface::class,
+            Delayer::class,
             new FixDelayer(1)
         );
     }

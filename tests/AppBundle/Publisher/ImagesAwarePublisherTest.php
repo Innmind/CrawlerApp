@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Publisher;
 
 use AppBundle\{
     Publisher\ImagesAwarePublisher,
-    PublisherInterface,
+    Publisher,
     Reference
 };
 use Innmind\Crawler\{
@@ -36,7 +36,7 @@ class ImagesAwarePublisherTest extends TestCase
     public function setUp()
     {
         $this->publisher = new ImagesAwarePublisher(
-            $this->inner = $this->createMock(PublisherInterface::class),
+            $this->inner = $this->createMock(Publisher::class),
             $this->producer = $this->createMock(ProducerInterface::class)
         );
     }
@@ -44,7 +44,7 @@ class ImagesAwarePublisherTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            PublisherInterface::class,
+            Publisher::class,
             $this->publisher
         );
     }

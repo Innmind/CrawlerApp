@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\Crawler;
 
-use AppBundle\DelayerInterface;
+use AppBundle\Delayer;
 use Innmind\Crawler\{
     Crawler,
     HttpResource
@@ -16,7 +16,7 @@ final class DelayerAwareCrawler implements Crawler
     private $crawler;
 
     public function __construct(
-        DelayerInterface $delayer,
+        Delayer $delayer,
         Crawler $crawler
     ) {
         $this->delay = $delayer;

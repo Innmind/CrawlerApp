@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace AppBundle\Publisher;
 
 use AppBundle\{
-    PublisherInterface,
+    Publisher as PublisherInterface,
     Reference
 };
 use Innmind\Crawler\{

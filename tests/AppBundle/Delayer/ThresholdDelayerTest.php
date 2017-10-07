@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Delayer;
 
 use AppBundle\{
     Delayer\ThresholdDelayer,
-    DelayerInterface
+    Delayer
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
@@ -20,10 +20,10 @@ class ThresholdDelayerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            DelayerInterface::class,
+            Delayer::class,
             new ThresholdDelayer(
-                $this->createMock(DelayerInterface::class),
-                $this->createMock(DelayerInterface::class),
+                $this->createMock(Delayer::class),
+                $this->createMock(Delayer::class),
                 $this->createMock(TimeContinuumInterface::class),
                 0
             )
@@ -33,8 +33,8 @@ class ThresholdDelayerTest extends TestCase
     public function testDoesntCallFallback()
     {
         $delayer = new ThresholdDelayer(
-            $attempt = $this->createMock(DelayerInterface::class),
-            $fallback = $this->createMock(DelayerInterface::class),
+            $attempt = $this->createMock(Delayer::class),
+            $fallback = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
             1000
         );
@@ -65,8 +65,8 @@ class ThresholdDelayerTest extends TestCase
     public function testCallFallback()
     {
         $delayer = new ThresholdDelayer(
-            $attempt = $this->createMock(DelayerInterface::class),
-            $fallback = $this->createMock(DelayerInterface::class),
+            $attempt = $this->createMock(Delayer::class),
+            $fallback = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
             1000
         );
@@ -101,8 +101,8 @@ class ThresholdDelayerTest extends TestCase
     public function testThrowWhenNegativeThreshold()
     {
         new ThresholdDelayer(
-            $this->createMock(DelayerInterface::class),
-            $this->createMock(DelayerInterface::class),
+            $this->createMock(Delayer::class),
+            $this->createMock(Delayer::class),
             $this->createMock(TimeContinuumInterface::class),
             -1
         );

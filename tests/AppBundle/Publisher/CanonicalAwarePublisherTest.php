@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Publisher;
 
 use AppBundle\{
     Publisher\CanonicalAwarePublisher,
-    PublisherInterface,
+    Publisher,
     Reference
 };
 use Innmind\Crawler\{
@@ -32,7 +32,7 @@ class CanonicalAwarePublisherTest extends TestCase
     public function setUp()
     {
         $this->publisher = new CanonicalAwarePublisher(
-            $this->inner = $this->createMock(PublisherInterface::class),
+            $this->inner = $this->createMock(Publisher::class),
             $this->producer = $this->createMock(ProducerInterface::class)
         );
     }
@@ -40,7 +40,7 @@ class CanonicalAwarePublisherTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            PublisherInterface::class,
+            Publisher::class,
             $this->publisher
         );
     }

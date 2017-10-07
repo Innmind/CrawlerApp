@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Translator\Property;
 
 use AppBundle\Translator\{
     Property\PathTranslator,
-    PropertyTranslatorInterface
+    PropertyTranslator
 };
 use Innmind\Rest\Client\Definition\{
     Property,
@@ -48,7 +48,7 @@ class PathTranslatorTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            PropertyTranslatorInterface::class,
+            PropertyTranslator::class,
             $this->translator
         );
     }

@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Delayer;
 
 use AppBundle\{
     Delayer\RobotsTxtAwareDelayer,
-    DelayerInterface
+    Delayer
 };
 use Innmind\RobotsTxt\{
     Parser,
@@ -25,7 +25,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            DelayerInterface::class,
+            Delayer::class,
             new RobotsTxtAwareDelayer(
                 $this->createMock(Parser::class),
                 'foo'

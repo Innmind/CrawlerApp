@@ -5,8 +5,8 @@ namespace Tests\AppBundle\Consumer;
 
 use AppBundle\{
     Consumer\CrawlConsumer,
-    PublisherInterface,
-    LinkerInterface,
+    Publisher,
+    Linker,
     Reference,
     Exception\UrlCannotBeCrawledException,
     Exception\ResourceCannotBePublishedException,
@@ -44,8 +44,8 @@ class CrawlConsumerTest extends TestCase
             ConsumerInterface::class,
             new CrawlConsumer(
                 $this->createMock(Crawler::class),
-                $this->createMock(PublisherInterface::class),
-                $this->createMock(LinkerInterface::class),
+                $this->createMock(Publisher::class),
+                $this->createMock(Linker::class),
                 'ua'
             )
         );
@@ -55,8 +55,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -105,8 +105,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -138,8 +138,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -171,8 +171,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -204,8 +204,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -236,8 +236,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -298,8 +298,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -358,8 +358,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -415,8 +415,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([
@@ -465,8 +465,8 @@ class CrawlConsumerTest extends TestCase
     {
         $consumer = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
-            $publisher = $this->createMock(PublisherInterface::class),
-            $linker = $this->createMock(LinkerInterface::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
             'ua'
         );
         $message = new AMQPMessage(serialize([

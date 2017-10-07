@@ -3,12 +3,12 @@ declare(strict_types = 1);
 
 namespace AppBundle\Translator\Property\Image;
 
-use AppBundle\Translator\PropertyTranslatorInterface;
+use AppBundle\Translator\PropertyTranslator;
 use Innmind\Crawler\HttpResource;
 use Innmind\Rest\Client\Definition\Property;
 use Innmind\Immutable\Map;
 
-final class DimensionTranslator implements PropertyTranslatorInterface
+final class DimensionTranslator implements PropertyTranslator
 {
     public function supports(HttpResource $resource, Property $property): bool
     {

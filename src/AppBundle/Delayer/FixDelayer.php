@@ -4,12 +4,12 @@ declare(strict_types = 1);
 namespace AppBundle\Delayer;
 
 use AppBundle\{
-    DelayerInterface,
+    Delayer,
     Exception\InvalidArgumentException
 };
 use Innmind\Url\UrlInterface;
 
-final class FixDelayer implements DelayerInterface
+final class FixDelayer implements Delayer
 {
     private $microseconds;
 

@@ -5,7 +5,7 @@ namespace AppBundle;
 
 use AppBundle\Reference;
 
-interface LinkerInterface
+interface Linker
 {
     public function __invoke(
         Reference $source,

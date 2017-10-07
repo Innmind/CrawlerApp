@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Translator\Property\HtmlPage;
 
 use AppBundle\Translator\{
     Property\HtmlPage\MainContentTranslator,
-    PropertyTranslatorInterface
+    PropertyTranslator
 };
 use Innmind\Rest\Client\Definition\{
     Property,
@@ -45,7 +45,7 @@ class MainContentTranslatorTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            PropertyTranslatorInterface::class,
+            PropertyTranslator::class,
             $this->translator
         );
     }

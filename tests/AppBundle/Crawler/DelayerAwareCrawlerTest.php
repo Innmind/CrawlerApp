@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Crawler;
 
 use AppBundle\{
     Crawler\DelayerAwareCrawler,
-    DelayerInterface
+    Delayer
 };
 use Innmind\Crawler\{
     Crawler,
@@ -26,7 +26,7 @@ class DelayerAwareCrawlerTest extends TestCase
         $this->assertInstanceOf(
             Crawler::class,
             new DelayerAwareCrawler(
-                $this->createMock(DelayerInterface::class),
+                $this->createMock(Delayer::class),
                 $this->createMock(Crawler::class)
             )
         );
@@ -35,7 +35,7 @@ class DelayerAwareCrawlerTest extends TestCase
     public function testExecute()
     {
         $crawler = new DelayerAwareCrawler(
-            $delayer = $this->createMock(DelayerInterface::class),
+            $delayer = $this->createMock(Delayer::class),
             $inner = $this->createMock(Crawler::class)
         );
         $url = $this->createMock(UrlInterface::class);

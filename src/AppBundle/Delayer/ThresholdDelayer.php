@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace AppBundle\Delayer;
 
 use AppBundle\{
-    DelayerInterface,
+    Delayer,
     Exception\InvalidArgumentException
 };
 use Innmind\TimeContinuum\{
@@ -13,7 +13,7 @@ use Innmind\TimeContinuum\{
 };
 use Innmind\Url\UrlInterface;
 
-final class ThresholdDelayer implements DelayerInterface
+final class ThresholdDelayer implements Delayer
 {
     private $attempt;
     private $fallback;
@@ -21,8 +21,8 @@ final class ThresholdDelayer implements DelayerInterface
     private $threshold;
 
     public function __construct(
-        DelayerInterface $attempt,
-        DelayerInterface $fallback,
+        Delayer $attempt,
+        Delayer $fallback,
         TimeContinuumInterface $clock,
         int $threshold
     ) {

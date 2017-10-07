@@ -4,14 +4,14 @@ declare(strict_types = 1);
 namespace AppBundle\Translator\Property;
 
 use AppBundle\{
-    Translator\PropertyTranslatorInterface,
+    Translator\PropertyTranslator,
     Exception\InvalidArgumentException
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Rest\Client\Definition\Property;
 use Innmind\Immutable\MapInterface;
 
-final class DelegationTranslator implements PropertyTranslatorInterface
+final class DelegationTranslator implements PropertyTranslator
 {
     private $translators;
 
@@ -19,7 +19,7 @@ final class DelegationTranslator implements PropertyTranslatorInterface
     {
         if (
             (string) $translators->keyType() !== 'string' ||
-            (string) $translators->valueType() !== PropertyTranslatorInterface::class
+            (string) $translators->valueType() !== PropertyTranslator::class
         ) {
             throw new InvalidArgumentException;
         }

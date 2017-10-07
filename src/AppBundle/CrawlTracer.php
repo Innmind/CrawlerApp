@@ -9,7 +9,7 @@ use Innmind\Url\{
 };
 use Innmind\TimeContinuum\PointInTimeInterface;
 
-interface CrawlTracerInterface
+interface CrawlTracer
 {
     public function trace(UrlInterface $url): self;
     public function isKnown(UrlInterface $url): bool;

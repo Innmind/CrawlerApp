@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace AppBundle\Crawler;
 
 use AppBundle\{
-    CrawlTracerInterface,
+    CrawlTracer,
     Exception\UrlCannotBeCrawledException
 };
 use Innmind\Crawler\{
@@ -19,7 +19,7 @@ final class TracerAwareCrawler implements Crawler
     private $crawler;
 
     public function __construct(
-        CrawlTracerInterface $tracer,
+        CrawlTracer $tracer,
         Crawler $crawler
     ) {
         $this->tracer = $tracer;

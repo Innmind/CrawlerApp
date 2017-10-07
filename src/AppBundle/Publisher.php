@@ -6,7 +6,7 @@ namespace AppBundle;
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
 
-interface PublisherInterface
+interface Publisher
 {
     /**
      * @param HttpResource $resource The resource to crawl

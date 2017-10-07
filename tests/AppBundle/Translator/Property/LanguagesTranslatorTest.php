@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Translator\Property;
 
 use AppBundle\Translator\{
     Property\LanguagesTranslator,
-    PropertyTranslatorInterface
+    PropertyTranslator
 };
 use Innmind\Rest\Client\Definition\{
     Property,
@@ -45,7 +45,7 @@ class LanguagesTranslatorTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            PropertyTranslatorInterface::class,
+            PropertyTranslator::class,
             $this->translator
         );
     }

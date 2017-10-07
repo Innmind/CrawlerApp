@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Translator;
 
 use AppBundle\Translator\{
     HttpResourceTranslator,
-    PropertyTranslatorInterface
+    PropertyTranslator
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
@@ -69,7 +69,7 @@ class HttpResourceTranslatorTest extends TestCase
             new Map('string', 'string'),
             false
         );
-        $propertyTranslator = $this->createMock(PropertyTranslatorInterface::class);
+        $propertyTranslator = $this->createMock(PropertyTranslator::class);
         $propertyTranslator
             ->expects($this->at(0))
             ->method('supports')

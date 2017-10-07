@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Translator\Property\HtmlPage;
 
 use AppBundle\Translator\{
     Property\HtmlPage\AndroidAppLinkTranslator,
-    PropertyTranslatorInterface
+    PropertyTranslator
 };
 use Innmind\Rest\Client\Definition\{
     Property,
@@ -48,7 +48,7 @@ class AndroidAppLinkTranslatorTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            PropertyTranslatorInterface::class,
+            PropertyTranslator::class,
             $this->translator
         );
     }

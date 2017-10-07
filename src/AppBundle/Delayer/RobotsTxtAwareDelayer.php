@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\Delayer;
 
-use AppBundle\DelayerInterface;
+use AppBundle\Delayer;
 use Innmind\RobotsTxt\{
     Parser,
     Directives,
@@ -16,7 +16,7 @@ use Innmind\Url\{
     NullFragment
 };
 
-final class RobotsTxtAwareDelayer implements DelayerInterface
+final class RobotsTxtAwareDelayer implements Delayer
 {
     private $parser;
     private $userAgent;

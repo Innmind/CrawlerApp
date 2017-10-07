@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace AppBundle\Consumer;
 
 use AppBundle\{
-    PublisherInterface,
-    LinkerInterface,
+    Publisher,
+    Linker,
     Reference,
     Exception\ResourceCannotBePublishedException,
     Exception\UrlCannotBeCrawledException,
@@ -44,8 +44,8 @@ final class CrawlConsumer implements ConsumerInterface
 
     public function __construct(
         Crawler $crawler,
-        PublisherInterface $publisher,
-        LinkerInterface $linker,
+        Publisher $publisher,
+        Linker $linker,
         string $userAgent
     ) {
         $this->crawler = $crawler;

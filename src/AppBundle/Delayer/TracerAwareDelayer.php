@@ -4,8 +4,8 @@ declare(strict_types = 1);
 namespace AppBundle\Delayer;
 
 use AppBundle\{
-    CrawlTracerInterface,
-    DelayerInterface,
+    CrawlTracer,
+    Delayer,
     Exception\HostNeverHitException
 };
 use Innmind\TimeContinuum\{
@@ -14,7 +14,7 @@ use Innmind\TimeContinuum\{
 };
 use Innmind\Url\UrlInterface;
 
-final class TracerAwareDelayer implements DelayerInterface
+final class TracerAwareDelayer implements Delayer
 {
     private $tracer;
     private $delay;
@@ -22,8 +22,8 @@ final class TracerAwareDelayer implements DelayerInterface
     private $threshold;
 
     public function __construct(
-        CrawlTracerInterface $tracer,
-        DelayerInterface $delayer,
+        CrawlTracer $tracer,
+        Delayer $delayer,
         TimeContinuumInterface $clock,
         int $threshold
     ) {
