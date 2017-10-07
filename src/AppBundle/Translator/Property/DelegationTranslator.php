@@ -3,10 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\Translator\Property;
 
-use AppBundle\{
-    Translator\PropertyTranslator,
-    Exception\InvalidArgumentException
-};
+use AppBundle\Translator\PropertyTranslator;
 use Innmind\Crawler\HttpResource;
 use Innmind\Rest\Client\Definition\Property;
 use Innmind\Immutable\MapInterface;
@@ -21,7 +18,10 @@ final class DelegationTranslator implements PropertyTranslator
             (string) $translators->keyType() !== 'string' ||
             (string) $translators->valueType() !== PropertyTranslator::class
         ) {
-            throw new InvalidArgumentException;
+            throw new \TypeError(sprintf(
+                'Argument 1 must be of type MapInterface<string, %s>',
+                PropertyTranslator::class
+            ));
         }
 
         $this->translators = $translators;

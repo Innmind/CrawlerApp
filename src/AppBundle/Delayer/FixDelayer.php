@@ -5,7 +5,7 @@ namespace AppBundle\Delayer;
 
 use AppBundle\{
     Delayer,
-    Exception\InvalidArgumentException
+    Exception\DomainException
 };
 use Innmind\Url\UrlInterface;
 
@@ -16,7 +16,7 @@ final class FixDelayer implements Delayer
     public function __construct(int $milliseconds)
     {
         if ($milliseconds < 0) {
-            throw new InvalidArgumentException;
+            throw new DomainException;
         }
 
         $this->microseconds = $milliseconds * 1000;

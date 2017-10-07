@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\MediaType;
 
-use AppBundle\Exception\InvalidArgumentException;
+use AppBundle\Exception\DomainException;
 use Innmind\Filesystem\{
     MediaType,
     Exception\InvalidMediaTypeString
@@ -25,7 +25,7 @@ final class Pattern
         float $quality = 1
     ) {
         if ($quality < 0 || $quality > 1) {
-            throw new InvalidArgumentException;
+            throw new DomainException;
         }
 
         $this->topLevel = $topLevel;

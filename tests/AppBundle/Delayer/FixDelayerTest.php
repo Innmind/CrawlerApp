@@ -29,7 +29,7 @@ class FixDelayerTest extends TestCase
     }
 
     /**
-     * @expectedException AppBundle\Exception\InvalidArgumentException
+     * @expectedException AppBundle\Exception\DomainException
      */
     public function testThrowWhenNegativeSleepTime()
     {

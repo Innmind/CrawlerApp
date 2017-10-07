@@ -5,7 +5,7 @@ namespace AppBundle\Delayer;
 
 use AppBundle\{
     Delayer,
-    Exception\InvalidArgumentException
+    Exception\DomainException
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
@@ -27,7 +27,7 @@ final class ThresholdDelayer implements Delayer
         int $threshold
     ) {
         if ($threshold < 0) {
-            throw new InvalidArgumentException;
+            throw new DomainException;
         }
 
         $this->attempt = $attempt;

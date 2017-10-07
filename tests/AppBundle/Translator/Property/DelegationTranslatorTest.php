@@ -124,7 +124,8 @@ class DelegationTranslatorTest extends TestCase
     }
 
     /**
-     * @expectedException AppBundle\Exception\InvalidArgumentException
+     * @expectedException TypeError
+     * @expectedExceptionMessage Argument 1 must be of type MapInterface<string, AppBundle\Translator\PropertyTranslator>
      */
     public function testThrowWhenInvalidTranslatorMap()
     {
