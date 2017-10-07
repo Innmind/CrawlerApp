@@ -42,7 +42,7 @@ class TracerAwareCrawlerTest extends TestCase
         $url = $this->createMock(UrlInterface::class);
         $tracer
             ->expects($this->once())
-            ->method('isKnown')
+            ->method('knows')
             ->with($url)
             ->willReturn(true);
         $inner
@@ -71,7 +71,7 @@ class TracerAwareCrawlerTest extends TestCase
         $url = $this->createMock(UrlInterface::class);
         $tracer
             ->expects($this->once())
-            ->method('isKnown')
+            ->method('knows')
             ->with($url)
             ->willReturn(false);
         $request = $this->createMock(Request::class);

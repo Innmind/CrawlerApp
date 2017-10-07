@@ -28,7 +28,7 @@ final class TracerAwareCrawler implements Crawler
 
     public function execute(Request $request): HttpResource
     {
-        if ($this->tracer->isKnown($request->url())) {
+        if ($this->tracer->knows($request->url())) {
             throw new UrlCannotBeCrawledException($request->url());
         }
 

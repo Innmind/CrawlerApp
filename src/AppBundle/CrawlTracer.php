@@ -12,7 +12,7 @@ use Innmind\TimeContinuum\PointInTimeInterface;
 interface CrawlTracer
 {
     public function trace(UrlInterface $url): self;
-    public function isKnown(UrlInterface $url): bool;
+    public function knows(UrlInterface $url): bool;
 
     /**
      * @throws HostNeverHitException

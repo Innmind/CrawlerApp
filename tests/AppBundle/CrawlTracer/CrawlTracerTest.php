@@ -188,7 +188,7 @@ class CrawlTracerTest extends TestCase
         );
     }
 
-    public function testIsKnown()
+    public function testKnows()
     {
         $tracer = new CrawlTracer(
             $filesystem = $this->createMock(Adapter::class),
@@ -210,8 +210,8 @@ class CrawlTracerTest extends TestCase
                 )
             );
 
-        $this->assertFalse($tracer->isKnown(Url::fromString('/foo')));
-        $this->assertTrue($tracer->isKnown(Url::fromString('/foo')));
+        $this->assertFalse($tracer->knows(Url::fromString('/foo')));
+        $this->assertTrue($tracer->knows(Url::fromString('/foo')));
     }
 
     public function testLastHit()

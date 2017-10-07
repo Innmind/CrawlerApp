@@ -73,7 +73,7 @@ final class CrawlTracer implements CrawlTracerInterface
             )
         );
 
-        if ($this->isKnown($url)) {
+        if ($this->knows($url)) {
             return $this;
         }
 
@@ -89,7 +89,7 @@ final class CrawlTracer implements CrawlTracerInterface
         return $this;
     }
 
-    public function isKnown(UrlInterface $url): bool
+    public function knows(UrlInterface $url): bool
     {
         $urls = new Str(
             (string) $this
