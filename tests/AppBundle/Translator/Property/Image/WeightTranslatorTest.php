@@ -9,18 +9,18 @@ use AppBundle\Translator\{
 };
 use Innmind\Rest\Client\Definition\{
     Property,
-    TypeInterface,
+    Type,
     Access
 };
 use Innmind\Crawler\{
     HttpResource,
-    HttpResource\AttributeInterface,
     HttpResource\Attribute
 };
 use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\{
-    StreamInterface,
-    MediaTypeInterface
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\{
+    Readable,
+    Stream\Size
 };
 use Innmind\Immutable\{
     Set,
@@ -38,8 +38,8 @@ class WeightTranslatorTest extends TestCase
         $this->translator = new WeightTranslator;
         $this->property = new Property(
             'weight',
-            $this->createMock(TypeInterface::class),
-            new Access(new Set('string')),
+            $this->createMock(Type::class),
+            new Access,
             new Set('string'),
             false
         );
@@ -55,24 +55,24 @@ class WeightTranslatorTest extends TestCase
 
     public function testSupports()
     {
-        $attributes = new Map('string', AttributeInterface::class);
+        $attributes = new Map('string', Attribute::class);
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes,
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $this->assertFalse($this->translator->supports($resource, $this->property));
 
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes->put(
                 'weight',
-                new Attribute('weight', 'whatever')
+                new Attribute\Attribute('weight', 'whatever')
             ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $this->assertTrue($this->translator->supports($resource, $this->property));
@@ -80,15 +80,15 @@ class WeightTranslatorTest extends TestCase
 
     public function testTranslate()
     {
-        $attributes = new Map('string', AttributeInterface::class);
+        $attributes = new Map('string', Attribute::class);
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes->put(
                 'weight',
-                new Attribute('weight', 42)
+                new Attribute\Attribute('weight', new Size(42))
             ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $this->assertSame(

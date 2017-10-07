@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace AppBundle\MediaType;
 
 use AppBundle\Exception\MediaTypeDoesntMatchAnyException;
-use Innmind\Filesystem\MediaTypeInterface;
+use Innmind\Filesystem\MediaType;
 use Innmind\Immutable\SetInterface;
 
 final class Negotiator
@@ -12,7 +12,7 @@ final class Negotiator
     /**
      * @param SetInterface<Pattern> $patterns
      */
-    public function best(MediaTypeInterface $mediaType, SetInterface $pattterns): Pattern
+    public function best(MediaType $mediaType, SetInterface $pattterns): Pattern
     {
         $pattterns = $pattterns
             ->filter(function(Pattern $pattern) use ($mediaType): bool {

@@ -4,19 +4,17 @@ declare(strict_types = 1);
 namespace AppBundle\Command;
 
 use Innmind\Http\{
-    Message\Request,
-    Message\Method,
-    ProtocolVersion,
-    Headers,
-    Header\HeaderInterface,
-    Header\HeaderValueInterface,
-    Header\Header,
-    Header\HeaderValue
+    Message\Request\Request,
+    Message\Method\Method,
+    ProtocolVersion\ProtocolVersion,
+    Headers\Headers,
+    Header,
+    Header\Value\Value
 };
 use Innmind\Url\Url;
 use Innmind\Crawler\HttpResource\{
-    AttributeInterface,
-    AttributesInterface
+    Attribute,
+    Attributes
 };
 use Innmind\Immutable\{
     Map,
@@ -59,17 +57,16 @@ final class CrawlCommand extends ContainerAwareCommand
                     new Method(Method::GET),
                     new ProtocolVersion(2, 0),
                     new Headers(
-                        (new Map('string', HeaderInterface::class))
+                        (new Map('string', Header::class))
                             ->put(
                                 'User-Agent',
-                                new Header(
+                                new Header\Header(
                                     'User-Agent',
-                                    (new Set(HeaderValueInterface::class))
-                                        ->add(new HeaderValue(
-                                            $this
-                                                ->getContainer()
-                                                ->getParameter('user_agent')
-                                        ))
+                                    new Value(
+                                        $this
+                                            ->getContainer()
+                                            ->getParameter('user_agent')
+                                    )
                                 )
                             )
                     )
@@ -79,7 +76,7 @@ final class CrawlCommand extends ContainerAwareCommand
         $output->writeln('<info>Resource attributes:</>');
         $resource
             ->attributes()
-            ->foreach(function(string $name, AttributeInterface $attribute) use ($output): void {
+            ->foreach(function(string $name, Attribute $attribute) use ($output): void {
                 $this->print($output, $name, $attribute);
             });
 
@@ -96,15 +93,15 @@ final class CrawlCommand extends ContainerAwareCommand
     private function print(
         OutputInterface $output,
         string $name,
-        AttributeInterface $attribute,
+        Attribute $attribute,
         int $level = 0
     ): void {
         switch (true) {
-            case $attribute instanceof AttributesInterface:
+            case $attribute instanceof Attributes:
                 $output->writeln(sprintf('<fg=yellow>%s</>:', $name));
                 $attribute
                     ->content()
-                    ->foreach(function($key, AttributeInterface $value) use ($output, $level): void {
+                    ->foreach(function($key, Attribute $value) use ($output, $level): void {
                         $this->print($output, $key, $value, $level + 1);
                     });
                 break;

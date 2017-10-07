@@ -5,8 +5,8 @@ namespace AppBundle\MediaType;
 
 use AppBundle\Exception\InvalidArgumentException;
 use Innmind\Filesystem\{
-    MediaTypeInterface,
-    Exception\InvalidMediaTypeStringException
+    MediaType,
+    Exception\InvalidMediaTypeString
 };
 use Innmind\Immutable\{
     Str,
@@ -58,7 +58,7 @@ final class Pattern
         );
     }
 
-    public function matches(MediaTypeInterface $mediaType): bool
+    public function matches(MediaType $mediaType): bool
     {
         if (
             $this->topLevel() === '*' &&
@@ -91,7 +91,7 @@ final class Pattern
         $pattern = '~[\w\-.*]+/[\w\-.*]+([;,] [\w\-.]+=[\w\-.]+)?~';
 
         if (!$string->matches($pattern)) {
-            throw new InvalidMediaTypeStringException;
+            throw new InvalidMediaTypeString;
         }
 
         $splits = $string->pregSplit('~[;,] ?~');

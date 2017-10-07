@@ -9,16 +9,14 @@ use AppBundle\{
     Exception\UrlCannotBeCrawledException
 };
 use Innmind\Crawler\{
-    CrawlerInterface,
+    Crawler,
     HttpResource,
-    HttpResource\AttributeInterface
+    HttpResource\Attribute
 };
 use Innmind\Url\UrlInterface;
-use Innmind\Http\Message\RequestInterface;
-use Innmind\Filesystem\{
-    MediaTypeInterface,
-    StreamInterface
-};
+use Innmind\Http\Message\Request;
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
 
@@ -27,10 +25,10 @@ class TracerAwareCrawlerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            CrawlerInterface::class,
+            Crawler::class,
             new TracerAwareCrawler(
                 $this->createMock(CrawlTracerInterface::class),
-                $this->createMock(CrawlerInterface::class)
+                $this->createMock(Crawler::class)
             )
         );
     }
@@ -39,7 +37,7 @@ class TracerAwareCrawlerTest extends TestCase
     {
         $crawler = new TracerAwareCrawler(
             $tracer = $this->createMock(CrawlTracerInterface::class),
-            $inner = $this->createMock(CrawlerInterface::class)
+            $inner = $this->createMock(Crawler::class)
         );
         $url = $this->createMock(UrlInterface::class);
         $tracer
@@ -50,7 +48,7 @@ class TracerAwareCrawlerTest extends TestCase
         $inner
             ->expects($this->never())
             ->method('execute');
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createMock(Request::class);
         $request
             ->expects($this->exactly(2))
             ->method('url')
@@ -68,7 +66,7 @@ class TracerAwareCrawlerTest extends TestCase
     {
         $crawler = new TracerAwareCrawler(
             $tracer = $this->createMock(CrawlTracerInterface::class),
-            $inner = $this->createMock(CrawlerInterface::class)
+            $inner = $this->createMock(Crawler::class)
         );
         $url = $this->createMock(UrlInterface::class);
         $tracer
@@ -76,7 +74,7 @@ class TracerAwareCrawlerTest extends TestCase
             ->method('isKnown')
             ->with($url)
             ->willReturn(false);
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createMock(Request::class);
         $request
             ->expects($this->exactly(2))
             ->method('url')
@@ -88,9 +86,9 @@ class TracerAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $url,
-                    $this->createMock(MediaTypeInterface::class),
-                    new Map('string', AttributeInterface::class),
-                    $this->createMock(StreamInterface::class)
+                    $this->createMock(MediaType::class),
+                    new Map('string', Attribute::class),
+                    $this->createMock(Readable::class)
                 )
             );
 

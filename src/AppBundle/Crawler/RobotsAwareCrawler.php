@@ -5,29 +5,29 @@ namespace AppBundle\Crawler;
 
 use AppBundle\Exception\UrlCannotBeCrawledException;
 use Innmind\Crawler\{
-    CrawlerInterface,
+    Crawler,
     HttpResource
 };
 use Innmind\RobotsTxt\{
-    ParserInterface,
-    Exception\FileNotFoundException
+    Parser,
+    Exception\FileNotFound
 };
 use Innmind\Url\{
     NullQuery,
     NullFragment,
     Path
 };
-use Innmind\Http\Message\RequestInterface;
+use Innmind\Http\Message\Request;
 
-final class RobotsAwareCrawler implements CrawlerInterface
+final class RobotsAwareCrawler implements Crawler
 {
     private $parser;
     private $crawler;
     private $userAgent;
 
     public function __construct(
-        ParserInterface $parser,
-        CrawlerInterface $crawler,
+        Parser $parser,
+        Crawler $crawler,
         string $userAgent
     ) {
         $this->parser = $parser;
@@ -35,7 +35,7 @@ final class RobotsAwareCrawler implements CrawlerInterface
         $this->userAgent = $userAgent;
     }
 
-    public function execute(RequestInterface $request): HttpResource
+    public function execute(Request $request): HttpResource
     {
         try {
             $url = $request
@@ -48,7 +48,7 @@ final class RobotsAwareCrawler implements CrawlerInterface
             if ($robots->disallows($this->userAgent, $request->url())) {
                 throw new UrlCannotBeCrawledException($request->url());
             }
-        } catch (FileNotFoundException $e) {
+        } catch (FileNotFound $e) {
             //pass
         }
 

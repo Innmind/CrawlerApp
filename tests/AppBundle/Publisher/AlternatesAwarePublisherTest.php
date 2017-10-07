@@ -10,7 +10,6 @@ use AppBundle\{
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\AttributeInterface,
     HttpResource\Attribute,
     HttpResource\Alternates,
     HttpResource\Alternate
@@ -19,11 +18,9 @@ use Innmind\Url\{
     UrlInterface,
     Url
 };
-use Innmind\Filesystem\{
-    MediaTypeInterface,
-    StreamInterface
-};
-use Innmind\Rest\Client\IdentityInterface;
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
+use Innmind\Rest\Client\Identity;
 use Innmind\Immutable\{
     Map,
     SetInterface,
@@ -58,9 +55,9 @@ class AlternatesAwarePublisherTest extends TestCase
     {
         $resource = new CrawledResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
-            new Map('string', AttributeInterface::class),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(MediaType::class),
+            new Map('string', Attribute::class),
+            $this->createMock(Readable::class)
         );
         $server = $this->createMock(UrlInterface::class);
         $this
@@ -70,7 +67,7 @@ class AlternatesAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $this->createMock(Identity::class),
                     'foo',
                     $server
                 )
@@ -87,12 +84,12 @@ class AlternatesAwarePublisherTest extends TestCase
     {
         $resource = new CrawledResource(
             $url = Url::fromString('http://example.com/'),
-            $this->createMock(MediaTypeInterface::class),
-            (new Map('string', AttributeInterface::class))
+            $this->createMock(MediaType::class),
+            (new Map('string', Attribute::class))
                 ->put(
                     'alternates',
                     new Alternates(
-                        (new Map('string', AttributeInterface::class))
+                        (new Map('string', Attribute::class))
                             ->put(
                                 'en',
                                 new Alternate(
@@ -102,7 +99,7 @@ class AlternatesAwarePublisherTest extends TestCase
                             )
                     )
                 ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
         $server = $this->createMock(UrlInterface::class);
         $this
@@ -112,7 +109,7 @@ class AlternatesAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $this->createMock(Identity::class),
                     'foo',
                     $server
                 )
@@ -129,13 +126,13 @@ class AlternatesAwarePublisherTest extends TestCase
     {
         $resource = new CrawledResource(
             $url = Url::fromString('http://example.com/'),
-            $this->createMock(MediaTypeInterface::class),
-            (new Map('string', AttributeInterface::class))
+            $this->createMock(MediaType::class),
+            (new Map('string', Attribute::class))
                 ->put(
                     'alternates',
-                    $this->createMock(AttributeInterface::class)
+                    $this->createMock(Attribute::class)
                 ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
         $server = $this->createMock(UrlInterface::class);
         $this
@@ -145,7 +142,7 @@ class AlternatesAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $this->createMock(Identity::class),
                     'foo',
                     $server
                 )
@@ -162,12 +159,12 @@ class AlternatesAwarePublisherTest extends TestCase
     {
         $resource = new CrawledResource(
             Url::fromString('http://example.com/'),
-            $this->createMock(MediaTypeInterface::class),
-            (new Map('string', AttributeInterface::class))
+            $this->createMock(MediaType::class),
+            (new Map('string', Attribute::class))
                 ->put(
                     'alternates',
                     new Alternates(
-                        (new Map('string', AttributeInterface::class))
+                        (new Map('string', Attribute::class))
                             ->put(
                                 'en',
                                 new Alternate(
@@ -178,7 +175,7 @@ class AlternatesAwarePublisherTest extends TestCase
                             )
                     )
                 ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
         $server = Url::fromString('http://server.url/');
         $this
@@ -188,7 +185,7 @@ class AlternatesAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $identity = $this->createMock(IdentityInterface::class),
+                    $identity = $this->createMock(Identity::class),
                     'foo',
                     $server
                 )

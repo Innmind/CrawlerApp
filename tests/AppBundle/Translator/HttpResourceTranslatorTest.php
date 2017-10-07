@@ -9,22 +9,19 @@ use AppBundle\Translator\{
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\AttributeInterface,
     HttpResource\Attribute
 };
 use Innmind\Rest\Client\{
     Definition\HttpResource as Definition,
     Definition\Identity,
     Definition\Property,
-    Definition\TypeInterface,
+    Definition\Type,
     Definition\Access,
     HttpResource
 };
 use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\{
-    MediaTypeInterface,
-    StreamInterface
-};
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Map,
     Set
@@ -37,11 +34,11 @@ class HttpResourceTranslatorTest extends TestCase
     {
         $crawledResource = new CrawledResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
-            (new Map('string', AttributeInterface::class))
-                ->put('wanted', new Attribute('wanted', true))
-                ->put('not_wanted', new Attribute('not_wanted', false)),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(MediaType::class),
+            (new Map('string', Attribute::class))
+                ->put('wanted', new Attribute\Attribute('wanted', true))
+                ->put('not_wanted', new Attribute\Attribute('not_wanted', false)),
+            $this->createMock(Readable::class)
         );
         $definition = new Definition(
             'foo',
@@ -52,8 +49,8 @@ class HttpResourceTranslatorTest extends TestCase
                     'wanted',
                     $wanted = new Property(
                         'wanted',
-                        $this->createMock(TypeInterface::class),
-                        new Access(new Set('string')),
+                        $this->createMock(Type::class),
+                        new Access,
                         new Set('string'),
                         false
                     )
@@ -62,8 +59,8 @@ class HttpResourceTranslatorTest extends TestCase
                     'not_wanted',
                     $notWanted = new Property(
                         'not_wanted',
-                        $this->createMock(TypeInterface::class),
-                        new Access(new Set('string')),
+                        $this->createMock(Type::class),
+                        new Access,
                         new Set('string'),
                         false
                     )

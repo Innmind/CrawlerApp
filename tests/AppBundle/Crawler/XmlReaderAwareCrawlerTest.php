@@ -5,20 +5,18 @@ namespace Tests\AppBundle\Crawler;
 
 use AppBundle\Crawler\XmlReaderAwareCrawler;
 use Innmind\Crawler\{
-    CrawlerInterface,
+    Crawler,
     HttpResource,
-    HttpResource\AttributeInterface
+    HttpResource\Attribute
 };
 use Innmind\Xml\{
     ReaderInterface,
     NodeInterface,
     Reader\CacheReader
 };
-use Innmind\Filesystem\{
-    StreamInterface,
-    MediaTypeInterface
-};
-use Innmind\Http\Message\RequestInterface;
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
+use Innmind\Http\Message\Request;
 use Innmind\Url\UrlInterface;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
@@ -28,10 +26,10 @@ class XmlReaderAwareCrawlerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            CrawlerInterface::class,
+            Crawler::class,
             new XmlReaderAwareCrawler(
                 new CacheReader($this->createMock(ReaderInterface::class)),
-                $this->createMock(CrawlerInterface::class)
+                $this->createMock(Crawler::class)
             )
         );
     }
@@ -42,9 +40,9 @@ class XmlReaderAwareCrawlerTest extends TestCase
             $cache = new CacheReader(
                 $reader = $this->createMock(ReaderInterface::class)
             ),
-            $inner = $this->createMock(CrawlerInterface::class)
+            $inner = $this->createMock(Crawler::class)
         );
-        $stream = $this->createMock(StreamInterface::class);
+        $stream = $this->createMock(Readable::class);
         $reader
             ->expects($this->exactly(2))
             ->method('read')
@@ -52,7 +50,7 @@ class XmlReaderAwareCrawlerTest extends TestCase
             ->willReturn($this->createMock(NodeInterface::class));
         $cache->read($stream);
         $cache->read($stream);
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createMock(Request::class);
         $inner
             ->expects($this->once())
             ->method('execute')
@@ -60,8 +58,8 @@ class XmlReaderAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $this->createMock(UrlInterface::class),
-                    $this->createMock(MediaTypeInterface::class),
-                    new Map('string', AttributeInterface::class),
+                    $this->createMock(MediaType::class),
+                    new Map('string', Attribute::class),
                     $stream
                 )
             );

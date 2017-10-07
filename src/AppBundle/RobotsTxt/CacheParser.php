@@ -4,14 +4,13 @@ declare(strict_types = 1);
 namespace AppBundle\RobotsTxt;
 
 use Innmind\RobotsTxt\{
-    ParserInterface,
-    RobotsTxtInterface,
+    Parser,
     RobotsTxt,
     Parser\Walker
 };
 use Innmind\Filesystem\{
-    AdapterInterface,
-    File,
+    Adapter,
+    File\File,
     Stream\StringStream
 };
 use Innmind\Url\{
@@ -22,23 +21,23 @@ use Innmind\Url\{
 };
 use Innmind\Immutable\Str;
 
-final class CacheParser implements ParserInterface
+final class CacheParser implements Parser
 {
     private $parser;
     private $walker;
     private $filesystem;
 
     public function __construct(
-        ParserInterface $parser,
+        Parser $parser,
         Walker $walker,
-        AdapterInterface $filesystem
+        Adapter $filesystem
     ) {
         $this->parser = $parser;
         $this->walker = $walker;
         $this->filesystem = $filesystem;
     }
 
-    public function __invoke(UrlInterface $url): RobotsTxtInterface
+    public function __invoke(UrlInterface $url): RobotsTxt
     {
         $name = $this->name($url);
 
@@ -50,7 +49,7 @@ final class CacheParser implements ParserInterface
                     ->content()
             ));
 
-            return new RobotsTxt($url, $directives);
+            return new RobotsTxt\RobotsTxt($url, $directives);
         }
 
         $robots = ($this->parser)($url);

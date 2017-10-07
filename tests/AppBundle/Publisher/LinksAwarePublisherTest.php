@@ -10,18 +10,15 @@ use AppBundle\{
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\AttributeInterface,
     HttpResource\Attribute
 };
 use Innmind\Url\{
     UrlInterface,
     Url
 };
-use Innmind\Filesystem\{
-    MediaTypeInterface,
-    StreamInterface
-};
-use Innmind\Rest\Client\IdentityInterface;
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
+use Innmind\Rest\Client\Identity;
 use Innmind\Immutable\{
     Map,
     Set
@@ -55,9 +52,9 @@ class LinksAwarePublisherTest extends TestCase
     {
         $resource = new CrawledResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
-            new Map('string', AttributeInterface::class),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(MediaType::class),
+            new Map('string', Attribute::class),
+            $this->createMock(Readable::class)
         );
         $server = $this->createMock(UrlInterface::class);
         $this
@@ -67,7 +64,7 @@ class LinksAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $this->createMock(Identity::class),
                     'foo',
                     $server
                 )
@@ -84,17 +81,17 @@ class LinksAwarePublisherTest extends TestCase
     {
         $resource = new CrawledResource(
             $url = Url::fromString('http://example.com/'),
-            $this->createMock(MediaTypeInterface::class),
-            (new Map('string', AttributeInterface::class))
+            $this->createMock(MediaType::class),
+            (new Map('string', Attribute::class))
                 ->put(
                     'links',
-                    new Attribute(
+                    new Attribute\Attribute(
                         'links',
                         (new Set(UrlInterface::class))
                             ->add($url)
                     )
                 ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
         $server = $this->createMock(UrlInterface::class);
         $this
@@ -104,7 +101,7 @@ class LinksAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $this->createMock(Identity::class),
                     'foo',
                     $server
                 )
@@ -121,17 +118,17 @@ class LinksAwarePublisherTest extends TestCase
     {
         $resource = new CrawledResource(
             Url::fromString('http://example.com/'),
-            $this->createMock(MediaTypeInterface::class),
-            (new Map('string', AttributeInterface::class))
+            $this->createMock(MediaType::class),
+            (new Map('string', Attribute::class))
                 ->put(
                     'links',
-                    new Attribute(
+                    new Attribute\Attribute(
                         'links',
                         (new Set(UrlInterface::class))
                             ->add(Url::fromString('http://example.com/foo'))
                     )
                 ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
         $server = Url::fromString('http://server.url/');
         $this
@@ -141,7 +138,7 @@ class LinksAwarePublisherTest extends TestCase
             ->with($resource, $server)
             ->willReturn(
                 $expected = new Reference(
-                    $identity = $this->createMock(IdentityInterface::class),
+                    $identity = $this->createMock(Identity::class),
                     'foo',
                     $server
                 )

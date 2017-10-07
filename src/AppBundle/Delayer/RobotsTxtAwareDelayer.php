@@ -5,9 +5,9 @@ namespace AppBundle\Delayer;
 
 use AppBundle\DelayerInterface;
 use Innmind\RobotsTxt\{
-    ParserInterface,
-    DirectivesInterface,
-    Exception\FileNotFoundException
+    Parser,
+    Directives,
+    Exception\FileNotFound
 };
 use Innmind\Url\{
     UrlInterface,
@@ -21,7 +21,7 @@ final class RobotsTxtAwareDelayer implements DelayerInterface
     private $parser;
     private $userAgent;
 
-    public function __construct(ParserInterface $parser, string $userAgent)
+    public function __construct(Parser $parser, string $userAgent)
     {
         $this->parser = $parser;
         $this->userAgent = $userAgent;
@@ -37,7 +37,7 @@ final class RobotsTxtAwareDelayer implements DelayerInterface
                     ->withFragment(new NullFragment)
             )
                 ->directives()
-                ->filter(function(DirectivesInterface $directives): bool {
+                ->filter(function(Directives $directives): bool {
                     return $directives->targets($this->userAgent) &&
                         $directives->hasCrawlDelay();
                 });
@@ -49,12 +49,12 @@ final class RobotsTxtAwareDelayer implements DelayerInterface
             sleep(
                 $directives->reduce(
                     0,
-                    function(int $carry, DirectivesInterface $directives): int {
+                    function(int $carry, Directives $directives): int {
                         return max($carry, $directives->crawlDelay()->toInt());
                     }
                 )
             );
-        } catch (FileNotFoundException $e) {
+        } catch (FileNotFound $e) {
             //pass
         }
     }

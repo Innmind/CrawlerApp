@@ -5,13 +5,13 @@ namespace Tests\AppBundle\RobotsTxt;
 
 use AppBundle\RobotsTxt\CacheParser;
 use Innmind\RobotsTxt\{
-    ParserInterface,
-    RobotsTxtInterface,
+    Parser,
+    RobotsTxt,
     Parser\Walker
 };
 use Innmind\Filesystem\{
-    AdapterInterface,
-    File,
+    Adapter,
+    File\File,
     Stream\StringStream
 };
 use Innmind\Url\Url;
@@ -26,16 +26,16 @@ class CacheParserTest extends TestCase
     public function setUp()
     {
         $this->parser = new CacheParser(
-            $this->inner = $this->createMock(ParserInterface::class),
+            $this->inner = $this->createMock(Parser::class),
             new Walker,
-            $this->filesystem = $this->createMock(AdapterInterface::class)
+            $this->filesystem = $this->createMock(Adapter::class)
         );
     }
 
     public function testInterface()
     {
         $this->assertInstanceOf(
-            ParserInterface::class,
+            Parser::class,
             $this->parser
         );
     }
@@ -68,7 +68,7 @@ class CacheParserTest extends TestCase
             Url::fromString('http://user:pwd@www.example.org/robots.txt')
         );
 
-        $this->assertInstanceOf(RobotsTxtInterface::class, $robots);
+        $this->assertInstanceOf(RobotsTxt::class, $robots);
         $this->assertSame($expected, (string) $robots);
     }
 
@@ -99,7 +99,7 @@ class CacheParserTest extends TestCase
             ->method('__invoke')
             ->with($url)
             ->willReturn(
-                $expected = $this->createMock(RobotsTxtInterface::class)
+                $expected = $this->createMock(RobotsTxt::class)
             );
         $expected
             ->expects($this->once())

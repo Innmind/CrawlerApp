@@ -8,9 +8,9 @@ use AppBundle\{
     Exception\HostNeverHitException
 };
 use Innmind\Filesystem\{
-    AdapterInterface,
-    Directory,
-    File,
+    Adapter,
+    Directory\Directory,
+    File\File,
     Stream\StringStream,
     Stream\NullStream
 };
@@ -37,7 +37,7 @@ final class CrawlTracer implements CrawlTracerInterface
     private $clock;
 
     public function __construct(
-        AdapterInterface $filesystem,
+        Adapter $filesystem,
         TimeContinuumInterface $clock
     ) {
         $this->filesystem = $filesystem;

@@ -8,9 +8,9 @@ use AppBundle\{
     CrawlTracerInterface
 };
 use Innmind\Filesystem\{
-    AdapterInterface,
-    Directory,
-    File,
+    Adapter,
+    Directory\Directory,
+    File\File,
     Stream\NullStream,
     Stream\StringStream
 };
@@ -32,7 +32,7 @@ class CrawlTracerTest extends TestCase
         $this->assertInstanceOf(
             CrawlTracerInterface::class,
             new CrawlTracer(
-                $this->createMock(AdapterInterface::class),
+                $this->createMock(Adapter::class),
                 $this->createMock(TimeContinuumInterface::class)
             )
         );
@@ -40,7 +40,7 @@ class CrawlTracerTest extends TestCase
 
     public function testTrace()
     {
-        $filesystem = $this->createMock(AdapterInterface::class);
+        $filesystem = $this->createMock(Adapter::class);
         $filesystem
             ->expects($this->at(0))
             ->method('has')
@@ -117,7 +117,7 @@ class CrawlTracerTest extends TestCase
 
     public function testTraceDoesntAddUrlTwice()
     {
-        $filesystem = $this->createMock(AdapterInterface::class);
+        $filesystem = $this->createMock(Adapter::class);
         $filesystem
             ->expects($this->at(0))
             ->method('has')
@@ -191,7 +191,7 @@ class CrawlTracerTest extends TestCase
     public function testIsKnown()
     {
         $tracer = new CrawlTracer(
-            $filesystem = $this->createMock(AdapterInterface::class),
+            $filesystem = $this->createMock(Adapter::class),
             $this->createMock(TimeContinuumInterface::class)
         );
         $filesystem
@@ -217,7 +217,7 @@ class CrawlTracerTest extends TestCase
     public function testLastHit()
     {
         $tracer = new CrawlTracer(
-            $filesystem = $this->createMock(AdapterInterface::class),
+            $filesystem = $this->createMock(Adapter::class),
             $clock = $this->createMock(TimeContinuumInterface::class)
         );
         $filesystem
@@ -248,7 +248,7 @@ class CrawlTracerTest extends TestCase
     public function testThrowWhenHostNeverHit()
     {
         $tracer = new CrawlTracer(
-            $filesystem = $this->createMock(AdapterInterface::class),
+            $filesystem = $this->createMock(Adapter::class),
             $clock = $this->createMock(TimeContinuumInterface::class)
         );
         $filesystem

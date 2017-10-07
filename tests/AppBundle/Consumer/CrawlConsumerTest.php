@@ -13,25 +13,23 @@ use AppBundle\{
     Exception\CantLinkResourceAcrossServersException
 };
 use Innmind\Crawler\{
-    CrawlerInterface,
+    Crawler,
     HttpResource as CrawledResource,
-    HttpResource\AttributeInterface
+    HttpResource\Attribute
 };
 use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\{
-    MediaTypeInterface,
-    StreamInterface
-};
-use Innmind\Rest\Client\IdentityInterface;
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
+use Innmind\Rest\Client\Identity;
 use Innmind\HttpTransport\Exception\{
-    ConnectException,
-    ClientErrorException,
-    ServerErrorException
+    ConnectionFailed,
+    ClientError,
+    ServerError
 };
 use Innmind\Http\Message\{
-    RequestInterface,
-    ResponseInterface,
-    StatusCode
+    Request,
+    Response,
+    StatusCode\StatusCode
 };
 use Innmind\Immutable\Map;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
@@ -45,7 +43,7 @@ class CrawlConsumerTest extends TestCase
         $this->assertInstanceOf(
             ConsumerInterface::class,
             new CrawlConsumer(
-                $this->createMock(CrawlerInterface::class),
+                $this->createMock(Crawler::class),
                 $this->createMock(PublisherInterface::class),
                 $this->createMock(LinkerInterface::class),
                 'ua'
@@ -56,7 +54,7 @@ class CrawlConsumerTest extends TestCase
     public function testExecute()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -70,7 +68,7 @@ class CrawlConsumerTest extends TestCase
         $crawler
             ->expects($this->once())
             ->method('execute')
-            ->with($this->callback(static function(RequestInterface $request): bool {
+            ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
@@ -78,9 +76,9 @@ class CrawlConsumerTest extends TestCase
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
-                $this->createMock(MediaTypeInterface::class),
-                new Map('string', AttributeInterface::class),
-                $this->createMock(StreamInterface::class)
+                $this->createMock(MediaType::class),
+                new Map('string', Attribute::class),
+                $this->createMock(Readable::class)
             ));
         $publisher
             ->expects($this->once())
@@ -92,7 +90,7 @@ class CrawlConsumerTest extends TestCase
                 })
             )
             ->willReturn(new Reference(
-                $this->createMock(IdentityInterface::class),
+                $this->createMock(Identity::class),
                 'definition',
                 $this->createMock(UrlInterface::class)
             ));
@@ -106,7 +104,7 @@ class CrawlConsumerTest extends TestCase
     public function testExecuteWhenCantConnectToHostOnCrawl()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -121,8 +119,8 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->will($this->throwException(
-                new ConnectException(
-                    $this->createMock(RequestInterface::class),
+                new ConnectionFailed(
+                    $this->createMock(Request::class),
                     new \Exception
                 )
             ));
@@ -139,7 +137,7 @@ class CrawlConsumerTest extends TestCase
     public function testExecuteWhenClientErrorOnCrawl()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -154,9 +152,9 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->will($this->throwException(
-                new ClientErrorException(
-                    $this->createMock(RequestInterface::class),
-                    $this->createMock(ResponseInterface::class)
+                new ClientError(
+                    $this->createMock(Request::class),
+                    $this->createMock(Response::class)
                 )
             ));
         $publisher
@@ -172,7 +170,7 @@ class CrawlConsumerTest extends TestCase
     public function testExecuteWhenServerErrorOnCrawl()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -187,9 +185,9 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->will($this->throwException(
-                new ServerErrorException(
-                    $this->createMock(RequestInterface::class),
-                    $this->createMock(ResponseInterface::class)
+                new ServerError(
+                    $this->createMock(Request::class),
+                    $this->createMock(Response::class)
                 )
             ));
         $publisher
@@ -205,7 +203,7 @@ class CrawlConsumerTest extends TestCase
     public function testExecuteWhenUrlCannotBeCrawled()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -237,7 +235,7 @@ class CrawlConsumerTest extends TestCase
     public function testLink()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -253,7 +251,7 @@ class CrawlConsumerTest extends TestCase
         $crawler
             ->expects($this->once())
             ->method('execute')
-            ->with($this->callback(static function(RequestInterface $request): bool {
+            ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
@@ -261,9 +259,9 @@ class CrawlConsumerTest extends TestCase
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
-                $this->createMock(MediaTypeInterface::class),
-                new Map('string', AttributeInterface::class),
-                $this->createMock(StreamInterface::class)
+                $this->createMock(MediaType::class),
+                new Map('string', Attribute::class),
+                $this->createMock(Readable::class)
             ));
         $publisher
             ->expects($this->once())
@@ -275,7 +273,7 @@ class CrawlConsumerTest extends TestCase
                 })
             )
             ->willReturn($reference = new Reference(
-                $this->createMock(IdentityInterface::class),
+                $this->createMock(Identity::class),
                 'definition',
                 $this->createMock(UrlInterface::class)
             ));
@@ -299,7 +297,7 @@ class CrawlConsumerTest extends TestCase
     public function testPublishEvenOnConflictDetected()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -315,7 +313,7 @@ class CrawlConsumerTest extends TestCase
         $crawler
             ->expects($this->once())
             ->method('execute')
-            ->with($this->callback(static function(RequestInterface $request): bool {
+            ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
@@ -323,9 +321,9 @@ class CrawlConsumerTest extends TestCase
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
-                $this->createMock(MediaTypeInterface::class),
-                new Map('string', AttributeInterface::class),
-                $this->createMock(StreamInterface::class)
+                $this->createMock(MediaType::class),
+                new Map('string', Attribute::class),
+                $this->createMock(Readable::class)
             ));
         $publisher
             ->expects($this->once())
@@ -337,9 +335,9 @@ class CrawlConsumerTest extends TestCase
                 })
             )
             ->will($this->throwException(
-                new ClientErrorException(
-                    $this->createMock(RequestInterface::class),
-                    $response = $this->createMock(ResponseInterface::class)
+                new ClientError(
+                    $this->createMock(Request::class),
+                    $response = $this->createMock(Response::class)
                 )
             ));
         $response
@@ -354,12 +352,12 @@ class CrawlConsumerTest extends TestCase
     }
 
     /**
-     * @expectedException Innmind\HttpTransport\Exception\ClientErrorException
+     * @expectedException Innmind\HttpTransport\Exception\ClientError
      */
     public function testThrowOnClientErrorOnPublish()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -375,7 +373,7 @@ class CrawlConsumerTest extends TestCase
         $crawler
             ->expects($this->once())
             ->method('execute')
-            ->with($this->callback(static function(RequestInterface $request): bool {
+            ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
@@ -383,9 +381,9 @@ class CrawlConsumerTest extends TestCase
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
-                $this->createMock(MediaTypeInterface::class),
-                new Map('string', AttributeInterface::class),
-                $this->createMock(StreamInterface::class)
+                $this->createMock(MediaType::class),
+                new Map('string', Attribute::class),
+                $this->createMock(Readable::class)
             ));
         $publisher
             ->expects($this->once())
@@ -397,9 +395,9 @@ class CrawlConsumerTest extends TestCase
                 })
             )
             ->will($this->throwException(
-                new ClientErrorException(
-                    $this->createMock(RequestInterface::class),
-                    $response = $this->createMock(ResponseInterface::class)
+                new ClientError(
+                    $this->createMock(Request::class),
+                    $response = $this->createMock(Response::class)
                 )
             ));
         $response
@@ -416,7 +414,7 @@ class CrawlConsumerTest extends TestCase
     public function testExecuteWhenFailsToPublish()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -432,7 +430,7 @@ class CrawlConsumerTest extends TestCase
         $crawler
             ->expects($this->once())
             ->method('execute')
-            ->with($this->callback(static function(RequestInterface $request): bool {
+            ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
@@ -440,9 +438,9 @@ class CrawlConsumerTest extends TestCase
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
-                $this->createMock(MediaTypeInterface::class),
-                new Map('string', AttributeInterface::class),
-                $this->createMock(StreamInterface::class)
+                $this->createMock(MediaType::class),
+                new Map('string', Attribute::class),
+                $this->createMock(Readable::class)
             ));
         $publisher
             ->expects($this->once())
@@ -466,7 +464,7 @@ class CrawlConsumerTest extends TestCase
     public function testExecuteWhenTryingToLinkAcrossServers()
     {
         $consumer = new CrawlConsumer(
-            $crawler = $this->createMock(CrawlerInterface::class),
+            $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(PublisherInterface::class),
             $linker = $this->createMock(LinkerInterface::class),
             'ua'
@@ -482,7 +480,7 @@ class CrawlConsumerTest extends TestCase
         $crawler
             ->expects($this->once())
             ->method('execute')
-            ->with($this->callback(static function(RequestInterface $request): bool {
+            ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
@@ -490,9 +488,9 @@ class CrawlConsumerTest extends TestCase
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
-                $this->createMock(MediaTypeInterface::class),
-                new Map('string', AttributeInterface::class),
-                $this->createMock(StreamInterface::class)
+                $this->createMock(MediaType::class),
+                new Map('string', Attribute::class),
+                $this->createMock(Readable::class)
             ));
         $publisher
             ->expects($this->once())
@@ -504,7 +502,7 @@ class CrawlConsumerTest extends TestCase
                 })
             )
             ->willReturn($reference = new Reference(
-                $this->createMock(IdentityInterface::class),
+                $this->createMock(Identity::class),
                 'definition',
                 $this->createMock(UrlInterface::class)
             ));

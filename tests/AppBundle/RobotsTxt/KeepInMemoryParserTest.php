@@ -5,8 +5,8 @@ namespace Tests\AppBundle\RobotsTxt;
 
 use AppBundle\RobotsTxt\KeepInMemoryParser;
 use Innmind\RobotsTxt\{
-    ParserInterface,
-    RobotsTxtInterface
+    Parser,
+    RobotsTxt
 };
 use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;
@@ -16,9 +16,9 @@ class KeepInMemoryParserTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            ParserInterface::class,
+            Parser::class,
             new KeepInMemoryParser(
-                $this->createMock(ParserInterface::class)
+                $this->createMock(Parser::class)
             )
         );
     }
@@ -26,14 +26,14 @@ class KeepInMemoryParserTest extends TestCase
     public function testInvokation()
     {
         $parser = new KeepInMemoryParser(
-            $inner = $this->createMock(ParserInterface::class)
+            $inner = $this->createMock(Parser::class)
         );
         $url = Url::fromString('http://example.com');
         $inner
             ->expects($this->once())
             ->method('__invoke')
             ->with($url)
-            ->willReturn($expected = $this->createMock(RobotsTxtInterface::class));
+            ->willReturn($expected = $this->createMock(RobotsTxt::class));
 
         $this->assertSame($expected, $parser($url));
         $this->assertSame($expected, $parser($url));

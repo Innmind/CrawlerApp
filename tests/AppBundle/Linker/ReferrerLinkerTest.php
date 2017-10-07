@@ -8,7 +8,7 @@ use AppBundle\{
     LinkerInterface,
     Reference
 };
-use Innmind\Rest\Client\IdentityInterface;
+use Innmind\Rest\Client\Identity;
 use Innmind\Url\UrlInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -30,12 +30,12 @@ class ReferrerLinkerTest extends TestCase
             $inner = $this->createMock(LinkerInterface::class)
         );
         $source = new Reference(
-            $this->createMock(IdentityInterface::class),
+            $this->createMock(Identity::class),
             'foo',
             $this->createMock(UrlInterface::class)
         );
         $target = new Reference(
-            $this->createMock(IdentityInterface::class),
+            $this->createMock(Identity::class),
             'foo',
             $this->createMock(UrlInterface::class)
         );
@@ -58,12 +58,12 @@ class ReferrerLinkerTest extends TestCase
             $inner = $this->createMock(LinkerInterface::class)
         );
         $source = new Reference(
-            $this->createMock(IdentityInterface::class),
+            $this->createMock(Identity::class),
             'foo',
             $this->createMock(UrlInterface::class)
         );
         $target = new Reference(
-            $this->createMock(IdentityInterface::class),
+            $this->createMock(Identity::class),
             'foo',
             $this->createMock(UrlInterface::class)
         );

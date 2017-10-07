@@ -13,7 +13,7 @@ use AppBundle\{
     Exception\MediaTypeDoesntMatchAnyException
 };
 use Innmind\Rest\Client\{
-    ClientInterface,
+    Client,
     Definition\HttpResource as Definition
 };
 use Innmind\Crawler\HttpResource;
@@ -27,7 +27,7 @@ final class Publisher implements PublisherInterface
     private $negotiator;
 
     public function __construct(
-        ClientInterface $client,
+        Client $client,
         HttpResourceTranslator $translator
     ) {
         $this->client = $client;

@@ -9,9 +9,8 @@ use AppBundle\{
     Exception\CantLinkResourceAcrossServersException
 };
 use Innmind\Rest\Client\{
-    ClientInterface,
+    Client,
     Link,
-    Link\ParameterInterface,
     Link\Parameter
 };
 use Innmind\Immutable\{
@@ -23,7 +22,7 @@ final class Linker implements LinkerInterface
 {
     private $client;
 
-    public function __construct(ClientInterface $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -38,10 +37,10 @@ final class Linker implements LinkerInterface
             throw new CantLinkResourceAcrossServersException($source, $target);
         }
 
-        $map = new Map('string', ParameterInterface::class);
+        $map = new Map('string', Parameter::class);
 
         foreach ($attributes as $key => $value) {
-            $map = $map->put($key, new Parameter($key, $value));
+            $map = $map->put($key, new Parameter\Parameter($key, $value));
         }
 
         $this

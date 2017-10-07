@@ -19,6 +19,7 @@ final class WeightTranslator implements PropertyTranslatorInterface
         return $resource
             ->attributes()
             ->get('weight')
-            ->content();
+            ->content()
+            ->toInt();
     }
 }

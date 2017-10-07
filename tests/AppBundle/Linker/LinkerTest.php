@@ -10,10 +10,10 @@ use AppBundle\{
     Exception\CantLinkResourceAcrossServersException
 };
 use Innmind\Rest\Client\{
-    ClientInterface,
-    IdentityInterface,
+    Client,
+    Identity,
     Link,
-    ServerInterface
+    Server
 };
 use Innmind\Url\Url;
 use Innmind\Immutable\SetInterface;
@@ -26,7 +26,7 @@ class LinkerTest extends TestCase
         $this->assertInstanceOf(
             LinkerInterface::class,
             new Linker(
-                $this->createMock(ClientInterface::class)
+                $this->createMock(Client::class)
             )
         );
     }
@@ -34,7 +34,7 @@ class LinkerTest extends TestCase
     public function testThrowWhenLinkingResourcesOnDifferentServers()
     {
         $linker = new Linker(
-            $client = $this->createMock(ClientInterface::class)
+            $client = $this->createMock(Client::class)
         );
         $client
             ->expects($this->never())
@@ -43,12 +43,12 @@ class LinkerTest extends TestCase
         try {
             $linker(
                 $source = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $this->createMock(Identity::class),
                     'foo',
                     Url::fromString('foo')
                 ),
                 $target = new Reference(
-                    $this->createMock(IdentityInterface::class),
+                    $this->createMock(Identity::class),
                     'foo',
                     Url::fromString('bar')
                 ),
@@ -65,16 +65,16 @@ class LinkerTest extends TestCase
     public function testInvokation()
     {
         $linker = new Linker(
-            $client = $this->createMock(ClientInterface::class)
+            $client = $this->createMock(Client::class)
         );
-        $source = $this->createMock(IdentityInterface::class);
-        $target = $this->createMock(IdentityInterface::class);
+        $source = $this->createMock(Identity::class);
+        $target = $this->createMock(Identity::class);
         $client
             ->expects($this->once())
             ->method('server')
             ->with('http://server.url/')
             ->willReturn(
-                $server = $this->createMock(ServerInterface::class)
+                $server = $this->createMock(Server::class)
             );
         $server
             ->expects($this->once())

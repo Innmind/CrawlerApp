@@ -11,24 +11,22 @@ use AppBundle\{
     Exception\UrlCannotBeCrawledException,
     Exception\CantLinkResourceAcrossServersException
 };
-use Innmind\Crawler\CrawlerInterface;
-use Innmind\Rest\Client\Identity;
+use Innmind\Crawler\Crawler;
+use Innmind\Rest\Client\Identity\Identity;
 use Innmind\Http\{
-    Message\Request,
-    Message\Method,
-    Message\StatusCode,
-    ProtocolVersion,
-    Headers,
-    Header\HeaderInterface,
-    Header\Header,
-    Header\HeaderValueInterface,
-    Header\HeaderValue
+    Message\Request\Request,
+    Message\Method\Method,
+    Message\StatusCode\StatusCode,
+    ProtocolVersion\ProtocolVersion,
+    Headers\Headers,
+    Header,
+    Header\Value\Value
 };
 use Innmind\Url\Url;
 use Innmind\HttpTransport\Exception\{
-    ConnectException,
-    ClientErrorException,
-    ServerErrorException
+    ConnectionFailed,
+    ClientError,
+    ServerError
 };
 use Innmind\Immutable\{
     Map,
@@ -45,7 +43,7 @@ final class CrawlConsumer implements ConsumerInterface
     private $userAgent;
 
     public function __construct(
-        CrawlerInterface $crawler,
+        Crawler $crawler,
         PublisherInterface $publisher,
         LinkerInterface $linker,
         string $userAgent
@@ -67,25 +65,22 @@ final class CrawlConsumer implements ConsumerInterface
                     new Method(Method::GET),
                     new ProtocolVersion(2, 0),
                     new Headers(
-                        (new Map('string', HeaderInterface::class))
+                        (new Map('string', Header::class))
                             ->put(
                                 'User-Agent',
-                                new Header(
+                                new Header\Header(
                                     'User-Agent',
-                                    (new Set(HeaderValueInterface::class))
-                                        ->add(new HeaderValue(
-                                            $this->userAgent
-                                        ))
+                                    new Value($this->userAgent)
                                 )
                             )
                     )
                 )
             );
-        } catch (ConnectException $e) {
+        } catch (ConnectionFailed $e) {
             return true;
-        } catch (ClientErrorException $e) {
+        } catch (ClientError $e) {
             return true;
-        } catch (ServerErrorException $e) {
+        } catch (ServerError $e) {
             return false; //will retry later
         } catch (UrlCannotBeCrawledException $e) {
             return true;
@@ -107,7 +102,7 @@ final class CrawlConsumer implements ConsumerInterface
                     $data['attributes'] ?? []
                 );
             }
-        } catch (ClientErrorException $e) {
+        } catch (ClientError $e) {
             $code = $e->response()->statusCode()->value();
 
             if ($code !== StatusCode::codes()->get('CONFLICT')) {

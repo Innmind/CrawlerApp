@@ -12,30 +12,25 @@ use AppBundle\{
     Exception\ResourceCannotBePublishedException
 };
 use Innmind\Rest\Client\{
-    ClientInterface,
-    ServerInterface,
-    Server\CapabilitiesInterface,
+    Client,
+    Server,
+    Server\Capabilities,
     Definition\HttpResource as Definition,
     Definition\Property as PropertyDefinition,
     Definition\Identity,
     HttpResource,
-    IdentityInterface
+    Identity as IdentityInterface
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\AttributeInterface,
     HttpResource\Attribute
 };
 use Innmind\Url\{
     UrlInterface,
     Url
 };
-use Innmind\Http\Message\RequestInterface;
-use Innmind\Filesystem\{
-    MediaTypeInterface,
-    MediaType\MediaType,
-    StreamInterface
-};
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
 
@@ -47,7 +42,7 @@ class PublisherTest extends TestCase
     public function setUp()
     {
         $this->publisher = new Publisher(
-            $this->client = $this->createMock(ClientInterface::class),
+            $this->client = $this->createMock(Client::class),
             new HttpResourceTranslator(
                 $this->createMock(PropertyTranslatorInterface::class)
             )
@@ -70,13 +65,13 @@ class PublisherTest extends TestCase
             ->method('server')
             ->with('http://some.server/')
             ->willReturn(
-                $server = $this->createMock(ServerInterface::class)
+                $server = $this->createMock(Server::class)
             );
         $server
             ->expects($this->once())
             ->method('capabilities')
             ->willReturn(
-                $capabilities = $this->createMock(CapabilitiesInterface::class)
+                $capabilities = $this->createMock(Capabilities::class)
             );
         $capabilities
             ->expects($this->once())
@@ -98,9 +93,9 @@ class PublisherTest extends TestCase
             );
         $resource = new CrawledResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
-            new Map('string', AttributeInterface::class),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(MediaType::class),
+            new Map('string', Attribute::class),
+            $this->createMock(Readable::class)
         );
 
         try {
@@ -119,13 +114,13 @@ class PublisherTest extends TestCase
             ->method('server')
             ->with('http://some.server/')
             ->willReturn(
-                $server = $this->createMock(ServerInterface::class)
+                $server = $this->createMock(Server::class)
             );
         $server
             ->expects($this->once())
             ->method('capabilities')
             ->willReturn(
-                $capabilities = $this->createMock(CapabilitiesInterface::class)
+                $capabilities = $this->createMock(Capabilities::class)
             );
         $capabilities
             ->expects($this->once())
@@ -148,9 +143,9 @@ class PublisherTest extends TestCase
             );
         $resource = new CrawledResource(
             $this->createMock(UrlInterface::class),
-            MediaType::fromString('text/html'),
-            new Map('string', AttributeInterface::class),
-            $this->createMock(StreamInterface::class)
+            MediaType\MediaType::fromString('text/html'),
+            new Map('string', Attribute::class),
+            $this->createMock(Readable::class)
         );
 
         try {
@@ -170,13 +165,13 @@ class PublisherTest extends TestCase
             ->method('server')
             ->with('http://some.server/')
             ->willReturn(
-                $server = $this->createMock(ServerInterface::class)
+                $server = $this->createMock(Server::class)
             );
         $server
             ->expects($this->once())
             ->method('capabilities')
             ->willReturn(
-                $capabilities = $this->createMock(CapabilitiesInterface::class)
+                $capabilities = $this->createMock(Capabilities::class)
             );
         $server
             ->expects($this->once())
@@ -226,9 +221,9 @@ class PublisherTest extends TestCase
             );
         $resource = new CrawledResource(
             $this->createMock(UrlInterface::class),
-            MediaType::fromString('image/png'),
-            new Map('string', AttributeInterface::class),
-            $this->createMock(StreamInterface::class)
+            MediaType\MediaType::fromString('image/png'),
+            new Map('string', Attribute::class),
+            $this->createMock(Readable::class)
         );
 
         $reference = ($this->publisher)($resource, $serverUrl);

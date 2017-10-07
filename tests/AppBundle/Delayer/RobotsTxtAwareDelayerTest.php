@@ -8,10 +8,10 @@ use AppBundle\{
     DelayerInterface
 };
 use Innmind\RobotsTxt\{
-    ParserInterface,
-    RobotsTxt,
+    Parser,
+    RobotsTxt\RobotsTxt,
     Parser\Walker,
-    Exception\FileNotFoundException
+    Exception\FileNotFound
 };
 use Innmind\Url\{
     Url,
@@ -27,7 +27,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
         $this->assertInstanceOf(
             DelayerInterface::class,
             new RobotsTxtAwareDelayer(
-                $this->createMock(ParserInterface::class),
+                $this->createMock(Parser::class),
                 'foo'
             )
         );
@@ -36,13 +36,13 @@ class RobotsTxtAwareDelayerTest extends TestCase
     public function testDoesntWaitWhenNoRobots()
     {
         $delayer = new RobotsTxtAwareDelayer(
-            $parser = $this->createMock(ParserInterface::class),
+            $parser = $this->createMock(Parser::class),
             'foo'
         );
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->will($this->throwException(new FileNotFoundException));
+            ->will($this->throwException(new FileNotFound));
 
         $start = microtime(true);
         $this->assertNull($delayer(Url::fromString('http://example.com/')));
@@ -52,7 +52,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
     public function testDoesntWaitWhenNoDirectivesApply()
     {
         $delayer = new RobotsTxtAwareDelayer(
-            $parser = $this->createMock(ParserInterface::class),
+            $parser = $this->createMock(Parser::class),
             'bar'
         );
         $parser
@@ -80,7 +80,7 @@ TXT
     public function testWait()
     {
         $delayer = new RobotsTxtAwareDelayer(
-            $parser = $this->createMock(ParserInterface::class),
+            $parser = $this->createMock(Parser::class),
             'foo'
         );
         $parser

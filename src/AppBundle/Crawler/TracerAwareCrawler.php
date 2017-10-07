@@ -8,25 +8,25 @@ use AppBundle\{
     Exception\UrlCannotBeCrawledException
 };
 use Innmind\Crawler\{
-    CrawlerInterface,
+    Crawler,
     HttpResource
 };
-use Innmind\Http\Message\RequestInterface;
+use Innmind\Http\Message\Request;
 
-final class TracerAwareCrawler implements CrawlerInterface
+final class TracerAwareCrawler implements Crawler
 {
     private $tracer;
     private $crawler;
 
     public function __construct(
         CrawlTracerInterface $tracer,
-        CrawlerInterface $crawler
+        Crawler $crawler
     ) {
         $this->tracer = $tracer;
         $this->crawler = $crawler;
     }
 
-    public function execute(RequestInterface $request): HttpResource
+    public function execute(Request $request): HttpResource
     {
         if ($this->tracer->isKnown($request->url())) {
             throw new UrlCannotBeCrawledException($request->url());

@@ -9,20 +9,17 @@ use AppBundle\Translator\{
 };
 use Innmind\Rest\Client\Definition\{
     Property,
-    TypeInterface,
+    Type,
     Access
 };
 use Innmind\Crawler\{
     HttpResource,
-    HttpResource\AttributeInterface,
     HttpResource\Attribute,
-    HttpResource\Attributes
+    HttpResource\Attributes\Attributes
 };
 use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\{
-    StreamInterface,
-    MediaTypeInterface
-};
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
     Map,
@@ -40,8 +37,8 @@ class DimensionTranslatorTest extends TestCase
         $this->translator = new DimensionTranslator;
         $this->property = new Property(
             'dimension',
-            $this->createMock(TypeInterface::class),
-            new Access(new Set('string')),
+            $this->createMock(Type::class),
+            new Access,
             new Set('string'),
             false
         );
@@ -57,24 +54,24 @@ class DimensionTranslatorTest extends TestCase
 
     public function testSupports()
     {
-        $attributes = new Map('string', AttributeInterface::class);
+        $attributes = new Map('string', Attribute::class);
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes,
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $this->assertFalse($this->translator->supports($resource, $this->property));
 
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes->put(
                 'dimension',
-                new Attribute('dimension', 'whatever')
+                new Attribute\Attribute('dimension', 'whatever')
             ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $this->assertTrue($this->translator->supports($resource, $this->property));
@@ -82,20 +79,20 @@ class DimensionTranslatorTest extends TestCase
 
     public function testTranslate()
     {
-        $attributes = new Map('string', AttributeInterface::class);
+        $attributes = new Map('string', Attribute::class);
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes->put(
                 'dimension',
                 new Attributes(
                     'dimension',
-                    (new Map('string', AttributeInterface::class))
-                        ->put('width', new Attribute('width', 24))
-                        ->put('height', new Attribute('height', 42))
+                    (new Map('string', Attribute::class))
+                        ->put('width', new Attribute\Attribute('width', 24))
+                        ->put('height', new Attribute\Attribute('height', 42))
                 )
             ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $map = $this->translator->translate($resource, $this->property);

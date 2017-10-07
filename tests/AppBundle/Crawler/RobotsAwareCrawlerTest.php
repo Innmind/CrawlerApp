@@ -8,24 +8,22 @@ use AppBundle\{
     Exception\UrlCannotBeCrawledException
 };
 use Innmind\RobotsTxt\{
-    ParserInterface,
-    RobotsTxtInterface,
-    Exception\FileNotFoundException
+    Parser,
+    RobotsTxt,
+    Exception\FileNotFound
 };
 use Innmind\Crawler\{
-    CrawlerInterface,
+    Crawler,
     HttpResource,
-    HttpResource\AttributeInterface
+    HttpResource\Attribute
 };
 use Innmind\Url\{
     UrlInterface,
     Url
 };
-use Innmind\Http\Message\RequestInterface;
-use Innmind\Filesystem\{
-    MediaTypeInterface,
-    StreamInterface
-};
+use Innmind\Http\Message\Request;
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
 
@@ -38,8 +36,8 @@ class RobotsAwareCrawlerTest extends TestCase
     public function setUp()
     {
         $this->crawler = new RobotsAwareCrawler(
-            $this->parser = $this->createMock(ParserInterface::class),
-            $this->inner = $this->createMock(CrawlerInterface::class),
+            $this->parser = $this->createMock(Parser::class),
+            $this->inner = $this->createMock(Crawler::class),
             'user agent'
         );
     }
@@ -47,7 +45,7 @@ class RobotsAwareCrawlerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            CrawlerInterface::class,
+            Crawler::class,
             $this->crawler
         );
     }
@@ -62,9 +60,9 @@ class RobotsAwareCrawlerTest extends TestCase
                 return (string) $url === 'http://example.com/robots.txt';
             }))
             ->will(
-                $this->throwException(new FileNotFoundException)
+                $this->throwException(new FileNotFound)
             );
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createMock(Request::class);
         $request
             ->expects($this->once())
             ->method('url')
@@ -77,9 +75,9 @@ class RobotsAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $url,
-                    $this->createMock(MediaTypeInterface::class),
-                    new Map('string', AttributeInterface::class),
-                    $this->createMock(StreamInterface::class)
+                    $this->createMock(MediaType::class),
+                    new Map('string', Attribute::class),
+                    $this->createMock(Readable::class)
                 )
             );
 
@@ -90,7 +88,7 @@ class RobotsAwareCrawlerTest extends TestCase
 
     public function testCrawlWhenRobotsAllowsUrl()
     {
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createMock(Request::class);
         $request
             ->expects($this->exactly(2))
             ->method('url')
@@ -103,7 +101,7 @@ class RobotsAwareCrawlerTest extends TestCase
                 return (string) $url === 'http://example.com/robots.txt';
             }))
             ->willReturn(
-                $robots = $this->createMock(RobotsTxtInterface::class)
+                $robots = $this->createMock(RobotsTxt::class)
             );
         $robots
             ->expects($this->once())
@@ -118,9 +116,9 @@ class RobotsAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $url,
-                    $this->createMock(MediaTypeInterface::class),
-                    new Map('string', AttributeInterface::class),
-                    $this->createMock(StreamInterface::class)
+                    $this->createMock(MediaType::class),
+                    new Map('string', Attribute::class),
+                    $this->createMock(Readable::class)
                 )
             );
 
@@ -131,7 +129,7 @@ class RobotsAwareCrawlerTest extends TestCase
 
     public function testThrowWhenRobotsDisallows()
     {
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createMock(Request::class);
         $request
             ->expects($this->exactly(3))
             ->method('url')
@@ -144,7 +142,7 @@ class RobotsAwareCrawlerTest extends TestCase
                 return (string) $url === 'http://example.com/robots.txt';
             }))
             ->willReturn(
-                $robots = $this->createMock(RobotsTxtInterface::class)
+                $robots = $this->createMock(RobotsTxt::class)
             );
         $robots
             ->expects($this->once())

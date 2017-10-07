@@ -8,16 +8,14 @@ use AppBundle\{
     DelayerInterface
 };
 use Innmind\Crawler\{
-    CrawlerInterface,
+    Crawler,
     HttpResource,
-    HttpResource\AttributeInterface
+    HttpResource\Attribute
 };
 use Innmind\Url\UrlInterface;
-use Innmind\Http\Message\RequestInterface;
-use Innmind\Filesystem\{
-    MediaTypeInterface,
-    StreamInterface
-};
+use Innmind\Http\Message\Request;
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
 
@@ -26,10 +24,10 @@ class DelayerAwareCrawlerTest extends TestCase
     public function testInterface()
     {
         $this->assertInstanceOf(
-            CrawlerInterface::class,
+            Crawler::class,
             new DelayerAwareCrawler(
                 $this->createMock(DelayerInterface::class),
-                $this->createMock(CrawlerInterface::class)
+                $this->createMock(Crawler::class)
             )
         );
     }
@@ -38,10 +36,10 @@ class DelayerAwareCrawlerTest extends TestCase
     {
         $crawler = new DelayerAwareCrawler(
             $delayer = $this->createMock(DelayerInterface::class),
-            $inner = $this->createMock(CrawlerInterface::class)
+            $inner = $this->createMock(Crawler::class)
         );
         $url = $this->createMock(UrlInterface::class);
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createMock(Request::class);
         $request
             ->expects($this->once())
             ->method('url')
@@ -57,9 +55,9 @@ class DelayerAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $url,
-                    $this->createMock(MediaTypeInterface::class),
-                    new Map('string', AttributeInterface::class),
-                    $this->createMock(StreamInterface::class)
+                    $this->createMock(MediaType::class),
+                    new Map('string', Attribute::class),
+                    $this->createMock(Readable::class)
                 )
             );
 

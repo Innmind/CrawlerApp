@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle;
 
-use Innmind\Rest\Client\IdentityInterface;
+use Innmind\Rest\Client\Identity;
 use Innmind\Url\UrlInterface;
 
 final class Reference
@@ -13,7 +13,7 @@ final class Reference
     private $server;
 
     public function __construct(
-        IdentityInterface $identity,
+        Identity $identity,
         string $definition,
         UrlInterface $server
     ) {
@@ -22,7 +22,7 @@ final class Reference
         $this->server = $server;
     }
 
-    public function identity(): IdentityInterface
+    public function identity(): Identity
     {
         return $this->identity;
     }

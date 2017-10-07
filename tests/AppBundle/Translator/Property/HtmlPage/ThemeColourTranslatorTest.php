@@ -9,19 +9,16 @@ use AppBundle\Translator\{
 };
 use Innmind\Rest\Client\Definition\{
     Property,
-    TypeInterface,
+    Type,
     Access
 };
 use Innmind\Crawler\{
     HttpResource,
-    HttpResource\AttributeInterface,
     HttpResource\Attribute
 };
 use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\{
-    StreamInterface,
-    MediaTypeInterface
-};
+use Innmind\Filesystem\MediaType;
+use Innmind\Stream\Readable;
 use Innmind\Colour\Colour;
 use Innmind\Immutable\{
     Set,
@@ -39,8 +36,8 @@ class ThemeColourTranslatorTest extends TestCase
         $this->translator = new ThemeColourTranslator;
         $this->property = new Property(
             'theme_colour',
-            $this->createMock(TypeInterface::class),
-            new Access(new Set('string')),
+            $this->createMock(Type::class),
+            new Access,
             new Set('string'),
             false
         );
@@ -56,24 +53,24 @@ class ThemeColourTranslatorTest extends TestCase
 
     public function testSupports()
     {
-        $attributes = new Map('string', AttributeInterface::class);
+        $attributes = new Map('string', Attribute::class);
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes,
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $this->assertFalse($this->translator->supports($resource, $this->property));
 
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes->put(
                 'theme-color',
-                new Attribute('theme-color', Colour::fromString('39f'))
+                new Attribute\Attribute('theme-color', Colour::fromString('39f'))
             ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $this->assertTrue($this->translator->supports($resource, $this->property));
@@ -81,15 +78,15 @@ class ThemeColourTranslatorTest extends TestCase
 
     public function testTranslate()
     {
-        $attributes = new Map('string', AttributeInterface::class);
+        $attributes = new Map('string', Attribute::class);
         $resource = new HttpResource(
             $this->createMock(UrlInterface::class),
-            $this->createMock(MediaTypeInterface::class),
+            $this->createMock(MediaType::class),
             $attributes->put(
                 'theme-color',
-                new Attribute('theme-color', Colour::fromString('39f'))
+                new Attribute\Attribute('theme-color', Colour::fromString('39f'))
             ),
-            $this->createMock(StreamInterface::class)
+            $this->createMock(Readable::class)
         );
 
         $this->assertSame(
