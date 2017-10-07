@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\MediaType;
 
-use AppBundle\Exception\MediaTypeDoesntMatchAnyException;
+use AppBundle\Exception\MediaTypeDoesntMatchAny;
 use Innmind\Filesystem\MediaType;
 use Innmind\Immutable\SetInterface;
 
@@ -23,7 +23,7 @@ final class Negotiator
             });
 
         if ($pattterns->size() === 0) {
-            throw new MediaTypeDoesntMatchAnyException;
+            throw new MediaTypeDoesntMatchAny;
         }
 
         return $pattterns->first();

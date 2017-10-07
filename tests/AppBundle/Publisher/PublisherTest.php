@@ -9,7 +9,7 @@ use AppBundle\{
     Translator\HttpResourceTranslator,
     Translator\PropertyTranslator,
     Reference,
-    Exception\ResourceCannotBePublishedException
+    Exception\ResourceCannotBePublished
 };
 use Innmind\Rest\Client\{
     Client,
@@ -101,7 +101,7 @@ class PublisherTest extends TestCase
         try {
             ($this->publisher)($resource, Url::fromString('http://some.server/'));
             $this->fail('it should throw');
-        } catch (ResourceCannotBePublishedException $e) {
+        } catch (ResourceCannotBePublished $e) {
             $this->assertSame($resource, $e->resource());
         }
     }
@@ -151,7 +151,7 @@ class PublisherTest extends TestCase
         try {
             ($this->publisher)($resource, Url::fromString('http://some.server/'));
             $this->fail('it should throw');
-        } catch (ResourceCannotBePublishedException $e) {
+        } catch (ResourceCannotBePublished $e) {
             $this->assertSame($resource, $e->resource());
         }
     }

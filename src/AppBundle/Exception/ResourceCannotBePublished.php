@@ -5,7 +5,7 @@ namespace AppBundle\Exception;
 
 use Innmind\Crawler\HttpResource;
 
-final class ResourceCannotBePublishedException extends RuntimeException
+final class ResourceCannotBePublished extends RuntimeException
 {
     private $resource;
 

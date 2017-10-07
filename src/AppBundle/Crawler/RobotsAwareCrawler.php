@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace AppBundle\Crawler;
 
-use AppBundle\Exception\UrlCannotBeCrawledException;
+use AppBundle\Exception\UrlCannotBeCrawled;
 use Innmind\Crawler\{
     Crawler,
     HttpResource
@@ -46,7 +46,7 @@ final class RobotsAwareCrawler implements Crawler
             $robots = ($this->parser)($url);
 
             if ($robots->disallows($this->userAgent, $request->url())) {
-                throw new UrlCannotBeCrawledException($request->url());
+                throw new UrlCannotBeCrawled($request->url());
             }
         } catch (FileNotFound $e) {
             //pass

@@ -7,7 +7,7 @@ use AppBundle\{
     Linker\Linker,
     Linker as LinkerInterface,
     Reference,
-    Exception\CantLinkResourceAcrossServersException
+    Exception\CantLinkResourceAcrossServers
 };
 use Innmind\Rest\Client\{
     Client,
@@ -56,7 +56,7 @@ class LinkerTest extends TestCase
                 []
             );
             $this->fail('it should throw');
-        } catch (CantLinkResourceAcrossServersException $e) {
+        } catch (CantLinkResourceAcrossServers $e) {
             $this->assertSame($source, $e->source());
             $this->assertSame($target, $e->target());
         }

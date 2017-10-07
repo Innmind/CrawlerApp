@@ -7,9 +7,9 @@ use AppBundle\{
     Publisher,
     Linker,
     Reference,
-    Exception\ResourceCannotBePublishedException,
-    Exception\UrlCannotBeCrawledException,
-    Exception\CantLinkResourceAcrossServersException
+    Exception\ResourceCannotBePublished,
+    Exception\UrlCannotBeCrawled,
+    Exception\CantLinkResourceAcrossServers
 };
 use Innmind\Crawler\Crawler;
 use Innmind\Rest\Client\Identity\Identity;
@@ -82,7 +82,7 @@ final class CrawlConsumer implements ConsumerInterface
             return true;
         } catch (ServerError $e) {
             return false; //will retry later
-        } catch (UrlCannotBeCrawledException $e) {
+        } catch (UrlCannotBeCrawled $e) {
             return true;
         }
 
@@ -108,9 +108,9 @@ final class CrawlConsumer implements ConsumerInterface
             if ($code !== StatusCode::codes()->get('CONFLICT')) {
                 throw $e;
             }
-        } catch (ResourceCannotBePublishedException $e) {
+        } catch (ResourceCannotBePublished $e) {
             //pass
-        } catch (CantLinkResourceAcrossServersException $e) {
+        } catch (CantLinkResourceAcrossServers $e) {
             //pass
         }
 

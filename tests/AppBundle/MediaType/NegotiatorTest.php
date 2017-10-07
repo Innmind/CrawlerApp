@@ -66,7 +66,7 @@ class NegotiatorTest extends TestCase
     }
 
     /**
-     * @expectedException AppBundle\Exception\MediaTypeDoesntMatchAnyException
+     * @expectedException AppBundle\Exception\MediaTypeDoesntMatchAny
      */
     public function testThrowWhenNoMediaTypeFound()
     {

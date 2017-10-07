@@ -9,8 +9,8 @@ use AppBundle\{
     MediaType\Negotiator,
     MediaType\Pattern,
     Translator\HttpResourceTranslator,
-    Exception\ResourceCannotBePublishedException,
-    Exception\MediaTypeDoesntMatchAnyException
+    Exception\ResourceCannotBePublished,
+    Exception\MediaTypeDoesntMatchAny
 };
 use Innmind\Rest\Client\{
     Client,
@@ -49,7 +49,7 @@ final class Publisher implements PublisherInterface
             });
 
         if ($definitions->size() === 0) {
-            throw new ResourceCannotBePublishedException($resource);
+            throw new ResourceCannotBePublished($resource);
         }
 
         $mediaTypes = $definitions
@@ -75,8 +75,8 @@ final class Publisher implements PublisherInterface
                 $resource->mediaType(),
                 $mediaTypes
             );
-        } catch (MediaTypeDoesntMatchAnyException $e) {
-            throw new ResourceCannotBePublishedException($resource);
+        } catch (MediaTypeDoesntMatchAny $e) {
+            throw new ResourceCannotBePublished($resource);
         }
 
         $definition = $definitions

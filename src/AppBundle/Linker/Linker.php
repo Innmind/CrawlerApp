@@ -6,7 +6,7 @@ namespace AppBundle\Linker;
 use AppBundle\{
     Linker as LinkerInterface,
     Reference,
-    Exception\CantLinkResourceAcrossServersException
+    Exception\CantLinkResourceAcrossServers
 };
 use Innmind\Rest\Client\{
     Client,
@@ -34,7 +34,7 @@ final class Linker implements LinkerInterface
         array $attributes
     ): void {
         if ((string) $source->server() !== (string) $target->server()) {
-            throw new CantLinkResourceAcrossServersException($source, $target);
+            throw new CantLinkResourceAcrossServers($source, $target);
         }
 
         $map = new Map('string', Parameter::class);

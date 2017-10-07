@@ -5,7 +5,7 @@ namespace AppBundle\Exception;
 
 use AppBundle\Reference;
 
-final class CantLinkResourceAcrossServersException extends RuntimeException
+final class CantLinkResourceAcrossServers extends RuntimeException
 {
     private $source;
     private $target;

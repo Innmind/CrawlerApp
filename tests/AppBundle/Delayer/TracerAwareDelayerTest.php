@@ -7,7 +7,7 @@ use AppBundle\{
     Delayer\TracerAwareDelayer,
     Delayer,
     CrawlTracer,
-    Exception\HostNeverHitException
+    Exception\HostNeverHit
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
@@ -155,7 +155,7 @@ class TracerAwareDelayerTest extends TestCase
             ->method('lastHit')
             ->with($host)
             ->will(
-                $this->throwException(new HostNeverHitException)
+                $this->throwException(new HostNeverHit)
             );
         $clock
             ->expects($this->never())

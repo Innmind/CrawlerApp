@@ -5,7 +5,7 @@ namespace Tests\AppBundle\Crawler;
 
 use AppBundle\{
     Crawler\RobotsAwareCrawler,
-    Exception\UrlCannotBeCrawledException
+    Exception\UrlCannotBeCrawled
 };
 use Innmind\RobotsTxt\{
     Parser,
@@ -157,7 +157,7 @@ class RobotsAwareCrawlerTest extends TestCase
         try {
             $this->crawler->execute($request);
             $this->fail('it should throw');
-        } catch (UrlCannotBeCrawledException $e) {
+        } catch (UrlCannotBeCrawled $e) {
             $this->assertSame($url, $e->url());
         }
     }

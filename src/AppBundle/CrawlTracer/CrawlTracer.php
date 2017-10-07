@@ -5,7 +5,7 @@ namespace AppBundle\CrawlTracer;
 
 use AppBundle\{
     CrawlTracer as CrawlTracerInterface,
-    Exception\HostNeverHitException
+    Exception\HostNeverHit
 };
 use Innmind\Filesystem\{
     Adapter,
@@ -113,7 +113,7 @@ final class CrawlTracer implements CrawlTracerInterface
         $directory = $this->filesystem->get(self::HITS);
 
         if (!$directory->has($name)) {
-            throw new HostNeverHitException;
+            throw new HostNeverHit;
         }
 
         return $this->clock->at(

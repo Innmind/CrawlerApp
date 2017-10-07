@@ -5,7 +5,7 @@ namespace AppBundle\Crawler;
 
 use AppBundle\{
     CrawlTracer,
-    Exception\UrlCannotBeCrawledException
+    Exception\UrlCannotBeCrawled
 };
 use Innmind\Crawler\{
     Crawler,
@@ -29,7 +29,7 @@ final class TracerAwareCrawler implements Crawler
     public function execute(Request $request): HttpResource
     {
         if ($this->tracer->knows($request->url())) {
-            throw new UrlCannotBeCrawledException($request->url());
+            throw new UrlCannotBeCrawled($request->url());
         }
 
         $resource = $this->crawler->execute($request);

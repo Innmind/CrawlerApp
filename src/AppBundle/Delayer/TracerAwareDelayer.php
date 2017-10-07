@@ -6,7 +6,7 @@ namespace AppBundle\Delayer;
 use AppBundle\{
     CrawlTracer,
     Delayer,
-    Exception\HostNeverHitException
+    Exception\HostNeverHit
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
@@ -45,7 +45,7 @@ final class TracerAwareDelayer implements Delayer
             if ($this->threshold->longerThan($delta)) {
                 ($this->delay)($url);
             }
-        } catch (HostNeverHitException $e) {
+        } catch (HostNeverHit $e) {
             //pass
         }
     }

@@ -8,9 +8,9 @@ use AppBundle\{
     Publisher,
     Linker,
     Reference,
-    Exception\UrlCannotBeCrawledException,
-    Exception\ResourceCannotBePublishedException,
-    Exception\CantLinkResourceAcrossServersException
+    Exception\UrlCannotBeCrawled,
+    Exception\ResourceCannotBePublished,
+    Exception\CantLinkResourceAcrossServers
 };
 use Innmind\Crawler\{
     Crawler,
@@ -218,7 +218,7 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->will($this->throwException(
-                new UrlCannotBeCrawledException(
+                new UrlCannotBeCrawled(
                     $this->createMock(UrlInterface::class)
                 )
             ));
@@ -452,7 +452,7 @@ class CrawlConsumerTest extends TestCase
                 })
             )
             ->will($this->throwException(
-                new ResourceCannotBePublishedException($resource)
+                new ResourceCannotBePublished($resource)
             ));
         $linker
             ->expects($this->never())
@@ -520,7 +520,7 @@ class CrawlConsumerTest extends TestCase
                 ['foo', 'bar']
             )
             ->will($this->throwException(
-                new CantLinkResourceAcrossServersException($reference, $reference)
+                new CantLinkResourceAcrossServers($reference, $reference)
             ));
 
         $this->assertTrue($consumer->execute($message));

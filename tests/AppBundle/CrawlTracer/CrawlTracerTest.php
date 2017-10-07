@@ -243,7 +243,7 @@ class CrawlTracerTest extends TestCase
     }
 
     /**
-     * @expectedException AppBundle\Exception\HostNeverHitException
+     * @expectedException AppBundle\Exception\HostNeverHit
      */
     public function testThrowWhenHostNeverHit()
     {

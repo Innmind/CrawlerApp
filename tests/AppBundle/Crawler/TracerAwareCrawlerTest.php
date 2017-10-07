@@ -6,7 +6,7 @@ namespace Tests\AppBundle\Crawler;
 use AppBundle\{
     Crawler\TracerAwareCrawler,
     CrawlTracer,
-    Exception\UrlCannotBeCrawledException
+    Exception\UrlCannotBeCrawled
 };
 use Innmind\Crawler\{
     Crawler,
@@ -57,7 +57,7 @@ class TracerAwareCrawlerTest extends TestCase
         try {
             $crawler->execute($request);
             $this->fail('it should throw');
-        } catch (UrlCannotBeCrawledException $e) {
+        } catch (UrlCannotBeCrawled $e) {
             $this->assertSame($url, $e->url());
         }
     }

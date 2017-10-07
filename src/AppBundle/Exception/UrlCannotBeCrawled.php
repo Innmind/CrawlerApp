@@ -5,7 +5,7 @@ namespace AppBundle\Exception;
 
 use Innmind\Url\UrlInterface;
 
-final class UrlCannotBeCrawledException extends DomainException
+final class UrlCannotBeCrawled extends DomainException
 {
     private $url;
 
