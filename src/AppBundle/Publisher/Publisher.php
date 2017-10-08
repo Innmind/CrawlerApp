@@ -48,10 +48,6 @@ final class Publisher implements PublisherInterface
                     is_array($definition->metas()->get('allowed_media_types'));
             });
 
-        if ($definitions->size() === 0) {
-            throw new ResourceCannotBePublished($resource);
-        }
-
         $mediaTypes = $definitions
             ->reduce(
                 new Set('string'),
