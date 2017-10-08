@@ -16,7 +16,7 @@ class FixDelayerTest extends TestCase
     {
         $this->assertInstanceOf(
             Delayer::class,
-            new FixDelayer(1)
+            new FixDelayer(0)
         );
     }
 
