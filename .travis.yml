@@ -3,8 +3,10 @@ php:
     - 7.1
     - 7.2
     - nightly
-before_script: composer install --prefer-source
-script: vendor/bin/phpunit --coverage-clover=coverage.clover
+before_script:
+  - composer global require infection/infection
+  - composer install --prefer-source
+script: vendor/bin/phpunit --coverage-clover=coverage.clover && infection
 after_script:
     - if [ "$TRAVIS_PHP_VERSION" != "nighlty" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
     - if [ "$TRAVIS_PHP_VERSION" != "nighlty" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

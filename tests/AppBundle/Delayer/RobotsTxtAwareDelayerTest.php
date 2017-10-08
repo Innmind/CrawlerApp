@@ -66,7 +66,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
                     $this->createMock(UrlInterface::class),
                     (new Walker)(new Str(<<<TXT
 User-agent: foo
-Crawl-delay: 100
+Crawl-delay: 10
 TXT
                     ))
                 )
