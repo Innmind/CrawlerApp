@@ -23,7 +23,7 @@ services:
         class: Innmind\UrlResolver\UrlResolver
 
     crawl_consumer:
-        class: AppBundle\Consumer\CrawlConsumer
+        class: AppBundle\AMQP\Consumer\CrawlConsumer
         public: false
         arguments:
             - '@crawler'

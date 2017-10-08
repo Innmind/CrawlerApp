@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace AppBundle\Consumer;
+namespace AppBundle\AMQP\Consumer;
 
 use AppBundle\{
     Publisher,

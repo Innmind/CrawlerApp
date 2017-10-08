@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\AppBundle\Consumer;
+namespace Tests\AppBundle\AMQP\Consumer;
 
 use AppBundle\{
-    Consumer\CrawlConsumer,
+    AMQP\Consumer\CrawlConsumer,
     Publisher,
     Linker,
     Reference,
