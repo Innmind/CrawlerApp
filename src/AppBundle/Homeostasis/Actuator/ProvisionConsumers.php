@@ -126,7 +126,7 @@ final class ProvisionConsumers implements Actuator
 
     private function spawn(int $processes): void
     {
-        foreach (range(1, $processes) as $i) {
+        for ($i = 0; $i < $processes; $i++) {
             $this->control->processes()->execute($this->spawn);
         }
     }
