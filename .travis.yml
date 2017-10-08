@@ -4,6 +4,7 @@ php:
     - 7.2
     - nightly
 before_script:
+  - export PATH=~/.composer/vendor/bin:$PATH
   - composer global require infection/infection
   - composer install --prefer-source
 script: vendor/bin/phpunit --coverage-clover=coverage.clover && infection
