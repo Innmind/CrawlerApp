@@ -31,7 +31,11 @@ use Innmind\Http\Message\{
     Response,
     StatusCode\StatusCode
 };
-use Innmind\AMQP\Model\Basic\Message\Generic;
+use Innmind\AMQP\Model\Basic\Message\{
+    Generic,
+    Locked,
+    ContentType
+};
 use Innmind\Immutable\{
     Map,
     Str
@@ -60,12 +64,15 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'definition' => 'definition',
-            'server' => 'server',
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'definition' => 'definition',
+                'server' => 'server',
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -111,12 +118,15 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'definition' => 'definition',
-            'server' => 'server',
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'definition' => 'definition',
+                'server' => 'server',
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -144,12 +154,15 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'definition' => 'definition',
-            'server' => 'server',
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'definition' => 'definition',
+                'server' => 'server',
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -180,12 +193,15 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'definition' => 'definition',
-            'server' => 'server',
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'definition' => 'definition',
+                'server' => 'server',
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -213,12 +229,15 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'definition' => 'definition',
-            'server' => 'server',
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'definition' => 'definition',
+                'server' => 'server',
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -245,14 +264,17 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'relationship' => 'referrer',
-            'definition' => 'definition',
-            'server' => 'server',
-            'attributes' => ['foo', 'bar'],
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'relationship' => 'referrer',
+                'definition' => 'definition',
+                'server' => 'server',
+                'attributes' => ['foo', 'bar'],
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -307,14 +329,17 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'relationship' => 'referrer',
-            'definition' => 'definition',
-            'server' => 'server',
-            'attributes' => ['foo', 'bar'],
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'relationship' => 'referrer',
+                'definition' => 'definition',
+                'server' => 'server',
+                'attributes' => ['foo', 'bar'],
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -367,14 +392,17 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'relationship' => 'referrer',
-            'definition' => 'definition',
-            'server' => 'server',
-            'attributes' => ['foo', 'bar'],
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'relationship' => 'referrer',
+                'definition' => 'definition',
+                'server' => 'server',
+                'attributes' => ['foo', 'bar'],
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -424,14 +452,17 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'relationship' => 'referrer',
-            'definition' => 'definition',
-            'server' => 'server',
-            'attributes' => ['foo', 'bar'],
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'relationship' => 'referrer',
+                'definition' => 'definition',
+                'server' => 'server',
+                'attributes' => ['foo', 'bar'],
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -474,14 +505,17 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new Generic(new Str(json_encode([
-            'resource' => 'foo',
-            'origin' => 'origin',
-            'relationship' => 'referrer',
-            'definition' => 'definition',
-            'server' => 'server',
-            'attributes' => ['foo', 'bar'],
-        ])));
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'relationship' => 'referrer',
+                'definition' => 'definition',
+                'server' => 'server',
+                'attributes' => ['foo', 'bar'],
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
         $crawler
             ->expects($this->once())
             ->method('execute')
