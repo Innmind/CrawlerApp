@@ -77,6 +77,34 @@ TXT
         $this->assertTrue(microtime(true) - $start < 1);
     }
 
+    public function testDoesntWaitAsSpecifiedByRobotsTxt()
+    {
+        $delayer = new RobotsTxtAwareDelayer(
+            $parser = $this->createMock(Parser::class),
+            'foo'
+        );
+        $parser
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($this->callback(function(UrlInterface $url): bool {
+                return (string) $url === 'http://example.com/robots.txt';
+            }))
+            ->willReturn(
+                new RobotsTxt(
+                    $this->createMock(UrlInterface::class),
+                    (new Walker)(new Str(<<<TXT
+User-agent: foo
+Crawl-delay: 0
+TXT
+                    ))
+                )
+            );
+
+        $start = microtime(true);
+        $this->assertNull($delayer(Url::fromString('http://example.com/')));
+        $this->assertTrue(microtime(true) - $start < 1);
+    }
+
     public function testWait()
     {
         $delayer = new RobotsTxtAwareDelayer(
