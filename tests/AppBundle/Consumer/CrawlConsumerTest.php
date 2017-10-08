@@ -71,6 +71,7 @@ class CrawlConsumerTest extends TestCase
             ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
+                    (string) $request->protocolVersion() === '2.0' &&
                     $request->headers()->has('User-Agent') &&
                     (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
             }))
