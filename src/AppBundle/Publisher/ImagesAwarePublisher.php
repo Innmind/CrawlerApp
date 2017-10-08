@@ -5,7 +5,8 @@ namespace AppBundle\Publisher;
 
 use AppBundle\{
     Publisher as PublisherInterface,
-    Reference
+    Reference,
+    AMQP\Message\Image
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
@@ -36,16 +37,13 @@ final class ImagesAwarePublisher implements PublisherInterface
                 ->get('images')
                 ->content()
                 ->foreach(function(UrlInterface $image, string $description) use ($reference): void {
-                    $this->producer->publish(serialize([
-                        'resource' => (string) $image,
-                        'origin' => (string) $reference->identity(),
-                        'relationship' => 'referrer',
-                        'attributes' => [
-                            'description' => $description,
-                        ],
-                        'definition' => $reference->definition(),
-                        'server' => (string) $reference->server(),
-                    ]));
+                    $message = new Image(
+                        $image,
+                        $reference,
+                        $description
+                    );
+
+                    $this->producer->publish((string) $message->body());
                 });
         }
 

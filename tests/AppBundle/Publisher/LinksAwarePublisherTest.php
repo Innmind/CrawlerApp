@@ -151,7 +151,7 @@ class LinksAwarePublisherTest extends TestCase
             ->producer
             ->expects($this->once())
             ->method('publish')
-            ->with(serialize([
+            ->with(json_encode([
                 'resource' => 'http://example.com/foo',
                 'origin' => 'some identity',
                 'relationship' => 'referrer',

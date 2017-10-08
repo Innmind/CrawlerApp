@@ -56,7 +56,7 @@ final class CrawlConsumer implements ConsumerInterface
 
     public function execute(AMQPMessage $message): bool
     {
-        $data = unserialize($message->body);
+        $data = json_decode($message->body, true);
 
         try {
             $resource = $this->crawler->execute(

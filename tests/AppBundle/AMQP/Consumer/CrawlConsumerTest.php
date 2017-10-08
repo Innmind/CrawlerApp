@@ -59,7 +59,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
@@ -110,7 +110,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
@@ -143,7 +143,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
@@ -176,7 +176,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
@@ -209,7 +209,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
@@ -241,7 +241,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
@@ -303,7 +303,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
@@ -363,7 +363,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
@@ -420,7 +420,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
@@ -470,7 +470,7 @@ class CrawlConsumerTest extends TestCase
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(serialize([
+        $message = new AMQPMessage(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',

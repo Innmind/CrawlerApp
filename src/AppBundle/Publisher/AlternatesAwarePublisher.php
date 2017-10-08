@@ -5,7 +5,8 @@ namespace AppBundle\Publisher;
 
 use AppBundle\{
     Publisher as PublisherInterface,
-    Reference
+    Reference,
+    AMQP\Message\Alternate as Message
 };
 use Innmind\Crawler\{
     HttpResource,
@@ -49,16 +50,13 @@ final class AlternatesAwarePublisher implements PublisherInterface
                             return (string) $url !== (string) $resource->url();
                         })
                         ->foreach(function(UrlInterface $url) use ($language, $reference): void {
-                            $this->producer->publish(serialize([
-                                'resource' => (string) $url,
-                                'origin' => (string) $reference->identity(),
-                                'relationship' => 'alternate',
-                                'attributes' => [
-                                    'language' => $language,
-                                ],
-                                'definition' => $reference->definition(),
-                                'server' => (string) $reference->server(),
-                            ]));
+                            $message = new Message(
+                                $url,
+                                $reference,
+                                $language
+                            );
+
+                            $this->producer->publish((string) $message->body());
                         });
                 });
         }
