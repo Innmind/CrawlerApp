@@ -30,7 +30,8 @@
         "php-amqplib/rabbitmq-bundle": "^1.12",
         "innmind/homeostasis-bundle": "^2.0",
         "innmind/server-control": "^2.0",
-        "innmind/server-status": "^1.0"
+        "innmind/server-status": "^1.0",
+        "innmind/amqp": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
