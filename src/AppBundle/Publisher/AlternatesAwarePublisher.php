@@ -14,19 +14,19 @@ use Innmind\Crawler\{
     HttpResource\Alternate
 };
 use Innmind\Url\UrlInterface;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Innmind\AMQPBundle\Producer;
 
 final class AlternatesAwarePublisher implements PublisherInterface
 {
     private $publisher;
-    private $producer;
+    private $produce;
 
     public function __construct(
         PublisherInterface $publisher,
-        ProducerInterface $producer
+        Producer $producer
     ) {
         $this->publisher = $publisher;
-        $this->producer = $producer;
+        $this->produce = $producer;
     }
 
     public function __invoke(
@@ -50,13 +50,11 @@ final class AlternatesAwarePublisher implements PublisherInterface
                             return (string) $url !== (string) $resource->url();
                         })
                         ->foreach(function(UrlInterface $url) use ($language, $reference): void {
-                            $message = new Message(
+                            ($this->produce)(new Message(
                                 $url,
                                 $reference,
                                 $language
-                            );
-
-                            $this->producer->publish((string) $message->body());
+                            ));
                         });
                 });
         }

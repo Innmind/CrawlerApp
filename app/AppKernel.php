@@ -10,7 +10,7 @@ class AppKernel extends Kernel
         $bundles = [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
-            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle,
+            new Innmind\AMQPBundle\InnmindAMQPBundle,
             new Innmind\Rest\ClientBundle\InnmindRestClientBundle,
             new Innmind\HomeostasisBundle\InnmindHomeostasisBundle,
             new AppBundle\AppBundle(),

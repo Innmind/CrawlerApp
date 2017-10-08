@@ -6,7 +6,8 @@ namespace Tests\AppBundle\Publisher;
 use AppBundle\{
     Publisher\CanonicalAwarePublisher,
     Publisher,
-    Reference
+    Reference,
+    AMQP\Message\Canonical
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
@@ -19,8 +20,8 @@ use Innmind\Url\{
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
+use Innmind\AMQPBundle\Producer;
 use Innmind\Immutable\Map;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PHPUnit\Framework\TestCase;
 
 class CanonicalAwarePublisherTest extends TestCase
@@ -33,7 +34,7 @@ class CanonicalAwarePublisherTest extends TestCase
     {
         $this->publisher = new CanonicalAwarePublisher(
             $this->inner = $this->createMock(Publisher::class),
-            $this->producer = $this->createMock(ProducerInterface::class)
+            $this->producer = $this->createMock(Producer::class)
         );
     }
 
@@ -69,7 +70,7 @@ class CanonicalAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->never())
-            ->method('publish');
+            ->method('__invoke');
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }
@@ -102,7 +103,7 @@ class CanonicalAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->never())
-            ->method('publish');
+            ->method('__invoke');
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }
@@ -115,7 +116,10 @@ class CanonicalAwarePublisherTest extends TestCase
             (new Map('string', Attribute::class))
                 ->put(
                     'canonical',
-                    new Attribute\Attribute('canonical', Url::fromString('http://example.com/foo'))
+                    new Attribute\Attribute(
+                        'canonical',
+                        $published = Url::fromString('http://example.com/foo')
+                    )
                 ),
             $this->createMock(Readable::class)
         );
@@ -139,14 +143,11 @@ class CanonicalAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->once())
-            ->method('publish')
-            ->with(json_encode([
-                'resource' => 'http://example.com/foo',
-                'origin' => 'some identity',
-                'relationship' => 'canonical',
-                'definition' => 'foo',
-                'server' => 'http://server.url/',
-            ]));
+            ->method('__invoke')
+            ->with($this->callback(function(Canonical $message) use ($published, $expected) {
+                return $message->resource() === $published &&
+                    $message->reference() === $expected;
+            }));
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }

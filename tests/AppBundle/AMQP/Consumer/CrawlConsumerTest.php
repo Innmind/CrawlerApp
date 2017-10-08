@@ -31,40 +31,41 @@ use Innmind\Http\Message\{
     Response,
     StatusCode\StatusCode
 };
-use Innmind\Immutable\Map;
-use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
-use PhpAmqpLib\Message\AMQPMessage;
+use Innmind\AMQP\Model\Basic\Message\Generic;
+use Innmind\Immutable\{
+    Map,
+    Str
+};
 use PHPUnit\Framework\TestCase;
 
 class CrawlConsumerTest extends TestCase
 {
     public function testInterface()
     {
-        $this->assertInstanceOf(
-            ConsumerInterface::class,
-            new CrawlConsumer(
+        $this->assertTrue(
+            is_callable(new CrawlConsumer(
                 $this->createMock(Crawler::class),
                 $this->createMock(Publisher::class),
                 $this->createMock(Linker::class),
                 'ua'
-            )
+            ))
         );
     }
 
-    public function testExecute()
+    public function testInvokation()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
             'server' => 'server',
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -99,23 +100,23 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
-        $this->assertTrue($consumer->execute($message));
+        $this->assertNull($consume($message));
     }
 
-    public function testExecuteWhenCantConnectToHostOnCrawl()
+    public function testInvokeWhenCantConnectToHostOnCrawl()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
             'server' => 'server',
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -132,23 +133,23 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
-        $this->assertTrue($consumer->execute($message));
+        $this->assertNull($consume($message));
     }
 
-    public function testExecuteWhenClientErrorOnCrawl()
+    public function testInvokeWhenClientErrorOnCrawl()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
             'server' => 'server',
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -165,23 +166,26 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
-        $this->assertTrue($consumer->execute($message));
+        $this->assertNull($consume($message));
     }
 
-    public function testExecuteWhenServerErrorOnCrawl()
+    /**
+     * @expectedException Innmind\AMQP\Exception\Requeue
+     */
+    public function testInvokeWhenServerErrorOnCrawl()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
             'server' => 'server',
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -198,23 +202,23 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
-        $this->assertFalse($consumer->execute($message));
+        $consume($message);
     }
 
-    public function testExecuteWhenUrlCannotBeCrawled()
+    public function testInvokeWhenUrlCannotBeCrawled()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'definition' => 'definition',
             'server' => 'server',
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -230,25 +234,25 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
-        $this->assertTrue($consumer->execute($message));
+        $this->assertNull($consume($message));
     }
 
     public function testLink()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
             'definition' => 'definition',
             'server' => 'server',
             'attributes' => ['foo', 'bar'],
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -292,25 +296,25 @@ class CrawlConsumerTest extends TestCase
                 ['foo', 'bar']
             );
 
-        $this->assertTrue($consumer->execute($message));
+        $this->assertNull($consume($message));
     }
 
     public function testPublishEvenOnConflictDetected()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
             'definition' => 'definition',
             'server' => 'server',
             'attributes' => ['foo', 'bar'],
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -349,7 +353,7 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
-        $this->assertTrue($consumer->execute($message));
+        $this->assertNull($consume($message));
     }
 
     /**
@@ -357,20 +361,20 @@ class CrawlConsumerTest extends TestCase
      */
     public function testThrowOnClientErrorOnPublish()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
             'definition' => 'definition',
             'server' => 'server',
             'attributes' => ['foo', 'bar'],
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -409,25 +413,25 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
-        $this->assertTrue($consumer->execute($message));
+        $consume($message);
     }
 
-    public function testExecuteWhenFailsToPublish()
+    public function testInvokeWhenFailsToPublish()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
             'definition' => 'definition',
             'server' => 'server',
             'attributes' => ['foo', 'bar'],
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -459,25 +463,25 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
-        $this->assertTrue($consumer->execute($message));
+        $this->assertNull($consume($message));
     }
 
-    public function testExecuteWhenTryingToLinkAcrossServers()
+    public function testInvokeWhenTryingToLinkAcrossServers()
     {
-        $consumer = new CrawlConsumer(
+        $consume = new CrawlConsumer(
             $crawler = $this->createMock(Crawler::class),
             $publisher = $this->createMock(Publisher::class),
             $linker = $this->createMock(Linker::class),
             'ua'
         );
-        $message = new AMQPMessage(json_encode([
+        $message = new Generic(new Str(json_encode([
             'resource' => 'foo',
             'origin' => 'origin',
             'relationship' => 'referrer',
             'definition' => 'definition',
             'server' => 'server',
             'attributes' => ['foo', 'bar'],
-        ]));
+        ])));
         $crawler
             ->expects($this->once())
             ->method('execute')
@@ -524,6 +528,6 @@ class CrawlConsumerTest extends TestCase
                 new CantLinkResourceAcrossServers($reference, $reference)
             ));
 
-        $this->assertTrue($consumer->execute($message));
+        $this->assertNull($consume($message));
     }
 }

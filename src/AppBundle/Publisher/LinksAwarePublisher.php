@@ -10,19 +10,19 @@ use AppBundle\{
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Innmind\AMQPBundle\Producer;
 
 final class LinksAwarePublisher implements PublisherInterface
 {
     private $publisher;
-    private $producer;
+    private $produce;
 
     public function __construct(
         PublisherInterface $publisher,
-        ProducerInterface $producer
+        Producer $producer
     ) {
         $this->publisher = $publisher;
-        $this->producer = $producer;
+        $this->produce = $producer;
     }
 
     public function __invoke(
@@ -40,13 +40,11 @@ final class LinksAwarePublisher implements PublisherInterface
                     return (string) $url !== (string) $resource->url();
                 })
                 ->foreach(function(UrlInterface $url) use ($reference, $resource): void {
-                    $message = new Link(
+                    ($this->produce)(new Link(
                         $resource->url(),
                         $url,
                         $reference
-                    );
-
-                    $this->producer->publish((string) $message->body());
+                    ));
                 });
         }
 

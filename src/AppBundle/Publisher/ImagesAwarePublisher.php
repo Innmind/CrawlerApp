@@ -10,19 +10,19 @@ use AppBundle\{
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Innmind\AMQPBundle\Producer;
 
 final class ImagesAwarePublisher implements PublisherInterface
 {
     private $publisher;
-    private $producer;
+    private $produce;
 
     public function __construct(
         PublisherInterface $publisher,
-        ProducerInterface $producer
+        Producer $producer
     ) {
         $this->publisher = $publisher;
-        $this->producer = $producer;
+        $this->produce = $producer;
     }
 
     public function __invoke(
@@ -37,13 +37,11 @@ final class ImagesAwarePublisher implements PublisherInterface
                 ->get('images')
                 ->content()
                 ->foreach(function(UrlInterface $image, string $description) use ($reference): void {
-                    $message = new Image(
+                    ($this->produce)(new Image(
                         $image,
                         $reference,
                         $description
-                    );
-
-                    $this->producer->publish((string) $message->body());
+                    ));
                 });
         }
 

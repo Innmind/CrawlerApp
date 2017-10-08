@@ -6,7 +6,8 @@ namespace Tests\AppBundle\Publisher;
 use AppBundle\{
     Publisher\ImagesAwarePublisher,
     Publisher,
-    Reference
+    Reference,
+    AMQP\Message\Image
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
@@ -19,12 +20,12 @@ use Innmind\Url\{
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
+use Innmind\AMQPBundle\Producer;
 use Innmind\Immutable\{
     Map,
     SetInterface,
     Set
 };
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PHPUnit\Framework\TestCase;
 
 class ImagesAwarePublisherTest extends TestCase
@@ -37,7 +38,7 @@ class ImagesAwarePublisherTest extends TestCase
     {
         $this->publisher = new ImagesAwarePublisher(
             $this->inner = $this->createMock(Publisher::class),
-            $this->producer = $this->createMock(ProducerInterface::class)
+            $this->producer = $this->createMock(Producer::class)
         );
     }
 
@@ -73,7 +74,7 @@ class ImagesAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->never())
-            ->method('publish');
+            ->method('__invoke');
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }
@@ -89,7 +90,7 @@ class ImagesAwarePublisherTest extends TestCase
                     new Attribute\Attribute(
                         'images',
                         (new Map(UrlInterface::class, 'string'))
-                            ->put(Url::fromString('http://example.com/foo'), 'some desc')
+                            ->put($published = Url::fromString('http://example.com/foo'), 'some desc')
                     )
                 ),
             $this->createMock(Readable::class)
@@ -114,17 +115,12 @@ class ImagesAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->once())
-            ->method('publish')
-            ->with(json_encode([
-                'resource' => 'http://example.com/foo',
-                'origin' => 'some identity',
-                'relationship' => 'referrer',
-                'attributes' => [
-                    'description' => 'some desc',
-                ],
-                'definition' => 'foo',
-                'server' => 'http://server.url/',
-            ]));
+            ->method('__invoke')
+            ->with($this->callback(function(Image $message) use ($published, $expected) {
+                return $message->resource() === $published &&
+                    $message->reference() === $expected &&
+                    $message->description() === 'some desc';
+            }));
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }

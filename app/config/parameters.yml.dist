@@ -5,8 +5,8 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
     user_agent: 'Innmind Robot'
-    rabbitmq_host: 'localhost'
-    rabbitmq_port: 5672
-    rabbitmq_user: 'guest'
-    rabbitmq_password: 'guest'
-    rabbitmq_vhost: '/'
+    amqp_host: 'localhost'
+    amqp_port: 5672
+    amqp_user: 'guest'
+    amqp_password: 'guest'
+    amqp_vhost: '/'

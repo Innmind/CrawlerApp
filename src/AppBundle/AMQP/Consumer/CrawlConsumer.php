@@ -28,14 +28,16 @@ use Innmind\HttpTransport\Exception\{
     ClientError,
     ServerError
 };
+use Innmind\AMQP\{
+    Model\Basic\Message,
+    Exception\Requeue
+};
 use Innmind\Immutable\{
     Map,
     Set
 };
-use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
-use PhpAmqpLib\Message\AMQPMessage;
 
-final class CrawlConsumer implements ConsumerInterface
+final class CrawlConsumer
 {
     private $crawler;
     private $publish;
@@ -54,9 +56,9 @@ final class CrawlConsumer implements ConsumerInterface
         $this->userAgent = $userAgent;
     }
 
-    public function execute(AMQPMessage $message): bool
+    public function __invoke(Message $message): void
     {
-        $data = json_decode($message->body, true);
+        $data = json_decode((string) $message->body(), true);
 
         try {
             $resource = $this->crawler->execute(
@@ -77,13 +79,13 @@ final class CrawlConsumer implements ConsumerInterface
                 )
             );
         } catch (ConnectionFailed $e) {
-            return true;
+            return;
         } catch (ClientError $e) {
-            return true;
+            return;
         } catch (ServerError $e) {
-            return false; //will retry later
+            throw new Requeue; //will retry later
         } catch (UrlCannotBeCrawled $e) {
-            return true;
+            return;
         }
 
         try {
@@ -114,6 +116,6 @@ final class CrawlConsumer implements ConsumerInterface
             //pass
         }
 
-        return true;
+        return;
     }
 }

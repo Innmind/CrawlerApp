@@ -13,28 +13,28 @@ services:
         public: false
         arguments:
             - '@publisher.default'
-            - '@old_sound_rabbit_mq.crawl_producer'
+            - '@innmind.amqp.producer.urls'
 
     publisher.alternates_aware:
         class: AppBundle\Publisher\AlternatesAwarePublisher
         public: false
         arguments:
             - '@publisher.canonical_aware'
-            - '@old_sound_rabbit_mq.crawl_producer'
+            - '@innmind.amqp.producer.urls'
 
     publisher.images_aware:
         class: AppBundle\Publisher\ImagesAwarePublisher
         public: false
         arguments:
             - '@publisher.alternates_aware'
-            - '@old_sound_rabbit_mq.crawl_producer'
+            - '@innmind.amqp.producer.urls'
 
     publisher.links_aware:
         class: AppBundle\Publisher\LinksAwarePublisher
         public: false
         arguments:
             - '@publisher.images_aware'
-            - '@old_sound_rabbit_mq.crawl_producer'
+            - '@innmind.amqp.producer.urls'
 
     resource_translator:
         class: AppBundle\Translator\HttpResourceTranslator

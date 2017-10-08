@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "81386474cab47add74967b50de36edd3",
-    "content-hash": "7f3178a3ad03fc44ff15d09269235a36",
+    "hash": "756fdb3f7f66d4fdc46ffb5a6480ce15",
+    "content-hash": "9b582ca1fe88c5bf8bc1b8226a371dc9",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -807,6 +807,54 @@
                 "AMQP"
             ],
             "time": "2017-10-08 13:30:41"
+        },
+        {
+            "name": "innmind/amqp-bundle",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/AMQPBundle.git",
+                "reference": "b45db3e4c0e09bca85f92dd49fd2fa46c5023d95"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/AMQPBundle/zipball/b45db3e4c0e09bca85f92dd49fd2fa46c5023d95",
+                "reference": "b45db3e4c0e09bca85f92dd49fd2fa46c5023d95",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/amqp": "^1.0",
+                "innmind/socket": "^1.1",
+                "php": "~7.1",
+                "symfony/config": "~3.0",
+                "symfony/console": "^3.0",
+                "symfony/dependency-injection": "~3.0",
+                "symfony/framework-bundle": "^3.0",
+                "symfony/http-kernel": "~3.0",
+                "symfony/yaml": "~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\AMQPBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Symfony bundle to integrate AMQP library",
+            "homepage": "http://github.com/Innmind/AMQPBundle",
+            "time": "2017-09-17 14:17:02"
         },
         {
             "name": "innmind/colour",
