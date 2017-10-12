@@ -10,7 +10,7 @@ services:
             - '@filesystem.robots'
 
     robots.default:
-        class: Innmind\RobotsTxt\Parser
+        class: Innmind\RobotsTxt\Parser\Parser
         public: false
         arguments:
             - '@crawler.transport'

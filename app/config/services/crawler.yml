@@ -5,7 +5,7 @@ services:
     crawler: '@crawler.xml_reader_aware'
 
     crawler.default:
-        class: Innmind\Crawler\Crawler
+        class: Innmind\Crawler\Crawler\Crawler
         arguments:
             - '@crawler.transport'
             - '@crawler.parser'
