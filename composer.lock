@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "756fdb3f7f66d4fdc46ffb5a6480ce15",
+    "hash": "a9c9047b8286cc080c9c4c6a4e5e22dc",
     "content-hash": "9b582ca1fe88c5bf8bc1b8226a371dc9",
     "packages": [
         {
@@ -1048,16 +1048,16 @@
         },
         {
             "name": "innmind/homeostasis",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Homeostasis.git",
-                "reference": "a1a48f8001ca4f3c77f6f43c5f2c98afd0d6be4f"
+                "reference": "c63a895818c4fc03bd8dcb81fc9fa7c0549693ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Homeostasis/zipball/a1a48f8001ca4f3c77f6f43c5f2c98afd0d6be4f",
-                "reference": "a1a48f8001ca4f3c77f6f43c5f2c98afd0d6be4f",
+                "url": "https://api.github.com/repos/Innmind/Homeostasis/zipball/c63a895818c4fc03bd8dcb81fc9fa7c0549693ed",
+                "reference": "c63a895818c4fc03bd8dcb81fc9fa7c0549693ed",
                 "shasum": ""
             },
             "require": {
@@ -1091,7 +1091,7 @@
             ],
             "description": "App health regulator",
             "homepage": "http://github.com/Innmind/Homeostasis",
-            "time": "2017-10-07 12:11:36"
+            "time": "2017-10-12 18:33:07"
         },
         {
             "name": "innmind/homeostasis-bundle",
