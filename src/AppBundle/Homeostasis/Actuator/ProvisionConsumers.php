@@ -40,9 +40,9 @@ final class ProvisionConsumers implements Actuator
         $this->spawn = Command::background('php')
             ->withArgument('./console')
             ->withOption('env', $environment)
-            ->withArgument('rabbitmq:consumer')
-            ->withArgument('crawl')
-            ->withShortOption('m', '50')
+            ->withArgument('innmind:amqp:consume')
+            ->withArgument('crawler')
+            ->withArgument('50')
             ->withWorkingDirectory($workingDirectory);
     }
 

@@ -6,7 +6,8 @@ namespace Tests\AppBundle\Publisher;
 use AppBundle\{
     Publisher\AlternatesAwarePublisher,
     Publisher,
-    Reference
+    Reference,
+    AMQP\Message\Alternate as Message
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
@@ -21,12 +22,12 @@ use Innmind\Url\{
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
+use Innmind\AMQPBundle\Producer;
 use Innmind\Immutable\{
     Map,
     SetInterface,
     Set
 };
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PHPUnit\Framework\TestCase;
 
 class AlternatesAwarePublisherTest extends TestCase
@@ -39,7 +40,7 @@ class AlternatesAwarePublisherTest extends TestCase
     {
         $this->publisher = new AlternatesAwarePublisher(
             $this->inner = $this->createMock(Publisher::class),
-            $this->producer = $this->createMock(ProducerInterface::class)
+            $this->producer = $this->createMock(Producer::class)
         );
     }
 
@@ -75,7 +76,7 @@ class AlternatesAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->never())
-            ->method('publish');
+            ->method('__invoke');
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }
@@ -117,7 +118,7 @@ class AlternatesAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->never())
-            ->method('publish');
+            ->method('__invoke');
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }
@@ -150,7 +151,7 @@ class AlternatesAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->never())
-            ->method('publish');
+            ->method('__invoke');
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }
@@ -170,7 +171,7 @@ class AlternatesAwarePublisherTest extends TestCase
                                 new Alternate(
                                     'en',
                                     (new Set(UrlInterface::class))
-                                        ->add(Url::fromString('http://example.com/foo'))
+                                        ->add($published = Url::fromString('http://example.com/foo'))
                                 )
                             )
                     )
@@ -197,17 +198,12 @@ class AlternatesAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->once())
-            ->method('publish')
-            ->with(serialize([
-                'resource' => 'http://example.com/foo',
-                'origin' => 'some identity',
-                'relationship' => 'alternate',
-                'attributes' => [
-                    'language' => 'en',
-                ],
-                'definition' => 'foo',
-                'server' => 'http://server.url/',
-            ]));
+            ->method('__invoke')
+            ->with($this->callback(function(Message $message) use ($published, $expected) {
+                return $message->resource() === $published &&
+                    $message->reference() === $expected &&
+                    $message->language() === 'en';
+            }));
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }

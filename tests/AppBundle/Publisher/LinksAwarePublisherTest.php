@@ -6,7 +6,8 @@ namespace Tests\AppBundle\Publisher;
 use AppBundle\{
     Publisher\LinksAwarePublisher,
     Publisher,
-    Reference
+    Reference,
+    AMQP\Message\Link
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
@@ -19,11 +20,11 @@ use Innmind\Url\{
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
+use Innmind\AMQPBundle\Producer;
 use Innmind\Immutable\{
     Map,
     Set
 };
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PHPUnit\Framework\TestCase;
 
 class LinksAwarePublisherTest extends TestCase
@@ -36,7 +37,7 @@ class LinksAwarePublisherTest extends TestCase
     {
         $this->publisher = new LinksAwarePublisher(
             $this->inner = $this->createMock(Publisher::class),
-            $this->producer = $this->createMock(ProducerInterface::class)
+            $this->producer = $this->createMock(Producer::class)
         );
     }
 
@@ -72,7 +73,7 @@ class LinksAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->never())
-            ->method('publish');
+            ->method('__invoke');
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }
@@ -109,7 +110,7 @@ class LinksAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->never())
-            ->method('publish');
+            ->method('__invoke');
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }
@@ -125,7 +126,7 @@ class LinksAwarePublisherTest extends TestCase
                     new Attribute\Attribute(
                         'links',
                         (new Set(UrlInterface::class))
-                            ->add(Url::fromString('http://example.com/foo'))
+                            ->add($published = Url::fromString('http://example.com/foo'))
                     )
                 ),
             $this->createMock(Readable::class)
@@ -150,14 +151,11 @@ class LinksAwarePublisherTest extends TestCase
         $this
             ->producer
             ->expects($this->once())
-            ->method('publish')
-            ->with(serialize([
-                'resource' => 'http://example.com/foo',
-                'origin' => 'some identity',
-                'relationship' => 'referrer',
-                'definition' => 'foo',
-                'server' => 'http://server.url/',
-            ]));
+            ->method('__invoke')
+            ->with($this->callback(function(Link $message) use ($published, $expected) {
+                return $message->resource() === $published &&
+                    $message->reference() === $expected;
+            }));
 
         $this->assertSame($expected, ($this->publisher)($resource, $server));
     }

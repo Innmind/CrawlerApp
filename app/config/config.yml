@@ -24,28 +24,20 @@ innmind_rest_client:
 innmind_homeostasis:
     actuator: homeostasis.actuator.provision_consumers
 
-old_sound_rabbit_mq:
-    connections:
-        default:
-            host: '%rabbitmq_host%'
-            port: '%rabbitmq_port%'
-            user: '%rabbitmq_user%'
-            password: '%rabbitmq_password%'
-            vhost: '%rabbitmq_vhost%'
-            lazy:     false
-            connection_timeout: 3
-            read_write_timeout: 120
-
-            keepalive: true
-            heartbeat: 60
-            use_socket: false
-    producers:
-        crawl:
-            connection:       default
-            exchange_options: {name: 'crawl', type: direct}
-    consumers:
-        crawl:
-            connection:       default
-            exchange_options: {name: 'crawl', type: direct}
-            queue_options:    {name: 'crawl'}
-            callback:         crawl_consumer
+innmind_amqp:
+    server:
+        host: '%amqp_host%'
+        port: '%amqp_port%'
+        user: '%amqp_user%'
+        password: '%amqp_password%'
+        vhost: '%amqp_vhost%'
+    exchanges:
+        urls:
+            type: direct
+    queues:
+        crawler:
+            consumer: crawl_consumer
+    bindings:
+        -
+            exchange: urls
+            queue: crawler

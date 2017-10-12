@@ -5,23 +5,24 @@ namespace AppBundle\Publisher;
 
 use AppBundle\{
     Publisher as PublisherInterface,
-    Reference
+    Reference,
+    AMQP\Message\Link
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Innmind\AMQPBundle\Producer;
 
 final class LinksAwarePublisher implements PublisherInterface
 {
     private $publisher;
-    private $producer;
+    private $produce;
 
     public function __construct(
         PublisherInterface $publisher,
-        ProducerInterface $producer
+        Producer $producer
     ) {
         $this->publisher = $publisher;
-        $this->producer = $producer;
+        $this->produce = $producer;
     }
 
     public function __invoke(
@@ -38,14 +39,12 @@ final class LinksAwarePublisher implements PublisherInterface
                 ->filter(function(UrlInterface $url) use ($resource): bool {
                     return (string) $url !== (string) $resource->url();
                 })
-                ->foreach(function(UrlInterface $url) use ($reference): void {
-                    $this->producer->publish(serialize([
-                        'resource' => (string) $url,
-                        'origin' => (string) $reference->identity(),
-                        'relationship' => 'referrer',
-                        'definition' => $reference->definition(),
-                        'server' => (string) $reference->server(),
-                    ]));
+                ->foreach(function(UrlInterface $url) use ($reference, $resource): void {
+                    ($this->produce)(new Link(
+                        $resource->url(),
+                        $url,
+                        $reference
+                    ));
                 });
         }
 

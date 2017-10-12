@@ -6,13 +6,12 @@ namespace AppBundle\AMQP\Consumer;
 use AppBundle\{
     Publisher,
     Linker,
-    Reference,
+    AMQP\Message\Resource,
     Exception\ResourceCannotBePublished,
     Exception\UrlCannotBeCrawled,
     Exception\CantLinkResourceAcrossServers
 };
 use Innmind\Crawler\Crawler;
-use Innmind\Rest\Client\Identity\Identity;
 use Innmind\Http\{
     Message\Request\Request,
     Message\Method\Method,
@@ -22,20 +21,21 @@ use Innmind\Http\{
     Header,
     Header\Value\Value
 };
-use Innmind\Url\Url;
 use Innmind\HttpTransport\Exception\{
     ConnectionFailed,
     ClientError,
     ServerError
 };
+use Innmind\AMQP\{
+    Model\Basic\Message,
+    Exception\Requeue
+};
 use Innmind\Immutable\{
     Map,
     Set
 };
-use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
-use PhpAmqpLib\Message\AMQPMessage;
 
-final class CrawlConsumer implements ConsumerInterface
+final class CrawlConsumer
 {
     private $crawler;
     private $publish;
@@ -54,14 +54,14 @@ final class CrawlConsumer implements ConsumerInterface
         $this->userAgent = $userAgent;
     }
 
-    public function execute(AMQPMessage $message): bool
+    public function __invoke(Message $message): void
     {
-        $data = unserialize($message->body);
+        $message = new Resource($message);
 
         try {
             $resource = $this->crawler->execute(
                 new Request(
-                    Url::fromString($data['resource']),
+                    $message->resource(),
                     new Method(Method::GET),
                     new ProtocolVersion(2, 0),
                     new Headers(
@@ -77,29 +77,27 @@ final class CrawlConsumer implements ConsumerInterface
                 )
             );
         } catch (ConnectionFailed $e) {
-            return true;
+            return;
         } catch (ClientError $e) {
-            return true;
+            return;
         } catch (ServerError $e) {
-            return false; //will retry later
+            throw new Requeue; //will retry later
         } catch (UrlCannotBeCrawled $e) {
-            return true;
+            return;
         }
 
         try {
-            $server = Url::fromString($data['server']);
-            $reference = ($this->publish)($resource, $server);
+            $reference = ($this->publish)(
+                $resource,
+                $message->reference()->server()
+            );
 
-            if (isset($data['relationship'])) {
+            if ($message->hasRelationship()) {
                 ($this->link)(
                     $reference,
-                    new Reference(
-                        new Identity($data['origin']),
-                        $data['definition'],
-                        $server
-                    ),
-                    $data['relationship'],
-                    $data['attributes'] ?? []
+                    $message->reference(),
+                    $message->relationship(),
+                    $message->attributes()
                 );
             }
         } catch (ClientError $e) {
@@ -114,6 +112,6 @@ final class CrawlConsumer implements ConsumerInterface
             //pass
         }
 
-        return true;
+        return;
     }
 }
