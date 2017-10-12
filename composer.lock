@@ -810,16 +810,16 @@
         },
         {
             "name": "innmind/amqp-bundle",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/AMQPBundle.git",
-                "reference": "b45db3e4c0e09bca85f92dd49fd2fa46c5023d95"
+                "reference": "6f3bbb2e8773626656443cec8f09a0eff4bc09f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/AMQPBundle/zipball/b45db3e4c0e09bca85f92dd49fd2fa46c5023d95",
-                "reference": "b45db3e4c0e09bca85f92dd49fd2fa46c5023d95",
+                "url": "https://api.github.com/repos/Innmind/AMQPBundle/zipball/6f3bbb2e8773626656443cec8f09a0eff4bc09f6",
+                "reference": "6f3bbb2e8773626656443cec8f09a0eff4bc09f6",
                 "shasum": ""
             },
             "require": {
@@ -854,7 +854,7 @@
             ],
             "description": "Symfony bundle to integrate AMQP library",
             "homepage": "http://github.com/Innmind/AMQPBundle",
-            "time": "2017-09-17 14:17:02"
+            "time": "2017-10-12 17:18:00"
         },
         {
             "name": "innmind/colour",
@@ -1284,16 +1284,16 @@
         },
         {
             "name": "innmind/immutable",
-            "version": "2.4.1",
+            "version": "2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Immutable.git",
-                "reference": "e38df27d5d083578c471b4371ae74124b6119747"
+                "reference": "e4b1ebe01cdd321527d21cab6b2c7c23a1f762bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Immutable/zipball/e38df27d5d083578c471b4371ae74124b6119747",
-                "reference": "e38df27d5d083578c471b4371ae74124b6119747",
+                "url": "https://api.github.com/repos/Innmind/Immutable/zipball/e4b1ebe01cdd321527d21cab6b2c7c23a1f762bb",
+                "reference": "e4b1ebe01cdd321527d21cab6b2c7c23a1f762bb",
                 "shasum": ""
             },
             "require": {
@@ -1324,7 +1324,7 @@
                 "immutable",
                 "wrapper"
             ],
-            "time": "2017-09-30 10:56:33"
+            "time": "2017-10-07 15:48:00"
         },
         {
             "name": "innmind/ip",
@@ -4508,16 +4508,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.4.0",
+            "version": "6.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a1bcaca096998de32c29535fdd2dea0c475e8f61"
+                "reference": "b770d8ba7e60295ee91d69d5a5e01ae833cac220"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a1bcaca096998de32c29535fdd2dea0c475e8f61",
-                "reference": "a1bcaca096998de32c29535fdd2dea0c475e8f61",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b770d8ba7e60295ee91d69d5a5e01ae833cac220",
+                "reference": "b770d8ba7e60295ee91d69d5a5e01ae833cac220",
                 "shasum": ""
             },
             "require": {
@@ -4588,7 +4588,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-10-06 03:14:57"
+            "time": "2017-10-07 17:53:53"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
