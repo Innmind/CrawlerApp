@@ -33,7 +33,7 @@ final class Regulate implements EventSubscriberInterface
     {
         $command = $event->getCommand();
 
-        if ($command->getName() !== 'rabbitmq:consumer') {
+        if ($command->getName() !== 'innmind:amqp:consume') {
             return;
         }
 
