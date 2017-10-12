@@ -1372,16 +1372,16 @@
         },
         {
             "name": "innmind/log-reader",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/LogReader.git",
-                "reference": "eff1dd54b03a6952e278e1dfb99be21ade2402a0"
+                "reference": "2e47ea84658a6c8a700106d750cbb3f25cc62dc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/LogReader/zipball/eff1dd54b03a6952e278e1dfb99be21ade2402a0",
-                "reference": "eff1dd54b03a6952e278e1dfb99be21ade2402a0",
+                "url": "https://api.github.com/repos/Innmind/LogReader/zipball/2e47ea84658a6c8a700106d750cbb3f25cc62dc4",
+                "reference": "2e47ea84658a6c8a700106d750cbb3f25cc62dc4",
                 "shasum": ""
             },
             "require": {
@@ -1414,7 +1414,7 @@
             ],
             "description": "Parse log files",
             "homepage": "http://github.com/Innmind/LogReader",
-            "time": "2017-10-07 11:49:35"
+            "time": "2017-10-12 17:57:43"
         },
         {
             "name": "innmind/math",
