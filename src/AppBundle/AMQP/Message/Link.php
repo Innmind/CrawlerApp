@@ -55,7 +55,8 @@ final class Link implements Message
 
         $this->inner = (new Generic(new Str(json_encode($payload))))
             ->withContentType(new ContentType('application', 'json'))
-            ->withAppId(new AppId('crawler'));
+            ->withAppId(new AppId('crawler'))
+            ->withDeliveryMode(DeliveryMode::persistent());
 
         if ((string) $referrer->authority()->host() !== (string) $resource->authority()->host()) {
             $this->inner = $this->inner->withPriority(new Priority(5));
@@ -132,10 +133,7 @@ final class Link implements Message
 
     public function withDeliveryMode(DeliveryMode $deliveryMode): Message
     {
-        $self = clone $this;
-        $self->inner = $this->inner->withDeliveryMode($deliveryMode);
-
-        return $self;
+        throw new LogicException;
     }
 
     public function hasPriority(): bool

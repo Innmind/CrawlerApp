@@ -54,7 +54,8 @@ final class Canonical implements Message
 
         $this->inner = (new Generic(new Str(json_encode($payload))))
             ->withContentType(new ContentType('application', 'json'))
-            ->withAppId(new AppId('crawler'));
+            ->withAppId(new AppId('crawler'))
+            ->withDeliveryMode(DeliveryMode::persistent());
     }
 
     public function resource(): UrlInterface
@@ -127,10 +128,7 @@ final class Canonical implements Message
 
     public function withDeliveryMode(DeliveryMode $deliveryMode): Message
     {
-        $self = clone $this;
-        $self->inner = $this->inner->withDeliveryMode($deliveryMode);
-
-        return $self;
+        throw new LogicException;
     }
 
     public function hasPriority(): bool

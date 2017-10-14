@@ -116,13 +116,11 @@ class AlternateTest extends TestCase
             ),
             'fr'
         );
-        $message2 = $message->withDeliveryMode(DeliveryMode::persistent());
 
-        $this->assertInstanceOf(Alternate::class, $message2);
-        $this->assertNotSame($message, $message2);
-        $this->assertFalse($message->hasDeliveryMode());
-        $this->assertTrue($message2->hasDeliveryMode());
-        $this->assertSame(DeliveryMode::persistent(), $message2->deliveryMode());
+        $this->assertTrue($message->hasDeliveryMode());
+        $this->assertSame(DeliveryMode::persistent(), $message->deliveryMode());
+        $this->expectException(LogicException::class);
+        $message->withHeaders($message->headers());
     }
 
     public function testPriority()
