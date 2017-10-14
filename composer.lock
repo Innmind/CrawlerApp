@@ -1000,16 +1000,16 @@
         },
         {
             "name": "innmind/filesystem",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Filesystem.git",
-                "reference": "97e3d3ff6acfd966d58fb53f4ff426ea64c9f408"
+                "reference": "6e65e4e736f7ff7f17d793e9f7d94b44e5c0a308"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/97e3d3ff6acfd966d58fb53f4ff426ea64c9f408",
-                "reference": "97e3d3ff6acfd966d58fb53f4ff426ea64c9f408",
+                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/6e65e4e736f7ff7f17d793e9f7d94b44e5c0a308",
+                "reference": "6e65e4e736f7ff7f17d793e9f7d94b44e5c0a308",
                 "shasum": ""
             },
             "require": {
@@ -1044,7 +1044,7 @@
             "keywords": [
                 "filesystem"
             ],
-            "time": "2017-09-17 16:10:05"
+            "time": "2017-10-14 11:57:23"
         },
         {
             "name": "innmind/homeostasis",
