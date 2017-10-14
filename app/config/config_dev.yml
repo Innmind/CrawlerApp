@@ -28,6 +28,11 @@ monolog:
         console:
             type:   console
             channels: [!event]
+        amqp:
+            type: stream
+            path: "%kernel.logs_dir%/amqp/%kernel.environment%.log"
+            level: debug
+            channels: [amqp]
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:

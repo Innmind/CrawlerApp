@@ -13,3 +13,12 @@ monolog:
             level: debug
         console:
             type:  console
+        buffer_amqp:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+        amqp:
+            type: stream
+            path: "%kernel.logs_dir%/amqp/%kernel.environment%.log"
+            level: debug
+            channels: [amqp]
