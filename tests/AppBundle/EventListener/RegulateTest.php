@@ -64,7 +64,7 @@ class RegulateTest extends TestCase
             ->method('__invoke')
             ->willReturn(Strategy::holdSteady());
         $event = new ConsoleTerminateEvent(
-            new Command('rabbitmq:consumer'),
+            new Command('innmind:amqp:consume'),
             $this->createMock(InputInterface::class),
             $this->createMock(OutputInterface::class),
             0
