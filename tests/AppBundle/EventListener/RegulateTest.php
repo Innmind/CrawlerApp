@@ -6,7 +6,8 @@ namespace Tests\AppBundle\EventListener;
 use AppBundle\EventListener\Regulate;
 use Innmind\Homeostasis\{
     Regulator,
-    Strategy
+    Strategy,
+    Exception\HomeostasisAlreadyInProcess
 };
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
@@ -46,6 +47,25 @@ class RegulateTest extends TestCase
             ->method('__invoke');
         $event = new ConsoleTerminateEvent(
             new Command('foo'),
+            $this->createMock(InputInterface::class),
+            $this->createMock(OutputInterface::class),
+            0
+        );
+
+        $this->assertNull($regulate($event));
+    }
+
+    public function testDoesntThrowWhenHomeostasisAlreadyInProcess()
+    {
+        $regulate = new Regulate(
+            $regulator = $this->createMock(Regulator::class)
+        );
+        $regulator
+            ->expects($this->once())
+            ->method('__invoke')
+            ->will($this->throwException(new HomeostasisAlreadyInProcess));
+        $event = new ConsoleTerminateEvent(
+            new Command('innmind:amqp:consume'),
             $this->createMock(InputInterface::class),
             $this->createMock(OutputInterface::class),
             0

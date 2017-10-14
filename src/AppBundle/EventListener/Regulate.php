@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace AppBundle\EventListener;
 
-use Innmind\Homeostasis\Regulator;
+use Innmind\Homeostasis\{
+    Regulator,
+    Exception\HomeostasisAlreadyInProcess
+};
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
     Console\ConsoleEvents,
@@ -37,6 +40,10 @@ final class Regulate implements EventSubscriberInterface
             return;
         }
 
-        ($this->regulate)();
+        try {
+            ($this->regulate)();
+        } catch (HomeostasisAlreadyInProcess $e) {
+            //pass
+        }
     }
 }
