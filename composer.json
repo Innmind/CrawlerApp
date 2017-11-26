@@ -27,7 +27,6 @@
         "innmind/crawler": "~4.0",
         "innmind/robots-txt": "~3.0",
         "innmind/rest-client-bundle": "~4.0",
-        "php-amqplib/rabbitmq-bundle": "^1.12",
         "innmind/homeostasis-bundle": "^2.0",
         "innmind/server-control": "^2.0",
         "innmind/server-status": "^1.0",
