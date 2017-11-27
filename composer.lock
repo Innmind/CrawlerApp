@@ -757,16 +757,16 @@
         },
         {
             "name": "innmind/amqp",
-            "version": "1.3.0",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/AMQP.git",
-                "reference": "abdfad68b776ce9a54db93ae08eb1273107b5758"
+                "reference": "35046e352589928be90bc429f94897a11c0ca564"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/AMQP/zipball/abdfad68b776ce9a54db93ae08eb1273107b5758",
-                "reference": "abdfad68b776ce9a54db93ae08eb1273107b5758",
+                "url": "https://api.github.com/repos/Innmind/AMQP/zipball/35046e352589928be90bc429f94897a11c0ca564",
+                "reference": "35046e352589928be90bc429f94897a11c0ca564",
                 "shasum": ""
             },
             "require": {
@@ -807,20 +807,20 @@
             "keywords": [
                 "AMQP"
             ],
-            "time": "2017-11-26 13:46:03"
+            "time": "2017-11-27 07:51:28"
         },
         {
             "name": "innmind/amqp-bundle",
-            "version": "1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/AMQPBundle.git",
-                "reference": "7718798a66dc221de57fb9a896a530dd1540dd78"
+                "reference": "baa65ccced345d7d098dbdfbfd8731eea317b488"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/AMQPBundle/zipball/7718798a66dc221de57fb9a896a530dd1540dd78",
-                "reference": "7718798a66dc221de57fb9a896a530dd1540dd78",
+                "url": "https://api.github.com/repos/Innmind/AMQPBundle/zipball/baa65ccced345d7d098dbdfbfd8731eea317b488",
+                "reference": "baa65ccced345d7d098dbdfbfd8731eea317b488",
                 "shasum": ""
             },
             "require": {
@@ -856,7 +856,7 @@
             ],
             "description": "Symfony bundle to integrate AMQP library",
             "homepage": "http://github.com/Innmind/AMQPBundle",
-            "time": "2017-11-26 12:46:25"
+            "time": "2017-11-27 17:17:43"
         },
         {
             "name": "innmind/colour",
@@ -1188,16 +1188,16 @@
         },
         {
             "name": "innmind/http",
-            "version": "3.0.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Http.git",
-                "reference": "0ebf0b4f730cb30df8d1789023edb62cebc24a4a"
+                "reference": "e255aad2487b8a94020ef655249f0b6be6e1dd27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Http/zipball/0ebf0b4f730cb30df8d1789023edb62cebc24a4a",
-                "reference": "0ebf0b4f730cb30df8d1789023edb62cebc24a4a",
+                "url": "https://api.github.com/repos/Innmind/Http/zipball/e255aad2487b8a94020ef655249f0b6be6e1dd27",
+                "reference": "e255aad2487b8a94020ef655249f0b6be6e1dd27",
                 "shasum": ""
             },
             "require": {
@@ -1234,7 +1234,7 @@
                 "Value Object",
                 "http"
             ],
-            "time": "2017-09-23 14:21:54"
+            "time": "2017-11-26 15:59:38"
         },
         {
             "name": "innmind/http-transport",
@@ -1652,16 +1652,16 @@
         },
         {
             "name": "innmind/server-status",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/ServerStatus.git",
-                "reference": "a855244b72dbd3e217b8f238fc463ca12e4af7ce"
+                "reference": "2df8daa73e6bba2c9258c542a1c4e6c889f42587"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/ServerStatus/zipball/a855244b72dbd3e217b8f238fc463ca12e4af7ce",
-                "reference": "a855244b72dbd3e217b8f238fc463ca12e4af7ce",
+                "url": "https://api.github.com/repos/Innmind/ServerStatus/zipball/2df8daa73e6bba2c9258c542a1c4e6c889f42587",
+                "reference": "2df8daa73e6bba2c9258c542a1c4e6c889f42587",
                 "shasum": ""
             },
             "require": {
@@ -1691,7 +1691,7 @@
             ],
             "description": "Library to access various components of the operating system",
             "homepage": "http://github.com/Innmind/ServerStatus",
-            "time": "2017-05-26 14:25:49"
+            "time": "2017-11-26 15:00:25"
         },
         {
             "name": "innmind/socket",
@@ -1875,16 +1875,16 @@
         },
         {
             "name": "innmind/url",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Url.git",
-                "reference": "7274a972d967edbe3cca0a141708c095eb78c27e"
+                "reference": "879c6fb89b39eb2cde9f01742efc13aa795467d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Url/zipball/7274a972d967edbe3cca0a141708c095eb78c27e",
-                "reference": "7274a972d967edbe3cca0a141708c095eb78c27e",
+                "url": "https://api.github.com/repos/Innmind/Url/zipball/879c6fb89b39eb2cde9f01742efc13aa795467d5",
+                "reference": "879c6fb89b39eb2cde9f01742efc13aa795467d5",
                 "shasum": ""
             },
             "require": {
@@ -1916,7 +1916,7 @@
             "keywords": [
                 "url"
             ],
-            "time": "2017-03-01 14:55:17"
+            "time": "2017-11-26 14:28:33"
         },
         {
             "name": "innmind/url-resolver",
@@ -4209,16 +4209,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "5.2.3",
+            "version": "5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "8e1d2397d8adf59a3f12b2878a3aaa66d1ab189d"
+                "reference": "033ec97498cf530cc1be4199264cad568b19be26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/8e1d2397d8adf59a3f12b2878a3aaa66d1ab189d",
-                "reference": "8e1d2397d8adf59a3f12b2878a3aaa66d1ab189d",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/033ec97498cf530cc1be4199264cad568b19be26",
+                "reference": "033ec97498cf530cc1be4199264cad568b19be26",
                 "shasum": ""
             },
             "require": {
@@ -4227,7 +4227,7 @@
                 "php": "^7.0",
                 "phpunit/php-file-iterator": "^1.4.2",
                 "phpunit/php-text-template": "^1.2.1",
-                "phpunit/php-token-stream": "^2.0",
+                "phpunit/php-token-stream": "^2.0.1",
                 "sebastian/code-unit-reverse-lookup": "^1.0.1",
                 "sebastian/environment": "^3.0",
                 "sebastian/version": "^2.0.1",
@@ -4269,20 +4269,20 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-11-03 13:47:33"
+            "time": "2017-11-27 09:00:30"
         },
         {
             "name": "phpunit/php-file-iterator",
-            "version": "1.4.3",
+            "version": "1.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-file-iterator.git",
-                "reference": "8ebba84e5bd74fc5fdeb916b38749016c7232f93"
+                "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/8ebba84e5bd74fc5fdeb916b38749016c7232f93",
-                "reference": "8ebba84e5bd74fc5fdeb916b38749016c7232f93",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-file-iterator/zipball/730b01bc3e867237eaac355e06a36b85dd93a8b4",
+                "reference": "730b01bc3e867237eaac355e06a36b85dd93a8b4",
                 "shasum": ""
             },
             "require": {
@@ -4316,7 +4316,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2017-11-24 15:00:59"
+            "time": "2017-11-27 13:52:08"
         },
         {
             "name": "phpunit/php-text-template",
@@ -4410,16 +4410,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "9a02332089ac48e704c70f6cefed30c224e3c0b0"
+                "reference": "791198a2c6254db10131eecfe8c06670700904db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/9a02332089ac48e704c70f6cefed30c224e3c0b0",
-                "reference": "9a02332089ac48e704c70f6cefed30c224e3c0b0",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/791198a2c6254db10131eecfe8c06670700904db",
+                "reference": "791198a2c6254db10131eecfe8c06670700904db",
                 "shasum": ""
             },
             "require": {
@@ -4455,7 +4455,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-08-20 05:47:52"
+            "time": "2017-11-27 05:48:46"
         },
         {
             "name": "phpunit/phpunit",
