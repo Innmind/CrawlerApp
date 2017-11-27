@@ -4,22 +4,20 @@ imports:
 monolog:
     handlers:
         main:
-            type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nested:
-            type:  stream
-            path:  "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-            channels: [!amqp]
-        console:
-            type:  console
-        buffer_amqp:
             type: fingers_crossed
             action_level: error
             handler: nested
+            channels: '!amqp'
+        nested:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+        buffer_amqp:
+            type: fingers_crossed
+            action_level: error
+            handler: amqp
+            channels: 'amqp'
         amqp:
             type: stream
             path: "%kernel.logs_dir%/amqp/%kernel.environment%.log"
             level: debug
-            channels: [amqp]
