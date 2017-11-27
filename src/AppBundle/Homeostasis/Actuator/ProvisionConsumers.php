@@ -43,6 +43,7 @@ final class ProvisionConsumers implements Actuator
             ->withArgument('innmind:amqp:consume')
             ->withArgument('crawler')
             ->withArgument('50')
+            ->withArgument('5')
             ->withWorkingDirectory($workingDirectory);
     }
 
