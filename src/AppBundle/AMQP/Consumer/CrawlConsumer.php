@@ -111,7 +111,5 @@ final class CrawlConsumer
         } catch (CantLinkResourceAcrossServers $e) {
             //pass
         }
-
-        return;
     }
 }
