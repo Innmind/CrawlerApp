@@ -757,16 +757,16 @@
         },
         {
             "name": "innmind/amqp",
-            "version": "1.3.3",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/AMQP.git",
-                "reference": "35046e352589928be90bc429f94897a11c0ca564"
+                "reference": "d359839f45a5b1d78496c8d7315e9169b1595c24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/AMQP/zipball/35046e352589928be90bc429f94897a11c0ca564",
-                "reference": "35046e352589928be90bc429f94897a11c0ca564",
+                "url": "https://api.github.com/repos/Innmind/AMQP/zipball/d359839f45a5b1d78496c8d7315e9169b1595c24",
+                "reference": "d359839f45a5b1d78496c8d7315e9169b1595c24",
                 "shasum": ""
             },
             "require": {
@@ -807,20 +807,20 @@
             "keywords": [
                 "AMQP"
             ],
-            "time": "2017-11-27 07:51:28"
+            "time": "2017-11-28 17:39:31"
         },
         {
             "name": "innmind/amqp-bundle",
-            "version": "1.4.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/AMQPBundle.git",
-                "reference": "baa65ccced345d7d098dbdfbfd8731eea317b488"
+                "reference": "34f536db681814bd17a004b4f0447265ec9bf426"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/AMQPBundle/zipball/baa65ccced345d7d098dbdfbfd8731eea317b488",
-                "reference": "baa65ccced345d7d098dbdfbfd8731eea317b488",
+                "url": "https://api.github.com/repos/Innmind/AMQPBundle/zipball/34f536db681814bd17a004b4f0447265ec9bf426",
+                "reference": "34f536db681814bd17a004b4f0447265ec9bf426",
                 "shasum": ""
             },
             "require": {
@@ -856,7 +856,7 @@
             ],
             "description": "Symfony bundle to integrate AMQP library",
             "homepage": "http://github.com/Innmind/AMQPBundle",
-            "time": "2017-11-27 17:17:43"
+            "time": "2017-11-28 07:21:25"
         },
         {
             "name": "innmind/colour",
@@ -2322,20 +2322,20 @@
         },
         {
             "name": "league/uri-manipulations",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/uri-manipulations.git",
-                "reference": "03cf5bc525611c3cb37b31b3845a91bf01725b31"
+                "reference": "e8ad43a956234a78763cc44fa16ddebeb1f4fbf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/uri-manipulations/zipball/03cf5bc525611c3cb37b31b3845a91bf01725b31",
-                "reference": "03cf5bc525611c3cb37b31b3845a91bf01725b31",
+                "url": "https://api.github.com/repos/thephpleague/uri-manipulations/zipball/e8ad43a956234a78763cc44fa16ddebeb1f4fbf4",
+                "reference": "e8ad43a956234a78763cc44fa16ddebeb1f4fbf4",
                 "shasum": ""
             },
             "require": {
-                "league/uri-components": "^1.4",
+                "league/uri-components": "^1.4.1",
                 "league/uri-interfaces": "^1.0",
                 "php": ">=7.0",
                 "psr/http-message": "^1.0"
@@ -2390,7 +2390,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-11-22 12:09:07"
+            "time": "2017-11-24 08:17:41"
         },
         {
             "name": "league/uri-parser",
@@ -4054,29 +4054,35 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.1.1",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2"
+                "reference": "66465776cfc249844bde6d117abff1d22e06c2da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2d3d238c433cf69caeb4842e97a3223a116f94b2",
-                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/66465776cfc249844bde6d117abff1d22e06c2da",
+                "reference": "66465776cfc249844bde6d117abff1d22e06c2da",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.0",
-                "phpdocumentor/reflection-common": "^1.0@dev",
+                "phpdocumentor/reflection-common": "^1.0.0",
                 "phpdocumentor/type-resolver": "^0.4.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
-                "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^4.4"
+                "doctrine/instantiator": "~1.0.5",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^6.4"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "phpDocumentor\\Reflection\\": [
@@ -4095,7 +4101,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-08-30 18:51:59"
+            "time": "2017-11-27 17:38:31"
         },
         {
             "name": "phpdocumentor/type-resolver",
