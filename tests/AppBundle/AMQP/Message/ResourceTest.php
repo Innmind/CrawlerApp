@@ -65,6 +65,25 @@ class ResourceTest extends TestCase
         $this->assertSame('referrer', $message->relationship());
     }
 
+    /**
+     * @expectedException AppBundle\Exception\DomainException
+     */
+    public function testThrowWhenNotContentType()
+    {
+        new Resource(new Locked(new Generic(new Str(''))));
+    }
+
+    /**
+     * @expectedException AppBundle\Exception\DomainException
+     */
+    public function testThrowWhenInvalidContentType()
+    {
+        new Resource(new Locked(
+            (new Generic(new Str('')))
+                ->withContentType(new ContentType('application', 'octet-stream'))
+        ));
+    }
+
     public function testContentType()
     {
         $message = new Resource(
