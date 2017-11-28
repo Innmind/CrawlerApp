@@ -13,5 +13,3 @@ script:
 after_script:
     - if [ "$TRAVIS_PHP_VERSION" != "nighlty" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
     - if [ "$TRAVIS_PHP_VERSION" != "nighlty" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
-notifications:
-    slack: innmind:nAiLaAi6RU4wGEAdL6FuKdyF
