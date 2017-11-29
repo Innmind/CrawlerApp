@@ -16,7 +16,8 @@ use Innmind\Server\Control\{
 };
 use Innmind\Immutable\{
     StreamInterface,
-    MapInterface
+    MapInterface,
+    Str
 };
 use Psr\Log\LoggerInterface;
 
@@ -142,7 +143,18 @@ final class ProvisionConsumers implements Actuator
             ->processes()
             ->all()
             ->filter(function(int $pid, Process $process): bool {
-                return (string) $this->spawn === (string) $process->command();
+                $command = new Str((string) $process->command());
+                $parts = $command->split(' ');
+                $command = $parts
+                    ->drop(1)
+                    ->reduce(
+                        Command::foreground((string) $parts->get(0)),
+                        static function(Command $command, Str $argument): Command {
+                            return $command->withArgument((string) $argument);
+                        }
+                    );
+
+                return (string) $this->spawn === (string) $command;
             });
     }
 }

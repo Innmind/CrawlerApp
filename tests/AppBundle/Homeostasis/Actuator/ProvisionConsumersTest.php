@@ -101,7 +101,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(10),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
                     ->put(
@@ -112,7 +112,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(30),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
                     ->put(
@@ -123,7 +123,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(30),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
                     ->put(
@@ -134,7 +134,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(10),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
                     ->put(
@@ -145,7 +145,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(10),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
             );
@@ -215,7 +215,7 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === 'php ./console --env=test innmind:amqp:consume crawler 50' &&
+                    return (string) $command === "php './console' '--env=test' 'innmind:amqp:consume' 'crawler' '50' '5'" &&
                         $command->workingDirectory() === 'app';
                 })
             );
@@ -249,7 +249,7 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === 'php ./console --env=test innmind:amqp:consume crawler 50' &&
+                    return (string) $command === "php './console' '--env=test' 'innmind:amqp:consume' 'crawler' '50' '5'" &&
                         $command->workingDirectory() === 'app';
                 })
             );
@@ -283,7 +283,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(10),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
                     ->put(
@@ -305,7 +305,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(10),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
             );
@@ -318,7 +318,7 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === 'php ./console --env=test innmind:amqp:consume crawler 50' &&
+                    return (string) $command === "php './console' '--env=test' 'innmind:amqp:consume' 'crawler' '50' '5'" &&
                         $command->workingDirectory() === 'app';
                 })
             );
@@ -352,7 +352,7 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === 'php ./console --env=test innmind:amqp:consume crawler 50' &&
+                    return (string) $command === "php './console' '--env=test' 'innmind:amqp:consume' 'crawler' '50' '5'" &&
                         $command->workingDirectory() === 'app';
                 })
             );
@@ -386,7 +386,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(10),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
                     ->put(
@@ -408,7 +408,7 @@ class ProvisionConsumersTest extends TestCase
                             new Percentage(10),
                             new Memory(42),
                             $this->createMock(PointInTimeInterface::class),
-                            new Command('php ./console --env=test innmind:amqp:consume crawler 50')
+                            new Command('php ./console --env=test innmind:amqp:consume crawler 50 5')
                         )
                     )
             );
@@ -421,7 +421,7 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === 'php ./console --env=test innmind:amqp:consume crawler 50' &&
+                    return (string) $command === "php './console' '--env=test' 'innmind:amqp:consume' 'crawler' '50' '5'" &&
                         $command->workingDirectory() === 'app';
                 })
             );
