@@ -21,7 +21,8 @@ use Innmind\TimeContinuum\{
 };
 use Innmind\Url\{
     UrlInterface,
-    Authority\HostInterface
+    Authority\HostInterface,
+    NullFragment
 };
 use Innmind\Immutable\{
     Str,
@@ -82,7 +83,7 @@ final class CrawlTracer implements CrawlTracerInterface
         $this->filesystem->add(
             new File(
                 self::URLS,
-                new StringStream($file->content().$url."\n")
+                new StringStream($file->content().$url->withFragment(new NullFragment)."\n")
             )
         );
 
@@ -99,7 +100,7 @@ final class CrawlTracer implements CrawlTracerInterface
         );
 
         try {
-            $urls->position((string) $url);
+            $urls->position((string) $url->withFragment(new NullFragment));
 
             return true;
         } catch (SubstringException $e) {

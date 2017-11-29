@@ -91,7 +91,7 @@ class CrawlTracerTest extends TestCase
             ->method('add')
             ->with($this->callback(function(File $file): bool {
                 return (string) $file->name() === 'urls.txt' &&
-                    (string) $file->content() === 'http://www.example.com/foo?some#fragment'."\n";
+                    (string) $file->content() === 'http://www.example.com/foo?some'."\n";
             }));
         $tracer = new CrawlTracer(
             $filesystem,
@@ -160,7 +160,7 @@ class CrawlTracerTest extends TestCase
             ->willReturn(
                 new File(
                     'urls.txt',
-                    new StringStream('http://www.example.com/foo?some#fragment'."\n")
+                    new StringStream('http://www.example.com/foo?some#other-fragment'."\n")
                 )
             );
         $filesystem
@@ -209,9 +209,20 @@ class CrawlTracerTest extends TestCase
                     new StringStream('/foo')
                 )
             );
+        $filesystem
+            ->expects($this->at(2))
+            ->method('get')
+            ->with('urls.txt')
+            ->willReturn(
+                new File(
+                    'urls.txt',
+                    new StringStream('/foo')
+                )
+            );
 
         $this->assertFalse($tracer->knows(Url::fromString('/foo')));
         $this->assertTrue($tracer->knows(Url::fromString('/foo')));
+        $this->assertTrue($tracer->knows(Url::fromString('/foo#bar')));
     }
 
     public function testLastHit()
