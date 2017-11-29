@@ -6,7 +6,8 @@ namespace AppBundle\Publisher;
 use AppBundle\{
     Publisher as PublisherInterface,
     Reference,
-    AMQP\Message\Link
+    AMQP\Message\Link,
+    SameUrlAs
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
@@ -32,12 +33,13 @@ final class LinksAwarePublisher implements PublisherInterface
         $reference = ($this->publisher)($resource, $server);
 
         if ($resource->attributes()->contains('links')) {
+            $sameAs = new SameUrlAs($resource->url());
             $resource
                 ->attributes()
                 ->get('links')
                 ->content()
-                ->filter(function(UrlInterface $url) use ($resource): bool {
-                    return (string) $url !== (string) $resource->url();
+                ->filter(function(UrlInterface $url) use ($sameAs, $resource): bool {
+                    return !$sameAs($url);
                 })
                 ->foreach(function(UrlInterface $url) use ($reference, $resource): void {
                     ($this->produce)(new Link(

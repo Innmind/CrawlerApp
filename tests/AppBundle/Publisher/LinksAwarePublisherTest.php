@@ -15,7 +15,8 @@ use Innmind\Crawler\{
 };
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
+    Fragment
 };
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
@@ -89,7 +90,7 @@ class LinksAwarePublisherTest extends TestCase
                     new Attribute\Attribute(
                         'links',
                         (new Set(UrlInterface::class))
-                            ->add($url)
+                            ->add($url->withFragment(new Fragment('foo')))
                     )
                 ),
             $this->createMock(Readable::class)

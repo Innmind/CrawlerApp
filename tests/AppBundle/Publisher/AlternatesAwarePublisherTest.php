@@ -17,7 +17,8 @@ use Innmind\Crawler\{
 };
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
+    Fragment
 };
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
@@ -95,7 +96,8 @@ class AlternatesAwarePublisherTest extends TestCase
                                 'en',
                                 new Alternate(
                                     'en',
-                                    (new Set(UrlInterface::class))->add($url)
+                                    (new Set(UrlInterface::class))
+                                        ->add($url->withFragment(new Fragment('foo')))
                                 )
                             )
                     )
