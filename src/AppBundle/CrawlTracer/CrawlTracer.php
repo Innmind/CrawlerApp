@@ -24,10 +24,7 @@ use Innmind\Url\{
     Authority\HostInterface,
     NullFragment
 };
-use Innmind\Immutable\{
-    Str,
-    Exception\SubstringException
-};
+use Innmind\Immutable\Str;
 
 final class CrawlTracer implements CrawlTracerInterface
 {
@@ -99,13 +96,7 @@ final class CrawlTracer implements CrawlTracerInterface
                 ->content()
         );
 
-        try {
-            $urls->position((string) $url->withFragment(new NullFragment));
-
-            return true;
-        } catch (SubstringException $e) {
-            return false;
-        }
+        return $urls->contains((string) $url->withFragment(new NullFragment));
     }
 
     public function lastHit(HostInterface $host): PointInTimeInterface
