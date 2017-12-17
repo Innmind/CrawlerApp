@@ -3,5 +3,6 @@ services:
         class: AppBundle\EventListener\Regulate
         arguments:
             - '@innmind.homeostasis.regulator'
+            - '@homeostasis.actuator.provision_consumers'
         tags:
             - {name: kernel.event_subscriber}

@@ -7,6 +7,7 @@ use AppBundle\EventListener\Regulate;
 use Innmind\Homeostasis\{
     Regulator,
     Strategy,
+    Actuator,
     Exception\HomeostasisAlreadyInProcess
 };
 use Symfony\Component\{
@@ -25,7 +26,10 @@ class RegulateTest extends TestCase
     {
         $this->assertInstanceOf(
             EventSubscriberInterface::class,
-            new Regulate($this->createMock(Regulator::class))
+            new Regulate(
+                $this->createMock(Regulator::class),
+                $this->createMock(Actuator::class)
+            )
         );
     }
 
@@ -40,11 +44,15 @@ class RegulateTest extends TestCase
     public function testDoesntHandleEvent()
     {
         $regulate = new Regulate(
-            $regulator = $this->createMock(Regulator::class)
+            $regulator = $this->createMock(Regulator::class),
+            $actuator = $this->createMock(Actuator::class)
         );
         $regulator
             ->expects($this->never())
             ->method('__invoke');
+        $actuator
+            ->expects($this->never())
+            ->method('holdSteady');
         $event = new ConsoleTerminateEvent(
             new Command('foo'),
             $this->createMock(InputInterface::class),
@@ -58,12 +66,16 @@ class RegulateTest extends TestCase
     public function testDoesntThrowWhenHomeostasisAlreadyInProcess()
     {
         $regulate = new Regulate(
-            $regulator = $this->createMock(Regulator::class)
+            $regulator = $this->createMock(Regulator::class),
+            $actuator = $this->createMock(Actuator::class)
         );
         $regulator
             ->expects($this->once())
             ->method('__invoke')
             ->will($this->throwException(new HomeostasisAlreadyInProcess));
+        $actuator
+            ->expects($this->once())
+            ->method('holdSteady');
         $event = new ConsoleTerminateEvent(
             new Command('innmind:amqp:consume'),
             $this->createMock(InputInterface::class),
@@ -77,12 +89,16 @@ class RegulateTest extends TestCase
     public function testHandleEvent()
     {
         $regulate = new Regulate(
-            $regulator = $this->createMock(Regulator::class)
+            $regulator = $this->createMock(Regulator::class),
+            $actuator = $this->createMock(Actuator::class)
         );
         $regulator
             ->expects($this->once())
             ->method('__invoke')
             ->willReturn(Strategy::holdSteady());
+        $actuator
+            ->expects($this->never())
+            ->method('holdSteady');
         $event = new ConsoleTerminateEvent(
             new Command('innmind:amqp:consume'),
             $this->createMock(InputInterface::class),

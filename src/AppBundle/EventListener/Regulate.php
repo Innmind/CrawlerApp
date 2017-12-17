@@ -5,8 +5,11 @@ namespace AppBundle\EventListener;
 
 use Innmind\Homeostasis\{
     Regulator,
+    State,
+    Actuator,
     Exception\HomeostasisAlreadyInProcess
 };
+use Innmind\Immutable\Stream;
 use Symfony\Component\{
     EventDispatcher\EventSubscriberInterface,
     Console\ConsoleEvents,
@@ -16,10 +19,14 @@ use Symfony\Component\{
 final class Regulate implements EventSubscriberInterface
 {
     private $regulate;
+    private $actuator;
 
-    public function __construct(Regulator $regulator)
-    {
+    public function __construct(
+        Regulator $regulator,
+        Actuator $actuator
+    ) {
         $this->regulate = $regulator;
+        $this->actuator = $actuator;
     }
 
     /**
@@ -43,7 +50,7 @@ final class Regulate implements EventSubscriberInterface
         try {
             ($this->regulate)();
         } catch (HomeostasisAlreadyInProcess $e) {
-            //pass
+            $this->actuator->holdSteady(Stream::of(State::class));
         }
     }
 }
