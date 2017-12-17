@@ -564,4 +564,78 @@ class CrawlConsumerTest extends TestCase
 
         $this->assertNull($consume($message));
     }
+
+    /**
+     * @expectedException Innmind\AMQP\Exception\Requeue
+     */
+    public function testRequeueWhenServerFailDuringPublish()
+    {
+        $consume = new CrawlConsumer(
+            $crawler = $this->createMock(Crawler::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
+            'ua'
+        );
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'relationship' => 'referrer',
+                'definition' => 'definition',
+                'server' => 'server',
+                'attributes' => ['foo', 'bar'],
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
+        $crawler
+            ->expects($this->once())
+            ->method('execute')
+            ->with($this->callback(static function(Request $request): bool {
+                return (string) $request->url() === 'foo' &&
+                    (string) $request->method() === 'GET' &&
+                    $request->headers()->has('User-Agent') &&
+                    (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
+            }))
+            ->willReturn($resource = new CrawledResource(
+                $this->createMock(UrlInterface::class),
+                $this->createMock(MediaType::class),
+                new Map('string', Attribute::class),
+                $this->createMock(Readable::class)
+            ));
+        $publisher
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with(
+                $resource,
+                $this->callback(static function(UrlInterface $url): bool {
+                    return (string) $url === 'server';
+                })
+            )
+            ->willReturn($reference = new Reference(
+                $this->createMock(Identity::class),
+                'definition',
+                $this->createMock(UrlInterface::class)
+            ));
+        $linker
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with(
+                $reference,
+                $this->callback(function(Reference $reference): bool {
+                    return (string) $reference->identity() === 'origin' &&
+                        $reference->definition() === 'definition' &&
+                        (string) $reference->server() === 'server';
+                }),
+                'referrer',
+                ['foo', 'bar']
+            )
+            ->will($this->throwException(
+                new ServerError(
+                    $this->createMock(Request::class),
+                    $this->createMock(Response::class)
+                )
+            ));
+
+        $consume($message);
+    }
 }

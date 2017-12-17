@@ -110,6 +110,8 @@ final class CrawlConsumer
             //pass
         } catch (CantLinkResourceAcrossServers $e) {
             //pass
+        } catch (ServerError $e) {
+            throw new Requeue; //will retry later, maybe due to heavy load
         }
     }
 }
