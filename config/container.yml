@@ -1,0 +1,341 @@
+arguments:
+    logger: Psr\Log\LoggerInterface
+    userAgent: string
+    serializer: Symfony\Component\Serializer\Serializer
+    workingDirectory: string
+    logDirectory: string
+    environment: string
+    amqpTransport: Innmind\Socket\Internet\Transport
+    amqpServer: Innmind\Url\UrlInterface
+    stateDirectory: string
+    actionDirectory: string
+
+dependencies:
+    html @innmind/html/container.yml: []
+
+    transport @innmind/http-transport/container.yml:
+        logger: $logger
+
+    crawler @innmind/crawler/container.yml:
+        transport: $transport.thrower
+        clock: $clock
+        urlResolver: $urlResolver
+        reader: $cacheReader
+
+    restClient @innmind/rest-client/container.yml:
+        transport: $transport.thrower
+        urlResolver: $urlResolver
+        serializer: $serializer
+        cache: $filesystem.cache.restClient
+
+    homeostasis @innmind/homeostasis/container.yml:
+        actuator: $homeostasis.actuator
+        clock: $clock
+        stateFilesystem: $filesystem.homeostasis.state
+        actionFilesystem: $filesystem.homeostasis.action
+        factors: $homeostasis.factors
+
+    amqp @innmind/amqp/container.yml:
+        transport: $amqpTransport
+        server: $amqpServer
+        timeout: $amqp.timeout
+        clock: $clock
+        logger: $logger
+        consumers: $amqp.consumers
+        exchanges: $amqp.exchanges
+        queues: $amqp.queues
+        bindings: $amqp.bindings
+
+expose:
+    commands: $cli.commands
+
+services:
+    crawler:
+        robots_aware AppBundle\Crawler\RobotsAwareCrawler:
+            - $robots
+            - '@decorated'
+            - $userAgent
+
+        delayer_aware AppBundle\Crawler\DelayerAwareCrawler:
+            - $delayer
+            - $crawler.crawler
+
+        xml_reader_aware AppBundle\Crawler\XmlReaderAwareCrawler:
+            - $cacheReader
+            - '@decorated'
+
+        tracer_aware AppBundle\Crawler\TracerAwareCrawler:
+            - $tracer
+            - '@decorated'
+
+    crawler stack:
+        - $crawler.xml_reader_aware
+        - $crawler.tracer_aware
+        - $crawler.robots_aware
+        - $crawler.delayer_aware
+
+    robots:
+        keep_in_memory AppBundle\RobotsTxt\KeepInMemoryParser:
+            - '@decorated'
+
+        cache AppBundle\RobotsTxt\CacheParser:
+            - '@decorated'
+            - $robots.walker
+            - $filesystem.robots
+
+        default Innmind\RobotsTxt\Parser\Parser:
+            - $transport.thrower
+            - $robots.walker
+            - $userAgent
+
+        walker Innmind\RobotsTxt\Parser\Walker: []
+
+    robots stack:
+        - $robots.keep_in_memory
+        - $robots.cache
+        - $robots.default
+
+    publisher:
+        linksAware AppBundle\Publisher\LinksAwarePublisher:
+            - '@decorated'
+            - $amqp.producer.urls
+
+        imagesAware AppBundle\Publisher\ImagesAwarePublisher:
+            - '@decorated'
+            - $amqp.producer.urls
+
+        alternatesAware AppBundle\Publisher\AlternatesAwarePublisher:
+            - '@decorated'
+            - $amqp.producer.urls
+
+        canonicalAware AppBundle\Publisher\CanonicalAwarePublisher:
+            - '@decorated'
+            - $amqp.producer.urls
+
+        default AppBundle\Publisher\Publisher:
+            - $restClient.client
+            - $resourceTranslator
+
+    publisher stack:
+        - $publisher.linksAware
+        - $publisher.imagesAware
+        - $publisher.alternatesAware
+        - $publisher.canonicalAware
+        - $publisher.default
+
+    delayer:
+        threshold AppBundle\Delayer\ThresholdDelayer:
+            - $delayer.robots_aware
+            - '@decorated'
+            - $clock
+            - 1000 # 1 second
+
+        tracer_aware AppBundle\Delayer\TracerAwareDelayer:
+            - $tracer
+            - '@decorated'
+            - $clock
+            - 5 # 5 seconds (todo: harmonise delays units)
+
+        fixed AppBundle\Delayer\FixDelayer:
+            - 10000 # 10 seconds
+
+        robots_aware AppBundle\Delayer\RobotsTxtAwareDelayer:
+            - $robots
+            - $userAgent
+
+    delayer stack:
+        - $delayer.threshold
+        - $delayer.tracer_aware
+        - $delayer.fixed
+
+    tracer AppBundle\CrawlTracer\CrawlTracer:
+        - $filesystem.tracer
+        - $clock
+
+    linker:
+        referrer AppBundle\Linker\ReferrerLinker:
+            - '@decorated'
+
+        default AppBundle\Linker\Linker:
+            - $restClient.client
+
+    linker stack:
+        - $linker.referrer
+        - $linker.default
+
+    resourceTranslator AppBundle\Translator\HttpResourceTranslator:
+        - $resourceTranslator.property.delegate
+
+    resourceTranslator:
+        property:
+            delegate AppBundle\Translator\Property\DelegationTranslator:
+                - $resourceTranslator.property.map
+
+            map map<string, AppBundle\Translator\PropertyTranslator>:
+                - '<host, $resourceTranslator.property.host>'
+                - '<path, $resourceTranslator.property.path>'
+                - '<query, $resourceTranslator.property.query>'
+                - '<languages, $resourceTranslator.property.languages>'
+                - '<charset, $resourceTranslator.property.charset>'
+                - '<dimension, $resourceTranslator.property.image.dimension>'
+                - '<weight, $resourceTranslator.property.image.weight>'
+                - '<anchors, $resourceTranslator.property.html.anchors>'
+                - '<android_app_link, $resourceTranslator.property.html.android>'
+                - '<ios_app_link, $resourceTranslator.property.html.ios>'
+                - '<description, $resourceTranslator.property.html.description>'
+                - '<is_journal, $resourceTranslator.property.html.journal>'
+                - '<main_content, $resourceTranslator.property.html.mainContent>'
+                - '<theme_colour, $resourceTranslator.property.html.themeColour>'
+                - '<title, $resourceTranslator.property.html.title>'
+                - '<preview, $resourceTranslator.property.html.preview>'
+                - '<author, $resourceTranslator.property.html.author>'
+                - '<citations, $resourceTranslator.property.html.citations>'
+
+            host AppBundle\Translator\Property\HostTranslator: []
+            path AppBundle\Translator\Property\PathTranslator: []
+            query AppBundle\Translator\Property\QueryTranslator: []
+            languages AppBundle\Translator\Property\LanguagesTranslator: []
+            charset AppBundle\Translator\Property\CharsetTranslator: []
+
+            image:
+                dimension AppBundle\Translator\Property\Image\DimensionTranslator: []
+                weight AppBundle\Translator\Property\Image\WeightTranslator: []
+
+            html:
+                anchors AppBundle\Translator\Property\HtmlPage\AnchorsTranslator: []
+                android AppBundle\Translator\Property\HtmlPage\AndroidAppLinkTranslator: []
+                description AppBundle\Translator\Property\HtmlPage\DescriptionTranslator: []
+                ios AppBundle\Translator\Property\HtmlPage\IosAppLinkTranslator: []
+                journal AppBundle\Translator\Property\HtmlPage\IsJournalTranslator: []
+                mainContent AppBundle\Translator\Property\HtmlPage\MainContentTranslator: []
+                themeColour AppBundle\Translator\Property\HtmlPage\ThemeColourTranslator: []
+                title AppBundle\Translator\Property\HtmlPage\TitleTranslator: []
+                preview AppBundle\Translator\Property\HtmlPage\PreviewTranslator: []
+                author AppBundle\Translator\Property\HtmlPage\AuthorTranslator: []
+                citations AppBundle\Translator\Property\HtmlPage\CitationsTranslator: []
+
+    homeostasis:
+        actuator AppBundle\Homeostasis\Actuator\ProvisionConsumers:
+            - $server.status
+            - $server.control
+            - $logger
+            - $workingDirectory
+            - $environment
+
+        regulate AppBundle\Homeostasis\Regulator\Regulate:
+            - $homeostasis.regulator
+            - $homeostasis.actuator
+
+        factors set<Innmind\Homeostasis\Factor>:
+            - $homeostasis.factors.cpu
+            - $homeostasis.factors.log
+
+        factors:
+            cpu AppBundle\Homeostasis\Factors::cpu:
+                - $clock
+                - $server.status
+
+            log AppBundle\Homeostasis\Factors::log:
+                - $clock
+                - $log.reader
+                - $filesystem.logs
+
+    clock Innmind\TimeContinuum\TimeContinuum\Earth:
+        - $clock.timezone.paris
+
+    clock:
+        timezone:
+            paris Innmind\TimeContinuum\Timezone\Earth\Europe\Paris: []
+
+    urlResolver Innmind\UrlResolver\UrlResolver: []
+
+    crawlConsumer AppBundle\AMQP\Consumer\CrawlConsumer:
+        - $crawler
+        - $publisher
+        - $linker
+        - $userAgent
+
+    cacheReader Innmind\Xml\Reader\CacheReader:
+        - $html.reader
+
+    server:
+        status Innmind\Server\Status\ServerFactory::build:
+            - $clock
+
+        control Innmind\Server\Control\ServerFactory::build: []
+
+    amqp:
+        timeout Innmind\TimeContinuum\ElapsedPeriod:
+            - 60000 # one minute
+
+        consumers map<string, callable>:
+            - <crawler, $crawlConsumer>
+
+        exchanges set<Innmind\AMQP\Model\Exchange\Declaration>:
+            - $amqp.exchanges.urls
+
+        exchanges:
+            urls Innmind\AMQP\Model\Exchange\Declaration::durable:
+                - 'urls'
+                - $amqp.exchanges.urls.type
+
+            urls:
+                type Innmind\AMQP\Model\Exchange\Type::direct: []
+
+        queues set<Innmind\AMQP\Model\Queue\Declaration>:
+            - $amqp.queues.crawler
+
+        queues:
+            crawler AppBundle\AMQP\Queue::named:
+                - 'crawler'
+
+        bindings set<Innmind\AMQP\Model\Queue\Binding>:
+            - $amqp.bindings.urls
+
+        bindings:
+            urls Innmind\AMQP\Model\Queue\Binding:
+                - 'urls'
+                - 'crawler'
+
+        producer:
+            urls AppBundle\AMQP\Producer::get:
+                - $amqp.producers
+                - 'urls'
+
+    cli:
+        command:
+            consume AppBundle\Command\Consume:
+                - $amqp.consumeCommand
+                - $homeostasis.regulate
+
+            crawl AppBundle\Command\Crawl:
+                - $crawler
+                - $userAgent
+                - $publisher
+
+        commands Innmind\CLI\Commands:
+            - $cli.command.consume
+            - $cli.command.crawl
+
+    log:
+        reader Innmind\LogReader\Reader\Synchronous:
+            - $log.parser
+
+        parser Innmind\LogReader\Reader\LineParser\Symfony:
+            - $clock
+
+    filesystem:
+        logs Innmind\Filesystem\Adapter\FilesystemAdapter:
+            - $logDirectory
+        robots Innmind\Filesystem\Adapter\FilesystemAdapter:
+            - '/tmp/robots_txt'
+        tracer Innmind\Filesystem\Adapter\FilesystemAdapter:
+            - '/tmp/crawl_tracer'
+        homeostasis:
+            state Innmind\Filesystem\Adapter\FilesystemAdapter:
+                - $stateDirectory
+            action Innmind\Filesystem\Adapter\FilesystemAdapter:
+                - $actionDirectory
+        cache:
+            restClient Innmind\Filesystem\Adapter\FilesystemAdapter:
+                - '/tmp/rest-client'
