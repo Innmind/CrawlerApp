@@ -1630,16 +1630,16 @@
         },
         {
             "name": "innmind/rest-client",
-            "version": "6.1.0",
+            "version": "6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/rest-client.git",
-                "reference": "47362f67289f4f1884273e9f8d8aefd7d484cbe1"
+                "reference": "b4bd86658ba0d5c1f27fe5b94d76fa87a5a1d999"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/47362f67289f4f1884273e9f8d8aefd7d484cbe1",
-                "reference": "47362f67289f4f1884273e9f8d8aefd7d484cbe1",
+                "url": "https://api.github.com/repos/Innmind/rest-client/zipball/b4bd86658ba0d5c1f27fe5b94d76fa87a5a1d999",
+                "reference": "b4bd86658ba0d5c1f27fe5b94d76fa87a5a1d999",
                 "shasum": ""
             },
             "require": {
@@ -1652,7 +1652,7 @@
                 "innmind/specification": "^1.0",
                 "innmind/url-resolver": "~3.0",
                 "php": "~7.1",
-                "symfony/serializer": "~3.0",
+                "symfony/serializer": "~3.0|~4.0",
                 "willdurand/negotiation": "^2.2"
             },
             "require-dev": {
@@ -1681,7 +1681,7 @@
                 "client",
                 "rest"
             ],
-            "time": "2018-02-11T14:24:04+00:00"
+            "time": "2018-02-25T16:51:12+00:00"
         },
         {
             "name": "innmind/rest-client-bundle",
