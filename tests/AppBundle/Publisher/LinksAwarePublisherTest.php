@@ -21,7 +21,7 @@ use Innmind\Url\{
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
-use Innmind\AMQPBundle\Producer;
+use Innmind\AMQP\Producer;
 use Innmind\Immutable\{
     Map,
     Set

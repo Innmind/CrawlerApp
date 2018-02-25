@@ -15,7 +15,7 @@ use Innmind\Crawler\{
     HttpResource\Alternate
 };
 use Innmind\Url\UrlInterface;
-use Innmind\AMQPBundle\Producer;
+use Innmind\AMQP\Producer;
 
 final class AlternatesAwarePublisher implements PublisherInterface
 {

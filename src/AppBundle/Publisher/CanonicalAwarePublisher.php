@@ -10,7 +10,7 @@ use AppBundle\{
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
-use Innmind\AMQPBundle\Producer;
+use Innmind\AMQP\Producer;
 
 final class CanonicalAwarePublisher implements PublisherInterface
 {
