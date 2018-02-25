@@ -48,7 +48,15 @@ class CrawlTest extends TestCase
             $this->createMock(Publisher::class)
         );
 
-        $this->assertSame('crawl url [publish-to]', (string) $command);
+        $expected = <<<USAGE
+crawl url [publish]
+
+Crawl the given url and will print all the attributes found
+
+The "publish" argument is an optional url where to publish the crawled resource
+USAGE;
+
+        $this->assertSame($expected, (string) $command);
     }
 
     public function testCrawl()
@@ -127,7 +135,7 @@ class CrawlTest extends TestCase
             new Arguments(
                 (new Map('string', 'mixed'))
                     ->put('url', 'http://example.com')
-                    ->put('publish-to', 'http://example2.com')
+                    ->put('publish', 'http://example2.com')
             ),
             new Options
         ));

@@ -76,17 +76,23 @@ final class Crawl implements Command
                 $this->print($output, $name, $attribute);
             });
 
-        if ($arguments->contains('publish-to')) {
+        if ($arguments->contains('publish')) {
             ($this->publish)(
                 $resource,
-                Url::fromString($arguments->get('publish-to'))
+                Url::fromString($arguments->get('publish'))
             );
         }
     }
 
     public function __toString(): string
     {
-        return 'crawl url [publish-to]';
+        return <<<USAGE
+crawl url [publish]
+
+Crawl the given url and will print all the attributes found
+
+The "publish" argument is an optional url where to publish the crawled resource
+USAGE;
     }
 
     private function print(
