@@ -12,7 +12,6 @@ use Innmind\Url\{
 use Innmind\Socket\Internet\Transport;
 use Innmind\Immutable\Map;
 use Psr\Log\NullLogger;
-use Symfony\Component\Serializer\Serializer;
 use PHPUnit\Framework\TestCase;
 
 class ContainerTest extends TestCase
@@ -24,7 +23,6 @@ class ContainerTest extends TestCase
             (new Map('string', 'mixed'))
                 ->put('logger', new NullLogger)
                 ->put('userAgent', 'Innmind Robot')
-                ->put('serializer', new Serializer)
                 ->put('workingDirectory', '/tmp')
                 ->put('logDirectory', '/tmp/logs')
                 ->put('environment', 'test')

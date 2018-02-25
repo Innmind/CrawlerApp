@@ -1,7 +1,6 @@
 arguments:
     logger: Psr\Log\LoggerInterface
     userAgent: string
-    serializer: Symfony\Component\Serializer\Serializer
     workingDirectory: string
     logDirectory: string
     environment: string
@@ -25,7 +24,6 @@ dependencies:
     restClient @innmind/rest-client/container.yml:
         transport: $transport.thrower
         urlResolver: $urlResolver
-        serializer: $serializer
         cache: $filesystem.cache.restClient
 
     homeostasis @innmind/homeostasis/container.yml:
