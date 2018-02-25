@@ -753,16 +753,16 @@
         },
         {
             "name": "innmind/amqp",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/AMQP.git",
-                "reference": "dd0edf094526902e987ab147b7047fa0ce253d3e"
+                "reference": "85120ae1324243bbe125ec51fa63c91770e39c53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/AMQP/zipball/dd0edf094526902e987ab147b7047fa0ce253d3e",
-                "reference": "dd0edf094526902e987ab147b7047fa0ce253d3e",
+                "url": "https://api.github.com/repos/Innmind/AMQP/zipball/85120ae1324243bbe125ec51fa63c91770e39c53",
+                "reference": "85120ae1324243bbe125ec51fa63c91770e39c53",
                 "shasum": ""
             },
             "require": {
@@ -806,7 +806,7 @@
             "keywords": [
                 "AMQP"
             ],
-            "time": "2018-02-25T11:03:27+00:00"
+            "time": "2018-02-25T13:43:38+00:00"
         },
         {
             "name": "innmind/amqp-bundle",
@@ -859,16 +859,16 @@
         },
         {
             "name": "innmind/cli",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/CLI.git",
-                "reference": "8b03083952762d56048d4fcef59fc27c25cc50cc"
+                "reference": "e36920b2db83ddc586b5bd5e5461eeb44efc028d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/CLI/zipball/8b03083952762d56048d4fcef59fc27c25cc50cc",
-                "reference": "8b03083952762d56048d4fcef59fc27c25cc50cc",
+                "url": "https://api.github.com/repos/Innmind/CLI/zipball/e36920b2db83ddc586b5bd5e5461eeb44efc028d",
+                "reference": "e36920b2db83ddc586b5bd5e5461eeb44efc028d",
                 "shasum": ""
             },
             "require": {
@@ -904,7 +904,7 @@
             "keywords": [
                 "cli"
             ],
-            "time": "2018-02-22T07:36:15+00:00"
+            "time": "2018-02-25T14:26:25+00:00"
         },
         {
             "name": "innmind/colour",
