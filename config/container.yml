@@ -1,5 +1,6 @@
 arguments:
-    logger: Psr\Log\LoggerInterface
+    amqpLogPath: string
+    defaultLogPath: string
     userAgent: string
     workingDirectory: string
     logDirectory: string
@@ -13,7 +14,7 @@ dependencies:
     html @innmind/html/container.yml: []
 
     transport @innmind/http-transport/container.yml:
-        logger: $logger
+        logger: $logger.default
 
     crawler @innmind/crawler/container.yml:
         transport: $transport.thrower
@@ -38,7 +39,7 @@ dependencies:
         server: $amqpServer
         timeout: $amqp.timeout
         clock: $clock
-        logger: $logger
+        logger: $logger.amqp
         consumers: $amqp.consumers
         exchanges: $amqp.exchanges
         queues: $amqp.queues
@@ -216,7 +217,7 @@ services:
         actuator AppBundle\Homeostasis\Actuator\ProvisionConsumers:
             - $server.status
             - $server.control
-            - $logger
+            - $logger.default
             - $workingDirectory
             - $environment
 
@@ -337,3 +338,23 @@ services:
         cache:
             restClient Innmind\Filesystem\Adapter\FilesystemAdapter:
                 - '/tmp/rest-client'
+
+    logger:
+        amqp AppBundle\Logger::build:
+            - 'amqp'
+            - $logger.amqp.handler
+        amqp:
+            handler Monolog\Handler\StreamHandler:
+                - $amqpLogPath
+            buffer Monolog\Handler\FingersCrossedHandler:
+                - $logger.amqp.handler
+                - 400 # error level
+        default AppBundle\Logger::build:
+            - 'app'
+            - $logger.default.handler
+        default:
+            handler Monolog\Handler\StreamHandler:
+                - $defaultLogPath
+            buffer Monolog\Handler\FingersCrossedHandler:
+                - $logger.default.handler
+                - 400 # error level

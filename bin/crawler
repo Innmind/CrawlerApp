@@ -15,7 +15,6 @@ use Innmind\Url\{
 };
 use Innmind\Socket\Internet\Transport;
 use Innmind\Immutable\Map;
-use Psr\Log\NullLogger;
 
 new class extends Main {
     protected function main(Environment $env): void
@@ -29,7 +28,14 @@ new class extends Main {
         $container = (new ContainerBuilder)(
             new Path($env->workingDirectory().'/config/container.yml'),
             (new Map('string', 'mixed'))
-                ->put('logger', new NullLogger)
+                ->put(
+                    'amqpLogPath',
+                    $env->workingDirectory().'/var/logs/amqp/amqp.log'
+                )
+                ->put(
+                    'defaultLogPath',
+                    $env->workingDirectory().'/var/logs/app.log'
+                )
                 ->put('userAgent', 'Innmind Robot')
                 ->put('workingDirectory', (string) $env->workingDirectory())
                 ->put('logDirectory', $env->workingDirectory().'/var/logs')

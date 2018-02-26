@@ -11,7 +11,6 @@ use Innmind\Url\{
 };
 use Innmind\Socket\Internet\Transport;
 use Innmind\Immutable\Map;
-use Psr\Log\NullLogger;
 use PHPUnit\Framework\TestCase;
 
 class ContainerTest extends TestCase
@@ -21,7 +20,8 @@ class ContainerTest extends TestCase
         $container = (new ContainerBuilder)(
             new Path('config/container.yml'),
             (new Map('string', 'mixed'))
-                ->put('logger', new NullLogger)
+                ->put('amqpLogPath', '/tmp/logs/amqp.log')
+                ->put('defaultLogPath', '/tmp/logs/app.log')
                 ->put('userAgent', 'Innmind Robot')
                 ->put('workingDirectory', '/tmp')
                 ->put('logDirectory', '/tmp/logs')
