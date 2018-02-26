@@ -99,8 +99,7 @@ USAGE;
     private function print(
         Writable $output,
         string $name,
-        Attribute $attribute,
-        int $level = 0
+        Attribute $attribute
     ): void {
         switch (true) {
             case $attribute instanceof Attributes:
@@ -108,32 +107,44 @@ USAGE;
                 $attribute
                     ->content()
                     ->foreach(function($key, Attribute $value) use ($output, $level): void {
-                        $this->print($output, $key, $value, $level + 1);
+                        $this->print($output, $key, $value);
                     });
                 break;
 
             case $attribute->content() instanceof MapInterface:
-                $output->write(Str::of("$name:\n"));
-                $attribute
-                    ->content()
-                    ->foreach(function($key, $value) use ($output, $level): void {
-                        $output->write(Str::of(str_repeat('    ', $level + 1)."$key: $value\n"));
-                    });
+                $output->write(
+                    Str::of('%s: map<%s, %s>[%s]')
+                        ->sprintf(
+                            $name,
+                            $attribute->content()->keyType(),
+                            $attribute->content()->valueType(),
+                            $attribute->content()->size()
+                        )
+                        ->append("\n")
+                );
                 break;
 
             case $attribute->content() instanceof SetInterface:
-                $output->write(Str::of("$name:\n"));
-                $attribute
-                    ->content()
-                    ->foreach(
-                        function($value) use ($output, $level): void {
-                            $output->write(Str::of(str_repeat('    ', $level + 1)."$value\n"));
-                        }
-                    );
+                $output->write(
+                    Str::of('%s: set<%s>[%s]')
+                        ->sprintf(
+                            $name,
+                            $attribute->content()->type(),
+                            $attribute->content()->size()
+                        )
+                        ->append("\n")
+                );
                 break;
 
             default:
-                $output->write(Str::of(str_repeat('    ', $level)."$name: {$attribute->content()}\n"));
+                $output->write(
+                    Str::of('%s: string[%s]')
+                        ->sprintf(
+                            $name,
+                            (string) Str::of((string) $attribute->content())->length()
+                        )
+                        ->append("\n")
+                );
         }
     }
 }
