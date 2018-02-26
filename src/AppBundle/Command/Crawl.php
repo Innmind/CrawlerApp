@@ -24,6 +24,7 @@ use Innmind\Crawler\HttpResource\{
     Attribute,
     Attributes,
 };
+use Innmind\Stream\Writable;
 use Innmind\Immutable\{
     Map,
     Set,
