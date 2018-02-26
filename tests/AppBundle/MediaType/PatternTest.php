@@ -24,6 +24,11 @@ class PatternTest extends TestCase
         $this->assertSame('application/json; q=0.5', (string) $pattern);
     }
 
+    public function testDefaultQuality()
+    {
+        $this->assertSame(1.0, (new Pattern('application', 'json'))->quality());
+    }
+
     public function testAllowsQualityBounds()
     {
         $this->assertSame(0.0, (new Pattern('*', '*', 0))->quality());
