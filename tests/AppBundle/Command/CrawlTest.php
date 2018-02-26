@@ -72,6 +72,7 @@ USAGE;
             ->with($this->callback(static function($request): bool {
                 return (string) $request->url() === 'http://example.com/' &&
                     (string) $request->method() === 'GET' &&
+                    (string) $request->protocolVersion() === '2.0' &&
                     (string) $request->headers()->get('user-agent') === 'User-Agent : foo';
             }))
             ->willReturn(new HttpResource(
