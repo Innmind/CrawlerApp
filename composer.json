@@ -29,7 +29,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~6.0",
-        "giorgiosironi/eris": "^0.9.0"
+        "giorgiosironi/eris": "^0.9.0",
+        "infection/infection": "^0.7.1"
     },
     "scripts": {
         "test" : "bin/simple-phpunit"
