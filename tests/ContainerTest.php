@@ -25,7 +25,6 @@ class ContainerTest extends TestCase
                 ->put('userAgent', 'Innmind Robot')
                 ->put('workingDirectory', '/tmp')
                 ->put('logDirectory', '/tmp/logs')
-                ->put('environment', 'test')
                 ->put('amqpTransport', Transport::tcp())
                 ->put('amqpServer', Url::fromString('amqp://user:pwd@localhost:5672/'))
                 ->put('stateDirectory', '/tmp/state')

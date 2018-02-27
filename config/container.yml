@@ -4,7 +4,6 @@ arguments:
     userAgent: string
     workingDirectory: string
     logDirectory: string
-    environment: string
     amqpTransport: Innmind\Socket\Internet\Transport
     amqpServer: Innmind\Url\UrlInterface
     stateDirectory: string
@@ -219,7 +218,6 @@ services:
             - $server.control
             - $logger.default
             - $workingDirectory
-            - $environment
 
         regulate AppBundle\Homeostasis\Regulator\Regulate:
             - $homeostasis.regulator

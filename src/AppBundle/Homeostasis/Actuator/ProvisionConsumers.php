@@ -32,16 +32,14 @@ final class ProvisionConsumers implements Actuator
         Status $status,
         Control $control,
         LoggerInterface $logger,
-        string $workingDirectory,
-        string $environment
+        string $workingDirectory
     ) {
         $this->status = $status;
         $this->control = $control;
         $this->logger = $logger;
         $this->spawn = Command::background('php')
-            ->withArgument('./console')
-            ->withOption('env', $environment)
-            ->withArgument('innmind:amqp:consume')
+            ->withArgument('./bin/crawler')
+            ->withArgument('consume')
             ->withArgument('crawler')
             ->withArgument('50')
             ->withArgument('5')
@@ -143,18 +141,9 @@ final class ProvisionConsumers implements Actuator
             ->processes()
             ->all()
             ->filter(function(int $pid, Process $process): bool {
-                $command = new Str((string) $process->command());
-                $parts = $command->split(' ');
-                $command = $parts
-                    ->drop(1)
-                    ->reduce(
-                        Command::foreground((string) $parts->get(0)),
-                        static function(Command $command, Str $argument): Command {
-                            return $command->withArgument((string) $argument);
-                        }
-                    );
-
-                return (string) $this->spawn === (string) $command;
+                return Str::of((string) $process->command())->contains(
+                    'crawler consume crawler'
+                );
             });
     }
 }
