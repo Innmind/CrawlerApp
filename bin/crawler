@@ -1,0 +1,51 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types = 1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+use Innmind\CLI\{
+    Main,
+    Environment,
+};
+use Innmind\Compose\ContainerBuilder\ContainerBuilder;
+use Innmind\Url\{
+    Url,
+    Path,
+};
+use Innmind\Socket\Internet\Transport;
+use Innmind\Immutable\Map;
+
+new class extends Main {
+    protected function main(Environment $env): void
+    {
+        $server = 'amqp://guest:guest@localhost:5672/';
+
+        if ($env->variables()->contains('AMQP_SERVER')) {
+            $server = $env->variables()->get('AMQP_SERVER');
+        }
+
+        $container = (new ContainerBuilder)(
+            new Path($env->workingDirectory().'/config/container.yml'),
+            (new Map('string', 'mixed'))
+                ->put(
+                    'amqpLogPath',
+                    $env->workingDirectory().'/var/logs/amqp/amqp.log'
+                )
+                ->put(
+                    'defaultLogPath',
+                    $env->workingDirectory().'/var/logs/app.log'
+                )
+                ->put('userAgent', 'Innmind Robot')
+                ->put('workingDirectory', (string) $env->workingDirectory())
+                ->put('logDirectory', $env->workingDirectory().'/var/logs')
+                ->put('amqpTransport', Transport::tcp())
+                ->put('amqpServer', Url::fromString($server))
+                ->put('stateDirectory', $env->workingDirectory().'/var/data/states')
+                ->put('actionDirectory', $env->workingDirectory().'/var/data/actions')
+        );
+
+        $run = $container->get('commands');
+        $run($env);
+    }
+};

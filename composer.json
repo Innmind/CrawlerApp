@@ -5,25 +5,16 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle/"
-        },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
+            "Crawler\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\Crawler\\": "tests/"
         }
     },
     "require": {
-        "php": "~7.1",
-        "symfony/symfony": "~3.2",
-        "symfony/monolog-bundle": "^3.0.2",
-        "symfony/polyfill-apcu": "^1.0",
-        "sensio/distribution-bundle": "^5.0",
-        "incenteev/composer-parameter-handler": "^2.0",
+        "php": "~7.2",
         "innmind/crawler": "~4.0",
         "innmind/robots-txt": "~3.0",
         "innmind/rest-client-bundle": "~4.0",
@@ -31,38 +22,16 @@
         "innmind/server-control": "^2.0",
         "innmind/server-status": "^1.0",
         "innmind/amqp": "^1.1",
-        "innmind/amqp-bundle": "^1.1"
+        "innmind/amqp-bundle": "^1.1",
+        "innmind/compose": "^1.1",
+        "innmind/cli": "^1.0",
+        "monolog/monolog": "^1.23"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
         "phpunit/phpunit": "~6.0",
         "giorgiosironi/eris": "^0.9.0"
     },
     "scripts": {
-        "symfony-scripts": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-        ],
-        "post-install-cmd": [
-            "@symfony-scripts"
-        ],
-        "post-update-cmd": [
-            "@symfony-scripts"
-        ],
         "test" : "bin/simple-phpunit"
-    },
-    "extra": {
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
-        "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        },
-        "branch-alias": null
     }
 }
