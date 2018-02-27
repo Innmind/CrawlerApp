@@ -30,7 +30,8 @@
     "require-dev": {
         "phpunit/phpunit": "~6.0",
         "giorgiosironi/eris": "^0.9.0",
-        "infection/infection": "^0.7.1"
+        "infection/infection": "^0.7.1",
+        "roave/security-advisories": "dev-master"
     },
     "scripts": {
         "test" : "bin/simple-phpunit"
