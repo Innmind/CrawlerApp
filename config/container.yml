@@ -49,20 +49,20 @@ expose:
 
 services:
     crawler:
-        robots_aware AppBundle\Crawler\RobotsAwareCrawler:
+        robots_aware Crawler\Crawler\RobotsAwareCrawler:
             - $robots
             - '@decorated'
             - $userAgent
 
-        delayer_aware AppBundle\Crawler\DelayerAwareCrawler:
+        delayer_aware Crawler\Crawler\DelayerAwareCrawler:
             - $delayer
             - $crawler.crawler
 
-        xml_reader_aware AppBundle\Crawler\XmlReaderAwareCrawler:
+        xml_reader_aware Crawler\Crawler\XmlReaderAwareCrawler:
             - $cacheReader
             - '@decorated'
 
-        tracer_aware AppBundle\Crawler\TracerAwareCrawler:
+        tracer_aware Crawler\Crawler\TracerAwareCrawler:
             - $tracer
             - '@decorated'
 
@@ -73,10 +73,10 @@ services:
         - $crawler.delayer_aware
 
     robots:
-        keep_in_memory AppBundle\RobotsTxt\KeepInMemoryParser:
+        keep_in_memory Crawler\RobotsTxt\KeepInMemoryParser:
             - '@decorated'
 
-        cache AppBundle\RobotsTxt\CacheParser:
+        cache Crawler\RobotsTxt\CacheParser:
             - '@decorated'
             - $robots.walker
             - $filesystem.robots
@@ -94,23 +94,23 @@ services:
         - $robots.default
 
     publisher:
-        linksAware AppBundle\Publisher\LinksAwarePublisher:
+        linksAware Crawler\Publisher\LinksAwarePublisher:
             - '@decorated'
             - $amqp.producer.urls
 
-        imagesAware AppBundle\Publisher\ImagesAwarePublisher:
+        imagesAware Crawler\Publisher\ImagesAwarePublisher:
             - '@decorated'
             - $amqp.producer.urls
 
-        alternatesAware AppBundle\Publisher\AlternatesAwarePublisher:
+        alternatesAware Crawler\Publisher\AlternatesAwarePublisher:
             - '@decorated'
             - $amqp.producer.urls
 
-        canonicalAware AppBundle\Publisher\CanonicalAwarePublisher:
+        canonicalAware Crawler\Publisher\CanonicalAwarePublisher:
             - '@decorated'
             - $amqp.producer.urls
 
-        default AppBundle\Publisher\Publisher:
+        default Crawler\Publisher\Publisher:
             - $restClient.client
             - $resourceTranslator
 
@@ -122,22 +122,22 @@ services:
         - $publisher.default
 
     delayer:
-        threshold AppBundle\Delayer\ThresholdDelayer:
+        threshold Crawler\Delayer\ThresholdDelayer:
             - $delayer.robots_aware
             - '@decorated'
             - $clock
             - 1000 # 1 second
 
-        tracer_aware AppBundle\Delayer\TracerAwareDelayer:
+        tracer_aware Crawler\Delayer\TracerAwareDelayer:
             - $tracer
             - '@decorated'
             - $clock
             - 5 # 5 seconds (todo: harmonise delays units)
 
-        fixed AppBundle\Delayer\FixDelayer:
+        fixed Crawler\Delayer\FixDelayer:
             - 10000 # 10 seconds
 
-        robots_aware AppBundle\Delayer\RobotsTxtAwareDelayer:
+        robots_aware Crawler\Delayer\RobotsTxtAwareDelayer:
             - $robots
             - $userAgent
 
@@ -146,30 +146,30 @@ services:
         - $delayer.tracer_aware
         - $delayer.fixed
 
-    tracer AppBundle\CrawlTracer\CrawlTracer:
+    tracer Crawler\CrawlTracer\CrawlTracer:
         - $filesystem.tracer
         - $clock
 
     linker:
-        referrer AppBundle\Linker\ReferrerLinker:
+        referrer Crawler\Linker\ReferrerLinker:
             - '@decorated'
 
-        default AppBundle\Linker\Linker:
+        default Crawler\Linker\Linker:
             - $restClient.client
 
     linker stack:
         - $linker.referrer
         - $linker.default
 
-    resourceTranslator AppBundle\Translator\HttpResourceTranslator:
+    resourceTranslator Crawler\Translator\HttpResourceTranslator:
         - $resourceTranslator.property.delegate
 
     resourceTranslator:
         property:
-            delegate AppBundle\Translator\Property\DelegationTranslator:
+            delegate Crawler\Translator\Property\DelegationTranslator:
                 - $resourceTranslator.property.map
 
-            map map<string, AppBundle\Translator\PropertyTranslator>:
+            map map<string, Crawler\Translator\PropertyTranslator>:
                 - '<host, $resourceTranslator.property.host>'
                 - '<path, $resourceTranslator.property.path>'
                 - '<query, $resourceTranslator.property.query>'
@@ -189,37 +189,37 @@ services:
                 - '<author, $resourceTranslator.property.html.author>'
                 - '<citations, $resourceTranslator.property.html.citations>'
 
-            host AppBundle\Translator\Property\HostTranslator: []
-            path AppBundle\Translator\Property\PathTranslator: []
-            query AppBundle\Translator\Property\QueryTranslator: []
-            languages AppBundle\Translator\Property\LanguagesTranslator: []
-            charset AppBundle\Translator\Property\CharsetTranslator: []
+            host Crawler\Translator\Property\HostTranslator: []
+            path Crawler\Translator\Property\PathTranslator: []
+            query Crawler\Translator\Property\QueryTranslator: []
+            languages Crawler\Translator\Property\LanguagesTranslator: []
+            charset Crawler\Translator\Property\CharsetTranslator: []
 
             image:
-                dimension AppBundle\Translator\Property\Image\DimensionTranslator: []
-                weight AppBundle\Translator\Property\Image\WeightTranslator: []
+                dimension Crawler\Translator\Property\Image\DimensionTranslator: []
+                weight Crawler\Translator\Property\Image\WeightTranslator: []
 
             html:
-                anchors AppBundle\Translator\Property\HtmlPage\AnchorsTranslator: []
-                android AppBundle\Translator\Property\HtmlPage\AndroidAppLinkTranslator: []
-                description AppBundle\Translator\Property\HtmlPage\DescriptionTranslator: []
-                ios AppBundle\Translator\Property\HtmlPage\IosAppLinkTranslator: []
-                journal AppBundle\Translator\Property\HtmlPage\IsJournalTranslator: []
-                mainContent AppBundle\Translator\Property\HtmlPage\MainContentTranslator: []
-                themeColour AppBundle\Translator\Property\HtmlPage\ThemeColourTranslator: []
-                title AppBundle\Translator\Property\HtmlPage\TitleTranslator: []
-                preview AppBundle\Translator\Property\HtmlPage\PreviewTranslator: []
-                author AppBundle\Translator\Property\HtmlPage\AuthorTranslator: []
-                citations AppBundle\Translator\Property\HtmlPage\CitationsTranslator: []
+                anchors Crawler\Translator\Property\HtmlPage\AnchorsTranslator: []
+                android Crawler\Translator\Property\HtmlPage\AndroidAppLinkTranslator: []
+                description Crawler\Translator\Property\HtmlPage\DescriptionTranslator: []
+                ios Crawler\Translator\Property\HtmlPage\IosAppLinkTranslator: []
+                journal Crawler\Translator\Property\HtmlPage\IsJournalTranslator: []
+                mainContent Crawler\Translator\Property\HtmlPage\MainContentTranslator: []
+                themeColour Crawler\Translator\Property\HtmlPage\ThemeColourTranslator: []
+                title Crawler\Translator\Property\HtmlPage\TitleTranslator: []
+                preview Crawler\Translator\Property\HtmlPage\PreviewTranslator: []
+                author Crawler\Translator\Property\HtmlPage\AuthorTranslator: []
+                citations Crawler\Translator\Property\HtmlPage\CitationsTranslator: []
 
     homeostasis:
-        actuator AppBundle\Homeostasis\Actuator\ProvisionConsumers:
+        actuator Crawler\Homeostasis\Actuator\ProvisionConsumers:
             - $server.status
             - $server.control
             - $logger.default
             - $workingDirectory
 
-        regulate AppBundle\Homeostasis\Regulator\Regulate:
+        regulate Crawler\Homeostasis\Regulator\Regulate:
             - $homeostasis.regulator
             - $homeostasis.actuator
 
@@ -228,11 +228,11 @@ services:
             - $homeostasis.factors.log
 
         factors:
-            cpu AppBundle\Homeostasis\Factors::cpu:
+            cpu Crawler\Homeostasis\Factors::cpu:
                 - $clock
                 - $server.status
 
-            log AppBundle\Homeostasis\Factors::log:
+            log Crawler\Homeostasis\Factors::log:
                 - $clock
                 - $log.reader
                 - $filesystem.logs
@@ -246,7 +246,7 @@ services:
 
     urlResolver Innmind\UrlResolver\UrlResolver: []
 
-    crawlConsumer AppBundle\AMQP\Consumer\CrawlConsumer:
+    crawlConsumer Crawler\AMQP\Consumer\CrawlConsumer:
         - $crawler
         - $publisher
         - $linker
@@ -283,7 +283,7 @@ services:
             - $amqp.queues.crawler
 
         queues:
-            crawler AppBundle\AMQP\Queue::named:
+            crawler Crawler\AMQP\Queue::named:
                 - 'crawler'
 
         bindings set<Innmind\AMQP\Model\Queue\Binding>:
@@ -295,17 +295,17 @@ services:
                 - 'crawler'
 
         producer:
-            urls AppBundle\AMQP\Producer::get:
+            urls Crawler\AMQP\Producer::get:
                 - $amqp.producers
                 - 'urls'
 
     cli:
         command:
-            consume AppBundle\Command\Consume:
+            consume Crawler\Command\Consume:
                 - $amqp.consumeCommand
                 - $homeostasis.regulate
 
-            crawl AppBundle\Command\Crawl:
+            crawl Crawler\Command\Crawl:
                 - $crawler
                 - $userAgent
                 - $publisher
@@ -338,7 +338,7 @@ services:
                 - '/tmp/rest-client'
 
     logger:
-        amqp AppBundle\Logger::build:
+        amqp Crawler\Logger::build:
             - 'amqp'
             - $logger.amqp.handler
         amqp:
@@ -347,7 +347,7 @@ services:
             buffer Monolog\Handler\FingersCrossedHandler:
                 - $logger.amqp.handler
                 - 400 # error level
-        default AppBundle\Logger::build:
+        default Crawler\Logger::build:
             - 'app'
             - $logger.default.handler
         default:

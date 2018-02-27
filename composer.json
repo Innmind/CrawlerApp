@@ -5,12 +5,12 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle/"
+            "Crawler\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\Crawler\\": "tests/"
         }
     },
     "require": {
