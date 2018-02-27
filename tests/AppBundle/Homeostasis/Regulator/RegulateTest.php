@@ -10,14 +10,6 @@ use Innmind\Homeostasis\{
     Actuator,
     Exception\HomeostasisAlreadyInProcess
 };
-use Symfony\Component\{
-    EventDispatcher\EventSubscriberInterface,
-    Console\ConsoleEvents,
-    Console\Event\ConsoleTerminateEvent,
-    Console\Command\Command,
-    Console\Input\InputInterface,
-    Console\Output\OutputInterface
-};
 use PHPUnit\Framework\TestCase;
 
 class RegulateTest extends TestCase
