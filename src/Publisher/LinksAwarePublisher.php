@@ -38,7 +38,7 @@ final class LinksAwarePublisher implements PublisherInterface
                 ->attributes()
                 ->get('links')
                 ->content()
-                ->filter(function(UrlInterface $url) use ($sameAs, $resource): bool {
+                ->filter(function(UrlInterface $url) use ($sameAs): bool {
                     return !$sameAs($url);
                 })
                 ->foreach(function(UrlInterface $url) use ($reference, $resource): void {
