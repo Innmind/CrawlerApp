@@ -106,7 +106,7 @@ USAGE;
                 $output->write(Str::of("$name:\n"));
                 $attribute
                     ->content()
-                    ->foreach(function($key, Attribute $value) use ($output, $level): void {
+                    ->foreach(function($key, Attribute $value) use ($output): void {
                         $this->print($output, $key, $value);
                     });
                 break;
