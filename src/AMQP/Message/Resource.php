@@ -103,7 +103,10 @@ final class Resource implements Message
 
     public function withContentType(ContentType $contentType): Message
     {
-        $this->inner->withContentType($contentType);
+        $self = clone $this;
+        $self->inner = $this->inner->withContentType($contentType);
+
+        return $self;
     }
 
     public function hasContentEncoding(): bool
@@ -118,7 +121,10 @@ final class Resource implements Message
 
     public function withContentEncoding(ContentEncoding $contentEncoding): Message
     {
-        $this->inner->withContentEncoding($contentEncoding);
+        $self = clone $this;
+        $self->inner = $this->inner->withContentEncoding($contentEncoding);
+
+        return $self;
     }
 
     public function hasHeaders(): bool
@@ -136,7 +142,10 @@ final class Resource implements Message
 
     public function withHeaders(MapInterface $headers): Message
     {
-        $this->inner->withHeaders($headers);
+        $self = clone $this;
+        $self->inner = $this->inner->withHeaders($headers);
+
+        return $self;
     }
 
     public function hasDeliveryMode(): bool
@@ -151,7 +160,10 @@ final class Resource implements Message
 
     public function withDeliveryMode(DeliveryMode $deliveryMode): Message
     {
-        $this->inner->withDeliveryMode($deliveryMode);
+        $self = clone $this;
+        $self->inner = $this->inner->withDeliveryMode($deliveryMode);
+
+        return $self;
     }
 
     public function hasPriority(): bool
@@ -166,7 +178,10 @@ final class Resource implements Message
 
     public function withPriority(Priority $priority): Message
     {
-        $this->inner->withPriority($priority);
+        $self = clone $this;
+        $self->inner = $this->inner->withPriority($priority);
+
+        return $self;
     }
 
     public function hasCorrelationId(): bool
@@ -181,7 +196,10 @@ final class Resource implements Message
 
     public function withCorrelationId(CorrelationId $correlationId): Message
     {
-        $this->inner->withCorrelationId($correlationId);
+        $self = clone $this;
+        $self->inner = $this->inner->withCorrelationId($correlationId);
+
+        return $self;
     }
 
     public function hasReplyTo(): bool
@@ -196,7 +214,10 @@ final class Resource implements Message
 
     public function withReplyTo(ReplyTo $replyTo): Message
     {
-        $this->inner->withReplyTo($replyTo);
+        $self = clone $this;
+        $self->inner = $this->inner->withReplyTo($replyTo);
+
+        return $self;
     }
 
     public function hasExpiration(): bool
@@ -211,7 +232,10 @@ final class Resource implements Message
 
     public function withExpiration(ElapsedPeriod $expiration): Message
     {
-        $this->inner->withExpiration($expiration);
+        $self = clone $this;
+        $self->inner = $this->inner->withExpiration($expiration);
+
+        return $self;
     }
 
     public function hasId(): bool
@@ -226,7 +250,10 @@ final class Resource implements Message
 
     public function withId(Id $id): Message
     {
-        $this->inner->withId($id);
+        $self = clone $this;
+        $self->inner = $this->inner->withId($id);
+
+        return $self;
     }
 
     public function hasTimestamp(): bool
@@ -241,7 +268,10 @@ final class Resource implements Message
 
     public function withTimestamp(PointInTimeInterface $timestamp): Message
     {
-        $this->inner->withTimestamp($timestamp);
+        $self = clone $this;
+        $self->inner = $this->inner->withTimestamp($timestamp);
+
+        return $self;
     }
 
     public function hasType(): bool
@@ -256,7 +286,10 @@ final class Resource implements Message
 
     public function withType(Type $type): Message
     {
-        $this->inner->withType($type);
+        $self = clone $this;
+        $self->inner = $this->inner->withType($type);
+
+        return $self;
     }
 
     public function hasUserId(): bool
@@ -271,7 +304,10 @@ final class Resource implements Message
 
     public function withUserId(UserId $userId): Message
     {
-        $this->inner->withUserId($userId);
+        $self = clone $this;
+        $self->inner = $this->inner->withUserId($userId);
+
+        return $self;
     }
 
     public function hasAppId(): bool
@@ -286,7 +322,10 @@ final class Resource implements Message
 
     public function withAppId(AppId $appId): Message
     {
-        $this->inner->withAppId($appId);
+        $self = clone $this;
+        $self->inner = $this->inner->withAppId($appId);
+
+        return $self;
     }
 
     public function body(): Str
