@@ -15,7 +15,10 @@ use Innmind\Math\{
     Polynom\Polynom,
 };
 use Innmind\Filesystem\Adapter;
-use Innmind\LogReader\Reader;
+use Innmind\LogReader\{
+    Reader,
+    Log as LogLine,
+};
 use Innmind\Immutable\Set;
 
 final class Factors
@@ -53,7 +56,7 @@ final class Factors
                 ->withDegree(Number::wrap(2), Number::wrap(-52.3392))
                 ->withDegree(Number::wrap(3), Number::wrap(87.7193))
                 ->withDegree(Number::wrap(4), Number::wrap(-46.7836)),
-            static function(Log $line): bool {
+            static function(LogLine $line): bool {
                 return $line->attributes()->contains('level') &&
                     Set::of('string', 'emergency', 'alert', 'critical', 'error')->contains(
                         $line->attributes()->get('level')->value()
