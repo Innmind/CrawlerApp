@@ -83,6 +83,37 @@ class MemorySafeTest extends TestCase
         $this->assertSame($response, $transport->fulfill($request));
     }
 
+    public function testDoesntThrowWhenHtmlNotOverThreshold()
+    {
+        $transport = new MemorySafe(
+            $inner = $this->createMock(Transport::class)
+        );
+        $request = $this->createMock(Request::class);
+        $inner
+            ->expects($this->once())
+            ->method('fulfill')
+            ->with($request)
+            ->willReturn($response = $this->createMock(Response::class));
+        $response
+            ->expects($this->once())
+            ->method('body')
+            ->willReturn($body = $this->createMock(Readable::class));
+        $body
+            ->expects($this->once())
+            ->method('size')
+            ->willReturn(new Size(1024*1024)); // >1MB
+        $response
+            ->expects($this->any())
+            ->method('headers')
+            ->willReturn(Headers::of(
+                new ContentType(
+                    new ContentTypeValue('text', 'html')
+                )
+            ));
+
+        $this->assertSame($response, $transport->fulfill($request));
+    }
+
     public function testThrowWhenOverThresholdAndHtml()
     {
         $transport = new MemorySafe(
