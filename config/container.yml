@@ -16,7 +16,7 @@ dependencies:
         logger: $logger.default
 
     crawler @innmind/crawler/container.yml:
-        transport: $transport.thrower
+        transport: $transport.memorySafe
         clock: $clock
         urlResolver: $urlResolver
         reader: $cacheReader
@@ -356,3 +356,7 @@ services:
             buffer Monolog\Handler\FingersCrossedHandler:
                 - $logger.default.handler
                 - 400 # error level
+
+    transport:
+        memorySafe Crawler\Transport\MemorySafe:
+            - $transport.thrower

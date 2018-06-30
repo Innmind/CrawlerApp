@@ -786,16 +786,16 @@
         },
         {
             "name": "innmind/http",
-            "version": "3.1.1",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Http.git",
-                "reference": "e255aad2487b8a94020ef655249f0b6be6e1dd27"
+                "reference": "0a47a17e7b017a761a554b3c33058c0750bb3ee9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Http/zipball/e255aad2487b8a94020ef655249f0b6be6e1dd27",
-                "reference": "e255aad2487b8a94020ef655249f0b6be6e1dd27",
+                "url": "https://api.github.com/repos/Innmind/Http/zipball/0a47a17e7b017a761a554b3c33058c0750bb3ee9",
+                "reference": "0a47a17e7b017a761a554b3c33058c0750bb3ee9",
                 "shasum": ""
             },
             "require": {
@@ -808,7 +808,8 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~6.0",
-                "psr/http-message": "^1.0"
+                "psr/http-message": "^1.0",
+                "symfony/http-foundation": "^3.0|^4.0"
             },
             "type": "library",
             "autoload": {
@@ -832,7 +833,7 @@
                 "Value Object",
                 "http"
             ],
-            "time": "2017-11-26T15:59:38+00:00"
+            "time": "2018-04-28T15:09:00+00:00"
         },
         {
             "name": "innmind/http-transport",
