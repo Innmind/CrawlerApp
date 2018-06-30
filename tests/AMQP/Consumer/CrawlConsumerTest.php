@@ -10,7 +10,8 @@ use Crawler\{
     Reference,
     Exception\UrlCannotBeCrawled,
     Exception\ResourceCannotBePublished,
-    Exception\CantLinkResourceAcrossServers
+    Exception\CantLinkResourceAcrossServers,
+    Exception\ResponseTooHeavy,
 };
 use Innmind\Crawler\{
     Crawler,
@@ -246,6 +247,37 @@ class CrawlConsumerTest extends TestCase
                     $this->createMock(UrlInterface::class)
                 )
             ));
+        $publisher
+            ->expects($this->never())
+            ->method('__invoke');
+        $linker
+            ->expects($this->never())
+            ->method('__invoke');
+
+        $this->assertNull($consume($message));
+    }
+
+    public function testInvokeWhenResponseTooHeavy()
+    {
+        $consume = new CrawlConsumer(
+            $crawler = $this->createMock(Crawler::class),
+            $publisher = $this->createMock(Publisher::class),
+            $linker = $this->createMock(Linker::class),
+            'ua'
+        );
+        $message = new Locked(
+            (new Generic(new Str(json_encode([
+                'resource' => 'foo',
+                'origin' => 'origin',
+                'definition' => 'definition',
+                'server' => 'server',
+            ]))))
+                ->withContentType(new ContentType('application', 'json'))
+        );
+        $crawler
+            ->expects($this->once())
+            ->method('execute')
+            ->will($this->throwException(new ResponseTooHeavy));
         $publisher
             ->expects($this->never())
             ->method('__invoke');

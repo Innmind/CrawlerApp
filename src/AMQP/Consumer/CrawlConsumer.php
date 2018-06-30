@@ -9,7 +9,8 @@ use Crawler\{
     AMQP\Message\Resource,
     Exception\ResourceCannotBePublished,
     Exception\UrlCannotBeCrawled,
-    Exception\CantLinkResourceAcrossServers
+    Exception\CantLinkResourceAcrossServers,
+    Exception\ResponseTooHeavy,
 };
 use Innmind\Crawler\Crawler;
 use Innmind\Http\{
@@ -83,6 +84,8 @@ final class CrawlConsumer
         } catch (ServerError $e) {
             throw new Requeue; //will retry later
         } catch (UrlCannotBeCrawled $e) {
+            return;
+        } catch (ResponseTooHeavy $e) {
             return;
         }
 
