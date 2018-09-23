@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types = 1);
+
+require __DIR__.'/../vendor/autoload.php';
+
+use function Crawler\bootstrap;
+use Innmind\CLI\{
+    Main,
+    Environment,
+};
+use Innmind\Url\Url;
+use Innmind\Socket\Internet\Transport;
+use Innmind\Filesystem\Adapter\FilesystemAdapter;
+use Symfony\Component\Dotenv\Dotenv;
+
+new class extends Main {
+    protected function main(Environment $env): void
+    {
+        $dotenv = (new Dotenv)->parse(file_get_contents(__DIR__.'/../config/.env'));
+        $server = $dotenv['AMQP_SERVER'] ?? $env->variables()['AMQP_SERVER'] ?? 'amqp://guest:guest@localhost:5672/';
+
+        $run = bootstrap(
+            Url::fromString("file://{$env->workingDirectory()}/var/logs/app.log"),
+            Url::fromString("file://{$env->workingDirectory()}/var/logs/amqp/amqp.log"),
+            new FilesystemAdapter($env->workingDirectory().'/var/cache/rest'),
+            new FilesystemAdapter($env->workingDirectory().'/var/logs'),
+            new FilesystemAdapter($env->workingDirectory().'/var/data/states'),
+            new FilesystemAdapter($env->workingDirectory().'/var/data/actions'),
+            new FilesystemAdapter($env->workingDirectory().'/var/cache/traces'),
+            new FilesystemAdapter($env->workingDirectory().'/var/cache/robots_txts'),
+            $env->workingDirectory(),
+            Transport::tcp(),
+            Url::fromString($server),
+            'Innmind Robot'
+        );
+
+        $run($env);
+    }
+};
