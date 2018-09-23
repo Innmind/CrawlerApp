@@ -25,6 +25,8 @@ final class RobotsTxtAwareDelayer implements Delayer
 {
     private $parser;
     private $userAgent;
+    private $halt;
+    private $clock;
 
     public function __construct(
         Parser $parser,
