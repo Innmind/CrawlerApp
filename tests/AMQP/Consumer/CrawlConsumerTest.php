@@ -82,7 +82,7 @@ class CrawlConsumerTest extends TestCase
                     (string) $request->method() === 'GET' &&
                     (string) $request->protocolVersion() === '2.0' &&
                     $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
+                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
@@ -314,7 +314,7 @@ class CrawlConsumerTest extends TestCase
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
+                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
@@ -379,7 +379,7 @@ class CrawlConsumerTest extends TestCase
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
+                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
@@ -442,7 +442,7 @@ class CrawlConsumerTest extends TestCase
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
+                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
@@ -502,7 +502,7 @@ class CrawlConsumerTest extends TestCase
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
+                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
@@ -555,7 +555,7 @@ class CrawlConsumerTest extends TestCase
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
+                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
@@ -626,7 +626,7 @@ class CrawlConsumerTest extends TestCase
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
                     $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent : ua';
+                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
                 $this->createMock(UrlInterface::class),
