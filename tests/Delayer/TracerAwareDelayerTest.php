@@ -42,7 +42,7 @@ class TracerAwareDelayerTest extends TestCase
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
-            5
+            5000
         );
         $url = $this->createMock(UrlInterface::class);
         $url

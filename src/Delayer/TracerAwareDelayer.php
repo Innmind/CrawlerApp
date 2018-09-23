@@ -30,7 +30,7 @@ final class TracerAwareDelayer implements Delayer
         $this->tracer = $tracer;
         $this->delay = $delayer;
         $this->clock = $clock;
-        $this->threshold = new ElapsedPeriod($threshold * 1000);
+        $this->threshold = new ElapsedPeriod($threshold);
     }
 
     public function __invoke(UrlInterface $url): void

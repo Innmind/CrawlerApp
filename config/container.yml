@@ -132,7 +132,7 @@ services:
             - $tracer
             - '@decorated'
             - $clock
-            - 5 # 5 seconds (todo: harmonise delays units)
+            - 5000 # 5 seconds
 
         fixed Crawler\Delayer\FixDelayer:
             - 10000 # 10 seconds
