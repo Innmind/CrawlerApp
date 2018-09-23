@@ -4,17 +4,14 @@ declare(strict_types = 1);
 
 require __DIR__.'/../vendor/autoload.php';
 
+use function Crawler\bootstrap;
 use Innmind\CLI\{
     Main,
     Environment,
 };
-use Innmind\Compose\ContainerBuilder\ContainerBuilder;
-use Innmind\Url\{
-    Url,
-    Path,
-};
+use Innmind\Url\Url;
 use Innmind\Socket\Internet\Transport;
-use Innmind\Immutable\Map;
+use Innmind\Filesystem\Adapter\FilesystemAdapter;
 use Symfony\Component\Dotenv\Dotenv;
 
 new class extends Main {
@@ -23,27 +20,21 @@ new class extends Main {
         $dotenv = (new Dotenv)->parse(file_get_contents(__DIR__.'/../config/.env'));
         $server = $dotenv['AMQP_SERVER'] ?? $env->variables()['AMQP_SERVER'] ?? 'amqp://guest:guest@localhost:5672/';
 
-        $container = (new ContainerBuilder)(
-            new Path($env->workingDirectory().'/config/container.yml'),
-            (new Map('string', 'mixed'))
-                ->put(
-                    'amqpLogPath',
-                    $env->workingDirectory().'/var/logs/amqp/amqp.log'
-                )
-                ->put(
-                    'defaultLogPath',
-                    $env->workingDirectory().'/var/logs/app.log'
-                )
-                ->put('userAgent', 'Innmind Robot')
-                ->put('workingDirectory', (string) $env->workingDirectory())
-                ->put('logDirectory', $env->workingDirectory().'/var/logs')
-                ->put('amqpTransport', Transport::tcp())
-                ->put('amqpServer', Url::fromString($server))
-                ->put('stateDirectory', $env->workingDirectory().'/var/data/states')
-                ->put('actionDirectory', $env->workingDirectory().'/var/data/actions')
+        $run = bootstrap(
+            Url::fromString("file://{$env->workingDirectory()}/var/logs/app.log"),
+            Url::fromString("file://{$env->workingDirectory()}/var/logs/amqp/amqp.log"),
+            new FilesystemAdapter('/tmp/rest-client'),
+            new FilesystemAdapter($env->workingDirectory().'/var/logs'),
+            new FilesystemAdapter($env->workingDirectory().'/var/data/states'),
+            new FilesystemAdapter($env->workingDirectory().'/var/data/actions'),
+            new FilesystemAdapter('/tmp/crawl_tracer'),
+            new FilesystemAdapter('/tmp/robots_txt'),
+            $env->workingDirectory(),
+            Transport::tcp(),
+            Url::fromString($server),
+            'Innmind Robot'
         );
 
-        $run = $container->get('commands');
         $run($env);
     }
 };
