@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8086dda9caa40cb2b55b42c36dd0d671",
+    "content-hash": "226fea8f6ad01e162b3317f62eddc990",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -294,6 +294,7 @@
             ],
             "description": "Symfony bundle to integrate AMQP library",
             "homepage": "http://github.com/Innmind/AMQPBundle",
+            "abandoned": true,
             "time": "2017-11-28T07:21:25+00:00"
         },
         {
@@ -995,6 +996,58 @@
             "description": "Parse log files",
             "homepage": "http://github.com/Innmind/LogReader",
             "time": "2017-10-12T17:57:43+00:00"
+        },
+        {
+            "name": "innmind/logger",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Logger.git",
+                "reference": "12acb964d7a508daf7afea51b851a9a47d006aca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Logger/zipball/12acb964d7a508daf7afea51b851a9a47d006aca",
+                "reference": "12acb964d7a508daf7afea51b851a9a47d006aca",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/url": "^2.0",
+                "monolog/monolog": "^1.23",
+                "php": "~7.2",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "phpunit/phpunit": "~7.0",
+                "sentry/sentry": "^1.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Logger\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Logger",
+            "homepage": "http://github.com/Innmind/Logger",
+            "keywords": [
+                "logger",
+                "psr-3"
+            ],
+            "time": "2018-09-22T15:20:35+00:00"
         },
         {
             "name": "innmind/math",
