@@ -5,25 +5,33 @@ namespace Crawler\Delayer;
 
 use Crawler\{
     Delayer,
-    Exception\DomainException
+    Delay,
+};
+use Innmind\TimeWarp\Halt;
+use Innmind\TimeContinuum\{
+    TimeContinuumInterface,
+    PeriodInterface,
 };
 use Innmind\Url\UrlInterface;
 
 final class FixDelayer implements Delayer
 {
-    private $microseconds;
+    private $halt;
+    private $clock;
+    private $period;
 
-    public function __construct(int $milliseconds)
-    {
-        if ($milliseconds < 0) {
-            throw new DomainException;
-        }
-
-        $this->microseconds = $milliseconds * 1000;
+    public function __construct(
+        Halt $halt,
+        TimeContinuumInterface $clock,
+        PeriodInterface $period = null
+    ) {
+        $this->halt = $halt;
+        $this->clock = $clock;
+        $this->period = $period ?? Delay::default();
     }
 
     public function __invoke(UrlInterface $url): void
     {
-        usleep($this->microseconds);
+        ($this->halt)($this->clock, $this->period);
     }
 }

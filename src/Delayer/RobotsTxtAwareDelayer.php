@@ -7,13 +7,18 @@ use Crawler\Delayer;
 use Innmind\RobotsTxt\{
     Parser,
     Directives,
-    Exception\FileNotFound
+    Exception\FileNotFound,
 };
 use Innmind\Url\{
     UrlInterface,
     Path,
     NullQuery,
-    NullFragment
+    NullFragment,
+};
+use Innmind\TimeWarp\Halt;
+use Innmind\TimeContinuum\{
+    TimeContinuumInterface,
+    Period\Earth\Second,
 };
 
 final class RobotsTxtAwareDelayer implements Delayer
@@ -21,10 +26,16 @@ final class RobotsTxtAwareDelayer implements Delayer
     private $parser;
     private $userAgent;
 
-    public function __construct(Parser $parser, string $userAgent)
-    {
+    public function __construct(
+        Parser $parser,
+        string $userAgent,
+        Halt $halt,
+        TimeContinuumInterface $clock
+    ) {
         $this->parser = $parser;
         $this->userAgent = $userAgent;
+        $this->halt = $halt;
+        $this->clock = $clock;
     }
 
     public function __invoke(UrlInterface $url): void
@@ -46,7 +57,7 @@ final class RobotsTxtAwareDelayer implements Delayer
                 return;
             }
 
-            sleep(
+            $period = new Second(
                 $directives->reduce(
                     0,
                     function(int $carry, Directives $directives): int {
@@ -54,6 +65,7 @@ final class RobotsTxtAwareDelayer implements Delayer
                     }
                 )
             );
+            ($this->halt)($this->clock, $period);
         } catch (FileNotFound $e) {
             //pass
         }

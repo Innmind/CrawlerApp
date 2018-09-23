@@ -6,11 +6,12 @@ namespace Crawler\Delayer;
 use Crawler\{
     CrawlTracer,
     Delayer,
-    Exception\HostNeverHit
+    Delay,
+    Exception\HostNeverHit,
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
-    ElapsedPeriod
+    ElapsedPeriodInterface,
 };
 use Innmind\Url\UrlInterface;
 
@@ -25,12 +26,12 @@ final class TracerAwareDelayer implements Delayer
         CrawlTracer $tracer,
         Delayer $delayer,
         TimeContinuumInterface $clock,
-        int $threshold
+        ElapsedPeriodInterface $threshold = null
     ) {
         $this->tracer = $tracer;
         $this->delay = $delayer;
         $this->clock = $clock;
-        $this->threshold = new ElapsedPeriod($threshold);
+        $this->threshold = $threshold ?? Delay::hitInterval();
     }
 
     public function __invoke(UrlInterface $url): void

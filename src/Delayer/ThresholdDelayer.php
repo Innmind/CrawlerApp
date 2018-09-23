@@ -5,11 +5,11 @@ namespace Crawler\Delayer;
 
 use Crawler\{
     Delayer,
-    Exception\DomainException
+    Delay,
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
-    ElapsedPeriod
+    ElapsedPeriodInterface,
 };
 use Innmind\Url\UrlInterface;
 
@@ -24,16 +24,12 @@ final class ThresholdDelayer implements Delayer
         Delayer $attempt,
         Delayer $fallback,
         TimeContinuumInterface $clock,
-        int $threshold
+        ElapsedPeriodInterface $threshold = null
     ) {
-        if ($threshold < 0) {
-            throw new DomainException;
-        }
-
         $this->attempt = $attempt;
         $this->fallback = $fallback;
         $this->clock = $clock;
-        $this->threshold = new ElapsedPeriod($threshold);
+        $this->threshold = $threshold ?? Delay::threshold();
     }
 
     public function __invoke(UrlInterface $url): void

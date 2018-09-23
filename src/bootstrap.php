@@ -19,6 +19,7 @@ use Innmind\TimeContinuum\{
     TimeContinuum\Earth,
     Timezone\Earth\UTC,
     ElapsedPeriod,
+    Period\Earth\Second,
 };
 use Innmind\Xml\Reader\CacheReader;
 use Innmind\UrlResolver\UrlResolver;
@@ -41,6 +42,7 @@ use Innmind\AMQP\{
     Model\Exchange,
     Model\Queue,
 };
+use Innmind\TimeWarp\Halt\Usleep;
 use Innmind\Immutable\{
     Set,
     Map,
@@ -148,19 +150,23 @@ function bootstrap(
             $robots
         )
     );
+    $halt = new Usleep;
     $delayer = new Delayer\ThresholdDelayer(
         new Delayer\RobotsTxtAwareDelayer(
             $robots,
-            $userAgent
+            $userAgent,
+            $halt,
+            $clock
         ),
         new Delayer\TracerAwareDelayer(
             $tracer,
-            new Delayer\FixDelayer(10000), // 10 seconds
-            $clock,
-            5000 // 5 seconds
+            new Delayer\FixDelayer(
+                $halt,
+                $clock
+            ),
+            $clock
         ),
-        $clock,
-        1000 // one second
+        $clock
     );
 
     $crawler = new Crawler\XmlReaderAwareCrawler(

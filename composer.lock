@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "98071ce1fb74599034f0bd6e767e1d4d",
+    "content-hash": "812a7214dd02558f8501a7d0ad106f31",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -1362,6 +1362,52 @@
                 "time"
             ],
             "time": "2018-08-15T08:30:18+00:00"
+        },
+        {
+            "name": "innmind/time-warp",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/TimeWarp.git",
+                "reference": "098d1a5beeee8d410901f6d3160bb2d7fe299ddd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/TimeWarp/zipball/098d1a5beeee8d410901f6d3160bb2d7fe299ddd",
+                "reference": "098d1a5beeee8d410901f6d3160bb2d7fe299ddd",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/time-continuum": "^1.2",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\TimeWarp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Time warp",
+            "homepage": "http://github.com/Innmind/TimeWarp",
+            "keywords": [
+                "time",
+                "warp"
+            ],
+            "time": "2018-09-23T10:54:02+00:00"
         },
         {
             "name": "innmind/url",

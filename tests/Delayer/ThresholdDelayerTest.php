@@ -5,12 +5,12 @@ namespace Tests\Crawler\Delayer;
 
 use Crawler\{
     Delayer\ThresholdDelayer,
-    Delayer
+    Delayer,
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
     PointInTimeInterface,
-    ElapsedPeriod
+    ElapsedPeriod,
 };
 use Innmind\Url\UrlInterface;
 use PHPUnit\Framework\TestCase;
@@ -24,8 +24,7 @@ class ThresholdDelayerTest extends TestCase
             new ThresholdDelayer(
                 $this->createMock(Delayer::class),
                 $this->createMock(Delayer::class),
-                $this->createMock(TimeContinuumInterface::class),
-                0
+                $this->createMock(TimeContinuumInterface::class)
             )
         );
     }
@@ -36,7 +35,7 @@ class ThresholdDelayerTest extends TestCase
             $attempt = $this->createMock(Delayer::class),
             $fallback = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
-            1000
+            new ElapsedPeriod(1000)
         );
         $url = $this->createMock(UrlInterface::class);
         $attempt
@@ -68,7 +67,7 @@ class ThresholdDelayerTest extends TestCase
             $attempt = $this->createMock(Delayer::class),
             $fallback = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
-            1000
+            new ElapsedPeriod(1000)
         );
         $url = $this->createMock(UrlInterface::class);
         $attempt
@@ -93,18 +92,5 @@ class ThresholdDelayerTest extends TestCase
             ->willReturn(new ElapsedPeriod(500));
 
         $this->assertNull($delayer($url));
-    }
-
-    /**
-     * @expectedException Crawler\Exception\DomainException
-     */
-    public function testThrowWhenNegativeThreshold()
-    {
-        new ThresholdDelayer(
-            $this->createMock(Delayer::class),
-            $this->createMock(Delayer::class),
-            $this->createMock(TimeContinuumInterface::class),
-            -1
-        );
     }
 }

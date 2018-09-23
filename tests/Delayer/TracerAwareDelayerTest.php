@@ -30,8 +30,7 @@ class TracerAwareDelayerTest extends TestCase
             new TracerAwareDelayer(
                 $this->createMock(CrawlTracer::class),
                 $this->createMock(Delayer::class),
-                $this->createMock(TimeContinuumInterface::class),
-                5
+                $this->createMock(TimeContinuumInterface::class)
             )
         );
     }
@@ -42,7 +41,7 @@ class TracerAwareDelayerTest extends TestCase
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
-            5000
+            new ElapsedPeriod(5000)
         );
         $url = $this->createMock(UrlInterface::class);
         $url
@@ -89,7 +88,7 @@ class TracerAwareDelayerTest extends TestCase
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
-            5
+            new ElapsedPeriod(5000)
         );
         $url = $this->createMock(UrlInterface::class);
         $url
@@ -135,7 +134,7 @@ class TracerAwareDelayerTest extends TestCase
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Delayer::class),
             $clock = $this->createMock(TimeContinuumInterface::class),
-            5
+            new ElapsedPeriod(5000)
         );
         $url = $this->createMock(UrlInterface::class);
         $url

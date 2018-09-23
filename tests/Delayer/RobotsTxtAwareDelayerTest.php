@@ -5,17 +5,22 @@ namespace Tests\Crawler\Delayer;
 
 use Crawler\{
     Delayer\RobotsTxtAwareDelayer,
-    Delayer
+    Delayer,
 };
 use Innmind\RobotsTxt\{
     Parser,
     RobotsTxt\RobotsTxt,
     Parser\Walker,
-    Exception\FileNotFound
+    Exception\FileNotFound,
 };
 use Innmind\Url\{
     Url,
-    UrlInterface
+    UrlInterface,
+};
+use Innmind\TimeWarp\Halt;
+use Innmind\TimeContinuum\{
+    TimeContinuumInterface,
+    Period\Earth\Second,
 };
 use Innmind\Immutable\Str;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +33,9 @@ class RobotsTxtAwareDelayerTest extends TestCase
             Delayer::class,
             new RobotsTxtAwareDelayer(
                 $this->createMock(Parser::class),
-                'foo'
+                'foo',
+                $this->createMock(Halt::class),
+                $this->createMock(TimeContinuumInterface::class)
             )
         );
     }
@@ -37,7 +44,9 @@ class RobotsTxtAwareDelayerTest extends TestCase
     {
         $delayer = new RobotsTxtAwareDelayer(
             $parser = $this->createMock(Parser::class),
-            'foo'
+            'foo',
+            $this->createMock(Halt::class),
+            $this->createMock(TimeContinuumInterface::class)
         );
         $parser
             ->expects($this->once())
@@ -53,7 +62,9 @@ class RobotsTxtAwareDelayerTest extends TestCase
     {
         $delayer = new RobotsTxtAwareDelayer(
             $parser = $this->createMock(Parser::class),
-            'bar'
+            'bar',
+            $this->createMock(Halt::class),
+            $this->createMock(TimeContinuumInterface::class)
         );
         $parser
             ->expects($this->once())
@@ -81,7 +92,9 @@ TXT
     {
         $delayer = new RobotsTxtAwareDelayer(
             $parser = $this->createMock(Parser::class),
-            'foo'
+            'foo',
+            $this->createMock(Halt::class),
+            $this->createMock(TimeContinuumInterface::class)
         );
         $parser
             ->expects($this->once())
@@ -109,7 +122,9 @@ TXT
     {
         $delayer = new RobotsTxtAwareDelayer(
             $parser = $this->createMock(Parser::class),
-            'foo'
+            'foo',
+            $halt = $this->createMock(Halt::class),
+            $clock = $this->createMock(TimeContinuumInterface::class)
         );
         $parser
             ->expects($this->once())
@@ -127,17 +142,21 @@ TXT
                     ))
                 )
             );
+        $halt
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($clock, new Second(2));
 
-        $start = microtime(true);
         $this->assertNull($delayer(Url::fromString('http://example.com/')));
-        $this->assertTrue(microtime(true) - $start >= 2);
     }
 
     public function testWaitTheLongestOfMatchingCrawlDelays()
     {
         $delayer = new RobotsTxtAwareDelayer(
             $parser = $this->createMock(Parser::class),
-            'foo'
+            'foo',
+            $halt = $this->createMock(Halt::class),
+            $clock = $this->createMock(TimeContinuumInterface::class)
         );
         $parser
             ->expects($this->once())
@@ -158,9 +177,11 @@ TXT
                     ))
                 )
             );
+        $halt
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($clock, new Second(4));
 
-        $start = microtime(true);
         $this->assertNull($delayer(Url::fromString('http://example.com/')));
-        $this->assertTrue(microtime(true) - $start >= 4);
     }
 }

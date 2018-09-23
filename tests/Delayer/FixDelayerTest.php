@@ -7,6 +7,11 @@ use Crawler\{
     Delayer\FixDelayer,
     Delayer
 };
+use Innmind\TimeWarp\Halt;
+use Innmind\TimeContinuum\{
+    TimeContinuumInterface,
+    PeriodInterface,
+};
 use Innmind\Url\UrlInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -16,23 +21,25 @@ class FixDelayerTest extends TestCase
     {
         $this->assertInstanceOf(
             Delayer::class,
-            new FixDelayer(0)
+            new FixDelayer(
+                $this->createMock(Halt::class),
+                $this->createMock(TimeContinuumInterface::class)
+            )
         );
     }
 
     public function testInvokation()
     {
-        $start = microtime(true);
-        $this->assertNull((new FixDelayer(500))($this->createMock(UrlInterface::class)));
-        $this->assertTrue(microtime(true) - $start >= 0.5);
-        $this->assertTrue(microtime(true) - $start < 1);
-    }
+        $delay = new FixDelayer(
+            $halt = $this->createMock(Halt::class),
+            $clock = $this->createMock(TimeContinuumInterface::class),
+            $period = $this->createMock(PeriodInterface::class)
+        );
+        $halt
+            ->expects($this->once())
+            ->method('__invoke')
+            ->with($clock, $period);
 
-    /**
-     * @expectedException Crawler\Exception\DomainException
-     */
-    public function testThrowWhenNegativeSleepTime()
-    {
-        new FixDelayer(-1);
+        $this->assertNull($delay($this->createMock(UrlInterface::class)));
     }
 }
