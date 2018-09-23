@@ -16,7 +16,7 @@ final class Delay
      */
     public static function default(): PeriodInterface
     {
-        return new Second(10);
+        return new Second(6);
     }
 
     /**
