@@ -61,6 +61,7 @@ function bootstrap(
     PathInterface $workingDirectory,
     Socket $amqpTransport,
     UrlInterface $amqpServer,
+    string $apiKey,
     string $userAgent
 ): Commands {
     $logger = logger('app', $appLog)(LogLevel::ERROR);
@@ -81,7 +82,14 @@ function bootstrap(
     $urlResolver = new UrlResolver;
     $serverStatus = ServerStatusFactory::build($clock);
 
-    $rest = rest($transport, $urlResolver, $restCache);
+    $rest = rest(
+        new Transport\Authentified(
+            $transport,
+            $apiKey
+        ),
+        $urlResolver,
+        $restCache
+    );
 
     $factors = Set::of(
         Factor::class,

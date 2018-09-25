@@ -29,6 +29,7 @@ class BootstrapTest extends TestCase
             new Path('/tmp'),
             Transport::tcp(),
             Url::fromString('amqp://user:pwd@localhost:5672/'),
+            'apikey',
             'Innmind Robot'
         );
 

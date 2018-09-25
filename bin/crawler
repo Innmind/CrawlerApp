@@ -32,6 +32,7 @@ new class extends Main {
             $env->workingDirectory(),
             Transport::tcp(),
             Url::fromString($server),
+            $dotenv['API_KEY'] ?? $env->variables()['API_KEY'],
             'Innmind Robot'
         );
 
