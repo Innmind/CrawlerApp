@@ -10,6 +10,7 @@ use function Innmind\Rest\Client\bootstrap as rest;
 use function Innmind\Homeostasis\bootstrap as homeostasis;
 use function Innmind\AMQP\bootstrap as amqp;
 use function Innmind\Logger\bootstrap as logger;
+use function Innmind\InstallationMonitor\bootstrap as monitor;
 use Innmind\Url\{
     UrlInterface,
     PathInterface,
@@ -248,6 +249,8 @@ function bootstrap(
             $userAgent
         ));
 
+    $clients = monitor()['client'];
+
     return new Commands(
         new Command\Consume(
             $amqp['command']['consume']($consumers)($amqpClient),
@@ -257,6 +260,11 @@ function bootstrap(
             $crawler,
             $userAgent,
             $publisher
+        ),
+        new Command\Install(
+            $clients['silence'](
+                $clients['socket']()
+            )
         )
     );
 }
