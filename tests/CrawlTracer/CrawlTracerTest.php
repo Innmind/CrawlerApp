@@ -13,16 +13,16 @@ use Innmind\Filesystem\{
     Directory\Directory,
     File\File,
     Stream\NullStream,
-    Stream\StringStream
+    Stream\StringStream,
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
     PointInTimeInterface,
-    Format\ISO8601
+    Format\ISO8601,
 };
 use Innmind\Url\{
     Url,
-    Authority\Host
+    Authority\Host,
 };
 use PHPUnit\Framework\TestCase;
 

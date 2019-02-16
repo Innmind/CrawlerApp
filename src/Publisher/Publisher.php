@@ -10,15 +10,18 @@ use Crawler\{
     MediaType\Pattern,
     Translator\HttpResourceTranslator,
     Exception\ResourceCannotBePublished,
-    Exception\MediaTypeDoesntMatchAny
+    Exception\MediaTypeDoesntMatchAny,
 };
 use Innmind\Rest\Client\{
     Client,
-    Definition\HttpResource as Definition
+    Definition\HttpResource as Definition,
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;
-use Innmind\Immutable\Set;
+use Innmind\Immutable\{
+    SetInterface,
+    Set,
+};
 
 final class Publisher implements PublisherInterface
 {
@@ -45,13 +48,13 @@ final class Publisher implements PublisherInterface
             ->definitions()
             ->filter(function(string $name, Definition $definition): bool {
                 return $definition->metas()->contains('allowed_media_types') &&
-                    is_array($definition->metas()->get('allowed_media_types'));
+                    \is_array($definition->metas()->get('allowed_media_types'));
             });
 
         $mediaTypes = $definitions
             ->reduce(
                 new Set('string'),
-                function(Set $carry, string $name, Definition $definition): Set {
+                function(SetInterface $carry, string $name, Definition $definition): SetInterface {
                     foreach ($definition->metas()->get('allowed_media_types') as $value) {
                         $carry = $carry->add($value);
                     }
@@ -61,7 +64,7 @@ final class Publisher implements PublisherInterface
             )
             ->reduce(
                 new Set(Pattern::class),
-                function(Set $carry, string $mediaType): Set {
+                function(SetInterface $carry, string $mediaType): SetInterface {
                     return $carry->add(Pattern::fromString($mediaType));
                 }
             );
@@ -77,7 +80,7 @@ final class Publisher implements PublisherInterface
 
         $definition = $definitions
             ->filter(function(string $name, Definition $definition) use ($best): bool {
-                return in_array(
+                return \in_array(
                     (string) $best,
                     $definition->metas()->get('allowed_media_types')
                 );

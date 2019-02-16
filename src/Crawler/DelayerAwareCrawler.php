@@ -6,7 +6,7 @@ namespace Crawler\Crawler;
 use Crawler\Delayer;
 use Innmind\Crawler\{
     Crawler,
-    HttpResource
+    HttpResource,
 };
 use Innmind\Http\Message\Request;
 

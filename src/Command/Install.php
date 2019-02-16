@@ -33,7 +33,7 @@ final class Install implements Command
     {
         $envFile = $env->workingDirectory().'/config/.env';
 
-        if (file_exists($envFile)) {
+        if (\file_exists($envFile)) {
             $env->error()->write(
                 Str::of("App already installed\n")
             );
@@ -92,7 +92,7 @@ final class Install implements Command
             )
             ->join("\n");
 
-        file_put_contents($envFile, $envVars);
+        \file_put_contents($envFile, $envVars);
     }
 
     public function __toString(): string

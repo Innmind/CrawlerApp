@@ -6,18 +6,18 @@ namespace Crawler\RobotsTxt;
 use Innmind\RobotsTxt\{
     Parser,
     RobotsTxt,
-    Parser\Walker
+    Parser\Walker,
 };
 use Innmind\Filesystem\{
     Adapter,
     File\File,
-    Stream\StringStream
+    Stream\StringStream,
 };
 use Innmind\Url\{
     UrlInterface,
     NullScheme,
     NullPath,
-    Authority\NullUserInformation
+    Authority\NullUserInformation,
 };
 use Innmind\Immutable\Str;
 
@@ -74,6 +74,6 @@ final class CacheParser implements Parser
             )
             ->withPath(new NullPath);
 
-        return rtrim($name, '/').'.txt';
+        return \rtrim($name, '/').'.txt';
     }
 }

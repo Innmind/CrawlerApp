@@ -7,12 +7,12 @@ use Crawler\{
     Publisher as PublisherInterface,
     Reference,
     AMQP\Message\Alternate as Message,
-    SameUrlAs
+    SameUrlAs,
 };
 use Innmind\Crawler\{
     HttpResource,
     HttpResource\Alternates,
-    HttpResource\Alternate
+    HttpResource\Alternate,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\AMQP\Producer;

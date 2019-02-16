@@ -5,12 +5,12 @@ namespace Tests\Crawler\Crawler;
 
 use Crawler\{
     Crawler\DelayerAwareCrawler,
-    Delayer
+    Delayer,
 };
 use Innmind\Crawler\{
     Crawler,
     HttpResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\Http\Message\Request;

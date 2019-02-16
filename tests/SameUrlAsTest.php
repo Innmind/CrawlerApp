@@ -8,7 +8,7 @@ use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;
 use Eris\{
     Generator,
-    TestTrait
+    TestTrait,
 };
 
 class SameUrlAsTest extends TestCase

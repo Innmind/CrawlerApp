@@ -6,16 +6,16 @@ namespace Crawler\Linker;
 use Crawler\{
     Linker as LinkerInterface,
     Reference,
-    Exception\CantLinkResourceAcrossServers
+    Exception\CantLinkResourceAcrossServers,
 };
 use Innmind\Rest\Client\{
     Client,
     Link,
-    Link\Parameter
+    Link\Parameter,
 };
 use Innmind\Immutable\{
     Map,
-    Set
+    Set,
 };
 
 final class Linker implements LinkerInterface
@@ -49,7 +49,8 @@ final class Linker implements LinkerInterface
             ->link(
                 $source->definition(),
                 $source->identity(),
-                (new Set(Link::class))->add(
+                Set::of(
+                    Link::class,
                     new Link(
                         $target->definition(),
                         $target->identity(),

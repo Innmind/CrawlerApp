@@ -25,8 +25,8 @@ final class Authentified implements Transport
 
     public function __invoke(Request $request): Response
     {
-        $headers = iterator_to_array($request->headers());
-        $headers = array_values($headers);
+        $headers = \iterator_to_array($request->headers());
+        $headers = \array_values($headers);
         $headers[] = $this->header;
 
         $request = new Request\Request(

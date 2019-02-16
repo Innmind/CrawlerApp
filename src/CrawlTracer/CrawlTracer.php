@@ -5,24 +5,24 @@ namespace Crawler\CrawlTracer;
 
 use Crawler\{
     CrawlTracer as CrawlTracerInterface,
-    Exception\HostNeverHit
+    Exception\HostNeverHit,
 };
 use Innmind\Filesystem\{
     Adapter,
     Directory\Directory,
     File\File,
     Stream\StringStream,
-    Stream\NullStream
+    Stream\NullStream,
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
     PointInTimeInterface,
-    Format\ISO8601
+    Format\ISO8601,
 };
 use Innmind\Url\{
     UrlInterface,
     Authority\HostInterface,
-    NullFragment
+    NullFragment,
 };
 use Innmind\Immutable\Str;
 

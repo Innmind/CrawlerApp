@@ -5,7 +5,7 @@ namespace Tests\Crawler\Delayer;
 
 use Crawler\{
     Delayer\FixDelayer,
-    Delayer
+    Delayer,
 };
 use Innmind\TimeWarp\Halt;
 use Innmind\TimeContinuum\{

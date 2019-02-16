@@ -22,8 +22,8 @@ final class DimensionTranslator implements PropertyTranslator
             ->get('dimension')
             ->content();
 
-        return (new Map('string', 'int'))
-            ->put('width', $dimension->get('width')->content())
-            ->put('height', $dimension->get('height')->content());
+        return Map::of('string', 'int')
+            ('width', $dimension->get('width')->content())
+            ('height', $dimension->get('height')->content());
     }
 }

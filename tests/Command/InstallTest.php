@@ -74,20 +74,20 @@ USAGE;
                 Event::class,
                 new Event(
                     new Event\Name('library_installed'),
-                    (new Map('string', 'variable'))
-                        ->put('apiKey', 'somethings3cret')
+                    Map::of('string', 'variable')
+                        ('apiKey', 'somethings3cret')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    (new Map('string', 'variable'))
-                        ->put('name', 'monitor')
-                        ->put('password', 'foo')
+                    Map::of('string', 'variable')
+                        ('name', 'monitor')
+                        ('password', 'foo')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    (new Map('string', 'variable'))
-                        ->put('name', 'consumer')
-                        ->put('password', 'bar')
+                    Map::of('string', 'variable')
+                        ('name', 'consumer')
+                        ('password', 'bar')
                 )
             ));
         $env = $this->createMock(Environment::class);
@@ -103,13 +103,13 @@ USAGE;
         ));
         $this->assertSame(
             "API_KEY=somethings3cret\nAMQP_SERVER=amqp://consumer:bar@localhost:5672/",
-            file_get_contents('/tmp/config/.env')
+            \file_get_contents('/tmp/config/.env')
         );
     }
 
     public function testFailWhenFileAlreadyExist()
     {
-        file_put_contents('/tmp/config/.env', 'clean');
+        \file_put_contents('/tmp/config/.env', 'clean');
 
         $install = new Install(
             $client = $this->createMock(Client::class)
@@ -142,7 +142,7 @@ USAGE;
         ));
         $this->assertSame(
             'clean',
-            file_get_contents('/tmp/config/.env')
+            \file_get_contents('/tmp/config/.env')
         );
     }
 
@@ -158,15 +158,15 @@ USAGE;
                 Event::class,
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    (new Map('string', 'variable'))
-                        ->put('name', 'monitor')
-                        ->put('password', 'foo')
+                    Map::of('string', 'variable')
+                        ('name', 'monitor')
+                        ('password', 'foo')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    (new Map('string', 'variable'))
-                        ->put('name', 'consumer')
-                        ->put('password', 'bar')
+                    Map::of('string', 'variable')
+                        ('name', 'consumer')
+                        ('password', 'bar')
                 )
             ));
         $env = $this->createMock(Environment::class);
@@ -192,7 +192,7 @@ USAGE;
             new Arguments,
             new Options
         ));
-        $this->assertFalse(file_exists('/tmp/config/.env'));
+        $this->assertFalse(\file_exists('/tmp/config/.env'));
     }
 
     public function testFailWhenNoAMQPEvent()
@@ -207,8 +207,8 @@ USAGE;
                 Event::class,
                 new Event(
                     new Event\Name('library_installed'),
-                    (new Map('string', 'variable'))
-                        ->put('apiKey', 'somethings3cret')
+                    Map::of('string', 'variable')
+                        ('apiKey', 'somethings3cret')
                 )
             ));
         $env = $this->createMock(Environment::class);
@@ -234,6 +234,6 @@ USAGE;
             new Arguments,
             new Options
         ));
-        $this->assertFalse(file_exists('/tmp/config/.env'));
+        $this->assertFalse(\file_exists('/tmp/config/.env'));
     }
 }

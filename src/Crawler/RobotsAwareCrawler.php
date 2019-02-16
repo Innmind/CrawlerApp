@@ -6,16 +6,16 @@ namespace Crawler\Crawler;
 use Crawler\Exception\UrlCannotBeCrawled;
 use Innmind\Crawler\{
     Crawler,
-    HttpResource
+    HttpResource,
 };
 use Innmind\RobotsTxt\{
     Parser,
-    Exception\FileNotFound
+    Exception\FileNotFound,
 };
 use Innmind\Url\{
     NullQuery,
     NullFragment,
-    Path
+    Path,
 };
 use Innmind\Http\Message\Request;
 

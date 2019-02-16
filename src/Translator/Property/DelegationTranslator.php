@@ -7,6 +7,7 @@ use Crawler\Translator\PropertyTranslator;
 use Innmind\Crawler\HttpResource;
 use Innmind\Rest\Client\Definition\Property;
 use Innmind\Immutable\MapInterface;
+use function Innmind\Immutable\assertMap;
 
 final class DelegationTranslator implements PropertyTranslator
 {
@@ -14,15 +15,7 @@ final class DelegationTranslator implements PropertyTranslator
 
     public function __construct(MapInterface $translators)
     {
-        if (
-            (string) $translators->keyType() !== 'string' ||
-            (string) $translators->valueType() !== PropertyTranslator::class
-        ) {
-            throw new \TypeError(sprintf(
-                'Argument 1 must be of type MapInterface<string, %s>',
-                PropertyTranslator::class
-            ));
-        }
+        assertMap('string', PropertyTranslator::class, $translators, 1);
 
         $this->translators = $translators;
     }

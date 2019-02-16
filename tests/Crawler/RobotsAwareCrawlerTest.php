@@ -5,21 +5,21 @@ namespace Tests\Crawler\Crawler;
 
 use Crawler\{
     Crawler\RobotsAwareCrawler,
-    Exception\UrlCannotBeCrawled
+    Exception\UrlCannotBeCrawled,
 };
 use Innmind\RobotsTxt\{
     Parser,
     RobotsTxt,
-    Exception\FileNotFound
+    Exception\FileNotFound,
 };
 use Innmind\Crawler\{
     Crawler,
     HttpResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
 };
 use Innmind\Http\Message\Request;
 use Innmind\Filesystem\MediaType;

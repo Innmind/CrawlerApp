@@ -7,13 +7,13 @@ use Crawler\{
     Linker\Linker,
     Linker as LinkerInterface,
     Reference,
-    Exception\CantLinkResourceAcrossServers
+    Exception\CantLinkResourceAcrossServers,
 };
 use Innmind\Rest\Client\{
     Client,
     Identity,
     Link,
-    Server
+    Server,
 };
 use Innmind\Url\Url;
 use Innmind\Immutable\SetInterface;

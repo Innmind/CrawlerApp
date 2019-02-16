@@ -5,7 +5,7 @@ namespace Crawler;
 
 use Innmind\Url\{
     UrlInterface,
-    NullFragment
+    NullFragment,
 };
 
 final class SameUrlAs

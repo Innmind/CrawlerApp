@@ -22,16 +22,16 @@ use Innmind\AMQP\{
     Model\Basic\Message\AppId,
     Model\Basic\Message\Locked,
     Model\Basic\Message\Generic,
-    Exception\MessageLocked
+    Exception\MessageLocked,
 };
 use Innmind\Rest\Client\Identity;
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
 };
 use Innmind\TimeContinuum\{
     ElapsedPeriod,
-    PointInTimeInterface
+    PointInTimeInterface,
 };
 use Innmind\Immutable\Str;
 use PHPUnit\Framework\TestCase;
@@ -44,7 +44,7 @@ class ResourceTest extends TestCase
             Message::class,
             $message = new Resource(
                 new Locked(
-                    (new Generic(new Str(json_encode([
+                    (new Generic(new Str(\json_encode([
                         'resource' => '/foo',
                         'origin' => 'uuid',
                         'relationship' => 'referrer',
@@ -86,7 +86,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -107,7 +107,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -127,7 +127,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -147,7 +147,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -167,7 +167,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -187,7 +187,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -207,7 +207,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -227,7 +227,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -247,7 +247,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -267,7 +267,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -287,7 +287,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -307,7 +307,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -327,7 +327,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -347,7 +347,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(json_encode([
+                (new Generic(new Str(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -359,7 +359,7 @@ class ResourceTest extends TestCase
         );
 
         $this->assertSame(
-            json_encode([
+            \json_encode([
                 'resource' => '/',
                 'origin' => 'uuid',
                 'relationship' => 'referrer',

@@ -10,7 +10,7 @@ use Crawler\{
 use Innmind\HttpTransport\Transport;
 use Innmind\Http\Message\{
     Request,
-    Response
+    Response,
 };
 
 final class MemorySafe implements Transport

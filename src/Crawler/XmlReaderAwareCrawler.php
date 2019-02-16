@@ -5,7 +5,7 @@ namespace Crawler\Crawler;
 
 use Innmind\Crawler\{
     Crawler,
-    HttpResource
+    HttpResource,
 };
 use Innmind\Xml\Reader\Cache\Storage;
 use Innmind\Http\Message\Request;

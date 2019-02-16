@@ -5,7 +5,7 @@ namespace Crawler\RobotsTxt;
 
 use Innmind\RobotsTxt\{
     Parser,
-    RobotsTxt
+    RobotsTxt,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\Immutable\Map;

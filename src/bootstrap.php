@@ -28,9 +28,7 @@ use Innmind\TimeContinuum\{
 };
 use Innmind\UrlResolver\UrlResolver;
 use Innmind\Filesystem\Adapter;
-use Innmind\Homeostasis\{
-    Factor,
-};
+use Innmind\Homeostasis\Factor;
 use Innmind\Server\Status\ServerFactory as ServerStatusFactory;
 use Innmind\Server\Control\ServerFactory as ServerControlFactory;
 use Innmind\LogReader\{

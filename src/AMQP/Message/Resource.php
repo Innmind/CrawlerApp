@@ -73,7 +73,7 @@ final class Resource implements Message
 
     public function hasRelationship(): bool
     {
-        return is_string($this->relationship);
+        return \is_string($this->relationship);
     }
 
     public function relationship(): string

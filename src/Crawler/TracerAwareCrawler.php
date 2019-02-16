@@ -5,11 +5,11 @@ namespace Crawler\Crawler;
 
 use Crawler\{
     CrawlTracer,
-    Exception\UrlCannotBeCrawled
+    Exception\UrlCannotBeCrawled,
 };
 use Innmind\Crawler\{
     Crawler,
-    HttpResource
+    HttpResource,
 };
 use Innmind\Http\Message\Request;
 

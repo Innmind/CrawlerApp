@@ -7,12 +7,12 @@ use Crawler\RobotsTxt\CacheParser;
 use Innmind\RobotsTxt\{
     Parser,
     RobotsTxt,
-    Parser\Walker
+    Parser\Walker,
 };
 use Innmind\Filesystem\{
     Adapter,
     File\File,
-    Stream\StringStream
+    Stream\StringStream,
 };
 use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;

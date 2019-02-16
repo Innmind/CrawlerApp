@@ -18,11 +18,13 @@ class NegotiatorTest extends TestCase
     {
         $best = (new Negotiator)->best(
             MediaType::fromString('image/png'),
-            (new Set(Pattern::class))
-                ->add(Pattern::fromString('*/*; q=0.1'))
-                ->add($expected = Pattern::fromString('image/*'))
-                ->add(Pattern::fromString('image/png; q=0.5'))
-                ->add(Pattern::fromString('text/html'))
+            Set::of(
+                Pattern::class,
+                Pattern::fromString('*/*; q=0.1'),
+                $expected = Pattern::fromString('image/*'),
+                Pattern::fromString('image/png; q=0.5'),
+                Pattern::fromString('text/html')
+            )
         );
 
         $this->assertSame($expected, $best);
@@ -32,9 +34,11 @@ class NegotiatorTest extends TestCase
     {
         $best = (new Negotiator)->best(
             MediaType::fromString('image/png'),
-            (new Set(Pattern::class))
-                ->add($expected = Pattern::fromString('*/*; q=0.1'))
-                ->add(Pattern::fromString('text/html'))
+            Set::of(
+                Pattern::class,
+                $expected = Pattern::fromString('*/*; q=0.1'),
+                Pattern::fromString('text/html')
+            )
         );
 
         $this->assertSame($expected, $best);
@@ -44,10 +48,12 @@ class NegotiatorTest extends TestCase
     {
         $best = (new Negotiator)->best(
             MediaType::fromString('image/png'),
-            (new Set(Pattern::class))
-                ->add(Pattern::fromString('*/*; q=0.1'))
-                ->add($expected = Pattern::fromString('image/*'))
-                ->add(Pattern::fromString('text/html'))
+            Set::of(
+                Pattern::class,
+                Pattern::fromString('*/*; q=0.1'),
+                $expected = Pattern::fromString('image/*'),
+                Pattern::fromString('text/html')
+            )
         );
 
         $this->assertSame($expected, $best);
@@ -57,10 +63,12 @@ class NegotiatorTest extends TestCase
     {
         $best = (new Negotiator)->best(
             MediaType::fromString('image/png'),
-            (new Set(Pattern::class))
-                ->add(Pattern::fromString('*/*; q=0.1'))
-                ->add($expected = Pattern::fromString('image/png'))
-                ->add(Pattern::fromString('text/html'))
+            Set::of(
+                Pattern::class,
+                Pattern::fromString('*/*; q=0.1'),
+                $expected = Pattern::fromString('image/png'),
+                Pattern::fromString('text/html')
+            )
         );
 
         $this->assertSame($expected, $best);
@@ -72,8 +80,7 @@ class NegotiatorTest extends TestCase
 
         (new Negotiator)->best(
             MediaType::fromString('image/png'),
-            (new Set(Pattern::class))
-                ->add(Pattern::fromString('text/html'))
+            Set::of(Pattern::class, Pattern::fromString('text/html'))
         );
     }
 }

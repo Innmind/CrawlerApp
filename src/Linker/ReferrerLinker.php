@@ -5,7 +5,7 @@ namespace Crawler\Linker;
 
 use Crawler\{
     Linker as LinkerInterface,
-    Reference
+    Reference,
 };
 
 final class ReferrerLinker implements LinkerInterface

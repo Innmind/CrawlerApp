@@ -5,26 +5,26 @@ namespace Tests\Crawler\Translator\Property\Image;
 
 use Crawler\Translator\{
     Property\Image\WeightTranslator,
-    PropertyTranslator
+    PropertyTranslator,
 };
 use Innmind\Rest\Client\Definition\{
     Property,
     Type,
-    Access
+    Access,
 };
 use Innmind\Crawler\{
     HttpResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\{
     Readable,
-    Stream\Size
+    Stream\Size,
 };
 use Innmind\Immutable\{
     Set,
-    Map
+    Map,
 };
 use PHPUnit\Framework\TestCase;
 

@@ -7,15 +7,15 @@ use Crawler\{
     Publisher\CanonicalAwarePublisher,
     Publisher,
     Reference,
-    AMQP\Message\Canonical
+    AMQP\Message\Canonical,
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
 };
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
@@ -80,8 +80,8 @@ class CanonicalAwarePublisherTest extends TestCase
         $resource = new CrawledResource(
             $url = Url::fromString('http://example.com/'),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put(
+            Map::of('string', Attribute::class)
+                (
                     'canonical',
                     new Attribute\Attribute('canonical', $url)
                 ),
@@ -113,8 +113,8 @@ class CanonicalAwarePublisherTest extends TestCase
         $resource = new CrawledResource(
             Url::fromString('http://example.com/'),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put(
+            Map::of('string', Attribute::class)
+                (
                     'canonical',
                     new Attribute\Attribute(
                         'canonical',

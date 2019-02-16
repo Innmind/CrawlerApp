@@ -7,15 +7,15 @@ use Crawler\{
     Publisher\ImagesAwarePublisher,
     Publisher,
     Reference,
-    AMQP\Message\Image
+    AMQP\Message\Image,
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
 };
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
@@ -24,7 +24,7 @@ use Innmind\AMQP\Producer;
 use Innmind\Immutable\{
     Map,
     SetInterface,
-    Set
+    Set,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -84,13 +84,13 @@ class ImagesAwarePublisherTest extends TestCase
         $resource = new CrawledResource(
             Url::fromString('http://example.com/'),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put(
+            Map::of('string', Attribute::class)
+                (
                     'images',
                     new Attribute\Attribute(
                         'images',
-                        (new Map(UrlInterface::class, 'string'))
-                            ->put($published = Url::fromString('http://example.com/foo'), 'some desc')
+                        Map::of(UrlInterface::class, 'string')
+                            ($published = Url::fromString('http://example.com/foo'), 'some desc')
                     )
                 ),
             $this->createMock(Readable::class)

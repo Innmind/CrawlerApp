@@ -6,11 +6,11 @@ namespace Crawler\MediaType;
 use Crawler\Exception\DomainException;
 use Innmind\Filesystem\{
     MediaType,
-    Exception\InvalidMediaTypeString
+    Exception\InvalidMediaTypeString,
 };
 use Innmind\Immutable\{
     Str,
-    Map
+    Map,
 };
 
 final class Pattern
@@ -50,7 +50,7 @@ final class Pattern
 
     public function __toString(): string
     {
-        return sprintf(
+        return \sprintf(
             '%s/%s%s',
             $this->topLevel,
             $this->subType,

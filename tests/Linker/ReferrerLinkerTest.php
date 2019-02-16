@@ -6,7 +6,7 @@ namespace Tests\Crawler\Linker;
 use Crawler\{
     Linker\ReferrerLinker,
     Linker,
-    Reference
+    Reference,
 };
 use Innmind\Rest\Client\Identity;
 use Innmind\Url\UrlInterface;

@@ -6,7 +6,7 @@ namespace Tests\Crawler\Homeostasis\Actuator;
 use Crawler\Homeostasis\Actuator\ProvisionConsumers;
 use Innmind\Homeostasis\{
     Actuator,
-    State
+    State,
 };
 use Innmind\Server\Status\{
     Server as Status,
@@ -16,17 +16,17 @@ use Innmind\Server\Status\{
     Server\Process\User,
     Server\Process\Memory,
     Server\Process\Command,
-    Server\Cpu\Percentage
+    Server\Cpu\Percentage,
 };
 use Innmind\Server\Control\{
     Server as Control,
     Server\Processes as ControlProcesses,
-    Server\Signal
+    Server\Signal,
 };
 use Innmind\TimeContinuum\PointInTimeInterface;
 use Innmind\Immutable\{
     Map,
-    Stream
+    Stream,
 };
 use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
@@ -89,8 +89,8 @@ class ProvisionConsumersTest extends TestCase
             ->expects($this->once())
             ->method('all')
             ->willReturn(
-                (new Map('int', Process::class))
-                    ->put(
+                Map::of('int', Process::class)
+                    (
                         2,
                         new Process(
                             new Pid(2),
@@ -101,7 +101,7 @@ class ProvisionConsumersTest extends TestCase
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
-                    ->put(
+                    (
                         3,
                         new Process(
                             new Pid(3),
@@ -112,7 +112,7 @@ class ProvisionConsumersTest extends TestCase
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
-                    ->put(
+                    (
                         4,
                         new Process(
                             new Pid(4),
@@ -123,7 +123,7 @@ class ProvisionConsumersTest extends TestCase
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
-                    ->put(
+                    (
                         5,
                         new Process(
                             new Pid(5),
@@ -134,7 +134,7 @@ class ProvisionConsumersTest extends TestCase
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
-                    ->put(
+                    (
                         6,
                         new Process(
                             new Pid(6),
@@ -267,8 +267,8 @@ class ProvisionConsumersTest extends TestCase
             ->expects($this->once())
             ->method('all')
             ->willReturn(
-                (new Map('int', Process::class))
-                    ->put(
+                Map::of('int', Process::class)
+                    (
                         2,
                         new Process(
                             new Pid(2),
@@ -279,7 +279,7 @@ class ProvisionConsumersTest extends TestCase
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
-                    ->put(
+                    (
                         3,
                         new Process(
                             new Pid(3),
@@ -290,7 +290,7 @@ class ProvisionConsumersTest extends TestCase
                             new Command('top')
                         )
                     )
-                    ->put(
+                    (
                         4,
                         new Process(
                             new Pid(4),
@@ -368,8 +368,8 @@ class ProvisionConsumersTest extends TestCase
             ->expects($this->once())
             ->method('all')
             ->willReturn(
-                (new Map('int', Process::class))
-                    ->put(
+                Map::of('int', Process::class)
+                    (
                         2,
                         new Process(
                             new Pid(2),
@@ -380,7 +380,7 @@ class ProvisionConsumersTest extends TestCase
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
-                    ->put(
+                    (
                         3,
                         new Process(
                             new Pid(3),
@@ -391,7 +391,7 @@ class ProvisionConsumersTest extends TestCase
                             new Command('top')
                         )
                     )
-                    ->put(
+                    (
                         4,
                         new Process(
                             new Pid(4),

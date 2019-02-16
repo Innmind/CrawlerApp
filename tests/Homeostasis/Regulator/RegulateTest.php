@@ -8,7 +8,7 @@ use Innmind\Homeostasis\{
     Regulator,
     Strategy,
     Actuator,
-    Exception\HomeostasisAlreadyInProcess
+    Exception\HomeostasisAlreadyInProcess,
 };
 use PHPUnit\Framework\TestCase;
 
