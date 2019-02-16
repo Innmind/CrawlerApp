@@ -9,17 +9,22 @@ use Innmind\CLI\{
     Main,
     Environment,
 };
-use Innmind\Url\Url;
+use Innmind\Url\{
+    Url,
+    Path,
+};
 use Innmind\Socket\Internet\Transport;
 use Innmind\Filesystem\Adapter\FilesystemAdapter;
 use Innmind\OperatingSystem\OperatingSystem;
-use Symfony\Component\Dotenv\Dotenv;
+use function Innmind\CLI\variables;
 
 new class extends Main {
     protected function main(Environment $env, OperatingSystem $os): void
     {
-        $dotenv = (new Dotenv)->parse(file_get_contents(__DIR__.'/../config/.env'));
-        $server = $dotenv['AMQP_SERVER'] ?? $env->variables()['AMQP_SERVER'] ?? 'amqp://guest:guest@localhost:5672/';
+        $variables = variables(
+            $env->variables(),
+            $os->filesystem()->mount(new Path(__DIR__.'/../config'))
+        );
 
         $run = bootstrap(
             $os->clock(),
@@ -35,8 +40,8 @@ new class extends Main {
             new FilesystemAdapter($env->workingDirectory().'/var/cache/robots_txts'),
             $env->workingDirectory(),
             Transport::tcp(),
-            Url::fromString($server),
-            $dotenv['API_KEY'] ?? $env->variables()['API_KEY'],
+            Url::fromString($variables['amqpServer'] ?? 'amqp://guest:guest@localhost:5672/'),
+            $variables['apiKey'],
             'Innmind Robot'
         );
 
