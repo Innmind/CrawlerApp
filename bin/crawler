@@ -26,18 +26,19 @@ new class extends Main {
             $os->filesystem()->mount(new Path(__DIR__.'/../config'))
         );
 
+        $dir = __DIR__.'/../';
         $run = bootstrap(
             $os->clock(),
             $os->process(),
             $os->remote(),
-            Url::fromString("file://{$env->workingDirectory()}/var/logs/app.log"),
-            Url::fromString("file://{$env->workingDirectory()}/var/logs/amqp/amqp.log"),
-            new FilesystemAdapter($env->workingDirectory().'/var/cache/rest'),
-            new FilesystemAdapter($env->workingDirectory().'/var/logs'),
-            new FilesystemAdapter($env->workingDirectory().'/var/data/states'),
-            new FilesystemAdapter($env->workingDirectory().'/var/data/actions'),
-            new FilesystemAdapter($env->workingDirectory().'/var/cache/traces'),
-            new FilesystemAdapter($env->workingDirectory().'/var/cache/robots_txts'),
+            Url::fromString("file://$dir/var/logs/app.log"),
+            Url::fromString("file://$dir/var/logs/amqp/amqp.log"),
+            new FilesystemAdapter($dir.'/var/cache/rest'),
+            new FilesystemAdapter($dir.'/var/logs'),
+            new FilesystemAdapter($dir.'/var/data/states'),
+            new FilesystemAdapter($dir.'/var/data/actions'),
+            new FilesystemAdapter($dir.'/var/cache/traces'),
+            new FilesystemAdapter($dir.'/var/cache/robots_txts'),
             $env->workingDirectory(),
             Transport::tcp(),
             Url::fromString($variables['amqpServer'] ?? 'amqp://guest:guest@localhost:5672/'),
