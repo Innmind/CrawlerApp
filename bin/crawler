@@ -12,10 +12,11 @@ use Innmind\CLI\{
 use Innmind\Url\Url;
 use Innmind\Socket\Internet\Transport;
 use Innmind\Filesystem\Adapter\FilesystemAdapter;
+use Innmind\OperatingSystem\OperatingSystem;
 use Symfony\Component\Dotenv\Dotenv;
 
 new class extends Main {
-    protected function main(Environment $env): void
+    protected function main(Environment $env, OperatingSystem $os): void
     {
         $dotenv = (new Dotenv)->parse(file_get_contents(__DIR__.'/../config/.env'));
         $server = $dotenv['AMQP_SERVER'] ?? $env->variables()['AMQP_SERVER'] ?? 'amqp://guest:guest@localhost:5672/';
