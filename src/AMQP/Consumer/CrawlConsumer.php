@@ -20,36 +20,32 @@ use Innmind\Http\{
     ProtocolVersion\ProtocolVersion,
     Headers\Headers,
     Header,
-    Header\Value\Value
+    Header\Value\Value,
 };
 use Innmind\HttpTransport\Exception\{
     ConnectionFailed,
     ClientError,
-    ServerError
+    ServerError,
 };
 use Innmind\AMQP\{
     Model\Basic\Message,
-    Exception\Requeue
-};
-use Innmind\Immutable\{
-    Map,
-    Set
+    Exception\Requeue,
 };
 
 final class CrawlConsumer
 {
-    private $crawler;
+    private $crawl;
     private $publish;
     private $link;
     private $userAgent;
 
     public function __construct(
-        Crawler $crawler,
+        Crawler $crawl,
         Publisher $publisher,
         Linker $linker,
         string $userAgent
     ) {
-        $this->crawler = $crawler;
+        $this->crawl = $crawl;
         $this->publish = $publisher;
         $this->link = $linker;
         $this->userAgent = $userAgent;
@@ -60,20 +56,16 @@ final class CrawlConsumer
         $message = new Resource($message);
 
         try {
-            $resource = $this->crawler->execute(
+            $resource = ($this->crawl)(
                 new Request(
                     $message->resource(),
                     new Method(Method::GET),
                     new ProtocolVersion(2, 0),
-                    new Headers(
-                        (new Map('string', Header::class))
-                            ->put(
-                                'User-Agent',
-                                new Header\Header(
-                                    'User-Agent',
-                                    new Value($this->userAgent)
-                                )
-                            )
+                    Headers::of(
+                        new Header\Header(
+                            'User-Agent',
+                            new Value($this->userAgent)
+                        )
                     )
                 )
             );

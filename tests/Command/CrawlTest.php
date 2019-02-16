@@ -68,7 +68,7 @@ USAGE;
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function($request): bool {
                 return (string) $request->url() === 'http://example.com/' &&
                     (string) $request->method() === 'GET' &&
@@ -88,8 +88,8 @@ USAGE;
         $this->assertNull($command(
             $this->createMock(Environment::class),
             new Arguments(
-                (new Map('string', 'mixed'))
-                    ->put('url', 'http://example.com')
+                Map::of('string', 'mixed')
+                    ('url', 'http://example.com')
             ),
             new Options
         ));
@@ -104,7 +104,7 @@ USAGE;
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function($request): bool {
                 return (string) $request->url() === 'http://example.com/' &&
                     (string) $request->method() === 'GET' &&
@@ -134,9 +134,9 @@ USAGE;
         $this->assertNull($command(
             $this->createMock(Environment::class),
             new Arguments(
-                (new Map('string', 'mixed'))
-                    ->put('url', 'http://example.com')
-                    ->put('publish', 'http://example2.com')
+                Map::of('string', 'mixed')
+                    ('url', 'http://example.com')
+                    ('publish', 'http://example2.com')
             ),
             new Options
         ));

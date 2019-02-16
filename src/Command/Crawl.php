@@ -26,7 +26,6 @@ use Innmind\Crawler\HttpResource\{
 };
 use Innmind\Stream\Writable;
 use Innmind\Immutable\{
-    Map,
     Set,
     MapInterface,
     SetInterface,
@@ -35,36 +34,32 @@ use Innmind\Immutable\{
 
 final class Crawl implements Command
 {
-    private $crawler;
+    private $crawl;
     private $userAgent;
     private $publish;
 
     public function __construct(
-        Crawler $crawler,
+        Crawler $crawl,
         string $userAgent,
         Publisher $publish
     ) {
-        $this->crawler = $crawler;
+        $this->crawl = $crawl;
         $this->userAgent = $userAgent;
         $this->publish = $publish;
     }
 
     public function __invoke(Environment $env, Arguments $arguments, Options $options): void
     {
-        $resource = $this->crawler->execute(
+        $resource = ($this->crawl)(
             new Request(
                 Url::fromString($arguments->get('url')),
                 new Method(Method::GET),
                 new ProtocolVersion(2, 0),
-                new Headers(
-                    (new Map('string', Header::class))
-                        ->put(
-                            'User-Agent',
-                            new Header\Header(
-                                'User-Agent',
-                                new Value($this->userAgent)
-                            )
-                        )
+                Headers::of(
+                    new Header\Header(
+                        'User-Agent',
+                        new Value($this->userAgent)
+                    )
                 )
             )
         );

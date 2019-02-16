@@ -9,7 +9,7 @@ use Crawler\{
     Translator\HttpResourceTranslator,
     Translator\PropertyTranslator,
     Reference,
-    Exception\ResourceCannotBePublished
+    Exception\ResourceCannotBePublished,
 };
 use Innmind\Rest\Client\{
     Client,
@@ -18,20 +18,24 @@ use Innmind\Rest\Client\{
     Definition\HttpResource as Definition,
     Definition\Property as PropertyDefinition,
     Definition\Identity,
+    Definition\AllowedLink,
     HttpResource,
-    Identity as IdentityInterface
+    Identity as IdentityInterface,
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
 };
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
-use Innmind\Immutable\Map;
+use Innmind\Immutable\{
+    Map,
+    Set,
+};
 use PHPUnit\Framework\TestCase;
 
 class PublisherTest extends TestCase
@@ -77,8 +81,8 @@ class PublisherTest extends TestCase
             ->expects($this->once())
             ->method('definitions')
             ->willReturn(
-                (new Map('string', Definition::class))
-                    ->put(
+                Map::of('string', Definition::class)
+                    (
                         'foo',
                         new Definition(
                             'foo',
@@ -86,7 +90,7 @@ class PublisherTest extends TestCase
                             new Identity('uuid'),
                             new Map('string', PropertyDefinition::class),
                             new Map('scalar', 'variable'),
-                            new Map('string', 'string'),
+                            new Set(AllowedLink::class),
                             false
                         )
                     )
@@ -126,17 +130,17 @@ class PublisherTest extends TestCase
             ->expects($this->once())
             ->method('definitions')
             ->willReturn(
-                (new Map('string', Definition::class))
-                    ->put(
+                Map::of('string', Definition::class)
+                    (
                         'foo',
                         new Definition(
                             'foo',
                             $this->createMock(UrlInterface::class),
                             new Identity('uuid'),
                             new Map('string', PropertyDefinition::class),
-                            (new Map('scalar', 'variable'))
-                                ->put('allowed_media_types', ['image/*']),
-                            new Map('string', 'string'),
+                            Map::of('scalar', 'variable')
+                                ('allowed_media_types', ['image/*']),
+                            new Set(AllowedLink::class),
                             false
                         )
                     )
@@ -181,30 +185,30 @@ class PublisherTest extends TestCase
             ->expects($this->once())
             ->method('definitions')
             ->willReturn(
-                (new Map('string', Definition::class))
-                    ->put(
+                Map::of('string', Definition::class)
+                    (
                         'foo',
                         $definition = new Definition(
                             'foo',
                             $this->createMock(UrlInterface::class),
                             new Identity('uuid'),
                             new Map('string', PropertyDefinition::class),
-                            (new Map('scalar', 'variable'))
-                                ->put('allowed_media_types', ['image/*']),
-                            new Map('string', 'string'),
+                            Map::of('scalar', 'variable')
+                                ('allowed_media_types', ['image/*']),
+                            new Set(AllowedLink::class),
                             false
                         )
                     )
-                    ->put(
+                    (
                         'bar',
                         new Definition(
                             'bar',
                             $this->createMock(UrlInterface::class),
                             new Identity('uuid'),
                             new Map('string', PropertyDefinition::class),
-                            (new Map('scalar', 'variable'))
-                                ->put('allowed_media_types', ['text/html']),
-                            new Map('string', 'string'),
+                            Map::of('scalar', 'variable')
+                                ('allowed_media_types', ['text/html']),
+                            new Set(AllowedLink::class),
                             false
                         )
                     )

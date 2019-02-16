@@ -35,7 +35,7 @@ class TracerAwareCrawlerTest extends TestCase
 
     public function testThrowWhenResourceAlreadyCrawled()
     {
-        $crawler = new TracerAwareCrawler(
+        $crawl = new TracerAwareCrawler(
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Crawler::class)
         );
@@ -47,7 +47,7 @@ class TracerAwareCrawlerTest extends TestCase
             ->willReturn(true);
         $inner
             ->expects($this->never())
-            ->method('execute');
+            ->method('__invoke');
         $request = $this->createMock(Request::class);
         $request
             ->expects($this->exactly(2))
@@ -55,7 +55,7 @@ class TracerAwareCrawlerTest extends TestCase
             ->willReturn($url);
 
         try {
-            $crawler->execute($request);
+            $crawl($request);
             $this->fail('it should throw');
         } catch (UrlCannotBeCrawled $e) {
             $this->assertSame($url, $e->url());
@@ -64,7 +64,7 @@ class TracerAwareCrawlerTest extends TestCase
 
     public function testCrawl()
     {
-        $crawler = new TracerAwareCrawler(
+        $crawl = new TracerAwareCrawler(
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Crawler::class)
         );
@@ -81,7 +81,7 @@ class TracerAwareCrawlerTest extends TestCase
             ->willReturn($url);
         $inner
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($request)
             ->willReturn(
                 $expected = new HttpResource(
@@ -92,6 +92,6 @@ class TracerAwareCrawlerTest extends TestCase
                 )
             );
 
-        $this->assertSame($expected, $crawler->execute($request));
+        $this->assertSame($expected, $crawl($request));
     }
 }

@@ -22,6 +22,9 @@ new class extends Main {
         $server = $dotenv['AMQP_SERVER'] ?? $env->variables()['AMQP_SERVER'] ?? 'amqp://guest:guest@localhost:5672/';
 
         $run = bootstrap(
+            $os->clock(),
+            $os->process(),
+            $os->remote(),
             Url::fromString("file://{$env->workingDirectory()}/var/logs/app.log"),
             Url::fromString("file://{$env->workingDirectory()}/var/logs/amqp/amqp.log"),
             new FilesystemAdapter($env->workingDirectory().'/var/cache/rest'),

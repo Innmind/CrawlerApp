@@ -14,16 +14,16 @@ use Innmind\Http\{
 
 final class Authentified implements Transport
 {
-    private $transport;
+    private $fulfill;
     private $header;
 
-    public function __construct(Transport $transport, string $apiKey)
+    public function __construct(Transport $fulfill, string $apiKey)
     {
-        $this->transport = $transport;
+        $this->fulfill = $fulfill;
         $this->header = new Authorization(new AuthorizationValue('Bearer', $apiKey));
     }
 
-    public function fulfill(Request $request): Response
+    public function __invoke(Request $request): Response
     {
         $headers = iterator_to_array($request->headers());
         $headers = array_values($headers);
@@ -37,6 +37,6 @@ final class Authentified implements Transport
             $request->body()
         );
 
-        return $this->transport->fulfill($request);
+        return ($this->fulfill)($request);
     }
 }

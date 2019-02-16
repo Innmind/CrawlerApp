@@ -34,7 +34,7 @@ class DelayerAwareCrawlerTest extends TestCase
 
     public function testExecute()
     {
-        $crawler = new DelayerAwareCrawler(
+        $crawl = new DelayerAwareCrawler(
             $delayer = $this->createMock(Delayer::class),
             $inner = $this->createMock(Crawler::class)
         );
@@ -50,7 +50,7 @@ class DelayerAwareCrawlerTest extends TestCase
             ->with($url);
         $inner
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($request)
             ->willReturn(
                 $expected = new HttpResource(
@@ -61,6 +61,6 @@ class DelayerAwareCrawlerTest extends TestCase
                 )
             );
 
-        $this->assertSame($expected, $crawler->execute($request));
+        $this->assertSame($expected, $crawl($request));
     }
 }
