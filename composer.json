@@ -21,7 +21,6 @@
         "innmind/server-control": "^2.0",
         "innmind/server-status": "^1.0",
         "innmind/amqp": "^1.1",
-        "innmind/compose": "^1.1",
         "innmind/cli": "^1.0",
         "monolog/monolog": "^1.23",
         "symfony/dotenv": "^4.0",
