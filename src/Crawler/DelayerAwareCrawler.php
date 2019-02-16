@@ -13,20 +13,20 @@ use Innmind\Http\Message\Request;
 final class DelayerAwareCrawler implements Crawler
 {
     private $delay;
-    private $crawler;
+    private $crawl;
 
     public function __construct(
         Delayer $delayer,
-        Crawler $crawler
+        Crawler $crawl
     ) {
         $this->delay = $delayer;
-        $this->crawler = $crawler;
+        $this->crawl = $crawl;
     }
 
-    public function execute(Request $request): HttpResource
+    public function __invoke(Request $request): HttpResource
     {
         ($this->delay)($request->url());
 
-        return $this->crawler->execute($request);
+        return ($this->crawl)($request);
     }
 }

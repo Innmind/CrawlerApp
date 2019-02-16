@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace Tests\Crawler\MediaType;
 
-use Crawler\MediaType\{
-    Negotiator,
-    Pattern
+use Crawler\{
+    MediaType\Negotiator,
+    MediaType\Pattern,
+    Exception\MediaTypeDoesntMatchAny,
 };
 use Innmind\Filesystem\MediaType\MediaType;
 use Innmind\Immutable\Set;
@@ -65,11 +66,10 @@ class NegotiatorTest extends TestCase
         $this->assertSame($expected, $best);
     }
 
-    /**
-     * @expectedException Crawler\Exception\MediaTypeDoesntMatchAny
-     */
     public function testThrowWhenNoMediaTypeFound()
     {
+        $this->expectException(MediaTypeDoesntMatchAny::class);
+
         (new Negotiator)->best(
             MediaType::fromString('image/png'),
             (new Set(Pattern::class))

@@ -33,7 +33,7 @@ class PathTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new PathTranslator;
         $this->property = new Property(

@@ -6,7 +6,7 @@ namespace Tests\Crawler\AMQP\Message;
 use Crawler\{
     AMQP\Message\Resource,
     Reference,
-    Exception\DomainException
+    Exception\DomainException,
 };
 use Innmind\AMQP\{
     Model\Basic\Message,
@@ -65,19 +65,17 @@ class ResourceTest extends TestCase
         $this->assertSame('referrer', $message->relationship());
     }
 
-    /**
-     * @expectedException Crawler\Exception\DomainException
-     */
     public function testThrowWhenNotContentType()
     {
+        $this->expectException(DomainException::class);
+
         new Resource(new Locked(new Generic(new Str(''))));
     }
 
-    /**
-     * @expectedException Crawler\Exception\DomainException
-     */
     public function testThrowWhenInvalidContentType()
     {
+        $this->expectException(DomainException::class);
+
         new Resource(new Locked(
             (new Generic(new Str('')))
                 ->withContentType(new ContentType('application', 'octet-stream'))

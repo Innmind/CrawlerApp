@@ -31,7 +31,7 @@ class AuthentifiedTest extends TestCase
 
     public function testFulfill()
     {
-        $transport = new Authentified(
+        $fulfill = new Authentified(
             $inner = $this->createMock(Transport::class),
             'apikey'
         );
@@ -45,7 +45,7 @@ class AuthentifiedTest extends TestCase
         );
         $inner
             ->expects($this->once())
-            ->method('fulfill')
+            ->method('__invoke')
             ->with($this->callback(static function($wrapped) use ($request): bool {
                 return $wrapped !== $request &&
                     $wrapped->url() === $request->url() &&
@@ -57,6 +57,6 @@ class AuthentifiedTest extends TestCase
             }))
             ->willReturn($expected = $this->createMock(Response::class));
 
-        $this->assertSame($expected, $transport->fulfill($request));
+        $this->assertSame($expected, $fulfill($request));
     }
 }

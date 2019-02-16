@@ -5,11 +5,11 @@ namespace Tests\Crawler\Translator;
 
 use Crawler\Translator\{
     HttpResourceTranslator,
-    PropertyTranslator
+    PropertyTranslator,
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Rest\Client\{
     Definition\HttpResource as Definition,
@@ -17,14 +17,15 @@ use Innmind\Rest\Client\{
     Definition\Property,
     Definition\Type,
     Definition\Access,
-    HttpResource
+    Definition\AllowedLink,
+    HttpResource,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Map,
-    Set
+    Set,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -35,17 +36,17 @@ class HttpResourceTranslatorTest extends TestCase
         $crawledResource = new CrawledResource(
             $this->createMock(UrlInterface::class),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put('wanted', new Attribute\Attribute('wanted', true))
-                ->put('not_wanted', new Attribute\Attribute('not_wanted', false)),
+            Map::of('string', Attribute::class)
+                ('wanted', new Attribute\Attribute('wanted', true))
+                ('not_wanted', new Attribute\Attribute('not_wanted', false)),
             $this->createMock(Readable::class)
         );
         $definition = new Definition(
             'foo',
             $this->createMock(UrlInterface::class),
             new Identity('uuid'),
-            (new Map('string', Property::class))
-                ->put(
+            Map::of('string', Property::class)
+                (
                     'wanted',
                     $wanted = new Property(
                         'wanted',
@@ -55,7 +56,7 @@ class HttpResourceTranslatorTest extends TestCase
                         false
                     )
                 )
-                ->put(
+                (
                     'not_wanted',
                     $notWanted = new Property(
                         'not_wanted',
@@ -66,7 +67,7 @@ class HttpResourceTranslatorTest extends TestCase
                     )
                 ),
             new Map('scalar', 'variable'),
-            new Map('string', 'string'),
+            new Set(AllowedLink::class),
             false
         );
         $propertyTranslator = $this->createMock(PropertyTranslator::class);

@@ -7,12 +7,11 @@ use Crawler\Crawler\XmlReaderAwareCrawler;
 use Innmind\Crawler\{
     Crawler,
     HttpResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Xml\{
-    ReaderInterface,
-    NodeInterface,
-    Reader\CacheReader
+    Node,
+    Reader\Cache\Storage,
 };
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
@@ -28,7 +27,7 @@ class XmlReaderAwareCrawlerTest extends TestCase
         $this->assertInstanceOf(
             Crawler::class,
             new XmlReaderAwareCrawler(
-                new CacheReader($this->createMock(ReaderInterface::class)),
+                new Storage,
                 $this->createMock(Crawler::class)
             )
         );
@@ -36,24 +35,16 @@ class XmlReaderAwareCrawlerTest extends TestCase
 
     public function testCrawl()
     {
-        $crawler = new XmlReaderAwareCrawler(
-            $cache = new CacheReader(
-                $reader = $this->createMock(ReaderInterface::class)
-            ),
+        $crawl = new XmlReaderAwareCrawler(
+            $cache = new Storage,
             $inner = $this->createMock(Crawler::class)
         );
         $stream = $this->createMock(Readable::class);
-        $reader
-            ->expects($this->exactly(2))
-            ->method('read')
-            ->with($stream)
-            ->willReturn($this->createMock(NodeInterface::class));
-        $cache->read($stream);
-        $cache->read($stream);
+        $cache->add($stream, $this->createMock(Node::class));
         $request = $this->createMock(Request::class);
         $inner
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($request)
             ->willReturn(
                 $expected = new HttpResource(
@@ -64,9 +55,9 @@ class XmlReaderAwareCrawlerTest extends TestCase
                 )
             );
 
-        $resource = $crawler->execute($request);
+        $resource = $crawl($request);
 
         $this->assertSame($expected, $resource);
-        $cache->read($stream); //if the stream is indeed removed it will call the inner reader
+        $this->assertFalse($cache->contains($stream));
     }
 }
