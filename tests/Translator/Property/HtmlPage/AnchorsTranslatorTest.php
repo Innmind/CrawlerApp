@@ -30,7 +30,7 @@ class AnchorsTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new AnchorsTranslator;
         $this->property = new Property(

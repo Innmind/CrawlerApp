@@ -5,7 +5,8 @@ namespace Tests\Crawler\CrawlTracer;
 
 use Crawler\{
     CrawlTracer\CrawlTracer,
-    CrawlTracer as CrawlTracerInterface
+    CrawlTracer as CrawlTracerInterface,
+    Exception\HostNeverHit,
 };
 use Innmind\Filesystem\{
     Adapter,
@@ -253,9 +254,6 @@ class CrawlTracerTest extends TestCase
         $this->assertSame($expected, $tracer->lastHit(new Host('example.com')));
     }
 
-    /**
-     * @expectedException Crawler\Exception\HostNeverHit
-     */
     public function testThrowWhenHostNeverHit()
     {
         $tracer = new CrawlTracer(
@@ -269,6 +267,8 @@ class CrawlTracerTest extends TestCase
             ->willReturn(
                 new Directory('hits')
             );
+
+        $this->expectException(HostNeverHit::class);
 
         $tracer->lastHit(new Host('example.com'));
     }

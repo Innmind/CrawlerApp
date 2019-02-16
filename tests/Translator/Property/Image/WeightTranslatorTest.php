@@ -33,7 +33,7 @@ class WeightTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new WeightTranslator;
         $this->property = new Property(

@@ -30,7 +30,7 @@ class LanguagesTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new LanguagesTranslator;
         $this->property = new Property(

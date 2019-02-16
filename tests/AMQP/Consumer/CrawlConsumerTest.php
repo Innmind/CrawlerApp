@@ -32,10 +32,11 @@ use Innmind\Http\Message\{
     Response,
     StatusCode\StatusCode,
 };
-use Innmind\AMQP\Model\Basic\Message\{
-    Generic,
-    Locked,
-    ContentType,
+use Innmind\AMQP\{
+    Model\Basic\Message\Generic,
+    Model\Basic\Message\Locked,
+    Model\Basic\Message\ContentType,
+    Exception\Requeue,
 };
 use Innmind\Immutable\{
     Map,
@@ -183,9 +184,6 @@ class CrawlConsumerTest extends TestCase
         $this->assertNull($consume($message));
     }
 
-    /**
-     * @expectedException Innmind\AMQP\Exception\Requeue
-     */
     public function testInvokeWhenServerErrorOnCrawl()
     {
         $consume = new CrawlConsumer(
@@ -218,6 +216,8 @@ class CrawlConsumerTest extends TestCase
         $linker
             ->expects($this->never())
             ->method('__invoke');
+
+        $this->expectException(Requeue::class);
 
         $consume($message);
     }
@@ -413,9 +413,6 @@ class CrawlConsumerTest extends TestCase
         $this->assertNull($consume($message));
     }
 
-    /**
-     * @expectedException Innmind\HttpTransport\Exception\ClientError
-     */
     public function testThrowOnClientErrorOnPublish()
     {
         $consume = new CrawlConsumer(
@@ -472,6 +469,8 @@ class CrawlConsumerTest extends TestCase
         $linker
             ->expects($this->never())
             ->method('__invoke');
+
+        $this->expectException(ClientError::class);
 
         $consume($message);
     }
@@ -597,9 +596,6 @@ class CrawlConsumerTest extends TestCase
         $this->assertNull($consume($message));
     }
 
-    /**
-     * @expectedException Innmind\AMQP\Exception\Requeue
-     */
     public function testRequeueWhenServerFailDuringPublish()
     {
         $consume = new CrawlConsumer(
@@ -667,6 +663,8 @@ class CrawlConsumerTest extends TestCase
                     $this->createMock(Response::class)
                 )
             ));
+
+        $this->expectException(Requeue::class);
 
         $consume($message);
     }

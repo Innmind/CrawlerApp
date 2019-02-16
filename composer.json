@@ -31,8 +31,8 @@
         "innmind/installation-monitor": "^1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "~6.0",
-        "giorgiosironi/eris": "^0.9.0",
+        "phpunit/phpunit": "~8.0",
+        "giorgiosironi/eris": "^0.11.0",
         "infection/infection": "^0.7.1",
         "roave/security-advisories": "dev-master"
     },

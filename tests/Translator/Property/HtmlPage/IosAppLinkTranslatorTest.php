@@ -30,7 +30,7 @@ class IosAppLinkTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new IosAppLinkTranslator;
         $this->property = new Property(

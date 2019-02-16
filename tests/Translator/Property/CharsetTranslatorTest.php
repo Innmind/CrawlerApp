@@ -30,7 +30,7 @@ class CharsetTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new CharsetTranslator;
         $this->property = new Property(
