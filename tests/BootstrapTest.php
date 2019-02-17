@@ -4,10 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Crawler;
 
 use function Crawler\bootstrap;
-use Innmind\OperatingSystem\{
-    CurrentProcess,
-    Remote,
-};
+use Innmind\OperatingSystem\OperatingSystem;
 use Innmind\Url\{
     Url,
     Path,
@@ -23,9 +20,7 @@ class BootstrapTest extends TestCase
     public function testBootstrap()
     {
         $commands = bootstrap(
-            $this->createMock(TimeContinuumInterface::class),
-            $this->createMock(CurrentProcess::class),
-            $this->createMock(Remote::class),
+            $this->createMock(OperatingSystem::class),
             Url::fromString('file:///tmp/app.log'),
             Url::fromString('file:///tmp/amqp.log'),
             $this->createMock(Adapter::class),

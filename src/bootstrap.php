@@ -12,17 +12,13 @@ use function Innmind\Homeostasis\bootstrap as homeostasis;
 use function Innmind\AMQP\bootstrap as amqp;
 use function Innmind\Logger\bootstrap as logger;
 use function Innmind\InstallationMonitor\bootstrap as monitor;
-use Innmind\OperatingSystem\{
-    CurrentProcess,
-    Remote,
-};
+use Innmind\OperatingSystem\OperatingSystem;
 use Innmind\Url\{
     UrlInterface,
     PathInterface,
 };
 use Innmind\CLI\Commands;
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
     ElapsedPeriod,
     Period\Earth\Second,
 };
@@ -52,9 +48,7 @@ use Innmind\Immutable\{
 use Psr\Log\LogLevel;
 
 function bootstrap(
-    TimeContinuumInterface $clock,
-    CurrentProcess $process,
-    Remote $remote,
+    OperatingSystem $os,
     UrlInterface $appLog,
     UrlInterface $amqpLog,
     Adapter $restCache,
@@ -82,7 +76,7 @@ function bootstrap(
     $reader = $xml['cache'](html());
     $cacheStorage = $xml['cache_storage'];
     $urlResolver = new UrlResolver;
-    $serverStatus = ServerStatusFactory::build($clock);
+    $serverStatus = ServerStatusFactory::build($os->clock());
 
     $rest = rest(
         new Transport\Authentified(
@@ -95,10 +89,10 @@ function bootstrap(
 
     $factors = Set::of(
         Factor::class,
-        Homeostasis\Factors::cpu($clock, $serverStatus),
+        Homeostasis\Factors::cpu($os->clock(), $serverStatus),
         Homeostasis\Factors::log(
-            $clock,
-            new Synchronous(new Symfony($clock)),
+            $os->clock(),
+            new Synchronous(new Symfony($os->clock())),
             $logs
         )
     );
@@ -109,7 +103,7 @@ function bootstrap(
         (string) $workingDirectory
     );
 
-    $homeostasis = homeostasis($factors, $actuator, $homeostasisStates, $clock);
+    $homeostasis = homeostasis($factors, $actuator, $homeostasisStates, $os->clock());
     $regulator = $homeostasis['thread_safe'](
         $homeostasis['modulate_state_history']($homeostasisActions)(
             $homeostasis['regulator']
@@ -121,9 +115,9 @@ function bootstrap(
         $amqpTransport,
         $amqpServer,
         new ElapsedPeriod(60000), // one minute
-        $clock,
-        $process,
-        $remote
+        $os->clock(),
+        $os->process(),
+        $os->remote()
     );
     $exchanges = Set::of(
         Exchange\Declaration::class,
@@ -149,7 +143,7 @@ function bootstrap(
     );
     $producer = $amqp['producers']($exchanges)($amqpClient)->get('urls');
 
-    $tracer = new CrawlTracer\CrawlTracer($traces, $clock);
+    $tracer = new CrawlTracer\CrawlTracer($traces, $os->clock());
     $walker = new Walker;
     $robots = new RobotsTxt\KeepInMemoryParser(
         new RobotsTxt\CacheParser(
@@ -168,17 +162,17 @@ function bootstrap(
             $robots,
             $userAgent,
             $halt,
-            $clock
+            $os->clock()
         ),
         new Delayer\TracerAwareDelayer(
             $tracer,
             new Delayer\FixDelayer(
                 $halt,
-                $clock
+                $os->clock()
             ),
-            $clock
+            $os->clock()
         ),
-        $clock
+        $os->clock()
     );
 
     $crawler = new Crawler\XmlReaderAwareCrawler(
@@ -191,7 +185,7 @@ function bootstrap(
                     $delayer,
                     crawler(
                         new Transport\MemorySafe($transport),
-                        $clock,
+                        $os->clock(),
                         $reader,
                         $urlResolver
                     )
@@ -252,7 +246,7 @@ function bootstrap(
             $userAgent
         ));
 
-    $clients = monitor()['client'];
+    $clients = monitor($os)['client'];
 
     return new Commands(
         new Command\Consume(
@@ -266,7 +260,7 @@ function bootstrap(
         ),
         new Command\Install(
             $clients['silence'](
-                $clients['socket']()
+                $clients['ipc']()
             )
         )
     );

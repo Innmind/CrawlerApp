@@ -27,9 +27,7 @@ new class extends Main {
 
         $dir = __DIR__.'/../';
         $run = bootstrap(
-            $os->clock(),
-            $os->process(),
-            $os->remote(),
+            $os,
             Url::fromString("file://$dir/var/logs/app.log"),
             Url::fromString("file://$dir/var/logs/amqp/amqp.log"),
             $os->filesystem()->mount(new Path($dir.'/var/cache/rest')),
