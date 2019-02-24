@@ -7,31 +7,25 @@ use Crawler\{
     Delayer,
     Delay,
 };
-use Innmind\TimeWarp\Halt;
-use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    PeriodInterface,
-};
+use Innmind\OperatingSystem\CurrentProcess;
+use Innmind\TimeContinuum\PeriodInterface;
 use Innmind\Url\UrlInterface;
 
 final class FixDelayer implements Delayer
 {
-    private $halt;
-    private $clock;
+    private $process;
     private $period;
 
     public function __construct(
-        Halt $halt,
-        TimeContinuumInterface $clock,
+        CurrentProcess $process,
         PeriodInterface $period = null
     ) {
-        $this->halt = $halt;
-        $this->clock = $clock;
+        $this->process = $process;
         $this->period = $period ?? Delay::default();
     }
 
     public function __invoke(UrlInterface $url): void
     {
-        ($this->halt)($this->clock, $this->period);
+        $this->process->halt($this->period);
     }
 }

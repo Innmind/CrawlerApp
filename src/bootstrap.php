@@ -167,8 +167,7 @@ function bootstrap(
         new Delayer\TracerAwareDelayer(
             $tracer,
             new Delayer\FixDelayer(
-                $halt,
-                $os->clock()
+                $os->process()
             ),
             $os->clock()
         ),

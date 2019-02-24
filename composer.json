@@ -27,7 +27,6 @@
         "innmind/logger": "^1.0",
         "innmind/rest-client": "~7.1",
         "innmind/homeostasis": "^2.4",
-        "innmind/time-warp": "^1.0",
         "innmind/installation-monitor": "~2.1",
         "innmind/json": "^1.1"
     },
