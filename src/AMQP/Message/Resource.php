@@ -31,6 +31,7 @@ use Innmind\TimeContinuum\{
     ElapsedPeriod
 };
 use Innmind\Rest\Client\Identity\Identity;
+use Innmind\Json\Json;
 use Innmind\Immutable\{
     MapInterface,
     Str
@@ -53,7 +54,7 @@ final class Resource implements Message
             throw new DomainException;
         }
 
-        $payload = json_decode((string) $message->body(), true);
+        $payload = Json::decode((string) $message->body(), true);
 
         $this->inner = $message;
         $this->resource = Url::fromString($payload['resource']);
