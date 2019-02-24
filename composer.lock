@@ -457,16 +457,16 @@
         },
         {
             "name": "innmind/filesystem",
-            "version": "3.3.0",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Filesystem.git",
-                "reference": "9ad4b2b50037e2648095e85e7de0d89661a21644"
+                "reference": "9b1bcfac328f5849ea187497d5264aa747584e15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/9ad4b2b50037e2648095e85e7de0d89661a21644",
-                "reference": "9ad4b2b50037e2648095e85e7de0d89661a21644",
+                "url": "https://api.github.com/repos/Innmind/Filesystem/zipball/9b1bcfac328f5849ea187497d5264aa747584e15",
+                "reference": "9b1bcfac328f5849ea187497d5264aa747584e15",
                 "shasum": ""
             },
             "require": {
@@ -500,7 +500,7 @@
             "keywords": [
                 "filesystem"
             ],
-            "time": "2018-11-01T16:03:04+00:00"
+            "time": "2019-02-24T17:15:49+00:00"
         },
         {
             "name": "innmind/graphviz",
