@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d21dcc285927d20775f253219b73e844",
+    "content-hash": "9b008580334068e36929d977eb1e6619",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -3388,6 +3388,478 @@
                 "unit testing"
             ],
             "time": "2018-02-02T11:25:42+00:00"
+        },
+        {
+            "name": "innmind/command-bus",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/CommandBus.git",
+                "reference": "f0d0c12ebc2fb3644e06156271ab7ed7686393cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/CommandBus/zipball/f0d0c12ebc2fb3644e06156271ab7ed7686393cc",
+                "reference": "f0d0c12ebc2fb3644e06156271ab7ed7686393cc",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "~2.10",
+                "innmind/reflection": "~3.0",
+                "php": "~7.2",
+                "psr/log": "^1.0",
+                "ramsey/uuid": "^3.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\CommandBus\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Command Bus library",
+            "homepage": "http://github.com/Innmind/CommandBus",
+            "keywords": [
+                "command bus",
+                "ddd"
+            ],
+            "time": "2018-11-01T15:16:02+00:00"
+        },
+        {
+            "name": "innmind/debug",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Debug.git",
+                "reference": "f858319fabbec2f65bddda7fc46c7fd82034cbb4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Debug/zipball/f858319fabbec2f65bddda7fc46c7fd82034cbb4",
+                "reference": "f858319fabbec2f65bddda7fc46c7fd82034cbb4",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/cli": "^1.5",
+                "innmind/command-bus": "^3.0",
+                "innmind/event-bus": "^3.0",
+                "innmind/filesystem": "^3.3",
+                "innmind/http": "~3.9",
+                "innmind/http-framework": "^1.3",
+                "innmind/immutable": "^2.13",
+                "innmind/json": "^1.1",
+                "innmind/object-graph": "^1.4",
+                "innmind/operating-system": "^1.4",
+                "innmind/rest-client": "^7.1",
+                "innmind/server-control": "^2.7",
+                "innmind/stack-trace": "^2.0",
+                "innmind/time-continuum": "^1.3",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "innmind/server-status": "^1.3",
+                "innmind/socket": "^2.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Debug\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Set of tools to help debug applications",
+            "homepage": "http://github.com/Innmind/Debug",
+            "keywords": [
+                "cli",
+                "debug",
+                "http"
+            ],
+            "time": "2019-02-21T17:31:10+00:00"
+        },
+        {
+            "name": "innmind/http-authentication",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/HttpAuthentication.git",
+                "reference": "e40d05e8546956aab270b72f4357bd4bdb1770b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/HttpAuthentication/zipball/e40d05e8546956aab270b72f4357bd4bdb1770b9",
+                "reference": "e40d05e8546956aab270b72f4357bd4bdb1770b9",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/http": "^3.6",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "innmind/compose": "^1.7",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\HttpAuthentication\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "HTTP authentication",
+            "homepage": "http://github.com/Innmind/HttpAuthentication",
+            "keywords": [
+                "Authentication",
+                "http"
+            ],
+            "time": "2018-09-22T16:31:28+00:00"
+        },
+        {
+            "name": "innmind/http-framework",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/HttpFramework.git",
+                "reference": "1f836cc1a143bc054296c0ad4c5018b9425cd486"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/1f836cc1a143bc054296c0ad4c5018b9425cd486",
+                "reference": "1f836cc1a143bc054296c0ad4c5018b9425cd486",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/filesystem": "^3.3",
+                "innmind/http": "^3.8",
+                "innmind/http-authentication": "^1.1",
+                "innmind/rest-server": "^7.0",
+                "innmind/router": "^1.0",
+                "php": "~7.2",
+                "symfony/dotenv": "^4.1"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\HttpFramework\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "HTTP framework",
+            "homepage": "http://github.com/Innmind/HttpFramework",
+            "keywords": [
+                "framework",
+                "http"
+            ],
+            "time": "2019-02-09T16:19:17+00:00"
+        },
+        {
+            "name": "innmind/object-graph",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/ObjectGraph.git",
+                "reference": "29a583e22b91042e14cadaa8e6beaf7bd2873f3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/ObjectGraph/zipball/29a583e22b91042e14cadaa8e6beaf7bd2873f3f",
+                "reference": "29a583e22b91042e14cadaa8e6beaf7bd2873f3f",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/graphviz": "^1.2",
+                "innmind/immutable": "^2.13",
+                "innmind/reflection": "^3.0",
+                "innmind/url": "^2.0",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\ObjectGraph\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Extract object graph out of a root object",
+            "homepage": "http://github.com/Innmind/ObjectGraph",
+            "keywords": [
+                "dot",
+                "graphviz",
+                "object graph"
+            ],
+            "time": "2019-02-09T14:40:23+00:00"
+        },
+        {
+            "name": "innmind/reflection",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Reflection.git",
+                "reference": "cc25ac3cff73772d4876dc26722eaa11df8cf8f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Reflection/zipball/cc25ac3cff73772d4876dc26722eaa11df8cf8f4",
+                "reference": "cc25ac3cff73772d4876dc26722eaa11df8cf8f4",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "~2.10",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Reflection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to build objects and extract data out of them",
+            "homepage": "http://github.com/Innmind/Reflection",
+            "keywords": [
+                "reflection"
+            ],
+            "time": "2018-11-01T12:49:45+00:00"
+        },
+        {
+            "name": "innmind/rest-server",
+            "version": "7.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/rest-server.git",
+                "reference": "01e1169e25fdb6d92f2bc42461e5a92dc08ed0bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/rest-server/zipball/01e1169e25fdb6d92f2bc42461e5a92dc08ed0bb",
+                "reference": "01e1169e25fdb6d92f2bc42461e5a92dc08ed0bb",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/filesystem": "~3.0",
+                "innmind/http": "~3.8",
+                "innmind/immutable": "~2.12",
+                "innmind/json": "^1.0",
+                "innmind/specification": "~2.0",
+                "innmind/url-template": "^1.0",
+                "php": "~7.2",
+                "willdurand/negotiation": "^2.0"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "innmind/time-continuum": "^1.3",
+                "phpunit/phpunit": "~7.0"
+            },
+            "suggest": {
+                "innmind/time-continuum": "In order to use point in time type"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Rest\\Server\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to easily expose REST APIs",
+            "homepage": "http://github.com/Innmind/rest-server",
+            "keywords": [
+                "api",
+                "rest"
+            ],
+            "time": "2019-01-11T20:06:13+00:00"
+        },
+        {
+            "name": "innmind/router",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Router.git",
+                "reference": "1f83e7c60d0123bd0708cb6748a1aae1daba45c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Router/zipball/1f83e7c60d0123bd0708cb6748a1aae1daba45c5",
+                "reference": "1f83e7c60d0123bd0708cb6748a1aae1daba45c5",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/http": "^3.6",
+                "innmind/immutable": "^2.8",
+                "innmind/url": "^2.0",
+                "innmind/url-template": "^1.2",
+                "php": "~7.2",
+                "symfony/yaml": "^4.1"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.10.0",
+                "innmind/compose": "^1.7",
+                "phpunit/phpunit": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Router\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "HTTP router",
+            "homepage": "http://github.com/Innmind/Router",
+            "keywords": [
+                "http",
+                "router"
+            ],
+            "time": "2018-09-02T10:04:11+00:00"
+        },
+        {
+            "name": "innmind/url-template",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/UrlTemplate.git",
+                "reference": "35e1f09ee0c56363b3a69133a483fd388321735c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/UrlTemplate/zipball/35e1f09ee0c56363b3a69133a483fd388321735c",
+                "reference": "35e1f09ee0c56363b3a69133a483fd388321735c",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "^2.8",
+                "innmind/url": "^2.0",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.9.0",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\UrlTemplate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Url template expansion processor",
+            "homepage": "http://github.com/Innmind/UrlTemplate",
+            "keywords": [
+                "rfc6570",
+                "url template"
+            ],
+            "time": "2019-01-19T10:28:48+00:00"
         },
         {
             "name": "myclabs/deep-copy",

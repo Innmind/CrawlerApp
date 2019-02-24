@@ -18,7 +18,6 @@ use Innmind\Url\{
     PathInterface,
     Path,
 };
-use Innmind\CLI\Commands;
 use Innmind\TimeContinuum\{
     ElapsedPeriod,
     Period\Earth\Second,
@@ -63,7 +62,7 @@ function bootstrap(
     UrlInterface $amqpServer,
     string $apiKey,
     string $userAgent
-): Commands {
+): array {
     $logger = logger('app', $appLog)(LogLevel::ERROR);
     $transport = transport();
     $log = $transport['logger']($logger);
@@ -248,7 +247,7 @@ function bootstrap(
 
     $clients = monitor($os)['client'];
 
-    return new Commands(
+    return [
         new Command\Consume(
             $amqp['command']['consume']($consumers)($amqpClient),
             $regulator
@@ -264,5 +263,5 @@ function bootstrap(
             ),
             $os->filesystem()->mount(new Path(__DIR__.'/../config'))
         )
-    );
+    ];
 }

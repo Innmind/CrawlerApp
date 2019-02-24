@@ -8,6 +8,7 @@ use function Crawler\bootstrap;
 use Innmind\CLI\{
     Main,
     Environment,
+    Commands,
 };
 use Innmind\Url\{
     Url,
@@ -15,7 +16,13 @@ use Innmind\Url\{
 };
 use Innmind\Socket\Internet\Transport;
 use Innmind\OperatingSystem\OperatingSystem;
+use Innmind\Debug\{
+    CodeEditor,
+    Profiler\Section\CaptureAppGraph,
+};
+use Innmind\Immutable\Set;
 use function Innmind\CLI\variables;
+use function Innmind\Debug\bootstrap as debug;
 
 new class extends Main {
     protected function main(Environment $env, OperatingSystem $os): void
@@ -25,8 +32,19 @@ new class extends Main {
             $os->filesystem()->mount(new Path(__DIR__.'/../config'))
         );
 
+        if ($variables->contains('debug')) {
+            $debug = debug(
+                $os,
+                Url::fromString($variables->get('profiler')),
+                $variables,
+                CodeEditor::sublimeText(),
+                Set::of('string', CaptureAppGraph::class)
+            );
+            $os = $debug['os']();
+        }
+
         $dir = __DIR__.'/../';
-        $run = bootstrap(
+        $commands = bootstrap(
             $os,
             Url::fromString("file://$dir/var/logs/app.log"),
             Url::fromString("file://$dir/var/logs/amqp/amqp.log"),
@@ -43,6 +61,11 @@ new class extends Main {
             'Innmind Robot'
         );
 
+        if ($variables->contains('debug')) {
+            $commands = $debug['cli'](...$commands);
+        }
+
+        $run = new Commands(...$commands);
         $run($env);
     }
 };

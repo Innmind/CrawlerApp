@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Crawler;
 
 use function Crawler\bootstrap;
+use Crawler\Command;
 use Innmind\OperatingSystem\OperatingSystem;
 use Innmind\Url\{
     Url,
@@ -11,7 +12,6 @@ use Innmind\Url\{
 };
 use Innmind\Filesystem\Adapter;
 use Innmind\Socket\Internet\Transport;
-use Innmind\CLI\Commands;
 use Innmind\TimeContinuum\TimeContinuumInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -36,6 +36,8 @@ class BootstrapTest extends TestCase
             'Innmind Robot'
         );
 
-        $this->assertInstanceOf(Commands::class, $commands);
+        $this->assertInstanceOf(Command\Consume::class, $commands[0]);
+        $this->assertInstanceOf(Command\Crawl::class, $commands[1]);
+        $this->assertInstanceOf(Command\Install::class, $commands[2]);
     }
 }
