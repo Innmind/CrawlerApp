@@ -69,7 +69,7 @@ function bootstrap(
     $log = $transport['logger']($logger);
     $transport = $transport['throw_on_error'](
         $log(
-            $transport['default']()
+            $os->remote()->http()
         )
     );
 
