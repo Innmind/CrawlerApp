@@ -13,6 +13,11 @@ use Innmind\InstallationMonitor\{
     Client,
     Event,
 };
+use Innmind\Filesystem\{
+    Adapter,
+    File\File,
+    Stream\StringStream,
+};
 use Innmind\Immutable\{
     Map,
     Str,
@@ -23,17 +28,17 @@ use Innmind\Immutable\{
 final class Install implements Command
 {
     private $client;
+    private $config;
 
-    public function __construct(Client $client)
+    public function __construct(Client $client, Adapter $config)
     {
         $this->client = $client;
+        $this->config = $config;
     }
 
     public function __invoke(Environment $env, Arguments $arguments, Options $options): void
     {
-        $envFile = $env->workingDirectory().'/config/.env';
-
-        if (\file_exists($envFile)) {
+        if ($this->config->has('.env')) {
             $env->error()->write(
                 Str::of("App already installed\n")
             );
@@ -92,7 +97,10 @@ final class Install implements Command
             )
             ->join("\n");
 
-        \file_put_contents($envFile, $envVars);
+        $this->config->add(new File(
+            '.env',
+            new StringStream($envVars)
+        ));
     }
 
     public function __toString(): string

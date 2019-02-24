@@ -16,6 +16,7 @@ use Innmind\OperatingSystem\OperatingSystem;
 use Innmind\Url\{
     UrlInterface,
     PathInterface,
+    Path,
 };
 use Innmind\CLI\Commands;
 use Innmind\TimeContinuum\{
@@ -260,7 +261,8 @@ function bootstrap(
         new Command\Install(
             $clients['silence'](
                 $clients['ipc']()
-            )
+            ),
+            $os->filesystem()->mount(new Path(__DIR__.'/../config'))
         )
     );
 }
