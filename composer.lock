@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b008580334068e36929d977eb1e6619",
+    "content-hash": "16d5e3b221b070b8e8024dae18302f5c",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -191,23 +191,23 @@
         },
         {
             "name": "innmind/amqp",
-            "version": "2.0.1",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/AMQP.git",
-                "reference": "9fc4c6699c32ca85dc7fbdc2a54777b01627b729"
+                "reference": "0436f9471c21eff49c90d4bd55fd0dbd9c0777b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/AMQP/zipball/9fc4c6699c32ca85dc7fbdc2a54777b01627b729",
-                "reference": "9fc4c6699c32ca85dc7fbdc2a54777b01627b729",
+                "url": "https://api.github.com/repos/Innmind/AMQP/zipball/0436f9471c21eff49c90d4bd55fd0dbd9c0777b8",
+                "reference": "0436f9471c21eff49c90d4bd55fd0dbd9c0777b8",
                 "shasum": ""
             },
             "require": {
                 "innmind/filesystem": "^3.0",
                 "innmind/immutable": "^2.4",
                 "innmind/math": "^4.1",
-                "innmind/operating-system": "^1.4",
+                "innmind/operating-system": "^1.6",
                 "innmind/server-status": "^1.3",
                 "innmind/socket": "^1.0|~2.0",
                 "innmind/time-continuum": "^1.0",
@@ -249,7 +249,7 @@
             "keywords": [
                 "AMQP"
             ],
-            "time": "2019-02-17T15:39:16+00:00"
+            "time": "2019-02-26T20:40:36+00:00"
         },
         {
             "name": "innmind/cli",
@@ -1145,16 +1145,16 @@
         },
         {
             "name": "innmind/operating-system",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/OperatingSystem.git",
-                "reference": "401ca9cc281f0ead4430f75518b5f882533eaa99"
+                "reference": "602277edab0428c8d79780a4cdb72939874b2b16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/OperatingSystem/zipball/401ca9cc281f0ead4430f75518b5f882533eaa99",
-                "reference": "401ca9cc281f0ead4430f75518b5f882533eaa99",
+                "url": "https://api.github.com/repos/Innmind/OperatingSystem/zipball/602277edab0428c8d79780a4cdb72939874b2b16",
+                "reference": "602277edab0428c8d79780a4cdb72939874b2b16",
                 "shasum": ""
             },
             "require": {
@@ -1162,6 +1162,7 @@
                 "innmind/http-transport": "^4.0",
                 "innmind/server-control": "^2.6",
                 "innmind/server-status": "^1.1",
+                "innmind/signals": "^1.0",
                 "innmind/socket": "^2.0",
                 "innmind/time-continuum": "^1.2",
                 "innmind/time-warp": "^1.0",
@@ -1195,7 +1196,7 @@
                 "abstraction",
                 "operating system"
             ],
-            "time": "2019-02-20T20:39:39+00:00"
+            "time": "2019-02-26T19:12:14+00:00"
         },
         {
             "name": "innmind/rest-client",
@@ -1381,6 +1382,53 @@
             "description": "Library to access various components of the operating system",
             "homepage": "http://github.com/Innmind/ServerStatus",
             "time": "2019-01-05T14:32:02+00:00"
+        },
+        {
+            "name": "innmind/signals",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Signals.git",
+                "reference": "b475508e4dc8dd4f7f294f44549cc2831eea902f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Signals/zipball/b475508e4dc8dd4f7f294f44549cc2831eea902f",
+                "reference": "b475508e4dc8dd4f7f294f44549cc2831eea902f",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "^2.13",
+                "php": "~7.2"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.11.0",
+                "phpunit/phpunit": "~8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Signals\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Manage multiple callbacks per signal",
+            "homepage": "http://github.com/Innmind/Signals",
+            "keywords": [
+                "cli",
+                "handler",
+                "signal"
+            ],
+            "time": "2019-02-25T20:55:05+00:00"
         },
         {
             "name": "innmind/socket",
@@ -3442,16 +3490,16 @@
         },
         {
             "name": "innmind/debug",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Debug.git",
-                "reference": "f858319fabbec2f65bddda7fc46c7fd82034cbb4"
+                "reference": "3e5fe27016e676c2a54afa80f49ceaf83a88dd7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Debug/zipball/f858319fabbec2f65bddda7fc46c7fd82034cbb4",
-                "reference": "f858319fabbec2f65bddda7fc46c7fd82034cbb4",
+                "url": "https://api.github.com/repos/Innmind/Debug/zipball/3e5fe27016e676c2a54afa80f49ceaf83a88dd7f",
+                "reference": "3e5fe27016e676c2a54afa80f49ceaf83a88dd7f",
                 "shasum": ""
             },
             "require": {
@@ -3464,7 +3512,7 @@
                 "innmind/immutable": "^2.13",
                 "innmind/json": "^1.1",
                 "innmind/object-graph": "^1.4",
-                "innmind/operating-system": "^1.4",
+                "innmind/operating-system": "^1.6",
                 "innmind/rest-client": "^7.1",
                 "innmind/server-control": "^2.7",
                 "innmind/stack-trace": "^2.0",
@@ -3502,7 +3550,7 @@
                 "debug",
                 "http"
             ],
-            "time": "2019-02-21T17:31:10+00:00"
+            "time": "2019-02-26T19:21:18+00:00"
         },
         {
             "name": "innmind/http-authentication",
@@ -4400,16 +4448,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "7.0.2",
+            "version": "7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "cfca9c5f7f2694ca0c7749ffb142927d9f05250f"
+                "reference": "0317a769a81845c390e19684d9ba25d7f6aa4707"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/cfca9c5f7f2694ca0c7749ffb142927d9f05250f",
-                "reference": "cfca9c5f7f2694ca0c7749ffb142927d9f05250f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/0317a769a81845c390e19684d9ba25d7f6aa4707",
+                "reference": "0317a769a81845c390e19684d9ba25d7f6aa4707",
                 "shasum": ""
             },
             "require": {
@@ -4459,7 +4507,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-02-15T13:40:27+00:00"
+            "time": "2019-02-26T07:38:26+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -4837,12 +4885,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "614a9db1df6be4349544311096f8d48ca067ccbb"
+                "reference": "ff1020e24967e525adf76ebf9c28a14601d6fc8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/614a9db1df6be4349544311096f8d48ca067ccbb",
-                "reference": "614a9db1df6be4349544311096f8d48ca067ccbb",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/ff1020e24967e525adf76ebf9c28a14601d6fc8c",
+                "reference": "ff1020e24967e525adf76ebf9c28a14601d6fc8c",
                 "shasum": ""
             },
             "conflict": {
@@ -4877,91 +4925,8 @@
                 "doctrine/mongodb-odm-bundle": ">=2,<3.0.1",
                 "doctrine/orm": ">=2,<2.4.8|>=2.5,<2.5.1",
                 "dompdf/dompdf": ">=0.6,<0.6.2",
-                "drupal/acquia_connector": ">=1,<1.16",
-                "drupal/autologout": ">=4,<4.5",
-                "drupal/backup_migrate": ">=3,<3.4",
-                "drupal/bealestreet": ">=1,<1.2",
-                "drupal/bible": ">=1,<1.7",
-                "drupal/bing_autosuggest_api": ">=1,<1.1",
-                "drupal/bootstrap": ">=3,<3.14",
-                "drupal/brilliant_gallery": ">=1,<1.10",
-                "drupal/ckeditor_uploadimage": ">=1,<1.5",
-                "drupal/cleantalk": ">=2,<2.7",
-                "drupal/cloud": ">=1,<1.7",
-                "drupal/commerce": ">=2,<2.9",
-                "drupal/commerce_custom_order_status": ">=1,<1.1",
-                "drupal/commerce_klarna_checkout": ">=1,<1.5",
-                "drupal/config_perms": ">=1,<1.1|>=2,<2.2",
-                "drupal/config_update": ">=1,<1.5",
                 "drupal/core": ">=7,<7.62|>=8,<8.5.11|>=8.6,<8.6.10",
-                "drupal/datereminder": ">=1,<1.15",
-                "drupal/decoupled_router": ">=1,<1.2",
-                "drupal/domain_integration": ">=1,<1.2",
                 "drupal/drupal": ">=7,<7.62|>=8,<8.5.11|>=8.6,<8.6.10",
-                "drupal/entity": ">=1,<1.9",
-                "drupal/entity_ref_tab_formatter": ">=1,<1.3",
-                "drupal/entityqueue_taxonomy": ">=1,<1.1",
-                "drupal/esign": ">=1,<1.10",
-                "drupal/eu_cookie_compliance": ">=1,<1.1",
-                "drupal/exif": ">=1,<1.1",
-                "drupal/feedback_collect": ">=1,<1.6",
-                "drupal/filefield_paths": ">=1,<1.1",
-                "drupal/filefield_sources": ">=1,<1.11",
-                "drupal/focal_point": ">=1,<1.2",
-                "drupal/fontawesome": ">=2,<2.12",
-                "drupal/fraction": ">=1,<1.2",
-                "drupal/gathercontent": ">=3,<3.5",
-                "drupal/genpass": ">=1,<1.1",
-                "drupal/hosting_https": ">=3,<3.170",
-                "drupal/jsonapi": ">=1,<1.16",
-                "drupal/lightbox2": ">=2,<2.11",
-                "drupal/link": ">=1,<1.6",
-                "drupal/litejazz": ">=2,<2.3",
-                "drupal/mailhandler": ">=2,<2.11",
-                "drupal/mass_pwreset": ">=1,<1.1",
-                "drupal/me": ">=1,<1.3",
-                "drupal/media": ">=2,<2.19",
-                "drupal/menu_export": ">=1,<1.2",
-                "drupal/metatag": ">=1,<1.8",
-                "drupal/miniorange_oauth_client": ">=1,<1.21",
-                "drupal/moneysuite": ">=10,<10.4",
-                "drupal/mosaik": ">=1,<1.2",
-                "drupal/netforum_authentication": ">=1,<1.1",
-                "drupal/newsflash": ">=2,<2.6",
-                "drupal/node_feedback": ">=1,<1.3",
-                "drupal/node_view_permissions": ">=1,<1.1",
-                "drupal/nucleus": ">=1,<1.6",
-                "drupal/nvp": ">=1,<1.1",
-                "drupal/panels_breadcrumbs": ">=2,<2.4",
-                "drupal/panopoly_core": ">=1,<1.49",
-                "drupal/paragraphs": ">=1,<1.6",
-                "drupal/password_policy": ">=1,<1.16",
-                "drupal/permissions_by_term": ">=1,<1.35",
-                "drupal/phonefield": ">=1,<1.1",
-                "drupal/phpconfig": ">=1,<1.1",
-                "drupal/preview_link": ">=1,<1.1",
-                "drupal/print": ">=2,<2.1",
-                "drupal/provision": ">=3,<3.170",
-                "drupal/pubdlcnt": ">=1,<1.3",
-                "drupal/renderkit": ">=1,<1.6",
-                "drupal/responsive_menus": ">=1,<1.7",
-                "drupal/restws": ">=2,<2.8",
-                "drupal/sagepay_payment": ">=1,<1.5",
-                "drupal/salesforce": ">=3,<3.1",
-                "drupal/search_api_solr": ">=1,<1.14",
-                "drupal/search_autocomplete": ">=4,<4.8",
-                "drupal/services_sso_client": ">=1,<1.6",
-                "drupal/stacks": ">=1,<1.1",
-                "drupal/tapestry": ">=2,<2.2",
-                "drupal/term_reference_tree": ">=1,<1.11",
-                "drupal/tfa_basic": ">=1,<1.1",
-                "drupal/tft": ">=1,<1.1",
-                "drupal/tmgmt": ">=1,<1.7",
-                "drupal/uuid": ">=1,<1.1",
-                "drupal/video": ">=1,<1.4",
-                "drupal/workbench_moderation": ">=1,<1.4",
-                "drupal/yandex_metrics": ">=3,<3.1",
-                "drupal/zircon": ">=1,<1.2",
                 "erusev/parsedown": "<1.7",
                 "ezsystems/ezpublish-kernel": ">=5.3,<5.3.12.1|>=5.4,<5.4.13.1|>=6,<6.7.9.1|>=6.8,<6.13.5.1|>=7,<7.2.4.1|>=7.3,<7.3.2.1",
                 "ezsystems/ezpublish-legacy": ">=5.3,<5.3.12.6|>=5.4,<5.4.12.3|>=2011,<2017.12.4.3|>=2018.6,<2018.6.1.4|>=2018.9,<2018.9.1.3",
@@ -5116,7 +5081,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2019-02-22T18:40:39+00:00"
+            "time": "2019-02-26T18:37:22+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

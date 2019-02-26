@@ -138,7 +138,8 @@ function bootstrap(
                 $amqp['client']['fluent'](
                     $amqpClient
                 )
-            )
+            ),
+            $os->process()->signals()
         )
     );
     $producer = $amqp['producers']($exchanges)($amqpClient)->get('urls');
