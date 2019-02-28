@@ -5,23 +5,23 @@ namespace Tests\Crawler\Translator\Property;
 
 use Crawler\Translator\{
     Property\DelegationTranslator,
-    PropertyTranslator
+    PropertyTranslator,
 };
 use Innmind\Rest\Client\Definition\{
     Property,
     Type,
-    Access
+    Access,
 };
 use Innmind\Crawler\{
     HttpResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
-    Map
+    Map,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +33,7 @@ class DelegationTranslatorTest extends TestCase
     private $host;
     private $foo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new DelegationTranslator(
             (new Map('string', PropertyTranslator::class))
@@ -123,12 +123,11 @@ class DelegationTranslatorTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException TypeError
-     * @expectedExceptionMessage Argument 1 must be of type MapInterface<string, Crawler\Translator\PropertyTranslator>
-     */
     public function testThrowWhenInvalidTranslatorMap()
     {
+        $this->expectException(\TypeError::class);
+        $this->expectExceptionMessage('Argument 1 must be of type MapInterface<string, Crawler\Translator\PropertyTranslator>');
+
         new DelegationTranslator(new Map('string', 'object'));
     }
 }

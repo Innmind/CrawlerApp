@@ -63,7 +63,7 @@ final class RobotsTxtAwareDelayer implements Delayer
                 $directives->reduce(
                     0,
                     function(int $carry, Directives $directives): int {
-                        return max($carry, $directives->crawlDelay()->toInt());
+                        return \max($carry, $directives->crawlDelay()->toInt());
                     }
                 )
             );

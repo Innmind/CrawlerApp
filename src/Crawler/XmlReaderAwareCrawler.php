@@ -5,28 +5,28 @@ namespace Crawler\Crawler;
 
 use Innmind\Crawler\{
     Crawler,
-    HttpResource
+    HttpResource,
 };
-use Innmind\Xml\Reader\CacheReader;
+use Innmind\Xml\Reader\Cache\Storage;
 use Innmind\Http\Message\Request;
 
 final class XmlReaderAwareCrawler implements Crawler
 {
-    private $reader;
-    private $crawler;
+    private $storage;
+    private $crawl;
 
     public function __construct(
-        CacheReader $reader,
-        Crawler $crawler
+        Storage $storage,
+        Crawler $crawl
     ) {
-        $this->reader = $reader;
-        $this->crawler = $crawler;
+        $this->storage = $storage;
+        $this->crawl = $crawl;
     }
 
-    public function execute(Request $request): HttpResource
+    public function __invoke(Request $request): HttpResource
     {
-        $resource = $this->crawler->execute($request);
-        $this->reader->detach($resource->content());
+        $resource = ($this->crawl)($request);
+        $this->storage->remove($resource->content());
 
         return $resource;
     }

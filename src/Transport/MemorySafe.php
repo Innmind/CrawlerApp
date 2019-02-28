@@ -10,23 +10,23 @@ use Crawler\{
 use Innmind\HttpTransport\Transport;
 use Innmind\Http\Message\{
     Request,
-    Response
+    Response,
 };
 
 final class MemorySafe implements Transport
 {
-    private $transport;
+    private $fulfill;
     private $threshold;
 
-    public function __construct(Transport $transport, int $threshold = null)
+    public function __construct(Transport $fulfill, int $threshold = null)
     {
-        $this->transport = $transport;
+        $this->fulfill = $fulfill;
         $this->threshold = $threshold ?? 1048576; // 1MB
     }
 
-    public function fulfill(Request $request): Response
+    public function __invoke(Request $request): Response
     {
-        $response = $this->transport->fulfill($request);
+        $response = ($this->fulfill)($request);
 
         if (
             $response->body()->size()->toInt() > $this->threshold &&

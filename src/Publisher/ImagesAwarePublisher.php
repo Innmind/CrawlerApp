@@ -6,7 +6,7 @@ namespace Crawler\Publisher;
 use Crawler\{
     Publisher as PublisherInterface,
     Reference,
-    AMQP\Message\Image
+    AMQP\Message\Image,
 };
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\UrlInterface;

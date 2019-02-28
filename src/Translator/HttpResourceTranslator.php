@@ -8,9 +8,12 @@ use Innmind\Rest\Client\{
     Definition\HttpResource as Definition,
     Definition\Property as PropertyDefinition,
     HttpResource,
-    HttpResource\Property
+    HttpResource\Property,
 };
-use Innmind\Immutable\Map;
+use Innmind\Immutable\{
+    MapInterface,
+    Map,
+};
 
 final class HttpResourceTranslator
 {
@@ -32,7 +35,7 @@ final class HttpResourceTranslator
             })
             ->reduce(
                 new Map('string', Property::class),
-                function(Map $carry, string $name, PropertyDefinition $definition) use ($resource): Map {
+                function(MapInterface $carry, string $name, PropertyDefinition $definition) use ($resource): MapInterface {
                     return $carry->put(
                         $name,
                         new Property(

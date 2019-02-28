@@ -3,8 +3,14 @@ declare(strict_types = 1);
 
 namespace Tests\Crawler\MediaType;
 
-use Crawler\MediaType\Pattern;
-use Innmind\Filesystem\MediaType\MediaType;
+use Crawler\{
+    MediaType\Pattern,
+    Exception\DomainException,
+};
+use Innmind\Filesystem\{
+    MediaType\MediaType,
+    Exception\InvalidMediaTypeString,
+};
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
 
@@ -35,19 +41,17 @@ class PatternTest extends TestCase
         $this->assertSame(1.0, (new Pattern('*', '*', 1))->quality());
     }
 
-    /**
-     * @expectedException Crawler\Exception\DomainException
-     */
     public function testThrowWhenNegativeQuality()
     {
+        $this->expectException(DomainException::class);
+
         new Pattern('application', 'foo', -0.1);
     }
 
-    /**
-     * @expectedException Crawler\Exception\DomainException
-     */
     public function testThrowWhenQualityHigherThanOne()
     {
+        $this->expectException(DomainException::class);
+
         new Pattern('application', 'foo', 1.1);
     }
 
@@ -70,11 +74,9 @@ class PatternTest extends TestCase
         $this->assertSame('image/*; q=0.1', (string) Pattern::fromString('image/*; q=0.1'));
     }
 
-    /**
-     * @expectedException Innmind\Filesystem\Exception\InvalidMediaTypeString
-     */
     public function testThrowWhenInvalidString()
     {
+        $this->expectException(InvalidMediaTypeString::class);
         Pattern::fromString('foo');
     }
 

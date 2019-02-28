@@ -5,13 +5,10 @@ namespace Tests\Crawler\Delayer;
 
 use Crawler\{
     Delayer\FixDelayer,
-    Delayer
+    Delayer,
 };
-use Innmind\TimeWarp\Halt;
-use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    PeriodInterface,
-};
+use Innmind\OperatingSystem\CurrentProcess;
+use Innmind\TimeContinuum\PeriodInterface;
 use Innmind\Url\UrlInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -22,8 +19,7 @@ class FixDelayerTest extends TestCase
         $this->assertInstanceOf(
             Delayer::class,
             new FixDelayer(
-                $this->createMock(Halt::class),
-                $this->createMock(TimeContinuumInterface::class)
+                $this->createMock(CurrentProcess::class)
             )
         );
     }
@@ -31,14 +27,13 @@ class FixDelayerTest extends TestCase
     public function testInvokation()
     {
         $delay = new FixDelayer(
-            $halt = $this->createMock(Halt::class),
-            $clock = $this->createMock(TimeContinuumInterface::class),
+            $process = $this->createMock(CurrentProcess::class),
             $period = $this->createMock(PeriodInterface::class)
         );
-        $halt
+        $process
             ->expects($this->once())
-            ->method('__invoke')
-            ->with($clock, $period);
+            ->method('halt')
+            ->with($period);
 
         $this->assertNull($delay($this->createMock(UrlInterface::class)));
     }

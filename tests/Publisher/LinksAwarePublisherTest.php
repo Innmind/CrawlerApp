@@ -7,16 +7,16 @@ use Crawler\{
     Publisher\LinksAwarePublisher,
     Publisher,
     Reference,
-    AMQP\Message\Link
+    AMQP\Message\Link,
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\{
     UrlInterface,
     Url,
-    Fragment
+    Fragment,
 };
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
@@ -24,7 +24,7 @@ use Innmind\Rest\Client\Identity;
 use Innmind\AMQP\Producer;
 use Innmind\Immutable\{
     Map,
-    Set
+    Set,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -34,7 +34,7 @@ class LinksAwarePublisherTest extends TestCase
     private $inner;
     private $producer;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->publisher = new LinksAwarePublisher(
             $this->inner = $this->createMock(Publisher::class),
@@ -84,13 +84,15 @@ class LinksAwarePublisherTest extends TestCase
         $resource = new CrawledResource(
             $url = Url::fromString('http://example.com/'),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put(
+            Map::of('string', Attribute::class)
+                (
                     'links',
                     new Attribute\Attribute(
                         'links',
-                        (new Set(UrlInterface::class))
-                            ->add($url->withFragment(new Fragment('foo')))
+                        Set::of(
+                            UrlInterface::class,
+                            $url->withFragment(new Fragment('foo'))
+                        )
                     )
                 ),
             $this->createMock(Readable::class)
@@ -121,13 +123,15 @@ class LinksAwarePublisherTest extends TestCase
         $resource = new CrawledResource(
             Url::fromString('http://example.com/'),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put(
+            Map::of('string', Attribute::class)
+                (
                     'links',
                     new Attribute\Attribute(
                         'links',
-                        (new Set(UrlInterface::class))
-                            ->add($published = Url::fromString('http://example.com/foo'))
+                        Set::of(
+                            UrlInterface::class,
+                            $published = Url::fromString('http://example.com/foo')
+                        )
                     )
                 ),
             $this->createMock(Readable::class)

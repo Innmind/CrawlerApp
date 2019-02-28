@@ -6,36 +6,36 @@ namespace Crawler\Crawler;
 use Crawler\Exception\UrlCannotBeCrawled;
 use Innmind\Crawler\{
     Crawler,
-    HttpResource
+    HttpResource,
 };
 use Innmind\RobotsTxt\{
     Parser,
-    Exception\FileNotFound
+    Exception\FileNotFound,
 };
 use Innmind\Url\{
     NullQuery,
     NullFragment,
-    Path
+    Path,
 };
 use Innmind\Http\Message\Request;
 
 final class RobotsAwareCrawler implements Crawler
 {
     private $parser;
-    private $crawler;
+    private $crawl;
     private $userAgent;
 
     public function __construct(
         Parser $parser,
-        Crawler $crawler,
+        Crawler $crawl,
         string $userAgent
     ) {
         $this->parser = $parser;
-        $this->crawler = $crawler;
+        $this->crawl = $crawl;
         $this->userAgent = $userAgent;
     }
 
-    public function execute(Request $request): HttpResource
+    public function __invoke(Request $request): HttpResource
     {
         try {
             $url = $request
@@ -52,6 +52,6 @@ final class RobotsAwareCrawler implements Crawler
             //pass
         }
 
-        return $this->crawler->execute($request);
+        return ($this->crawl)($request);
     }
 }

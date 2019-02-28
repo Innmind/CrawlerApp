@@ -5,7 +5,7 @@ namespace Crawler;
 
 use Innmind\Url\{
     UrlInterface,
-    Authority\HostInterface
+    Authority\HostInterface,
 };
 use Innmind\TimeContinuum\PointInTimeInterface;
 

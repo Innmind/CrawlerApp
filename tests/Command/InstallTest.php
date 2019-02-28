@@ -15,7 +15,7 @@ use Innmind\InstallationMonitor\{
     Event,
 };
 use Innmind\Stream\Writable;
-use Innmind\Url\Path;
+use Innmind\Filesystem\Adapter;
 use Innmind\Immutable\{
     Map,
     Str,
@@ -25,23 +25,13 @@ use PHPUnit\Framework\TestCase;
 
 class InstallTest extends TestCase
 {
-    public function setUp()
-    {
-        @mkdir('/tmp/config');
-    }
-
-    public function tearDown()
-    {
-        @unlink('/tmp/config/.env');
-        @rmdir('/tmp/config');
-    }
-
     public function testInterface()
     {
         $this->assertInstanceOf(
             Command::class,
             new Install(
-                $this->createMock(Client::class)
+                $this->createMock(Client::class),
+                $this->createMock(Adapter::class)
             )
         );
     }
@@ -58,14 +48,18 @@ USAGE;
 
         $this->assertSame(
             $usage,
-            (string) new Install($this->createMock(Client::class))
+            (string) new Install(
+                $this->createMock(Client::class),
+                $this->createMock(Adapter::class)
+            )
         );
     }
 
     public function testInvokation()
     {
         $install = new Install(
-            $client = $this->createMock(Client::class)
+            $client = $this->createMock(Client::class),
+            $config = $this->createMock(Adapter::class)
         );
         $client
             ->expects($this->once())
@@ -74,54 +68,51 @@ USAGE;
                 Event::class,
                 new Event(
                     new Event\Name('library_installed'),
-                    (new Map('string', 'variable'))
-                        ->put('apiKey', 'somethings3cret')
+                    Map::of('string', 'variable')
+                        ('apiKey', 'somethings3cret')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    (new Map('string', 'variable'))
-                        ->put('name', 'monitor')
-                        ->put('password', 'foo')
+                    Map::of('string', 'variable')
+                        ('name', 'monitor')
+                        ('password', 'foo')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    (new Map('string', 'variable'))
-                        ->put('name', 'consumer')
-                        ->put('password', 'bar')
+                    Map::of('string', 'variable')
+                        ('name', 'consumer')
+                        ('password', 'bar')
                 )
             ));
-        $env = $this->createMock(Environment::class);
-        $env
+        $config
             ->expects($this->once())
-            ->method('workingDirectory')
-            ->willReturn(new Path('/tmp'));
+            ->method('has')
+            ->willReturn(false);
+        $config
+            ->expects($this->once())
+            ->method('add')
+            ->with($this->callback(static function($file): bool {
+                return (string) $file->name() === '.env' &&
+                    (string) $file->content() === "API_KEY=somethings3cret\nAMQP_SERVER=amqp://consumer:bar@localhost:5672/";
+            }));
 
         $this->assertNull($install(
-            $env,
+            $this->createMock(Environment::class),
             new Arguments,
             new Options
         ));
-        $this->assertSame(
-            "API_KEY=somethings3cret\nAMQP_SERVER=amqp://consumer:bar@localhost:5672/",
-            file_get_contents('/tmp/config/.env')
-        );
     }
 
     public function testFailWhenFileAlreadyExist()
     {
-        file_put_contents('/tmp/config/.env', 'clean');
-
         $install = new Install(
-            $client = $this->createMock(Client::class)
+            $client = $this->createMock(Client::class),
+            $config = $this->createMock(Adapter::class)
         );
         $client
             ->expects($this->never())
             ->method('events');
         $env = $this->createMock(Environment::class);
-        $env
-            ->expects($this->once())
-            ->method('workingDirectory')
-            ->willReturn(new Path('/tmp'));
         $env
             ->expects($this->once())
             ->method('error')
@@ -134,22 +125,27 @@ USAGE;
             ->expects($this->once())
             ->method('exit')
             ->with(1);
+        $config
+            ->expects($this->once())
+            ->method('has')
+            ->with('.env')
+            ->willReturn(true);
+        $config
+            ->expects($this->never())
+            ->method('add');
 
         $this->assertNull($install(
             $env,
             new Arguments,
             new Options
         ));
-        $this->assertSame(
-            'clean',
-            file_get_contents('/tmp/config/.env')
-        );
     }
 
     public function testFailWhenNoLibraryEvent()
     {
         $install = new Install(
-            $client = $this->createMock(Client::class)
+            $client = $this->createMock(Client::class),
+            $config = $this->createMock(Adapter::class)
         );
         $client
             ->expects($this->once())
@@ -158,22 +154,18 @@ USAGE;
                 Event::class,
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    (new Map('string', 'variable'))
-                        ->put('name', 'monitor')
-                        ->put('password', 'foo')
+                    Map::of('string', 'variable')
+                        ('name', 'monitor')
+                        ('password', 'foo')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    (new Map('string', 'variable'))
-                        ->put('name', 'consumer')
-                        ->put('password', 'bar')
+                    Map::of('string', 'variable')
+                        ('name', 'consumer')
+                        ('password', 'bar')
                 )
             ));
         $env = $this->createMock(Environment::class);
-        $env
-            ->expects($this->once())
-            ->method('workingDirectory')
-            ->willReturn(new Path('/tmp'));
         $env
             ->expects($this->once())
             ->method('error')
@@ -186,19 +178,27 @@ USAGE;
             ->expects($this->once())
             ->method('exit')
             ->with(1);
+        $config
+            ->expects($this->once())
+            ->method('has')
+            ->with('.env')
+            ->willReturn(false);
+        $config
+            ->expects($this->never())
+            ->method('add');
 
         $this->assertNull($install(
             $env,
             new Arguments,
             new Options
         ));
-        $this->assertFalse(file_exists('/tmp/config/.env'));
     }
 
     public function testFailWhenNoAMQPEvent()
     {
         $install = new Install(
-            $client = $this->createMock(Client::class)
+            $client = $this->createMock(Client::class),
+            $config = $this->createMock(Adapter::class)
         );
         $client
             ->expects($this->once())
@@ -207,15 +207,11 @@ USAGE;
                 Event::class,
                 new Event(
                     new Event\Name('library_installed'),
-                    (new Map('string', 'variable'))
-                        ->put('apiKey', 'somethings3cret')
+                    Map::of('string', 'variable')
+                        ('apiKey', 'somethings3cret')
                 )
             ));
         $env = $this->createMock(Environment::class);
-        $env
-            ->expects($this->once())
-            ->method('workingDirectory')
-            ->willReturn(new Path('/tmp'));
         $env
             ->expects($this->once())
             ->method('error')
@@ -228,12 +224,19 @@ USAGE;
             ->expects($this->once())
             ->method('exit')
             ->with(1);
+        $config
+            ->expects($this->once())
+            ->method('has')
+            ->with('.env')
+            ->willReturn(false);
+        $config
+            ->expects($this->never())
+            ->method('add');
 
         $this->assertNull($install(
             $env,
             new Arguments,
             new Options
         ));
-        $this->assertFalse(file_exists('/tmp/config/.env'));
     }
 }

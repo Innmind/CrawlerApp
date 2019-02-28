@@ -5,23 +5,24 @@ namespace Tests\Crawler\CrawlTracer;
 
 use Crawler\{
     CrawlTracer\CrawlTracer,
-    CrawlTracer as CrawlTracerInterface
+    CrawlTracer as CrawlTracerInterface,
+    Exception\HostNeverHit,
 };
 use Innmind\Filesystem\{
     Adapter,
     Directory\Directory,
     File\File,
     Stream\NullStream,
-    Stream\StringStream
+    Stream\StringStream,
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
     PointInTimeInterface,
-    Format\ISO8601
+    Format\ISO8601,
 };
 use Innmind\Url\{
     Url,
-    Authority\Host
+    Authority\Host,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -253,9 +254,6 @@ class CrawlTracerTest extends TestCase
         $this->assertSame($expected, $tracer->lastHit(new Host('example.com')));
     }
 
-    /**
-     * @expectedException Crawler\Exception\HostNeverHit
-     */
     public function testThrowWhenHostNeverHit()
     {
         $tracer = new CrawlTracer(
@@ -269,6 +267,8 @@ class CrawlTracerTest extends TestCase
             ->willReturn(
                 new Directory('hits')
             );
+
+        $this->expectException(HostNeverHit::class);
 
         $tracer->lastHit(new Host('example.com'));
     }

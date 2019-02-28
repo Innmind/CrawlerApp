@@ -9,3 +9,4 @@ var/logs/*
 !var/logs/.gitkeep
 /vendor/
 infection-log.txt
+.phpunit.result.cache

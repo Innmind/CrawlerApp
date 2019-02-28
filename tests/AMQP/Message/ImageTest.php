@@ -6,7 +6,7 @@ namespace Tests\Crawler\AMQP\Message;
 use Crawler\{
     AMQP\Message\Image,
     Reference,
-    Exception\LogicException
+    Exception\LogicException,
 };
 use Innmind\AMQP\Model\Basic\{
     Message,
@@ -19,16 +19,16 @@ use Innmind\AMQP\Model\Basic\{
     Message\Id,
     Message\Type,
     Message\UserId,
-    Message\AppId
+    Message\AppId,
 };
 use Innmind\Rest\Client\Identity;
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
 };
 use Innmind\TimeContinuum\{
     ElapsedPeriod,
-    PointInTimeInterface
+    PointInTimeInterface,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -295,7 +295,7 @@ class ImageTest extends TestCase
         );
 
         $this->assertSame(
-            json_encode([
+            \json_encode([
                 'resource' => '/foo',
                 'origin' => 'uuid',
                 'relationship' => 'referrer',

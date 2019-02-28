@@ -5,17 +5,17 @@ namespace Tests\Crawler\Translator\Property\Image;
 
 use Crawler\Translator\{
     Property\Image\DimensionTranslator,
-    PropertyTranslator
+    PropertyTranslator,
 };
 use Innmind\Rest\Client\Definition\{
     Property,
     Type,
-    Access
+    Access,
 };
 use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
-    HttpResource\Attributes\Attributes
+    HttpResource\Attributes\Attributes,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\Filesystem\MediaType;
@@ -23,7 +23,7 @@ use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
     Map,
-    MapInterface
+    MapInterface,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +32,7 @@ class DimensionTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new DimensionTranslator;
         $this->property = new Property(

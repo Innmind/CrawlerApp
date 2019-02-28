@@ -7,17 +7,17 @@ use Crawler\{
     Delayer\TracerAwareDelayer,
     Delayer,
     CrawlTracer,
-    Exception\HostNeverHit
+    Exception\HostNeverHit,
 };
 use Innmind\TimeContinuum\{
     TimeContinuumInterface,
     PointInTimeInterface,
-    ElapsedPeriod
+    ElapsedPeriod,
 };
 use Innmind\Url\{
     UrlInterface,
     AuthorityInterface,
-    Authority\HostInterface
+    Authority\HostInterface,
 };
 use PHPUnit\Framework\TestCase;
 

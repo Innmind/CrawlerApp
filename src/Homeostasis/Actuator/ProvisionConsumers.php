@@ -6,18 +6,18 @@ namespace Crawler\Homeostasis\Actuator;
 use Innmind\Homeostasis\Actuator;
 use Innmind\Server\Status\{
     Server as Status,
-    Server\Process
+    Server\Process,
 };
 use Innmind\Server\Control\{
     Server as Control,
     Server\Command,
     Server\Signal,
-    Server\Process\Pid
+    Server\Process\Pid,
 };
 use Innmind\Immutable\{
     StreamInterface,
     MapInterface,
-    Str
+    Str,
 };
 use Psr\Log\LoggerInterface;
 

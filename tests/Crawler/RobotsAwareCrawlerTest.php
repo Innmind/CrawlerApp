@@ -5,21 +5,21 @@ namespace Tests\Crawler\Crawler;
 
 use Crawler\{
     Crawler\RobotsAwareCrawler,
-    Exception\UrlCannotBeCrawled
+    Exception\UrlCannotBeCrawled,
 };
 use Innmind\RobotsTxt\{
     Parser,
     RobotsTxt,
-    Exception\FileNotFound
+    Exception\FileNotFound,
 };
 use Innmind\Crawler\{
     Crawler,
     HttpResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\{
     UrlInterface,
-    Url
+    Url,
 };
 use Innmind\Http\Message\Request;
 use Innmind\Filesystem\MediaType;
@@ -29,13 +29,13 @@ use PHPUnit\Framework\TestCase;
 
 class RobotsAwareCrawlerTest extends TestCase
 {
-    private $crawler;
+    private $crawl;
     private $parser;
     private $inner;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->crawler = new RobotsAwareCrawler(
+        $this->crawl = new RobotsAwareCrawler(
             $this->parser = $this->createMock(Parser::class),
             $this->inner = $this->createMock(Crawler::class),
             'user agent'
@@ -46,7 +46,7 @@ class RobotsAwareCrawlerTest extends TestCase
     {
         $this->assertInstanceOf(
             Crawler::class,
-            $this->crawler
+            $this->crawl
         );
     }
 
@@ -70,7 +70,7 @@ class RobotsAwareCrawlerTest extends TestCase
         $this
             ->inner
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($request)
             ->willReturn(
                 $expected = new HttpResource(
@@ -81,7 +81,7 @@ class RobotsAwareCrawlerTest extends TestCase
                 )
             );
 
-        $resource = $this->crawler->execute($request);
+        $resource = ($this->crawl)($request);
 
         $this->assertSame($expected, $resource);
     }
@@ -111,7 +111,7 @@ class RobotsAwareCrawlerTest extends TestCase
         $this
             ->inner
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($request)
             ->willReturn(
                 $expected = new HttpResource(
@@ -122,7 +122,7 @@ class RobotsAwareCrawlerTest extends TestCase
                 )
             );
 
-        $resource = $this->crawler->execute($request);
+        $resource = ($this->crawl)($request);
 
         $this->assertSame($expected, $resource);
     }
@@ -152,10 +152,10 @@ class RobotsAwareCrawlerTest extends TestCase
         $this
             ->inner
             ->expects($this->never())
-            ->method('execute');
+            ->method('__invoke');
 
         try {
-            $this->crawler->execute($request);
+            ($this->crawl)($request);
             $this->fail('it should throw');
         } catch (UrlCannotBeCrawled $e) {
             $this->assertSame($url, $e->url());

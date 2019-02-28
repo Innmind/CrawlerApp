@@ -26,6 +26,7 @@ use Innmind\TimeContinuum\{
     PointInTimeInterface,
     ElapsedPeriod
 };
+use Innmind\Json\Json;
 use Innmind\Immutable\{
     MapInterface,
     Str
@@ -53,7 +54,7 @@ final class Link implements Message
             'server' => (string) $reference->server(),
         ];
 
-        $this->inner = (new Generic(new Str(json_encode($payload))))
+        $this->inner = (new Generic(new Str(Json::encode($payload))))
             ->withContentType(new ContentType('application', 'json'))
             ->withAppId(new AppId('crawler'))
             ->withDeliveryMode(DeliveryMode::persistent());

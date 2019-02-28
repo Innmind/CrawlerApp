@@ -16,7 +16,7 @@ use Crawler\{
 use Innmind\Crawler\{
     Crawler,
     HttpResource as CrawledResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\Filesystem\MediaType;
@@ -25,21 +25,22 @@ use Innmind\Rest\Client\Identity;
 use Innmind\HttpTransport\Exception\{
     ConnectionFailed,
     ClientError,
-    ServerError
+    ServerError,
 };
 use Innmind\Http\Message\{
     Request,
     Response,
-    StatusCode\StatusCode
+    StatusCode\StatusCode,
 };
-use Innmind\AMQP\Model\Basic\Message\{
-    Generic,
-    Locked,
-    ContentType
+use Innmind\AMQP\{
+    Model\Basic\Message\Generic,
+    Model\Basic\Message\Locked,
+    Model\Basic\Message\ContentType,
+    Exception\Requeue,
 };
 use Innmind\Immutable\{
     Map,
-    Str
+    Str,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -76,7 +77,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
@@ -130,7 +131,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->will($this->throwException(
                 new ConnectionFailed(
                     $this->createMock(Request::class),
@@ -166,7 +167,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->will($this->throwException(
                 new ClientError(
                     $this->createMock(Request::class),
@@ -183,9 +184,6 @@ class CrawlConsumerTest extends TestCase
         $this->assertNull($consume($message));
     }
 
-    /**
-     * @expectedException Innmind\AMQP\Exception\Requeue
-     */
     public function testInvokeWhenServerErrorOnCrawl()
     {
         $consume = new CrawlConsumer(
@@ -205,7 +203,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->will($this->throwException(
                 new ServerError(
                     $this->createMock(Request::class),
@@ -218,6 +216,8 @@ class CrawlConsumerTest extends TestCase
         $linker
             ->expects($this->never())
             ->method('__invoke');
+
+        $this->expectException(Requeue::class);
 
         $consume($message);
     }
@@ -241,7 +241,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->will($this->throwException(
                 new UrlCannotBeCrawled(
                     $this->createMock(UrlInterface::class)
@@ -276,7 +276,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->will($this->throwException(new ResponseTooHeavy));
         $publisher
             ->expects($this->never())
@@ -309,7 +309,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
@@ -374,7 +374,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
@@ -413,9 +413,6 @@ class CrawlConsumerTest extends TestCase
         $this->assertNull($consume($message));
     }
 
-    /**
-     * @expectedException Innmind\HttpTransport\Exception\ClientError
-     */
     public function testThrowOnClientErrorOnPublish()
     {
         $consume = new CrawlConsumer(
@@ -437,7 +434,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
@@ -473,6 +470,8 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->never())
             ->method('__invoke');
 
+        $this->expectException(ClientError::class);
+
         $consume($message);
     }
 
@@ -497,7 +496,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
@@ -550,7 +549,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
@@ -597,9 +596,6 @@ class CrawlConsumerTest extends TestCase
         $this->assertNull($consume($message));
     }
 
-    /**
-     * @expectedException Innmind\AMQP\Exception\Requeue
-     */
     public function testRequeueWhenServerFailDuringPublish()
     {
         $consume = new CrawlConsumer(
@@ -621,7 +617,7 @@ class CrawlConsumerTest extends TestCase
         );
         $crawler
             ->expects($this->once())
-            ->method('execute')
+            ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
                 return (string) $request->url() === 'foo' &&
                     (string) $request->method() === 'GET' &&
@@ -667,6 +663,8 @@ class CrawlConsumerTest extends TestCase
                     $this->createMock(Response::class)
                 )
             ));
+
+        $this->expectException(Requeue::class);
 
         $consume($message);
     }

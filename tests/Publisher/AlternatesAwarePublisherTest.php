@@ -7,18 +7,18 @@ use Crawler\{
     Publisher\AlternatesAwarePublisher,
     Publisher,
     Reference,
-    AMQP\Message\Alternate as Message
+    AMQP\Message\Alternate as Message,
 };
 use Innmind\Crawler\{
     HttpResource as CrawledResource,
     HttpResource\Attribute,
     HttpResource\Alternates,
-    HttpResource\Alternate
+    HttpResource\Alternate,
 };
 use Innmind\Url\{
     UrlInterface,
     Url,
-    Fragment
+    Fragment,
 };
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
@@ -27,7 +27,7 @@ use Innmind\AMQP\Producer;
 use Innmind\Immutable\{
     Map,
     SetInterface,
-    Set
+    Set,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -37,7 +37,7 @@ class AlternatesAwarePublisherTest extends TestCase
     private $inner;
     private $producer;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->publisher = new AlternatesAwarePublisher(
             $this->inner = $this->createMock(Publisher::class),
@@ -87,17 +87,19 @@ class AlternatesAwarePublisherTest extends TestCase
         $resource = new CrawledResource(
             $url = Url::fromString('http://example.com/'),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put(
+            Map::of('string', Attribute::class)
+                (
                     'alternates',
                     new Alternates(
-                        (new Map('string', Attribute::class))
-                            ->put(
+                        Map::of('string', Attribute::class)
+                            (
                                 'en',
                                 new Alternate(
                                     'en',
-                                    (new Set(UrlInterface::class))
-                                        ->add($url->withFragment(new Fragment('foo')))
+                                    Set::of(
+                                        UrlInterface::class,
+                                        $url->withFragment(new Fragment('foo'))
+                                    )
                                 )
                             )
                     )
@@ -130,8 +132,8 @@ class AlternatesAwarePublisherTest extends TestCase
         $resource = new CrawledResource(
             $url = Url::fromString('http://example.com/'),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put(
+            Map::of('string', Attribute::class)
+                (
                     'alternates',
                     $this->createMock(Attribute::class)
                 ),
@@ -163,17 +165,19 @@ class AlternatesAwarePublisherTest extends TestCase
         $resource = new CrawledResource(
             Url::fromString('http://example.com/'),
             $this->createMock(MediaType::class),
-            (new Map('string', Attribute::class))
-                ->put(
+            Map::of('string', Attribute::class)
+                (
                     'alternates',
                     new Alternates(
-                        (new Map('string', Attribute::class))
-                            ->put(
+                        Map::of('string', Attribute::class)
+                            (
                                 'en',
                                 new Alternate(
                                     'en',
-                                    (new Set(UrlInterface::class))
-                                        ->add($published = Url::fromString('http://example.com/foo'))
+                                    Set::of(
+                                        UrlInterface::class,
+                                        $published = Url::fromString('http://example.com/foo')
+                                    )
                                 )
                             )
                     )

@@ -5,34 +5,34 @@ namespace Crawler\Crawler;
 
 use Crawler\{
     CrawlTracer,
-    Exception\UrlCannotBeCrawled
+    Exception\UrlCannotBeCrawled,
 };
 use Innmind\Crawler\{
     Crawler,
-    HttpResource
+    HttpResource,
 };
 use Innmind\Http\Message\Request;
 
 final class TracerAwareCrawler implements Crawler
 {
     private $tracer;
-    private $crawler;
+    private $crawl;
 
     public function __construct(
         CrawlTracer $tracer,
-        Crawler $crawler
+        Crawler $crawl
     ) {
         $this->tracer = $tracer;
-        $this->crawler = $crawler;
+        $this->crawl = $crawl;
     }
 
-    public function execute(Request $request): HttpResource
+    public function __invoke(Request $request): HttpResource
     {
         if ($this->tracer->knows($request->url())) {
             throw new UrlCannotBeCrawled($request->url());
         }
 
-        $resource = $this->crawler->execute($request);
+        $resource = ($this->crawl)($request);
         $this->tracer->trace($request->url());
         $this->tracer->trace($resource->url());
 

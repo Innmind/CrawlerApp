@@ -8,34 +8,64 @@ use function Crawler\bootstrap;
 use Innmind\CLI\{
     Main,
     Environment,
+    Commands,
 };
-use Innmind\Url\Url;
+use Innmind\Url\{
+    Url,
+    Path,
+};
 use Innmind\Socket\Internet\Transport;
-use Innmind\Filesystem\Adapter\FilesystemAdapter;
-use Symfony\Component\Dotenv\Dotenv;
+use Innmind\OperatingSystem\OperatingSystem;
+use Innmind\Debug\{
+    CodeEditor,
+    Profiler\Section\CaptureAppGraph,
+};
+use Innmind\Immutable\Set;
+use function Innmind\CLI\variables;
+use function Innmind\Debug\bootstrap as debug;
 
 new class extends Main {
-    protected function main(Environment $env): void
+    protected function main(Environment $env, OperatingSystem $os): void
     {
-        $dotenv = (new Dotenv)->parse(file_get_contents(__DIR__.'/../config/.env'));
-        $server = $dotenv['AMQP_SERVER'] ?? $env->variables()['AMQP_SERVER'] ?? 'amqp://guest:guest@localhost:5672/';
+        $variables = variables(
+            $env->variables(),
+            $os->filesystem()->mount(new Path(__DIR__.'/../config'))
+        );
 
-        $run = bootstrap(
-            Url::fromString("file://{$env->workingDirectory()}/var/logs/app.log"),
-            Url::fromString("file://{$env->workingDirectory()}/var/logs/amqp/amqp.log"),
-            new FilesystemAdapter($env->workingDirectory().'/var/cache/rest'),
-            new FilesystemAdapter($env->workingDirectory().'/var/logs'),
-            new FilesystemAdapter($env->workingDirectory().'/var/data/states'),
-            new FilesystemAdapter($env->workingDirectory().'/var/data/actions'),
-            new FilesystemAdapter($env->workingDirectory().'/var/cache/traces'),
-            new FilesystemAdapter($env->workingDirectory().'/var/cache/robots_txts'),
+        if ($variables->contains('debug')) {
+            $debug = debug(
+                $os,
+                Url::fromString($variables->get('profiler')),
+                $variables,
+                CodeEditor::sublimeText(),
+                Set::of('string', CaptureAppGraph::class)
+            );
+            $os = $debug['os']();
+        }
+
+        $dir = __DIR__.'/../';
+        $commands = bootstrap(
+            $os,
+            Url::fromString("file://{$dir}var/logs/app.log"),
+            Url::fromString("file://{$dir}var/logs/amqp/amqp.log"),
+            $os->filesystem()->mount(new Path($dir.'var/cache/rest')),
+            $os->filesystem()->mount(new Path($dir.'var/logs')),
+            $os->filesystem()->mount(new Path($dir.'var/data/states')),
+            $os->filesystem()->mount(new Path($dir.'var/data/actions')),
+            $os->filesystem()->mount(new Path($dir.'var/cache/traces')),
+            $os->filesystem()->mount(new Path($dir.'var/cache/robots_txts')),
             $env->workingDirectory(),
             Transport::tcp(),
-            Url::fromString($server),
-            $dotenv['API_KEY'] ?? $env->variables()['API_KEY'],
+            Url::fromString($variables['amqpServer'] ?? 'amqp://guest:guest@localhost:5672/'),
+            $variables['apiKey'],
             'Innmind Robot'
         );
 
+        if ($variables->contains('debug')) {
+            $commands = $debug['cli'](...$commands);
+        }
+
+        $run = new Commands(...$commands);
         $run($env);
     }
 };

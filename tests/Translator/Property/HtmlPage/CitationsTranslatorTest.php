@@ -5,23 +5,23 @@ namespace Tests\Crawler\Translator\Property\HtmlPage;
 
 use Crawler\Translator\{
     Property\HtmlPage\CitationsTranslator,
-    PropertyTranslator
+    PropertyTranslator,
 };
 use Innmind\Rest\Client\Definition\{
     Property,
     Type,
-    Access
+    Access,
 };
 use Innmind\Crawler\{
     HttpResource,
-    HttpResource\Attribute
+    HttpResource\Attribute,
 };
 use Innmind\Url\UrlInterface;
 use Innmind\Filesystem\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
-    Map
+    Map,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +30,7 @@ class CitationsTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->translator = new CitationsTranslator;
         $this->property = new Property(
