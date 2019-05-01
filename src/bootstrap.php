@@ -149,7 +149,7 @@ function bootstrap(
     $robots = new RobotsTxt\KeepInMemoryParser(
         new RobotsTxt\CacheParser(
             new Parser(
-                $transport,
+                $log($os->remote()->http()),
                 $walker,
                 $userAgent
             ),
