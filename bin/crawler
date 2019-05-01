@@ -23,10 +23,13 @@ use Innmind\Debug\{
 use Innmind\Immutable\Set;
 use function Innmind\CLI\variables;
 use function Innmind\Debug\bootstrap as debug;
+use function Innmind\SilentCartographer\bootstrap as cartographer;
 
 new class extends Main {
     protected function main(Environment $env, OperatingSystem $os): void
     {
+        $os = cartographer($os)['cli'](Url::fromString(__DIR__));
+
         $variables = variables(
             $env->variables(),
             $os->filesystem()->mount(new Path(__DIR__.'/../config'))
