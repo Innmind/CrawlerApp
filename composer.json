@@ -29,7 +29,8 @@
         "innmind/homeostasis": "^2.4",
         "innmind/installation-monitor": "~2.1",
         "innmind/json": "^1.1",
-        "innmind/silent-cartographer": "^1.1"
+        "innmind/silent-cartographer": "^1.1",
+        "innmind/stack": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~8.0",

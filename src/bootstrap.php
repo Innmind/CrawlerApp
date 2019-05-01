@@ -12,6 +12,7 @@ use function Innmind\Homeostasis\bootstrap as homeostasis;
 use function Innmind\AMQP\bootstrap as amqp;
 use function Innmind\Logger\bootstrap as logger;
 use function Innmind\InstallationMonitor\bootstrap as monitor;
+use function Innmind\Stack\stack;
 use Innmind\OperatingSystem\OperatingSystem;
 use Innmind\Url\{
     UrlInterface,
@@ -66,11 +67,10 @@ function bootstrap(
     $logger = logger('app', $appLog)(LogLevel::ERROR);
     $transport = transport();
     $log = $transport['logger']($logger);
-    $transport = $transport['throw_on_error'](
-        $log(
-            $os->remote()->http()
-        )
-    );
+    $transport = stack(
+        $transport['throw_on_error'],
+        $log
+    )($os->remote()->http());
 
     $xml = xml();
     $reader = $xml['cache'](html());
@@ -104,11 +104,10 @@ function bootstrap(
     );
 
     $homeostasis = homeostasis($factors, $actuator, $homeostasisStates, $os->clock());
-    $regulator = $homeostasis['thread_safe'](
-        $homeostasis['modulate_state_history']($homeostasisActions)(
-            $homeostasis['regulator']
-        )
-    );
+    $regulator = stack(
+        $homeostasis['thread_safe'],
+        $homeostasis['modulate_state_history']($homeostasisActions)
+    )($homeostasis['regulator']);
 
     $amqp = amqp(logger('amqp', $amqpLog)(LogLevel::ERROR));
     $amqpClient = $amqp['client']['basic'](
@@ -132,16 +131,14 @@ function bootstrap(
         new Queue\Binding('urls', 'crawler')
     );
 
-    $amqpClient = $amqp['client']['auto_declare']($exchanges, $queues, $bindings)(
-        $amqp['client']['signal_aware'](
-            $amqp['client']['logger'](
-                $amqp['client']['fluent'](
-                    $amqpClient
-                )
-            ),
-            $os->process()->signals()
-        )
-    );
+    $amqpClient = stack(
+        $amqp['client']['auto_declare']($exchanges, $queues, $bindings),
+        static function($client) use ($amqp, $os) {
+            return $amqp['client']['signal_aware']($client, $os->process()->signals());
+        },
+        $amqp['client']['logger'],
+        $amqp['client']['fluent']
+    )($amqpClient);
     $producer = $amqp['producers']($exchanges)($amqpClient)->get('urls');
 
     $tracer = new CrawlTracer\CrawlTracer($traces, $os->clock());
