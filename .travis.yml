@@ -9,8 +9,8 @@ matrix:
         - php: nightly
 before_script: composer install
 script:
-  - vendor/bin/phpunit --coverage-clover=coverage.clover
-  - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then vendor/bin/infection -s --only-covered --min-msi=95; fi
+  - vendor/bin/phpunit --coverage-clover=coverage.clover --coverage-xml=build/coverage/coverage-xml --log-junit=build/coverage/phpunit.junit.xml
+  - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then vendor/bin/infection -s --only-covered --min-msi=95 --coverage=build/coverage; fi
 after_script:
     - if [ "$TRAVIS_PHP_VERSION" != "nighlty" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
     - if [ "$TRAVIS_PHP_VERSION" != "nighlty" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
