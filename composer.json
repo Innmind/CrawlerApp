@@ -41,5 +41,10 @@
     },
     "scripts": {
         "test" : "bin/simple-phpunit"
+    },
+    "extra": {
+        "gene": {
+            "expression": ["bin/crawler install"]
+        }
     }
 }
