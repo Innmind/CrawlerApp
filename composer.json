@@ -35,7 +35,7 @@
     "require-dev": {
         "phpunit/phpunit": "~8.0",
         "giorgiosironi/eris": "^0.11.0",
-        "infection/infection": "^0.12",
+        "infection/infection": "^0.7.1",
         "roave/security-advisories": "dev-master",
         "innmind/debug": "^1.1"
     },
