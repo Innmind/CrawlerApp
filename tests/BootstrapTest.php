@@ -13,14 +13,25 @@ use Innmind\Url\{
 use Innmind\Filesystem\Adapter;
 use Innmind\Socket\Internet\Transport;
 use Innmind\TimeContinuum\TimeContinuumInterface;
+use Innmind\Server\Status\Server;
 use PHPUnit\Framework\TestCase;
 
 class BootstrapTest extends TestCase
 {
     public function testBootstrap()
     {
+        $os = $this->createMock(OperatingSystem::class);
+        $os
+            ->expects($this->any())
+            ->method('status')
+            ->willReturn($status = $this->createMock(Server::class));
+        $status
+            ->expects($this->any())
+            ->method('tmp')
+            ->willReturn(new Path(\sys_get_temp_dir()));
+
         $commands = bootstrap(
-            $this->createMock(OperatingSystem::class),
+            $os,
             Url::fromString('file:///tmp/app.log'),
             Url::fromString('file:///tmp/amqp.log'),
             $this->createMock(Adapter::class),

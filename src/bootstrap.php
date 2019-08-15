@@ -13,6 +13,7 @@ use function Innmind\AMQP\bootstrap as amqp;
 use function Innmind\Logger\bootstrap as logger;
 use function Innmind\InstallationMonitor\bootstrap as monitor;
 use function Innmind\Stack\stack;
+use function Innmind\IPC\bootstrap as ipc;
 use Innmind\OperatingSystem\OperatingSystem;
 use Innmind\Url\{
     UrlInterface,
@@ -42,6 +43,7 @@ use Innmind\AMQP\{
     Model\Queue,
 };
 use Innmind\TimeWarp\Halt\Usleep;
+use Innmind\IPC\Process\Name;
 use Innmind\Immutable\{
     Set,
     Map,
@@ -245,6 +247,9 @@ function bootstrap(
 
     $clients = monitor($os)['client'];
 
+    $ipc = ipc($os);
+    $homeostasis = new Name('crawler-homeostasis');
+
     return [
         new Command\Consume(
             $amqp['command']['consume']($consumers)($amqpClient),
@@ -260,6 +265,11 @@ function bootstrap(
                 $clients['ipc']()
             ),
             $os->filesystem()->mount(new Path(__DIR__.'/../config'))
+        ),
+        new Command\Homeostasis(
+            $ipc->listen($homeostasis),
+            $regulator,
+            $os->control()->processes()
         )
     ];
 }
