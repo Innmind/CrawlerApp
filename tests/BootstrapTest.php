@@ -28,8 +28,8 @@ class BootstrapTest extends TestCase
         $status
             ->expects($this->any())
             ->method('tmp')
-            ->willReturn(new Path(\sys_get_temp_dir()));
-var_dump(\sys_get_temp_dir());
+            ->willReturn(new Path(\getcwd().'/var'));
+
         $commands = bootstrap(
             $os,
             Url::fromString('file:///tmp/app.log'),
