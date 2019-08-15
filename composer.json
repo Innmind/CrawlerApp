@@ -45,7 +45,10 @@
     },
     "extra": {
         "gene": {
-            "expression": ["bin/crawler install"]
+            "expression": [
+                "bin/crawler install",
+                "bin/crawler homeostasis --daemon"
+            ]
         }
     }
 }
