@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace Crawler\Command;
 
+use Crawler\Homeostasis\Regulator\Regulate;
 use Innmind\CLI\{
     Command,
     Command\Arguments,
     Command\Options,
     Environment,
 };
-use Innmind\Homeostasis\Regulator;
 use Innmind\Immutable\Str;
 
 final class Consume implements Command
@@ -17,7 +17,7 @@ final class Consume implements Command
     private $consume;
     private $regulate;
 
-    public function __construct(Command $consume, Regulator $regulate)
+    public function __construct(Command $consume, Regulate $regulate)
     {
         $this->consume = $consume;
         $this->regulate = $regulate;

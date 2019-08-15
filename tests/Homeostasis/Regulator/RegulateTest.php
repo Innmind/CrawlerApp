@@ -4,58 +4,67 @@ declare(strict_types = 1);
 namespace Tests\Crawler\Homeostasis\Regulator;
 
 use Crawler\Homeostasis\Regulator\Regulate;
-use Innmind\Homeostasis\{
-    Regulator,
-    Strategy,
-    Actuator,
-    Exception\HomeostasisAlreadyInProcess,
+use Innmind\IPC\{
+    IPC,
+    Process,
+    Process\Name,
 };
 use PHPUnit\Framework\TestCase;
 
 class RegulateTest extends TestCase
 {
-    public function testInterface()
-    {
-        $this->assertInstanceOf(
-            Regulator::class,
-            new Regulate(
-                $this->createMock(Regulator::class),
-                $this->createMock(Actuator::class)
-            )
-        );
-    }
-
-    public function testDoesntThrowWhenHomeostasisAlreadyInProcess()
+    public function testPingTheHomeostasisDaemonWhenAvailable()
     {
         $regulate = new Regulate(
-            $regulator = $this->createMock(Regulator::class),
-            $actuator = $this->createMock(Actuator::class)
+            $ipc = $this->createMock(IPC::class),
+            $name = new Name('foo')
         );
-        $regulator
+        $ipc
+            ->expects($this->at(0))
+            ->method('wait')
+            ->with($name);
+        $ipc
+            ->expects($this->at(1))
+            ->method('exist')
+            ->with($name)
+            ->willReturn(true);
+        $ipc
+            ->expects($this->at(2))
+            ->method('get')
+            ->with($name)
+            ->willReturn($process = $this->createMock(Process::class));
+        $process
             ->expects($this->once())
-            ->method('__invoke')
-            ->will($this->throwException(new HomeostasisAlreadyInProcess));
-        $actuator
+            ->method('send')
+            ->with($this->callback(function() {
+                return true; //assert that at least one message is sent
+            }));
+        $process
             ->expects($this->once())
-            ->method('holdSteady');
+            ->method('close');
 
-        $this->assertSame(Strategy::holdSteady(), $regulate());
+        $this->assertNull($regulate());
     }
 
-    public function testRegulate()
+    public function testDoesntPingTheHomeostasisDaemonWhenNotAvailable()
     {
         $regulate = new Regulate(
-            $regulator = $this->createMock(Regulator::class),
-            $actuator = $this->createMock(Actuator::class)
+            $ipc = $this->createMock(IPC::class),
+            $name = new Name('foo')
         );
-        $regulator
-            ->expects($this->once())
-            ->method('__invoke')
-            ->willReturn(Strategy::increase());
-        $actuator
+        $ipc
+            ->expects($this->at(0))
+            ->method('wait')
+            ->with($name);
+        $ipc
+            ->expects($this->at(1))
+            ->method('exist')
+            ->with($name)
+            ->willReturn(false);
+        $ipc
             ->expects($this->never())
-            ->method('holdSteady');
+            ->method('get');
 
-        $this->assertSame(Strategy::increase(), $regulate());
+        $this->assertNull($regulate());
     }
 }

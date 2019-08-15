@@ -253,7 +253,10 @@ function bootstrap(
     return [
         new Command\Consume(
             $amqp['command']['consume']($consumers)($amqpClient),
-            $regulator
+            new Homeostasis\Regulator\Regulate(
+                $ipc,
+                $homeostasis
+            )
         ),
         new Command\Crawl(
             $crawler,
