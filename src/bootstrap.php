@@ -106,10 +106,9 @@ function bootstrap(
     );
 
     $homeostasis = homeostasis($factors, $actuator, $homeostasisStates, $os->clock());
-    $regulator = stack(
-        $homeostasis['thread_safe'],
-        $homeostasis['modulate_state_history']($homeostasisActions)
-    )($homeostasis['regulator']);
+    $regulator = $homeostasis['modulate_state_history']($homeostasisActions)(
+        $homeostasis['regulator']
+    );
 
     $amqp = amqp(logger('amqp', $amqpLog)(LogLevel::ERROR));
     $amqpClient = $amqp['client']['basic'](
