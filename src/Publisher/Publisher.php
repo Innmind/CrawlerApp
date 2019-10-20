@@ -65,7 +65,7 @@ final class Publisher implements PublisherInterface
             ->reduce(
                 new Set(Pattern::class),
                 function(SetInterface $carry, string $mediaType): SetInterface {
-                    return $carry->add(Pattern::fromString($mediaType));
+                    return $carry->add(Pattern::of($mediaType));
                 }
             );
 

@@ -55,9 +55,9 @@ class PatternTest extends TestCase
         new Pattern('application', 'foo', 1.1);
     }
 
-    public function testFromString()
+    public function testOf()
     {
-        $pattern = Pattern::fromString(
+        $pattern = Pattern::of(
             'application/tree.octet-stream+suffix;charset=UTF-8, another=param,me=too'
         );
 
@@ -70,14 +70,14 @@ class PatternTest extends TestCase
             (string) $pattern
         );
 
-        $this->assertSame('*/*; q=0.1', (string) Pattern::fromString('*/*; q=0.1'));
-        $this->assertSame('image/*; q=0.1', (string) Pattern::fromString('image/*; q=0.1'));
+        $this->assertSame('*/*; q=0.1', (string) Pattern::of('*/*; q=0.1'));
+        $this->assertSame('image/*; q=0.1', (string) Pattern::of('image/*; q=0.1'));
     }
 
     public function testThrowWhenInvalidString()
     {
         $this->expectException(InvalidMediaTypeString::class);
-        Pattern::fromString('foo');
+        Pattern::of('foo');
     }
 
     /**
@@ -87,7 +87,7 @@ class PatternTest extends TestCase
     {
         $this->assertSame(
             $expected,
-            Pattern::fromString($pattern)->matches(
+            Pattern::of($pattern)->matches(
                 MediaType::fromString($media)
             )
         );

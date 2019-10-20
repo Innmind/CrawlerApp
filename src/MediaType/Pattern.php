@@ -85,7 +85,7 @@ final class Pattern
      *
      * @return self
      */
-    public static function fromString(string $string): self
+    public static function of(string $string): self
     {
         $string = new Str($string);
         $pattern = '~[\w\-.*]+/[\w\-.*]+([;,] [\w\-.]+=[\w\-.]+)?~';
