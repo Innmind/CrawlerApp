@@ -34,9 +34,9 @@ use Innmind\Immutable\{
 
 final class Link implements Message
 {
-    private $inner;
-    private $resource;
-    private $reference;
+    private Message $inner;
+    private UrlInterface $resource;
+    private Reference $reference;
 
     public function __construct(
         UrlInterface $referrer,

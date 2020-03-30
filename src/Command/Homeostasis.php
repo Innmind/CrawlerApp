@@ -18,9 +18,9 @@ use Innmind\Server\Control\Server\{
 
 final class Homeostasis implements Command
 {
-    private $listen;
-    private $regulate;
-    private $processes;
+    private Server $listen;
+    private Regulator $regulate;
+    private Processes $processes;
 
     public function __construct(
         Server $listen,

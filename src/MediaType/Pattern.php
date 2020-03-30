@@ -15,9 +15,9 @@ use Innmind\Immutable\{
 
 final class Pattern
 {
-    private $topLevel;
-    private $subType;
-    private $quality;
+    private string $topLevel;
+    private string $subType;
+    private float $quality;
 
     public function __construct(
         string $topLevel,

@@ -34,9 +34,9 @@ use Innmind\Immutable\{
 
 final class Crawl implements Command
 {
-    private $crawl;
-    private $userAgent;
-    private $publish;
+    private Crawler $crawl;
+    private string $userAgent;
+    private Publisher $publish;
 
     public function __construct(
         Crawler $crawl,

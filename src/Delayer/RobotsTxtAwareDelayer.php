@@ -23,10 +23,10 @@ use Innmind\TimeContinuum\{
 
 final class RobotsTxtAwareDelayer implements Delayer
 {
-    private $parser;
-    private $userAgent;
-    private $halt;
-    private $clock;
+    private Parser $parser;
+    private string $userAgent;
+    private Halt $halt;
+    private TimeContinuumInterface $clock;
 
     public function __construct(
         Parser $parser,

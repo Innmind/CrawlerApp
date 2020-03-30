@@ -12,8 +12,8 @@ use Innmind\Http\Message\Request;
 
 final class DelayerAwareCrawler implements Crawler
 {
-    private $delay;
-    private $crawl;
+    private Delayer $delay;
+    private Crawler $crawl;
 
     public function __construct(
         Delayer $delayer,

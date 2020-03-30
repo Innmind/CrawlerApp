@@ -14,8 +14,8 @@ use Innmind\Immutable\Str;
 
 final class Consume implements Command
 {
-    private $consume;
-    private $regulate;
+    private Command $consume;
+    private Regulate $regulate;
 
     public function __construct(Command $consume, Regulate $regulate)
     {

@@ -27,8 +27,8 @@ use Innmind\Immutable\{
 
 final class Install implements Command
 {
-    private $client;
-    private $config;
+    private Client $client;
+    private Adapter $config;
 
     public function __construct(Client $client, Adapter $config)
     {

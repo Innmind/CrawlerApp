@@ -39,11 +39,11 @@ use Innmind\Immutable\{
 
 final class Resource implements Message
 {
-    private $inner;
-    private $resource;
-    private $relationship;
-    private $attributes;
-    private $reference;
+    private Message $inner;
+    private UrlInterface $resource;
+    private ?string $relationship;
+    private array $attributes;
+    private Reference $reference;
 
     public function __construct(Locked $message)
     {

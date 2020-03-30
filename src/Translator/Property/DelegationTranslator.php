@@ -11,7 +11,7 @@ use function Innmind\Immutable\assertMap;
 
 final class DelegationTranslator implements PropertyTranslator
 {
-    private $translators;
+    private MapInterface $translators;
 
     public function __construct(MapInterface $translators)
     {

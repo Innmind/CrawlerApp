@@ -23,10 +23,10 @@ use Psr\Log\LoggerInterface;
 
 final class ProvisionConsumers implements Actuator
 {
-    private $status;
-    private $control;
-    private $logger;
-    private $spawn;
+    private Status $status;
+    private Control $control;
+    private LoggerInterface $logger;
+    private Command $spawn;
 
     public function __construct(
         Status $status,

@@ -17,7 +17,7 @@ use Innmind\Immutable\{
 
 final class HttpResourceTranslator
 {
-    private $translator;
+    private PropertyTranslator $translator;
 
     public function __construct(PropertyTranslator $translator)
     {

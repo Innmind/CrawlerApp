@@ -34,10 +34,10 @@ use Innmind\Immutable\{
 
 final class Image implements Message
 {
-    private $inner;
-    private $resource;
-    private $reference;
-    private $description;
+    private Message $inner;
+    private UrlInterface $resource;
+    private Reference $reference;
+    private string $description;
 
     public function __construct(
         UrlInterface $resource,

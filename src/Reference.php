@@ -8,9 +8,9 @@ use Innmind\Url\UrlInterface;
 
 final class Reference
 {
-    private $identity;
-    private $definition;
-    private $server;
+    private Identity $identity;
+    private string $definition;
+    private UrlInterface $server;
 
     public function __construct(
         Identity $identity,

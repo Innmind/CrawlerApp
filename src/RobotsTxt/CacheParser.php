@@ -23,9 +23,9 @@ use Innmind\Immutable\Str;
 
 final class CacheParser implements Parser
 {
-    private $parser;
-    private $walker;
-    private $filesystem;
+    private Parser $parser;
+    private Walker $walker;
+    private Adapter $filesystem;
 
     public function __construct(
         Parser $parser,

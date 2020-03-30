@@ -20,7 +20,7 @@ use Innmind\Immutable\{
 
 final class Linker implements LinkerInterface
 {
-    private $client;
+    private Client $client;
 
     public function __construct(Client $client)
     {

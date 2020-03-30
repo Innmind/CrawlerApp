@@ -10,7 +10,7 @@ use Innmind\Url\{
 
 final class SameUrlAs
 {
-    private $url;
+    private UrlInterface $url;
 
     public function __construct(UrlInterface $url)
     {

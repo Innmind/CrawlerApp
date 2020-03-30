@@ -34,10 +34,10 @@ use Innmind\Immutable\{
 
 final class Alternate implements Message
 {
-    private $inner;
-    private $resource;
-    private $reference;
-    private $language;
+    private Message $inner;
+    private UrlInterface $resource;
+    private Reference $reference;
+    private string $language;
 
     public function __construct(
         UrlInterface $resource,

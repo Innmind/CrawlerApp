@@ -25,9 +25,9 @@ use Innmind\Immutable\{
 
 final class Publisher implements PublisherInterface
 {
-    private $client;
-    private $translator;
-    private $negotiator;
+    private Client $client;
+    private HttpResourceTranslator $translator;
+    private Negotiator $negotiator;
 
     public function __construct(
         Client $client,

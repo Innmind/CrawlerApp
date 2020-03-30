@@ -15,10 +15,10 @@ use Innmind\Url\UrlInterface;
 
 final class ThresholdDelayer implements Delayer
 {
-    private $attempt;
-    private $fallback;
-    private $clock;
-    private $threshold;
+    private Delayer $attempt;
+    private Delayer $fallback;
+    private TimeContinuumInterface $clock;
+    private ElapsedPeriodInterface $threshold;
 
     public function __construct(
         Delayer $attempt,

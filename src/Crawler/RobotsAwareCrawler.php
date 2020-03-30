@@ -21,9 +21,9 @@ use Innmind\Http\Message\Request;
 
 final class RobotsAwareCrawler implements Crawler
 {
-    private $parser;
-    private $crawl;
-    private $userAgent;
+    private Parser $parser;
+    private Crawler $crawl;
+    private string $userAgent;
 
     public function __construct(
         Parser $parser,

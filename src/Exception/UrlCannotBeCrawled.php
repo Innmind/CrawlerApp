@@ -7,7 +7,7 @@ use Innmind\Url\UrlInterface;
 
 final class UrlCannotBeCrawled extends DomainException
 {
-    private $url;
+    private UrlInterface $url;
 
     public function __construct(UrlInterface $url)
     {

@@ -34,10 +34,10 @@ use Innmind\AMQP\{
 
 final class CrawlConsumer
 {
-    private $crawl;
-    private $publish;
-    private $link;
-    private $userAgent;
+    private Crawler $crawl;
+    private Publisher $publish;
+    private Linker $link;
+    private string $userAgent;
 
     public function __construct(
         Crawler $crawl,

@@ -14,8 +14,8 @@ use Innmind\Http\{
 
 final class Authentified implements Transport
 {
-    private $fulfill;
-    private $header;
+    private Transport $fulfill;
+    private Authorization $header;
 
     public function __construct(Transport $fulfill, string $apiKey)
     {

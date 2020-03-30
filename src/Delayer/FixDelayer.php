@@ -13,8 +13,8 @@ use Innmind\Url\UrlInterface;
 
 final class FixDelayer implements Delayer
 {
-    private $process;
-    private $period;
+    private CurrentProcess $process;
+    private PeriodInterface $period;
 
     public function __construct(
         CurrentProcess $process,

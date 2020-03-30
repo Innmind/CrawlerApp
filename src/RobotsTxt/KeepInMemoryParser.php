@@ -12,8 +12,8 @@ use Innmind\Immutable\Map;
 
 final class KeepInMemoryParser implements Parser
 {
-    private $parser;
-    private $cache;
+    private Parser $parser;
+    private Map $cache;
 
     public function __construct(Parser $parser)
     {

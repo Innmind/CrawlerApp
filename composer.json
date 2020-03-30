@@ -15,7 +15,7 @@
         }
     },
     "require": {
-        "php": "~7.2",
+        "php": "~7.4",
         "innmind/crawler": "~5.0",
         "innmind/robots-txt": "~4.0",
         "innmind/server-control": "^2.0",

@@ -13,8 +13,8 @@ use Innmind\Immutable\Str;
 
 final class Regulate
 {
-    private $ipc;
-    private $name;
+    private IPC $ipc;
+    private Name $name;
 
     public function __construct(IPC $ipc, Name $name)
     {

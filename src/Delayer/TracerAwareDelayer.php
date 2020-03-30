@@ -17,10 +17,10 @@ use Innmind\Url\UrlInterface;
 
 final class TracerAwareDelayer implements Delayer
 {
-    private $tracer;
-    private $delay;
-    private $clock;
-    private $threshold;
+    private CrawlTracer $tracer;
+    private Delayer $delay;
+    private TimeContinuumInterface $clock;
+    private ElapsedPeriodInterface $threshold;
 
     public function __construct(
         CrawlTracer $tracer,

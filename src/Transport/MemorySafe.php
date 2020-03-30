@@ -15,8 +15,8 @@ use Innmind\Http\Message\{
 
 final class MemorySafe implements Transport
 {
-    private $fulfill;
-    private $threshold;
+    private Transport $fulfill;
+    private int $threshold;
 
     public function __construct(Transport $fulfill, int $threshold = null)
     {

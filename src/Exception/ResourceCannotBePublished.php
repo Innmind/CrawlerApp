@@ -7,7 +7,7 @@ use Innmind\Crawler\HttpResource;
 
 final class ResourceCannotBePublished extends RuntimeException
 {
-    private $resource;
+    private HttpResource $resource;
 
     public function __construct(HttpResource $resource)
     {

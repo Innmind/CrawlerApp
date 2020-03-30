@@ -31,8 +31,8 @@ final class CrawlTracer implements CrawlTracerInterface
     private const URLS = 'urls.txt';
     private const HITS = 'hits';
 
-    private $filesystem;
-    private $clock;
+    private Adapter $filesystem;
+    private TimeContinuumInterface $clock;
 
     public function __construct(
         Adapter $filesystem,

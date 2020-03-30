@@ -14,8 +14,8 @@ use Innmind\AMQP\Producer;
 
 final class ImagesAwarePublisher implements PublisherInterface
 {
-    private $publisher;
-    private $produce;
+    private PublisherInterface $publisher;
+    private Producer $produce;
 
     public function __construct(
         PublisherInterface $publisher,
