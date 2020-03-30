@@ -1,0 +1,4 @@
+ignore:
+    - var/
+    - bin/
+    - app/
