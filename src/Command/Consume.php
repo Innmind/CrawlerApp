@@ -32,11 +32,13 @@ final class Consume implements Command
         }
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
-        return (string) Str::of((string) $this->consume)->replace(
-            'innmind:amqp:consume',
-            'consume'
-        );
+        return Str::of($this->consume->toString())
+            ->replace(
+                'innmind:amqp:consume',
+                'consume'
+            )
+            ->toString();
     }
 }

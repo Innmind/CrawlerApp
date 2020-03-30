@@ -16,8 +16,8 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\{
     Readable,
     Stream\Size,
@@ -40,7 +40,7 @@ class WeightTranslatorTest extends TestCase
             'weight',
             $this->createMock(Type::class),
             new Access,
-            new Set('string'),
+            Set::of('string'),
             false
         );
     }
@@ -55,10 +55,10 @@ class WeightTranslatorTest extends TestCase
 
     public function testSupports()
     {
-        $attributes = new Map('string', Attribute::class);
+        $attributes = Map::of('string', Attribute::class);
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes,
             $this->createMock(Readable::class)
         );
@@ -66,8 +66,8 @@ class WeightTranslatorTest extends TestCase
         $this->assertFalse($this->translator->supports($resource, $this->property));
 
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes->put(
                 'weight',
                 new Attribute\Attribute('weight', 'whatever')
@@ -80,10 +80,10 @@ class WeightTranslatorTest extends TestCase
 
     public function testTranslate()
     {
-        $attributes = new Map('string', Attribute::class);
+        $attributes = Map::of('string', Attribute::class);
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes->put(
                 'weight',
                 new Attribute\Attribute('weight', new Size(42))

@@ -16,17 +16,15 @@ use Innmind\Crawler\{
     HttpResource\Alternate,
 };
 use Innmind\Url\{
-    UrlInterface,
     Url,
     Fragment,
 };
-use Innmind\Filesystem\MediaType;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
 use Innmind\AMQP\Producer;
 use Innmind\Immutable\{
     Map,
-    SetInterface,
     Set,
 };
 use PHPUnit\Framework\TestCase;
@@ -56,12 +54,12 @@ class AlternatesAwarePublisherTest extends TestCase
     public function testDoesntPublishWhenNoAlternate()
     {
         $resource = new CrawledResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
-        $server = $this->createMock(UrlInterface::class);
+        $server = Url::of('example.com');
         $this
             ->inner
             ->expects($this->once())
@@ -85,8 +83,8 @@ class AlternatesAwarePublisherTest extends TestCase
     public function testDoesntPublishWhenAlternateIdenticalToResourceUrl()
     {
         $resource = new CrawledResource(
-            $url = Url::fromString('http://example.com/'),
-            $this->createMock(MediaType::class),
+            $url = Url::of('http://example.com/'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 (
                     'alternates',
@@ -97,8 +95,8 @@ class AlternatesAwarePublisherTest extends TestCase
                                 new Alternate(
                                     'en',
                                     Set::of(
-                                        UrlInterface::class,
-                                        $url->withFragment(new Fragment('foo'))
+                                        Url::class,
+                                        $url->withFragment(Fragment::of('foo'))
                                     )
                                 )
                             )
@@ -106,7 +104,7 @@ class AlternatesAwarePublisherTest extends TestCase
                 ),
             $this->createMock(Readable::class)
         );
-        $server = $this->createMock(UrlInterface::class);
+        $server = Url::of('example.com');
         $this
             ->inner
             ->expects($this->once())
@@ -130,8 +128,8 @@ class AlternatesAwarePublisherTest extends TestCase
     public function testDoesntPublishWhenNotCorrectAttributeInstance()
     {
         $resource = new CrawledResource(
-            $url = Url::fromString('http://example.com/'),
-            $this->createMock(MediaType::class),
+            $url = Url::of('http://example.com/'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 (
                     'alternates',
@@ -139,7 +137,7 @@ class AlternatesAwarePublisherTest extends TestCase
                 ),
             $this->createMock(Readable::class)
         );
-        $server = $this->createMock(UrlInterface::class);
+        $server = Url::of('example.com');
         $this
             ->inner
             ->expects($this->once())
@@ -163,8 +161,8 @@ class AlternatesAwarePublisherTest extends TestCase
     public function testPublish()
     {
         $resource = new CrawledResource(
-            Url::fromString('http://example.com/'),
-            $this->createMock(MediaType::class),
+            Url::of('http://example.com/'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 (
                     'alternates',
@@ -175,8 +173,8 @@ class AlternatesAwarePublisherTest extends TestCase
                                 new Alternate(
                                     'en',
                                     Set::of(
-                                        UrlInterface::class,
-                                        $published = Url::fromString('http://example.com/foo')
+                                        Url::class,
+                                        $published = Url::of('http://example.com/foo')
                                     )
                                 )
                             )
@@ -184,7 +182,7 @@ class AlternatesAwarePublisherTest extends TestCase
                 ),
             $this->createMock(Readable::class)
         );
-        $server = Url::fromString('http://server.url/');
+        $server = Url::of('http://server.url/');
         $this
             ->inner
             ->expects($this->once())
@@ -199,7 +197,7 @@ class AlternatesAwarePublisherTest extends TestCase
             );
         $identity
             ->expects($this->once())
-            ->method('__toString')
+            ->method('toString')
             ->willReturn('some identity');
         $this
             ->producer

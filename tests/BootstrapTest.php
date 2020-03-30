@@ -28,21 +28,21 @@ class BootstrapTest extends TestCase
         $status
             ->expects($this->any())
             ->method('tmp')
-            ->willReturn(new Path(\getcwd().'/var'));
+            ->willReturn(Path::of(\getcwd().'/var/'));
 
         $commands = bootstrap(
             $os,
-            Url::fromString('file:///tmp/app.log'),
-            Url::fromString('file:///tmp/amqp.log'),
+            Url::of('file:///tmp/app.log'),
+            Url::of('file:///tmp/amqp.log'),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
-            new Path('/tmp'),
+            Path::of('/tmp'),
             Transport::tcp(),
-            Url::fromString('amqp://user:pwd@localhost:5672/'),
+            Url::of('amqp://user:pwd@localhost:5672/'),
             'apikey',
             'Innmind Robot'
         );

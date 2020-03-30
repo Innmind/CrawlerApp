@@ -16,8 +16,8 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
@@ -37,7 +37,7 @@ class IsJournalTranslatorTest extends TestCase
             'is_journal',
             $this->createMock(Type::class),
             new Access,
-            new Set('string'),
+            Set::of('string'),
             false
         );
     }
@@ -52,10 +52,10 @@ class IsJournalTranslatorTest extends TestCase
 
     public function testSupports()
     {
-        $attributes = new Map('string', Attribute::class);
+        $attributes = Map::of('string', Attribute::class);
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes,
             $this->createMock(Readable::class)
         );
@@ -63,8 +63,8 @@ class IsJournalTranslatorTest extends TestCase
         $this->assertFalse($this->translator->supports($resource, $this->property));
 
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes->put(
                 'journal',
                 new Attribute\Attribute('journal', true)
@@ -77,10 +77,10 @@ class IsJournalTranslatorTest extends TestCase
 
     public function testTranslate()
     {
-        $attributes = new Map('string', Attribute::class);
+        $attributes = Map::of('string', Attribute::class);
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes->put(
                 'journal',
                 new Attribute\Attribute('journal', true)

@@ -47,10 +47,10 @@ class ConsumeTest extends TestCase
         );
         $mock
             ->expects($this->once())
-            ->method('__toString')
+            ->method('toString')
             ->willReturn('innmind:amqp:consume queue [number] [prefetch]');
 
-        $this->assertSame('consume queue [number] [prefetch]', (string) $command);
+        $this->assertSame('consume queue [number] [prefetch]', $command->toString());
     }
 
     public function testInvokation()

@@ -14,11 +14,10 @@ use Innmind\Crawler\{
     HttpResource\Attribute,
 };
 use Innmind\Url\{
-    UrlInterface,
     Url,
     Fragment,
 };
-use Innmind\Filesystem\MediaType;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
 use Innmind\AMQP\Producer;
@@ -53,12 +52,12 @@ class LinksAwarePublisherTest extends TestCase
     public function testDoesntPublishWhenNoLink()
     {
         $resource = new CrawledResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
-        $server = $this->createMock(UrlInterface::class);
+        $server = Url::of('example.com');
         $this
             ->inner
             ->expects($this->once())
@@ -82,22 +81,22 @@ class LinksAwarePublisherTest extends TestCase
     public function testDoesntPublishWhenLinkIdenticalToResourceUrl()
     {
         $resource = new CrawledResource(
-            $url = Url::fromString('http://example.com/'),
-            $this->createMock(MediaType::class),
+            $url = Url::of('http://example.com/'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 (
                     'links',
                     new Attribute\Attribute(
                         'links',
                         Set::of(
-                            UrlInterface::class,
-                            $url->withFragment(new Fragment('foo'))
+                            Url::class,
+                            $url->withFragment(Fragment::of('foo'))
                         )
                     )
                 ),
             $this->createMock(Readable::class)
         );
-        $server = $this->createMock(UrlInterface::class);
+        $server = Url::of('example.com');
         $this
             ->inner
             ->expects($this->once())
@@ -121,22 +120,22 @@ class LinksAwarePublisherTest extends TestCase
     public function testPublish()
     {
         $resource = new CrawledResource(
-            Url::fromString('http://example.com/'),
-            $this->createMock(MediaType::class),
+            Url::of('http://example.com/'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 (
                     'links',
                     new Attribute\Attribute(
                         'links',
                         Set::of(
-                            UrlInterface::class,
-                            $published = Url::fromString('http://example.com/foo')
+                            Url::class,
+                            $published = Url::of('http://example.com/foo')
                         )
                     )
                 ),
             $this->createMock(Readable::class)
         );
-        $server = Url::fromString('http://server.url/');
+        $server = Url::of('http://server.url/');
         $this
             ->inner
             ->expects($this->once())
@@ -151,7 +150,7 @@ class LinksAwarePublisherTest extends TestCase
             );
         $identity
             ->expects($this->once())
-            ->method('__toString')
+            ->method('toString')
             ->willReturn('some identity');
         $this
             ->producer

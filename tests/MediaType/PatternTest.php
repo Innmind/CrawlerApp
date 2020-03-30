@@ -7,8 +7,8 @@ use Crawler\{
     MediaType\Pattern,
     Exception\DomainException,
 };
-use Innmind\Filesystem\{
-    MediaType\MediaType,
+use Innmind\MediaType\{
+    MediaType,
     Exception\InvalidMediaTypeString,
 };
 use Innmind\Immutable\Map;
@@ -88,7 +88,7 @@ class PatternTest extends TestCase
         $this->assertSame(
             $expected,
             Pattern::of($pattern)->matches(
-                MediaType::fromString($media)
+                MediaType::of($media)
             )
         );
     }

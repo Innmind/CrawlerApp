@@ -16,8 +16,9 @@ final class QueryTranslator implements PropertyTranslator
 
     public function translate(HttpResource $resource, Property $property)
     {
-        return (string) $resource
+        return $resource
             ->url()
-            ->query();
+            ->query()
+            ->toString();
     }
 }

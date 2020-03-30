@@ -13,16 +13,16 @@ use Innmind\RobotsTxt\{
     Parser\Walker,
     Exception\FileNotFound,
 };
-use Innmind\Url\{
-    Url,
-    UrlInterface,
-};
+use Innmind\Url\Url;
 use Innmind\TimeWarp\Halt;
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    Period\Earth\Second,
+    Clock,
+    Earth\Period\Second,
 };
-use Innmind\Immutable\Str;
+use Innmind\Immutable\{
+    Str,
+    Sequence,
+};
 use PHPUnit\Framework\TestCase;
 
 class RobotsTxtAwareDelayerTest extends TestCase
@@ -35,7 +35,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
                 $this->createMock(Parser::class),
                 'foo',
                 $this->createMock(Halt::class),
-                $this->createMock(TimeContinuumInterface::class)
+                $this->createMock(Clock::class)
             )
         );
     }
@@ -46,7 +46,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
             $parser = $this->createMock(Parser::class),
             'foo',
             $this->createMock(Halt::class),
-            $this->createMock(TimeContinuumInterface::class)
+            $this->createMock(Clock::class)
         );
         $parser
             ->expects($this->once())
@@ -54,7 +54,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
             ->will($this->throwException(new FileNotFound));
 
         $start = microtime(true);
-        $this->assertNull($delayer(Url::fromString('http://example.com/')));
+        $this->assertNull($delayer(Url::of('http://example.com/')));
         $this->assertTrue(microtime(true) - $start < 1);
     }
 
@@ -64,27 +64,27 @@ class RobotsTxtAwareDelayerTest extends TestCase
             $parser = $this->createMock(Parser::class),
             'bar',
             $this->createMock(Halt::class),
-            $this->createMock(TimeContinuumInterface::class)
+            $this->createMock(Clock::class)
         );
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(UrlInterface $url): bool {
-                return (string) $url === 'http://example.com/robots.txt';
+            ->with($this->callback(function(Url $url): bool {
+                return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
                 new RobotsTxt(
-                    $this->createMock(UrlInterface::class),
-                    (new Walker)(new Str(<<<TXT
-User-agent: foo
-Crawl-delay: 10
-TXT
+                    Url::of('example.com'),
+                    (new Walker)(Sequence::of(
+                        Str::class,
+                        Str::of('User-agent: foo'),
+                        Str::of('Crawl-delay: 10'),
                     ))
                 )
             );
 
         $start = microtime(true);
-        $this->assertNull($delayer(Url::fromString('http://example.com/')));
+        $this->assertNull($delayer(Url::of('http://example.com/')));
         $this->assertTrue(microtime(true) - $start < 1);
     }
 
@@ -94,27 +94,27 @@ TXT
             $parser = $this->createMock(Parser::class),
             'foo',
             $this->createMock(Halt::class),
-            $this->createMock(TimeContinuumInterface::class)
+            $this->createMock(Clock::class)
         );
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(UrlInterface $url): bool {
-                return (string) $url === 'http://example.com/robots.txt';
+            ->with($this->callback(function(Url $url): bool {
+                return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
                 new RobotsTxt(
-                    $this->createMock(UrlInterface::class),
-                    (new Walker)(new Str(<<<TXT
-User-agent: foo
-Crawl-delay: 0
-TXT
+                    Url::of('example.com'),
+                    (new Walker)(Sequence::of(
+                        Str::class,
+                        Str::of('User-agent: foo'),
+                        Str::of('Crawl-delay: 0'),
                     ))
                 )
             );
 
         $start = microtime(true);
-        $this->assertNull($delayer(Url::fromString('http://example.com/')));
+        $this->assertNull($delayer(Url::of('http://example.com/')));
         $this->assertTrue(microtime(true) - $start < 1);
     }
 
@@ -124,21 +124,21 @@ TXT
             $parser = $this->createMock(Parser::class),
             'foo',
             $halt = $this->createMock(Halt::class),
-            $clock = $this->createMock(TimeContinuumInterface::class)
+            $clock = $this->createMock(Clock::class)
         );
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(UrlInterface $url): bool {
-                return (string) $url === 'http://example.com/robots.txt';
+            ->with($this->callback(function(Url $url): bool {
+                return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
                 new RobotsTxt(
-                    $this->createMock(UrlInterface::class),
-                    (new Walker)(new Str(<<<TXT
-User-agent: foo
-Crawl-delay: 2
-TXT
+                    Url::of('example.com'),
+                    (new Walker)(Sequence::of(
+                        Str::class,
+                        Str::of('User-agent: foo'),
+                        Str::of('Crawl-delay: 2'),
                     ))
                 )
             );
@@ -147,7 +147,7 @@ TXT
             ->method('__invoke')
             ->with($clock, new Second(2));
 
-        $this->assertNull($delayer(Url::fromString('http://example.com/')));
+        $this->assertNull($delayer(Url::of('http://example.com/')));
     }
 
     public function testWaitTheLongestOfMatchingCrawlDelays()
@@ -156,24 +156,24 @@ TXT
             $parser = $this->createMock(Parser::class),
             'foo',
             $halt = $this->createMock(Halt::class),
-            $clock = $this->createMock(TimeContinuumInterface::class)
+            $clock = $this->createMock(Clock::class)
         );
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(UrlInterface $url): bool {
-                return (string) $url === 'http://example.com/robots.txt';
+            ->with($this->callback(function(Url $url): bool {
+                return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
                 new RobotsTxt(
-                    $this->createMock(UrlInterface::class),
-                    (new Walker)(new Str(<<<TXT
-User-agent: foo
-Crawl-delay: 2
-
-User-agent: *
-Crawl-delay: 4
-TXT
+                    Url::of('example.com'),
+                    (new Walker)(Sequence::of(
+                        Str::class,
+                        Str::of('User-agent: foo'),
+                        Str::of('Crawl-delay: 2'),
+                        Str::of(''),
+                        Str::of('User-agent: *'),
+                        Str::of('Crawl-delay: 4'),
                     ))
                 )
             );
@@ -182,6 +182,6 @@ TXT
             ->method('__invoke')
             ->with($clock, new Second(4));
 
-        $this->assertNull($delayer(Url::fromString('http://example.com/')));
+        $this->assertNull($delayer(Url::of('http://example.com/')));
     }
 }

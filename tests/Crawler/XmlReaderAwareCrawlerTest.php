@@ -13,10 +13,10 @@ use Innmind\Xml\{
     Node,
     Reader\Cache\Storage,
 };
-use Innmind\Filesystem\MediaType;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Http\Message\Request;
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
 
@@ -48,9 +48,9 @@ class XmlReaderAwareCrawlerTest extends TestCase
             ->with($request)
             ->willReturn(
                 $expected = new HttpResource(
-                    $this->createMock(UrlInterface::class),
-                    $this->createMock(MediaType::class),
-                    new Map('string', Attribute::class),
+                    Url::of('example.com'),
+                    MediaType::null(),
+                    Map::of('string', Attribute::class),
                     $stream
                 )
             );

@@ -38,11 +38,11 @@ class HomeostasisTest extends TestCase
     {
         $this->assertSame(
             'homeostasis -d|--daemon',
-            (string) new Homeostasis(
+            (new Homeostasis(
                 $this->createMock(Server::class),
                 $this->createMock(Regulator::class),
                 $this->createMock(Processes::class)
-            )
+            ))->toString()
         );
     }
 
@@ -95,22 +95,22 @@ class HomeostasisTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->with($this->callback(static function($command) {
-                return (string) $command === "bin/crawler 'homeostasis'" &&
-                    $command->workingDirectory() === '/somewhere' &&
+                return $command->toString() === "bin/crawler 'homeostasis'" &&
+                    $command->workingDirectory()->toString() === '/somewhere' &&
                     $command->toBeRunInBackground();
             }));
         $env = $this->createMock(Environment::class);
         $env
             ->expects($this->once())
             ->method('workingDirectory')
-            ->willReturn(new Path('/somewhere'));
+            ->willReturn(Path::of('/somewhere'));
 
         $this->assertNull($command(
             $env,
             new Arguments,
             new Options(
-                Map::of('string', 'mixed')
-                    ('daemon', true)
+                Map::of('string', 'string')
+                    ('daemon', '')
             )
         ));
     }

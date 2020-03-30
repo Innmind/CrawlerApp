@@ -18,8 +18,8 @@ use Innmind\Crawler\{
     HttpResource as CrawledResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
 use Innmind\HttpTransport\Exception\{
@@ -30,7 +30,7 @@ use Innmind\HttpTransport\Exception\{
 use Innmind\Http\Message\{
     Request,
     Response,
-    StatusCode\StatusCode,
+    StatusCode,
 };
 use Innmind\AMQP\{
     Model\Basic\Message\Generic,
@@ -67,7 +67,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -79,16 +79,16 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
-                return (string) $request->url() === 'foo' &&
-                    (string) $request->method() === 'GET' &&
-                    (string) $request->protocolVersion() === '2.0' &&
-                    $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
+                return $request->url()->toString() === 'foo' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->protocolVersion()->toString() === '2.0' &&
+                    $request->headers()->contains('User-Agent') &&
+                    $request->headers()->get('User-Agent')->toString() === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -96,14 +96,14 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $resource,
-                $this->callback(static function(UrlInterface $url): bool {
-                    return (string) $url === 'server';
+                $this->callback(static function(Url $url): bool {
+                    return $url->toString() === 'server';
                 })
             )
             ->willReturn(new Reference(
                 $this->createMock(Identity::class),
                 'definition',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ));
         $linker
             ->expects($this->never())
@@ -121,7 +121,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -157,7 +157,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -193,7 +193,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -231,7 +231,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -244,7 +244,7 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->will($this->throwException(
                 new UrlCannotBeCrawled(
-                    $this->createMock(UrlInterface::class)
+                    Url::of('example.com')
                 )
             ));
         $publisher
@@ -266,7 +266,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -297,7 +297,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -311,15 +311,15 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
-                return (string) $request->url() === 'foo' &&
-                    (string) $request->method() === 'GET' &&
-                    $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
+                return $request->url()->toString() === 'foo' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->headers()->contains('User-Agent') &&
+                    $request->headers()->get('User-Agent')->toString() === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -327,14 +327,14 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $resource,
-                $this->callback(static function(UrlInterface $url): bool {
-                    return (string) $url === 'server';
+                $this->callback(static function(Url $url): bool {
+                    return $url->toString() === 'server';
                 })
             )
             ->willReturn($reference = new Reference(
                 $this->createMock(Identity::class),
                 'definition',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ));
         $linker
             ->expects($this->once())
@@ -342,9 +342,9 @@ class CrawlConsumerTest extends TestCase
             ->with(
                 $reference,
                 $this->callback(function(Reference $reference): bool {
-                    return (string) $reference->identity() === 'origin' &&
+                    return $reference->identity()->toString() === 'origin' &&
                         $reference->definition() === 'definition' &&
-                        (string) $reference->server() === 'server';
+                        $reference->server()->toString() === 'server';
                 }),
                 'referrer',
                 ['foo', 'bar']
@@ -362,7 +362,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -376,15 +376,15 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
-                return (string) $request->url() === 'foo' &&
-                    (string) $request->method() === 'GET' &&
-                    $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
+                return $request->url()->toString() === 'foo' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->headers()->contains('User-Agent') &&
+                    $request->headers()->get('User-Agent')->toString() === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -392,8 +392,8 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $resource,
-                $this->callback(static function(UrlInterface $url): bool {
-                    return (string) $url === 'server';
+                $this->callback(static function(Url $url): bool {
+                    return $url->toString() === 'server';
                 })
             )
             ->will($this->throwException(
@@ -422,7 +422,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -436,15 +436,15 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
-                return (string) $request->url() === 'foo' &&
-                    (string) $request->method() === 'GET' &&
-                    $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
+                return $request->url()->toString() === 'foo' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->headers()->contains('User-Agent') &&
+                    $request->headers()->get('User-Agent')->toString() === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -452,8 +452,8 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $resource,
-                $this->callback(static function(UrlInterface $url): bool {
-                    return (string) $url === 'server';
+                $this->callback(static function(Url $url): bool {
+                    return $url->toString() === 'server';
                 })
             )
             ->will($this->throwException(
@@ -484,7 +484,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -498,15 +498,15 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
-                return (string) $request->url() === 'foo' &&
-                    (string) $request->method() === 'GET' &&
-                    $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
+                return $request->url()->toString() === 'foo' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->headers()->contains('User-Agent') &&
+                    $request->headers()->get('User-Agent')->toString() === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -514,8 +514,8 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $resource,
-                $this->callback(static function(UrlInterface $url): bool {
-                    return (string) $url === 'server';
+                $this->callback(static function(Url $url): bool {
+                    return $url->toString() === 'server';
                 })
             )
             ->will($this->throwException(
@@ -537,7 +537,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -551,15 +551,15 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
-                return (string) $request->url() === 'foo' &&
-                    (string) $request->method() === 'GET' &&
-                    $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
+                return $request->url()->toString() === 'foo' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->headers()->contains('User-Agent') &&
+                    $request->headers()->get('User-Agent')->toString() === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -567,14 +567,14 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $resource,
-                $this->callback(static function(UrlInterface $url): bool {
-                    return (string) $url === 'server';
+                $this->callback(static function(Url $url): bool {
+                    return $url->toString() === 'server';
                 })
             )
             ->willReturn($reference = new Reference(
                 $this->createMock(Identity::class),
                 'definition',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ));
         $linker
             ->expects($this->once())
@@ -582,9 +582,9 @@ class CrawlConsumerTest extends TestCase
             ->with(
                 $reference,
                 $this->callback(function(Reference $reference): bool {
-                    return (string) $reference->identity() === 'origin' &&
+                    return $reference->identity()->toString() === 'origin' &&
                         $reference->definition() === 'definition' &&
-                        (string) $reference->server() === 'server';
+                        $reference->server()->toString() === 'server';
                 }),
                 'referrer',
                 ['foo', 'bar']
@@ -605,7 +605,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(new Str(json_encode([
+            (new Generic(Str::of(json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -619,15 +619,15 @@ class CrawlConsumerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function(Request $request): bool {
-                return (string) $request->url() === 'foo' &&
-                    (string) $request->method() === 'GET' &&
-                    $request->headers()->has('User-Agent') &&
-                    (string) $request->headers()->get('User-Agent') === 'User-Agent: ua';
+                return $request->url()->toString() === 'foo' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->headers()->contains('User-Agent') &&
+                    $request->headers()->get('User-Agent')->toString() === 'User-Agent: ua';
             }))
             ->willReturn($resource = new CrawledResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -635,14 +635,14 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $resource,
-                $this->callback(static function(UrlInterface $url): bool {
-                    return (string) $url === 'server';
+                $this->callback(static function(Url $url): bool {
+                    return $url->toString() === 'server';
                 })
             )
             ->willReturn($reference = new Reference(
                 $this->createMock(Identity::class),
                 'definition',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ));
         $linker
             ->expects($this->once())
@@ -650,9 +650,9 @@ class CrawlConsumerTest extends TestCase
             ->with(
                 $reference,
                 $this->callback(function(Reference $reference): bool {
-                    return (string) $reference->identity() === 'origin' &&
+                    return $reference->identity()->toString() === 'origin' &&
                         $reference->definition() === 'definition' &&
-                        (string) $reference->server() === 'server';
+                        $reference->server()->toString() === 'server';
                 }),
                 'referrer',
                 ['foo', 'bar']

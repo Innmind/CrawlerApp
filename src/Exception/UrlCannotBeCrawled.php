@@ -3,19 +3,19 @@ declare(strict_types = 1);
 
 namespace Crawler\Exception;
 
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 
 final class UrlCannotBeCrawled extends DomainException
 {
-    private UrlInterface $url;
+    private Url $url;
 
-    public function __construct(UrlInterface $url)
+    public function __construct(Url $url)
     {
         $this->url = $url;
         parent::__construct();
     }
 
-    public function url(): UrlInterface
+    public function url(): Url
     {
         return $this->url;
     }

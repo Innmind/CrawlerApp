@@ -12,9 +12,9 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\Http\Message\Request;
-use Innmind\Filesystem\MediaType;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +38,7 @@ class DelayerAwareCrawlerTest extends TestCase
             $delayer = $this->createMock(Delayer::class),
             $inner = $this->createMock(Crawler::class)
         );
-        $url = $this->createMock(UrlInterface::class);
+        $url = Url::of('example.com');
         $request = $this->createMock(Request::class);
         $request
             ->expects($this->once())
@@ -55,8 +55,8 @@ class DelayerAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $url,
-                    $this->createMock(MediaType::class),
-                    new Map('string', Attribute::class),
+                    MediaType::null(),
+                    Map::of('string', Attribute::class),
                     $this->createMock(Readable::class)
                 )
             );

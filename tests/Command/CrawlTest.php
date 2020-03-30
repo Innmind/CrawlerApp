@@ -19,8 +19,8 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
 use Innmind\Immutable\Map;
@@ -56,7 +56,7 @@ Crawl the given url and will print all the attributes found
 The "publish" argument is an optional url where to publish the crawled resource
 USAGE;
 
-        $this->assertSame($expected, (string) $command);
+        $this->assertSame($expected, $command->toString());
     }
 
     public function testCrawl()
@@ -70,15 +70,15 @@ USAGE;
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function($request): bool {
-                return (string) $request->url() === 'http://example.com/' &&
-                    (string) $request->method() === 'GET' &&
-                    (string) $request->protocolVersion() === '2.0' &&
-                    (string) $request->headers()->get('user-agent') === 'User-Agent: foo';
+                return $request->url()->toString() === 'http://example.com/' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->protocolVersion()->toString() === '2.0' &&
+                    $request->headers()->get('user-agent')->toString() === 'User-Agent: foo';
             }))
             ->willReturn(new HttpResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -88,7 +88,7 @@ USAGE;
         $this->assertNull($command(
             $this->createMock(Environment::class),
             new Arguments(
-                Map::of('string', 'mixed')
+                Map::of('string', 'string')
                     ('url', 'http://example.com')
             ),
             new Options
@@ -106,14 +106,14 @@ USAGE;
             ->expects($this->once())
             ->method('__invoke')
             ->with($this->callback(static function($request): bool {
-                return (string) $request->url() === 'http://example.com/' &&
-                    (string) $request->method() === 'GET' &&
-                    (string) $request->headers()->get('user-agent') === 'User-Agent: foo';
+                return $request->url()->toString() === 'http://example.com/' &&
+                    $request->method()->toString() === 'GET' &&
+                    $request->headers()->get('user-agent')->toString() === 'User-Agent: foo';
             }))
             ->willReturn($resource = new HttpResource(
-                $this->createMock(UrlInterface::class),
-                $this->createMock(MediaType::class),
-                new Map('string', Attribute::class),
+                Url::of('example.com'),
+                MediaType::null(),
+                Map::of('string', Attribute::class),
                 $this->createMock(Readable::class)
             ));
         $publisher
@@ -122,19 +122,19 @@ USAGE;
             ->with(
                 $resource,
                 $this->callback(static function($url): bool {
-                    return (string) $url === 'http://example2.com/';
+                    return $url->toString() === 'http://example2.com/';
                 })
             )
             ->willReturn(new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ));
 
         $this->assertNull($command(
             $this->createMock(Environment::class),
             new Arguments(
-                Map::of('string', 'mixed')
+                Map::of('string', 'string')
                     ('url', 'http://example.com')
                     ('publish', 'http://example2.com')
             ),

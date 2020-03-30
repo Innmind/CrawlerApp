@@ -20,8 +20,8 @@ use Innmind\Rest\Client\{
     Definition\AllowedLink,
     HttpResource,
 };
-use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Map,
@@ -34,8 +34,8 @@ class HttpResourceTranslatorTest extends TestCase
     public function testTranslate()
     {
         $crawledResource = new CrawledResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 ('wanted', new Attribute\Attribute('wanted', true))
                 ('not_wanted', new Attribute\Attribute('not_wanted', false)),
@@ -43,7 +43,7 @@ class HttpResourceTranslatorTest extends TestCase
         );
         $definition = new Definition(
             'foo',
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Identity('uuid'),
             Map::of('string', Property::class)
                 (
@@ -52,7 +52,7 @@ class HttpResourceTranslatorTest extends TestCase
                         'wanted',
                         $this->createMock(Type::class),
                         new Access,
-                        new Set('string'),
+                        Set::of('string'),
                         false
                     )
                 )
@@ -62,12 +62,12 @@ class HttpResourceTranslatorTest extends TestCase
                         'not_wanted',
                         $this->createMock(Type::class),
                         new Access,
-                        new Set('string'),
+                        Set::of('string'),
                         false
                     )
                 ),
-            new Map('scalar', 'variable'),
-            new Set(AllowedLink::class),
+            Map::of('scalar', 'scalar|array'),
+            Set::of(AllowedLink::class),
             false
         );
         $propertyTranslator = $this->createMock(PropertyTranslator::class);

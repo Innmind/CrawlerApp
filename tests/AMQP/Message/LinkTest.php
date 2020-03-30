@@ -22,13 +22,10 @@ use Innmind\AMQP\Model\Basic\{
     Message\AppId,
 };
 use Innmind\Rest\Client\Identity;
-use Innmind\Url\{
-    UrlInterface,
-    Url,
-};
+use Innmind\Url\Url;
 use Innmind\TimeContinuum\{
-    ElapsedPeriod,
-    PointInTimeInterface,
+    Earth\ElapsedPeriod,
+    PointInTime,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -39,12 +36,12 @@ class LinkTest extends TestCase
         $this->assertInstanceOf(
             Message::class,
             $message = new Link(
-                $this->createMock(UrlInterface::class),
-                $resource = $this->createMock(UrlInterface::class),
+                Url::of('example.com'),
+                $resource = Url::of('example.com'),
                 $reference = new Reference(
                     $this->createMock(Identity::class),
                     'foo',
-                    $this->createMock(UrlInterface::class)
+                    Url::of('example.com')
                 )
             )
         );
@@ -55,17 +52,17 @@ class LinkTest extends TestCase
     public function testContentType()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
         $this->assertTrue($message->hasContentType());
-        $this->assertSame('application/json', (string) $message->contentType());
+        $this->assertSame('application/json', $message->contentType()->toString());
         $this->expectException(LogicException::class);
         $message->withContentType(new ContentType('application', 'octet-stream'));
     }
@@ -73,12 +70,12 @@ class LinkTest extends TestCase
     public function testContentEncoding()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -90,12 +87,12 @@ class LinkTest extends TestCase
     public function testHeaders()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -107,12 +104,12 @@ class LinkTest extends TestCase
     public function testDeliveryMode()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -125,12 +122,12 @@ class LinkTest extends TestCase
     public function testPriority()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -142,12 +139,12 @@ class LinkTest extends TestCase
     public function testAddPriorityWhenLinkOnAnotherHost()
     {
         $message = new Link(
-            Url::fromString('http://example.com/'),
-            Url::fromString('http://github.com/'),
+            Url::of('http://example.com/'),
+            Url::of('http://github.com/'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -158,12 +155,12 @@ class LinkTest extends TestCase
     public function testCorrelationId()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -175,12 +172,12 @@ class LinkTest extends TestCase
     public function testReplyTo()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -192,12 +189,12 @@ class LinkTest extends TestCase
     public function testExpiration()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -209,12 +206,12 @@ class LinkTest extends TestCase
     public function testId()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -226,16 +223,16 @@ class LinkTest extends TestCase
     public function testTimestamp()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
         $message2 = $message->withTimestamp(
-            $expected = $this->createMock(PointInTimeInterface::class)
+            $expected = $this->createMock(PointInTime::class)
         );
 
         $this->assertInstanceOf(Link::class, $message2);
@@ -248,12 +245,12 @@ class LinkTest extends TestCase
     public function testType()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -265,12 +262,12 @@ class LinkTest extends TestCase
     public function testUserId()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
@@ -282,17 +279,17 @@ class LinkTest extends TestCase
     public function testAppId()
     {
         $message = new Link(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             )
         );
 
         $this->assertTrue($message->hasAppId());
-        $this->assertSame('crawler', (string) $message->appId());
+        $this->assertSame('crawler', $message->appId()->toString());
         $this->expectException(LogicException::class);
         $message->withAppId(new AppId('foo'));
     }
@@ -300,12 +297,12 @@ class LinkTest extends TestCase
     public function testBody()
     {
         $message = new Link(
-            Url::fromString('/baz'),
-            Url::fromString('/foo'),
+            Url::of('/baz'),
+            Url::of('/foo'),
             new Reference(
                 new Identity\Identity('uuid'),
                 'def',
-                Url::fromString('/bar')
+                Url::of('/bar')
             )
         );
 
@@ -317,7 +314,7 @@ class LinkTest extends TestCase
                 'definition' => 'def',
                 'server' => '/bar',
             ]),
-            (string) $message->body()
+            $message->body()->toString()
         );
     }
 }

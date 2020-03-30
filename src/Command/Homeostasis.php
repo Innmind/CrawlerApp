@@ -40,7 +40,7 @@ final class Homeostasis implements Command
                 ->execute(
                     ServerCommand::background('bin/crawler')
                         ->withArgument('homeostasis')
-                        ->withWorkingDirectory((string) $env->workingDirectory())
+                        ->withWorkingDirectory($env->workingDirectory())
                 );
 
             return;
@@ -51,7 +51,7 @@ final class Homeostasis implements Command
         });
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return <<<USAGE
 homeostasis -d|--daemon

@@ -23,10 +23,10 @@ use Innmind\Server\Control\{
     Server\Processes as ControlProcesses,
     Server\Signal,
 };
-use Innmind\TimeContinuum\PointInTimeInterface;
+use Innmind\TimeContinuum\PointInTime;
 use Innmind\Immutable\{
     Map,
-    Stream,
+    Sequence,
 };
 use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
@@ -61,7 +61,7 @@ class ProvisionConsumersTest extends TestCase
         $processes
             ->expects($this->once())
             ->method('all')
-            ->willReturn(new Map('int', Process::class));
+            ->willReturn(Map::of('int', Process::class));
         $control
             ->expects($this->never())
             ->method('processes');
@@ -70,7 +70,7 @@ class ProvisionConsumersTest extends TestCase
             ->method('alert')
             ->with('Dramatic decrease asked without consumers running');
 
-        $this->assertNull($provisioner->dramaticDecrease(new Stream(State::class)));
+        $this->assertNull($provisioner->dramaticDecrease(Sequence::of(State::class)));
     }
 
     public function testDramaticDecrease()
@@ -97,7 +97,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -108,7 +108,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(30),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -119,7 +119,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(30),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -130,7 +130,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -141,7 +141,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -169,7 +169,7 @@ class ProvisionConsumersTest extends TestCase
                 Signal::terminate()
             );
 
-        $this->assertNull($provisioner->dramaticDecrease(new Stream(State::class)));
+        $this->assertNull($provisioner->dramaticDecrease(Sequence::of(State::class)));
     }
 
     public function testDecrease()
@@ -187,7 +187,7 @@ class ProvisionConsumersTest extends TestCase
             ->expects($this->never())
             ->method('processes');
 
-        $this->assertNull($provisioner->decrease(new Stream(State::class)));
+        $this->assertNull($provisioner->decrease(Sequence::of(State::class)));
     }
 
     public function testHoldSteady()
@@ -210,12 +210,12 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
-                        $command->workingDirectory() === '/path/to/app';
+                    return $command->toString() === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
+                        $command->workingDirectory()->toString() === '/path/to/app';
                 })
             );
 
-        $this->assertNull($provisioner->holdSteady(new Stream(State::class)));
+        $this->assertNull($provisioner->holdSteady(Sequence::of(State::class)));
     }
 
     public function testIncreaseWhenNoProcesses()
@@ -233,7 +233,7 @@ class ProvisionConsumersTest extends TestCase
         $processes
             ->expects($this->once())
             ->method('all')
-            ->willReturn(new Map('int', Process::class));
+            ->willReturn(Map::of('int', Process::class));
         $control
             ->expects($this->once())
             ->method('processes')
@@ -243,12 +243,12 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
-                        $command->workingDirectory() === '/path/to/app';
+                    return $command->toString() === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
+                        $command->workingDirectory()->toString() === '/path/to/app';
                 })
             );
 
-        $this->assertNull($provisioner->increase(new Stream(State::class)));
+        $this->assertNull($provisioner->increase(Sequence::of(State::class)));
     }
 
     public function testIncrease()
@@ -275,7 +275,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -286,7 +286,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('top')
                         )
                     )
@@ -297,7 +297,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -311,12 +311,12 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
-                        $command->workingDirectory() === '/path/to/app';
+                    return $command->toString() === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
+                        $command->workingDirectory()->toString() === '/path/to/app';
                 })
             );
 
-        $this->assertNull($provisioner->increase(new Stream(State::class)));
+        $this->assertNull($provisioner->increase(Sequence::of(State::class)));
     }
 
     public function testDramaticIncreaseWhenNoProcesses()
@@ -334,7 +334,7 @@ class ProvisionConsumersTest extends TestCase
         $processes
             ->expects($this->once())
             ->method('all')
-            ->willReturn(new Map('int', Process::class));
+            ->willReturn(Map::of('int', Process::class));
         $control
             ->expects($this->exactly(2))
             ->method('processes')
@@ -344,12 +344,12 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
-                        $command->workingDirectory() === '/path/to/app';
+                    return $command->toString() === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
+                        $command->workingDirectory()->toString() === '/path/to/app';
                 })
             );
 
-        $this->assertNull($provisioner->dramaticIncrease(new Stream(State::class)));
+        $this->assertNull($provisioner->dramaticIncrease(Sequence::of(State::class)));
     }
 
     public function testDramaticIncrease()
@@ -376,7 +376,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -387,7 +387,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('top')
                         )
                     )
@@ -398,7 +398,7 @@ class ProvisionConsumersTest extends TestCase
                             new User('me'),
                             new Percentage(10),
                             new Memory(42),
-                            $this->createMock(PointInTimeInterface::class),
+                            $this->createMock(PointInTime::class),
                             new Command('php ./bin/crawler consume crawler 50 5')
                         )
                     )
@@ -412,11 +412,11 @@ class ProvisionConsumersTest extends TestCase
             ->method('execute')
             ->with(
                 $this->callback(static function($command): bool {
-                    return (string) $command === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
-                        $command->workingDirectory() === '/path/to/app';
+                    return $command->toString() === "php './bin/crawler' 'consume' 'crawler' '50' '5'" &&
+                        $command->workingDirectory()->toString() === '/path/to/app';
                 })
             );
 
-        $this->assertNull($provisioner->dramaticIncrease(new Stream(State::class)));
+        $this->assertNull($provisioner->dramaticIncrease(Sequence::of(State::class)));
     }
 }

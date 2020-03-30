@@ -6,14 +6,14 @@ namespace Crawler\Translator\Property;
 use Crawler\Translator\PropertyTranslator;
 use Innmind\Crawler\HttpResource;
 use Innmind\Rest\Client\Definition\Property;
-use Innmind\Immutable\MapInterface;
+use Innmind\Immutable\Map;
 use function Innmind\Immutable\assertMap;
 
 final class DelegationTranslator implements PropertyTranslator
 {
-    private MapInterface $translators;
+    private Map $translators;
 
-    public function __construct(MapInterface $translators)
+    public function __construct(Map $translators)
     {
         assertMap('string', PropertyTranslator::class, $translators, 1);
 

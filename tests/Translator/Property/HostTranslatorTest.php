@@ -16,11 +16,8 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\{
-    UrlInterface,
-    Url,
-};
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
@@ -40,7 +37,7 @@ class HostTranslatorTest extends TestCase
             'host',
             $this->createMock(Type::class),
             new Access,
-            new Set('string'),
+            Set::of('string'),
             false
         );
     }
@@ -56,9 +53,9 @@ class HostTranslatorTest extends TestCase
     public function testSupports()
     {
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
 
@@ -68,9 +65,9 @@ class HostTranslatorTest extends TestCase
     public function testTranslate()
     {
         $resource = new HttpResource(
-            Url::fromString('http://www.example.com/path'),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('http://www.example.com/path'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
 

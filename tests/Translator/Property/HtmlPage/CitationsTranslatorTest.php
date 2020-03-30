@@ -16,8 +16,8 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
@@ -37,7 +37,7 @@ class CitationsTranslatorTest extends TestCase
             'citations',
             $this->createMock(Type::class),
             new Access,
-            new Set('string'),
+            Set::of('string'),
             false
         );
     }
@@ -52,10 +52,10 @@ class CitationsTranslatorTest extends TestCase
 
     public function testSupports()
     {
-        $attributes = new Map('string', Attribute::class);
+        $attributes = Map::of('string', Attribute::class);
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes,
             $this->createMock(Readable::class)
         );
@@ -63,8 +63,8 @@ class CitationsTranslatorTest extends TestCase
         $this->assertFalse($this->translator->supports($resource, $this->property));
 
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes->put(
                 'citations',
                 new Attribute\Attribute('citations', 'whatever')
@@ -77,13 +77,13 @@ class CitationsTranslatorTest extends TestCase
 
     public function testTranslate()
     {
-        $attributes = new Map('string', Attribute::class);
+        $attributes = Map::of('string', Attribute::class);
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes->put(
                 'citations',
-                new Attribute\Attribute('citations', $expected = new Set('string'))
+                new Attribute\Attribute('citations', $expected = Set::of('string'))
             ),
             $this->createMock(Readable::class)
         );

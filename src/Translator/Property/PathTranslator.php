@@ -16,8 +16,9 @@ final class PathTranslator implements PropertyTranslator
 
     public function translate(HttpResource $resource, Property $property)
     {
-        return (string) $resource
+        return $resource
             ->url()
-            ->path();
+            ->path()
+            ->toString();
     }
 }

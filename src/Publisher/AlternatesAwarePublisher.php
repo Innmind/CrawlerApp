@@ -14,7 +14,7 @@ use Innmind\Crawler\{
     HttpResource\Alternates,
     HttpResource\Alternate,
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\AMQP\Producer;
 
 final class AlternatesAwarePublisher implements PublisherInterface
@@ -32,7 +32,7 @@ final class AlternatesAwarePublisher implements PublisherInterface
 
     public function __invoke(
         HttpResource $resource,
-        UrlInterface $server
+        Url $server
     ): Reference {
         $reference = ($this->publisher)($resource, $server);
 
@@ -48,10 +48,10 @@ final class AlternatesAwarePublisher implements PublisherInterface
                 ->foreach(function(string $language, Alternate $alternate) use ($sameAs, $reference): void {
                     $alternate
                         ->content()
-                        ->filter(function(UrlInterface $url) use ($sameAs): bool {
+                        ->filter(function(Url $url) use ($sameAs): bool {
                             return !$sameAs($url);
                         })
-                        ->foreach(function(UrlInterface $url) use ($language, $reference): void {
+                        ->foreach(function(Url $url) use ($language, $reference): void {
                             ($this->produce)(new Message(
                                 $url,
                                 $reference,

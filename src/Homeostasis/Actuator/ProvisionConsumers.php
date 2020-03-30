@@ -14,9 +14,10 @@ use Innmind\Server\Control\{
     Server\Signal,
     Server\Process\Pid,
 };
+use Innmind\Url\Path;
 use Innmind\Immutable\{
-    StreamInterface,
-    MapInterface,
+    Sequence,
+    Map,
     Str,
 };
 use Psr\Log\LoggerInterface;
@@ -43,13 +44,13 @@ final class ProvisionConsumers implements Actuator
             ->withArgument('crawler')
             ->withArgument('50')
             ->withArgument('5')
-            ->withWorkingDirectory($workingDirectory);
+            ->withWorkingDirectory(Path::of($workingDirectory));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dramaticDecrease(StreamInterface $states): void
+    public function dramaticDecrease(Sequence $states): void
     {
         $running = $this->processes();
 
@@ -79,7 +80,7 @@ final class ProvisionConsumers implements Actuator
     /**
      * {@inheritdoc}
      */
-    public function decrease(StreamInterface $states): void
+    public function decrease(Sequence $states): void
     {
         //let the consumers finish by themselves
     }
@@ -87,7 +88,7 @@ final class ProvisionConsumers implements Actuator
     /**
      * {@inheritdoc}
      */
-    public function holdSteady(StreamInterface $states): void
+    public function holdSteady(Sequence $states): void
     {
         $this->spawn(1);
     }
@@ -95,7 +96,7 @@ final class ProvisionConsumers implements Actuator
     /**
      * {@inheritdoc}
      */
-    public function increase(StreamInterface $states): void
+    public function increase(Sequence $states): void
     {
         $running = $this->processes();
 
@@ -111,7 +112,7 @@ final class ProvisionConsumers implements Actuator
     /**
      * {@inheritdoc}
      */
-    public function dramaticIncrease(StreamInterface $states): void
+    public function dramaticIncrease(Sequence $states): void
     {
         $running = $this->processes();
 
@@ -132,16 +133,16 @@ final class ProvisionConsumers implements Actuator
     }
 
     /**
-     * @return MapInterface<int, Process>
+     * @return Map<int, Process>
      */
-    private function processes(): MapInterface
+    private function processes(): Map
     {
         return $this
             ->status
             ->processes()
             ->all()
             ->filter(function(int $pid, Process $process): bool {
-                return Str::of((string) $process->command())->contains(
+                return Str::of($process->command()->toString())->contains(
                     'crawler consume crawler'
                 );
             });

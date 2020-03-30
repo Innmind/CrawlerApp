@@ -8,7 +8,7 @@ use Innmind\IPC\{
     Process\Name,
     Message,
 };
-use Innmind\Filesystem\MediaType\MediaType;
+use Innmind\MediaType\MediaType;
 use Innmind\Immutable\Str;
 
 final class Regulate
@@ -29,7 +29,7 @@ final class Regulate
         if ($this->ipc->exist($this->name)) {
             $daemon = $this->ipc->get($this->name);
             $daemon->send(new Message\Generic(
-                MediaType::fromString('text/plain'),
+                MediaType::of('text/plain'),
                 Str::of('')
             ));
             $daemon->close();

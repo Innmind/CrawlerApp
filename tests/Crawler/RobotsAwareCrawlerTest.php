@@ -17,12 +17,9 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\{
-    UrlInterface,
-    Url,
-};
+use Innmind\Url\Url;
 use Innmind\Http\Message\Request;
-use Innmind\Filesystem\MediaType;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
@@ -56,8 +53,8 @@ class RobotsAwareCrawlerTest extends TestCase
             ->parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(UrlInterface $url): bool {
-                return (string) $url === 'http://example.com/robots.txt';
+            ->with($this->callback(function(Url $url): bool {
+                return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->will(
                 $this->throwException(new FileNotFound)
@@ -66,7 +63,7 @@ class RobotsAwareCrawlerTest extends TestCase
         $request
             ->expects($this->once())
             ->method('url')
-            ->willReturn($url = Url::fromString('http://example.com/foo?bar#baz'));
+            ->willReturn($url = Url::of('http://example.com/foo?bar#baz'));
         $this
             ->inner
             ->expects($this->once())
@@ -75,8 +72,8 @@ class RobotsAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $url,
-                    $this->createMock(MediaType::class),
-                    new Map('string', Attribute::class),
+                    MediaType::null(),
+                    Map::of('string', Attribute::class),
                     $this->createMock(Readable::class)
                 )
             );
@@ -92,13 +89,13 @@ class RobotsAwareCrawlerTest extends TestCase
         $request
             ->expects($this->exactly(2))
             ->method('url')
-            ->willReturn($url = Url::fromString('http://example.com/foo?bar#baz'));
+            ->willReturn($url = Url::of('http://example.com/foo?bar#baz'));
         $this
             ->parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(UrlInterface $url): bool {
-                return (string) $url === 'http://example.com/robots.txt';
+            ->with($this->callback(function(Url $url): bool {
+                return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
                 $robots = $this->createMock(RobotsTxt::class)
@@ -116,8 +113,8 @@ class RobotsAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $url,
-                    $this->createMock(MediaType::class),
-                    new Map('string', Attribute::class),
+                    MediaType::null(),
+                    Map::of('string', Attribute::class),
                     $this->createMock(Readable::class)
                 )
             );
@@ -133,13 +130,13 @@ class RobotsAwareCrawlerTest extends TestCase
         $request
             ->expects($this->exactly(3))
             ->method('url')
-            ->willReturn($url = Url::fromString('http://example.com/foo?bar#baz'));
+            ->willReturn($url = Url::of('http://example.com/foo?bar#baz'));
         $this
             ->parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(UrlInterface $url): bool {
-                return (string) $url === 'http://example.com/robots.txt';
+            ->with($this->callback(function(Url $url): bool {
+                return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
                 $robots = $this->createMock(RobotsTxt::class)

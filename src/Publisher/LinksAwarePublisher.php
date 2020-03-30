@@ -10,7 +10,7 @@ use Crawler\{
     SameUrlAs,
 };
 use Innmind\Crawler\HttpResource;
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\AMQP\Producer;
 
 final class LinksAwarePublisher implements PublisherInterface
@@ -28,7 +28,7 @@ final class LinksAwarePublisher implements PublisherInterface
 
     public function __invoke(
         HttpResource $resource,
-        UrlInterface $server
+        Url $server
     ): Reference {
         $reference = ($this->publisher)($resource, $server);
 
@@ -38,10 +38,10 @@ final class LinksAwarePublisher implements PublisherInterface
                 ->attributes()
                 ->get('links')
                 ->content()
-                ->filter(function(UrlInterface $url) use ($sameAs): bool {
+                ->filter(function(Url $url) use ($sameAs): bool {
                     return !$sameAs($url);
                 })
-                ->foreach(function(UrlInterface $url) use ($reference, $resource): void {
+                ->foreach(function(Url $url) use ($reference, $resource): void {
                     ($this->produce)(new Link(
                         $resource->url(),
                         $url,

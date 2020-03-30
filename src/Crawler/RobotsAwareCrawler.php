@@ -12,11 +12,7 @@ use Innmind\RobotsTxt\{
     Parser,
     Exception\FileNotFound,
 };
-use Innmind\Url\{
-    NullQuery,
-    NullFragment,
-    Path,
-};
+use Innmind\Url\Path;
 use Innmind\Http\Message\Request;
 
 final class RobotsAwareCrawler implements Crawler
@@ -40,9 +36,9 @@ final class RobotsAwareCrawler implements Crawler
         try {
             $url = $request
                 ->url()
-                ->withPath(new Path('/robots.txt'))
-                ->withQuery(new NullQuery)
-                ->withFragment(new NullFragment);
+                ->withPath(Path::of('/robots.txt'))
+                ->withoutQuery()
+                ->withoutFragment();
             $robots = ($this->parser)($url);
 
             if ($robots->disallows($this->userAgent, $request->url())) {

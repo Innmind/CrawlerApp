@@ -26,11 +26,8 @@ use Innmind\Crawler\{
     HttpResource as CrawledResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\{
-    UrlInterface,
-    Url,
-};
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Map,
@@ -86,24 +83,24 @@ class PublisherTest extends TestCase
                         'foo',
                         new Definition(
                             'foo',
-                            $this->createMock(UrlInterface::class),
+                            Url::of('example.com'),
                             new Identity('uuid'),
-                            new Map('string', PropertyDefinition::class),
-                            new Map('scalar', 'variable'),
-                            new Set(AllowedLink::class),
+                            Map::of('string', PropertyDefinition::class),
+                            Map::of('scalar', 'scalar|array'),
+                            Set::of(AllowedLink::class),
                             false
                         )
                     )
             );
         $resource = new CrawledResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
 
         try {
-            ($this->publisher)($resource, Url::fromString('http://some.server/'));
+            ($this->publisher)($resource, Url::of('http://some.server/'));
             $this->fail('it should throw');
         } catch (ResourceCannotBePublished $e) {
             $this->assertSame($resource, $e->resource());
@@ -135,25 +132,25 @@ class PublisherTest extends TestCase
                         'foo',
                         new Definition(
                             'foo',
-                            $this->createMock(UrlInterface::class),
+                            Url::of('example.com'),
                             new Identity('uuid'),
-                            new Map('string', PropertyDefinition::class),
-                            Map::of('scalar', 'variable')
+                            Map::of('string', PropertyDefinition::class),
+                            Map::of('scalar', 'scalar|array')
                                 ('allowed_media_types', ['image/*']),
-                            new Set(AllowedLink::class),
+                            Set::of(AllowedLink::class),
                             false
                         )
                     )
             );
         $resource = new CrawledResource(
-            $this->createMock(UrlInterface::class),
-            MediaType\MediaType::fromString('text/html'),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::of('text/html'),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
 
         try {
-            ($this->publisher)($resource, Url::fromString('http://some.server/'));
+            ($this->publisher)($resource, Url::of('http://some.server/'));
             $this->fail('it should throw');
         } catch (ResourceCannotBePublished $e) {
             $this->assertSame($resource, $e->resource());
@@ -162,7 +159,7 @@ class PublisherTest extends TestCase
 
     public function testInvokation()
     {
-        $serverUrl = Url::fromString('http://some.server/');
+        $serverUrl = Url::of('http://some.server/');
         $this
             ->client
             ->expects($this->once())
@@ -190,12 +187,12 @@ class PublisherTest extends TestCase
                         'foo',
                         $definition = new Definition(
                             'foo',
-                            $this->createMock(UrlInterface::class),
+                            Url::of('example.com'),
                             new Identity('uuid'),
-                            new Map('string', PropertyDefinition::class),
-                            Map::of('scalar', 'variable')
+                            Map::of('string', PropertyDefinition::class),
+                            Map::of('scalar', 'scalar|array')
                                 ('allowed_media_types', ['image/*']),
-                            new Set(AllowedLink::class),
+                            Set::of(AllowedLink::class),
                             false
                         )
                     )
@@ -203,12 +200,12 @@ class PublisherTest extends TestCase
                         'bar',
                         new Definition(
                             'bar',
-                            $this->createMock(UrlInterface::class),
+                            Url::of('example.com'),
                             new Identity('uuid'),
-                            new Map('string', PropertyDefinition::class),
-                            Map::of('scalar', 'variable')
+                            Map::of('string', PropertyDefinition::class),
+                            Map::of('scalar', 'scalar|array')
                                 ('allowed_media_types', ['text/html']),
-                            new Set(AllowedLink::class),
+                            Set::of(AllowedLink::class),
                             false
                         )
                     )
@@ -224,9 +221,9 @@ class PublisherTest extends TestCase
                 $identity = $this->createMock(IdentityInterface::class)
             );
         $resource = new CrawledResource(
-            $this->createMock(UrlInterface::class),
-            MediaType\MediaType::fromString('image/png'),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::of('image/png'),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
 

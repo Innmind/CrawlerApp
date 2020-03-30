@@ -16,9 +16,10 @@ final class ThemeColourTranslator implements PropertyTranslator
 
     public function translate(HttpResource $resource, Property $property)
     {
-        return (string) $resource
+        return $resource
             ->attributes()
             ->get('theme-color')
-            ->content();
+            ->content()
+            ->toString();
     }
 }

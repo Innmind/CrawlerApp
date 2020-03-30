@@ -22,13 +22,10 @@ use Innmind\AMQP\Model\Basic\{
     Message\AppId,
 };
 use Innmind\Rest\Client\Identity;
-use Innmind\Url\{
-    UrlInterface,
-    Url,
-};
+use Innmind\Url\Url;
 use Innmind\TimeContinuum\{
-    ElapsedPeriod,
-    PointInTimeInterface,
+    Earth\ElapsedPeriod,
+    PointInTime,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -39,11 +36,11 @@ class ImageTest extends TestCase
         $this->assertInstanceOf(
             Message::class,
             $message = new Image(
-                $resource = $this->createMock(UrlInterface::class),
+                $resource = Url::of('example.com'),
                 $reference = new Reference(
                     $this->createMock(Identity::class),
                     'foo',
-                    $this->createMock(UrlInterface::class)
+                    Url::of('example.com')
                 ),
                 'fr'
             )
@@ -56,17 +53,17 @@ class ImageTest extends TestCase
     public function testContentType()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
 
         $this->assertTrue($message->hasContentType());
-        $this->assertSame('application/json', (string) $message->contentType());
+        $this->assertSame('application/json', $message->contentType()->toString());
         $this->expectException(LogicException::class);
         $message->withContentType(new ContentType('application', 'octet-stream'));
     }
@@ -74,11 +71,11 @@ class ImageTest extends TestCase
     public function testContentEncoding()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -91,11 +88,11 @@ class ImageTest extends TestCase
     public function testHeaders()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -108,11 +105,11 @@ class ImageTest extends TestCase
     public function testDeliveryMode()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -126,11 +123,11 @@ class ImageTest extends TestCase
     public function testPriority()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -143,11 +140,11 @@ class ImageTest extends TestCase
     public function testCorrelationId()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -160,11 +157,11 @@ class ImageTest extends TestCase
     public function testReplyTo()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -177,11 +174,11 @@ class ImageTest extends TestCase
     public function testExpiration()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -194,11 +191,11 @@ class ImageTest extends TestCase
     public function testId()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -211,16 +208,16 @@ class ImageTest extends TestCase
     public function testTimestamp()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
         $message2 = $message->withTimestamp(
-            $expected = $this->createMock(PointInTimeInterface::class)
+            $expected = $this->createMock(PointInTime::class)
         );
 
         $this->assertInstanceOf(Image::class, $message2);
@@ -233,11 +230,11 @@ class ImageTest extends TestCase
     public function testType()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -250,11 +247,11 @@ class ImageTest extends TestCase
     public function testUserId()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
@@ -267,17 +264,17 @@ class ImageTest extends TestCase
     public function testAppId()
     {
         $message = new Image(
-            $this->createMock(UrlInterface::class),
+            Url::of('example.com'),
             new Reference(
                 $this->createMock(Identity::class),
                 'foo',
-                $this->createMock(UrlInterface::class)
+                Url::of('example.com')
             ),
             'fr'
         );
 
         $this->assertTrue($message->hasAppId());
-        $this->assertSame('crawler', (string) $message->appId());
+        $this->assertSame('crawler', $message->appId()->toString());
         $this->expectException(LogicException::class);
         $message->withAppId(new AppId('foo'));
     }
@@ -285,11 +282,11 @@ class ImageTest extends TestCase
     public function testBody()
     {
         $message = new Image(
-            Url::fromString('/foo'),
+            Url::of('/foo'),
             new Reference(
                 new Identity\Identity('uuid'),
                 'def',
-                Url::fromString('/bar')
+                Url::of('/bar')
             ),
             'fr'
         );
@@ -305,7 +302,7 @@ class ImageTest extends TestCase
                 'definition' => 'def',
                 'server' => '/bar',
             ]),
-            (string) $message->body()
+            $message->body()->toString()
         );
     }
 }

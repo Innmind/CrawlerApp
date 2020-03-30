@@ -15,10 +15,10 @@ use Crawler\{
 use Innmind\Crawler\Crawler;
 use Innmind\Http\{
     Message\Request\Request,
-    Message\Method\Method,
-    Message\StatusCode\StatusCode,
-    ProtocolVersion\ProtocolVersion,
-    Headers\Headers,
+    Message\Method,
+    Message\StatusCode,
+    ProtocolVersion,
+    Headers,
     Header,
     Header\Value\Value,
 };
@@ -59,7 +59,7 @@ final class CrawlConsumer
             $resource = ($this->crawl)(
                 new Request(
                     $message->resource(),
-                    new Method(Method::GET),
+                    Method::get(),
                     new ProtocolVersion(2, 0),
                     Headers::of(
                         new Header\Header(

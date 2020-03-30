@@ -16,14 +16,10 @@ use Innmind\InstallationMonitor\{
 use Innmind\Filesystem\{
     Adapter,
     File\File,
-    Stream\StringStream,
+    Name,
 };
-use Innmind\Immutable\{
-    Map,
-    Str,
-    SequenceInterface,
-    Sequence,
-};
+use Innmind\Stream\Readable\Stream;
+use Innmind\Immutable\Str;
 
 final class Install implements Command
 {
@@ -38,7 +34,7 @@ final class Install implements Command
 
     public function __invoke(Environment $env, Arguments $arguments, Options $options): void
     {
-        if ($this->config->has('.env')) {
+        if ($this->config->contains(new Name('.env'))) {
             $env->error()->write(
                 Str::of("App already installed\n")
             );
@@ -51,7 +47,7 @@ final class Install implements Command
             ->client
             ->events()
             ->groupBy(static function(Event $event): string {
-                return (string) $event->name();
+                return $event->name()->toString();
             });
 
         if (
@@ -66,6 +62,7 @@ final class Install implements Command
             return;
         }
 
+        /** @var string */
         $amqpPassword = $events
             ->get('amqp.user_added')
             ->filter(static function(Event $event): bool {
@@ -75,35 +72,22 @@ final class Install implements Command
             ->payload()
             ->get('password');
 
-        $envVars = (string) (new Map('string', 'string'))
-            ->put(
-                'API_KEY',
-                $events
-                    ->get('library_installed')
-                    ->first()
-                    ->payload()
-                    ->get('apiKey')
-            )
-            ->put('AMQP_SERVER', "amqp://consumer:$amqpPassword@localhost:5672/")
-            ->reduce(
-                new Sequence,
-                static function(SequenceInterface $lines, string $key, string $value): SequenceInterface {
-                    return $lines->add(sprintf(
-                        '%s=%s',
-                        $key,
-                        $value
-                    ));
-                }
-            )
-            ->join("\n");
+        /** @var string */
+        $apiKey = $events
+            ->get('library_installed')
+            ->first()
+            ->payload()
+            ->get('apiKey');
+        $envVars = "API_KEY=$apiKey\n";
+        $envVars .= "AMQP_SERVER=amqp://consumer:$amqpPassword@localhost:5672/";
 
         $this->config->add(new File(
-            '.env',
-            new StringStream($envVars)
+            new Name('.env'),
+            Stream::ofContent($envVars)
         ));
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return <<<USAGE
 install

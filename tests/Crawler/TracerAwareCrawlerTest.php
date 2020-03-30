@@ -13,9 +13,9 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\Http\Message\Request;
-use Innmind\Filesystem\MediaType;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
@@ -39,7 +39,7 @@ class TracerAwareCrawlerTest extends TestCase
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Crawler::class)
         );
-        $url = $this->createMock(UrlInterface::class);
+        $url = Url::of('example.com');
         $tracer
             ->expects($this->once())
             ->method('knows')
@@ -68,7 +68,7 @@ class TracerAwareCrawlerTest extends TestCase
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Crawler::class)
         );
-        $url = $this->createMock(UrlInterface::class);
+        $url = Url::of('example.com');
         $tracer
             ->expects($this->once())
             ->method('knows')
@@ -86,8 +86,8 @@ class TracerAwareCrawlerTest extends TestCase
             ->willReturn(
                 $expected = new HttpResource(
                     $url,
-                    $this->createMock(MediaType::class),
-                    new Map('string', Attribute::class),
+                    MediaType::null(),
+                    Map::of('string', Attribute::class),
                     $this->createMock(Readable::class)
                 )
             );

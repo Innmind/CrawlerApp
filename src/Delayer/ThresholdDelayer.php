@@ -8,23 +8,23 @@ use Crawler\{
     Delay,
 };
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    ElapsedPeriodInterface,
+    Clock,
+    ElapsedPeriod,
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 
 final class ThresholdDelayer implements Delayer
 {
     private Delayer $attempt;
     private Delayer $fallback;
-    private TimeContinuumInterface $clock;
-    private ElapsedPeriodInterface $threshold;
+    private Clock $clock;
+    private ElapsedPeriod $threshold;
 
     public function __construct(
         Delayer $attempt,
         Delayer $fallback,
-        TimeContinuumInterface $clock,
-        ElapsedPeriodInterface $threshold = null
+        Clock $clock,
+        ElapsedPeriod $threshold = null
     ) {
         $this->attempt = $attempt;
         $this->fallback = $fallback;
@@ -32,7 +32,7 @@ final class ThresholdDelayer implements Delayer
         $this->threshold = $threshold ?? Delay::threshold();
     }
 
-    public function __invoke(UrlInterface $url): void
+    public function __invoke(Url $url): void
     {
         $start = $this->clock->now();
         ($this->attempt)($url);

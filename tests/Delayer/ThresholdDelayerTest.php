@@ -8,11 +8,11 @@ use Crawler\{
     Delayer,
 };
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    PointInTimeInterface,
-    ElapsedPeriod,
+    Clock,
+    PointInTime,
+    Earth\ElapsedPeriod,
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;
 
 class ThresholdDelayerTest extends TestCase
@@ -24,7 +24,7 @@ class ThresholdDelayerTest extends TestCase
             new ThresholdDelayer(
                 $this->createMock(Delayer::class),
                 $this->createMock(Delayer::class),
-                $this->createMock(TimeContinuumInterface::class)
+                $this->createMock(Clock::class)
             )
         );
     }
@@ -34,10 +34,10 @@ class ThresholdDelayerTest extends TestCase
         $delayer = new ThresholdDelayer(
             $attempt = $this->createMock(Delayer::class),
             $fallback = $this->createMock(Delayer::class),
-            $clock = $this->createMock(TimeContinuumInterface::class),
+            $clock = $this->createMock(Clock::class),
             new ElapsedPeriod(1000)
         );
-        $url = $this->createMock(UrlInterface::class);
+        $url = Url::of('example.com');
         $attempt
             ->expects($this->once())
             ->method('__invoke')
@@ -49,8 +49,8 @@ class ThresholdDelayerTest extends TestCase
             ->expects($this->exactly(2))
             ->method('now')
             ->will($this->onConsecutiveCalls(
-                $start = $this->createMock(PointInTimeInterface::class),
-                $end = $this->createMock(PointInTimeInterface::class)
+                $start = $this->createMock(PointInTime::class),
+                $end = $this->createMock(PointInTime::class)
             ));
         $end
             ->expects($this->once())
@@ -66,10 +66,10 @@ class ThresholdDelayerTest extends TestCase
         $delayer = new ThresholdDelayer(
             $attempt = $this->createMock(Delayer::class),
             $fallback = $this->createMock(Delayer::class),
-            $clock = $this->createMock(TimeContinuumInterface::class),
+            $clock = $this->createMock(Clock::class),
             new ElapsedPeriod(1000)
         );
-        $url = $this->createMock(UrlInterface::class);
+        $url = Url::of('example.com');
         $attempt
             ->expects($this->once())
             ->method('__invoke')
@@ -82,8 +82,8 @@ class ThresholdDelayerTest extends TestCase
             ->expects($this->exactly(2))
             ->method('now')
             ->will($this->onConsecutiveCalls(
-                $start = $this->createMock(PointInTimeInterface::class),
-                $end = $this->createMock(PointInTimeInterface::class)
+                $start = $this->createMock(PointInTime::class),
+                $end = $this->createMock(PointInTime::class)
             ));
         $end
             ->expects($this->once())

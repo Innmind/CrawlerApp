@@ -9,7 +9,7 @@ use Innmind\Homeostasis\{
     Sensor\Measure\Weight,
 };
 use Innmind\Server\Status\Server;
-use Innmind\TimeContinuum\TimeContinuumInterface;
+use Innmind\TimeContinuum\Clock;
 use Innmind\Math\{
     Algebra\Number\Number,
     Polynom\Polynom,
@@ -24,7 +24,7 @@ use Innmind\Immutable\Set;
 final class Factors
 {
     public static function cpu(
-        TimeContinuumInterface $clock,
+        Clock $clock,
         Server $server
     ): Cpu {
         return new Cpu(
@@ -42,7 +42,7 @@ final class Factors
     }
 
     public static function log(
-        TimeContinuumInterface $clock,
+        Clock $clock,
         Reader $reader,
         Adapter $logs
     ): Log {

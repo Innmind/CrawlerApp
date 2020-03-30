@@ -28,7 +28,7 @@ use function Innmind\SilentCartographer\bootstrap as cartographer;
 new class extends Main {
     protected function main(Environment $env, OperatingSystem $os): void
     {
-        $os = cartographer($os)['cli'](Url::fromString(__DIR__));
+        $os = cartographer($os)['cli'](Url::of(__DIR__));
 
         $variables = variables(
             $env->variables(),
@@ -38,7 +38,7 @@ new class extends Main {
         if ($variables->contains('debug')) {
             $debug = debug(
                 $os,
-                Url::fromString($variables->get('profiler')),
+                Url::of($variables->get('profiler')),
                 $variables,
                 CodeEditor::sublimeText(),
                 Set::of('string', CaptureAppGraph::class)
@@ -49,8 +49,8 @@ new class extends Main {
         $dir = __DIR__.'/../';
         $commands = bootstrap(
             $os,
-            Url::fromString("file://{$dir}var/logs/app.log"),
-            Url::fromString("file://{$dir}var/logs/amqp/amqp.log"),
+            Url::of("file://{$dir}var/logs/app.log"),
+            Url::of("file://{$dir}var/logs/amqp/amqp.log"),
             $os->filesystem()->mount(new Path($dir.'var/cache/rest')),
             $os->filesystem()->mount(new Path($dir.'var/logs')),
             $os->filesystem()->mount(new Path($dir.'var/data/states')),
@@ -59,7 +59,7 @@ new class extends Main {
             $os->filesystem()->mount(new Path($dir.'var/cache/robots_txts')),
             $env->workingDirectory(),
             Transport::tcp(),
-            Url::fromString($variables['amqpServer'] ?? 'amqp://guest:guest@localhost:5672/'),
+            Url::of($variables['amqpServer'] ?? 'amqp://guest:guest@localhost:5672/'),
             $variables['apiKey'],
             'Innmind Robot'
         );

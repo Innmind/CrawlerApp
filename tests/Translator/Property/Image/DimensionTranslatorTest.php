@@ -17,13 +17,12 @@ use Innmind\Crawler\{
     HttpResource\Attribute,
     HttpResource\Attributes\Attributes,
 };
-use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
     Map,
-    MapInterface,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -39,7 +38,7 @@ class DimensionTranslatorTest extends TestCase
             'dimension',
             $this->createMock(Type::class),
             new Access,
-            new Set('string'),
+            Set::of('string'),
             false
         );
     }
@@ -54,10 +53,10 @@ class DimensionTranslatorTest extends TestCase
 
     public function testSupports()
     {
-        $attributes = new Map('string', Attribute::class);
+        $attributes = Map::of('string', Attribute::class);
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes,
             $this->createMock(Readable::class)
         );
@@ -65,8 +64,8 @@ class DimensionTranslatorTest extends TestCase
         $this->assertFalse($this->translator->supports($resource, $this->property));
 
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes->put(
                 'dimension',
                 new Attribute\Attribute('dimension', 'whatever')
@@ -79,15 +78,15 @@ class DimensionTranslatorTest extends TestCase
 
     public function testTranslate()
     {
-        $attributes = new Map('string', Attribute::class);
+        $attributes = Map::of('string', Attribute::class);
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
+            Url::of('example.com'),
+            MediaType::null(),
             $attributes->put(
                 'dimension',
                 new Attributes(
                     'dimension',
-                    (new Map('string', Attribute::class))
+                    (Map::of('string', Attribute::class))
                         ->put('width', new Attribute\Attribute('width', 24))
                         ->put('height', new Attribute\Attribute('height', 42))
                 )
@@ -97,7 +96,7 @@ class DimensionTranslatorTest extends TestCase
 
         $map = $this->translator->translate($resource, $this->property);
 
-        $this->assertInstanceOf(MapInterface::class, $map);
+        $this->assertInstanceOf(Map::class, $map);
         $this->assertSame('string', (string) $map->keyType());
         $this->assertSame('int', (string) $map->valueType());
         $this->assertCount(2, $map);

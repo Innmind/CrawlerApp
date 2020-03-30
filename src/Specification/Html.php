@@ -4,20 +4,27 @@ declare(strict_types = 1);
 namespace Crawler\Specification;
 
 use Innmind\Http\Message\Response;
+use function Innmind\Immutable\join;
 
 final class Html
 {
     public function isSatisfiedBy(Response $response): bool
     {
-        if (!$response->headers()->has('content-type')) {
+        if (!$response->headers()->contains('content-type')) {
             return false;
         }
 
-        $header = $response
-            ->headers()
-            ->get('content-type')
-            ->values()
-            ->join('');
+        $header = join(
+            '',
+            $response
+                ->headers()
+                ->get('content-type')
+                ->values()
+                ->mapTo(
+                    'string',
+                    static fn($value): string => $value->toString(),
+                ),
+        );
 
         foreach (['text/html', 'text/xml', 'application/xml', 'application/xhtml'] as $mediaType) {
             if ($header->contains($mediaType)) {

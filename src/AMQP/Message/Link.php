@@ -7,7 +7,7 @@ use Crawler\{
     Reference,
     Exception\LogicException
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\AMQP\Model\Basic\{
     Message,
     Message\AppId,
@@ -23,48 +23,48 @@ use Innmind\AMQP\Model\Basic\{
     Message\UserId
 };
 use Innmind\TimeContinuum\{
-    PointInTimeInterface,
+    PointInTime,
     ElapsedPeriod
 };
 use Innmind\Json\Json;
 use Innmind\Immutable\{
-    MapInterface,
+    Map,
     Str
 };
 
 final class Link implements Message
 {
     private Message $inner;
-    private UrlInterface $resource;
+    private Url $resource;
     private Reference $reference;
 
     public function __construct(
-        UrlInterface $referrer,
-        UrlInterface $resource,
+        Url $referrer,
+        Url $resource,
         Reference $reference
     ) {
         $this->resource = $resource;
         $this->reference = $reference;
 
         $payload = [
-            'resource' => (string) $resource,
-            'origin' => (string) $reference->identity(),
+            'resource' => $resource->toString(),
+            'origin' => $reference->identity()->toString(),
             'relationship' => 'referrer',
             'definition' => $reference->definition(),
-            'server' => (string) $reference->server(),
+            'server' => $reference->server()->toString(),
         ];
 
-        $this->inner = (new Generic(new Str(Json::encode($payload))))
+        $this->inner = (new Generic(Str::of(Json::encode($payload))))
             ->withContentType(new ContentType('application', 'json'))
             ->withAppId(new AppId('crawler'))
             ->withDeliveryMode(DeliveryMode::persistent());
 
-        if ((string) $referrer->authority()->host() !== (string) $resource->authority()->host()) {
+        if (!$referrer->authority()->host()->equals($resource->authority()->host())) {
             $this->inner = $this->inner->withPriority(new Priority(5));
         }
     }
 
-    public function resource(): UrlInterface
+    public function resource(): Url
     {
         return $this->resource;
     }
@@ -110,14 +110,14 @@ final class Link implements Message
     }
 
     /**
-     * @return MapInterface<string, mixed>
+     * @return Map<string, mixed>
      */
-    public function headers(): MapInterface
+    public function headers(): Map
     {
         return $this->inner->headers();
     }
 
-    public function withHeaders(MapInterface $headers): Message
+    public function withHeaders(Map $headers): Message
     {
         throw new LogicException;
     }
@@ -217,12 +217,12 @@ final class Link implements Message
         return $this->inner->hasTimestamp();
     }
 
-    public function timestamp(): PointInTimeInterface
+    public function timestamp(): PointInTime
     {
         return $this->inner->timestamp();
     }
 
-    public function withTimestamp(PointInTimeInterface $timestamp): Message
+    public function withTimestamp(PointInTime $timestamp): Message
     {
         $self = clone $this;
         $self->inner = $this->inner->withTimestamp($timestamp);

@@ -16,7 +16,7 @@ final class IosAppLinkTranslator implements PropertyTranslator
 
     public function translate(HttpResource $resource, Property $property)
     {
-        return (string) $resource
+        return $resource
             ->attributes()
             ->get('ios')
             ->content();

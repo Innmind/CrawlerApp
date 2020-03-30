@@ -10,23 +10,23 @@ use Crawler\{
     Exception\HostNeverHit,
 };
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    ElapsedPeriodInterface,
+    Clock,
+    ElapsedPeriod,
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 
 final class TracerAwareDelayer implements Delayer
 {
     private CrawlTracer $tracer;
     private Delayer $delay;
-    private TimeContinuumInterface $clock;
-    private ElapsedPeriodInterface $threshold;
+    private Clock $clock;
+    private ElapsedPeriod $threshold;
 
     public function __construct(
         CrawlTracer $tracer,
         Delayer $delayer,
-        TimeContinuumInterface $clock,
-        ElapsedPeriodInterface $threshold = null
+        Clock $clock,
+        ElapsedPeriod $threshold = null
     ) {
         $this->tracer = $tracer;
         $this->delay = $delayer;
@@ -34,7 +34,7 @@ final class TracerAwareDelayer implements Delayer
         $this->threshold = $threshold ?? Delay::hitInterval();
     }
 
-    public function __invoke(UrlInterface $url): void
+    public function __invoke(Url $url): void
     {
         try {
             $lastHit = $this->tracer->lastHit($url->authority()->host());

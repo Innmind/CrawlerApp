@@ -9,11 +9,11 @@ use Innmind\Http\{
     Message\Request\Request,
     Message\Response,
     Message\Method,
-    Headers\Headers,
+    Headers,
     Header\Header,
     ProtocolVersion,
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;
 
 class AuthentifiedTest extends TestCase
@@ -36,9 +36,9 @@ class AuthentifiedTest extends TestCase
             'apikey'
         );
         $request = new Request(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(Method::class),
-            $this->createMock(ProtocolVersion::class),
+            Url::of('example.com'),
+            Method::get(),
+            new ProtocolVersion(2, 0),
             Headers::of(
                 new Header('x-foo')
             )
@@ -51,8 +51,8 @@ class AuthentifiedTest extends TestCase
                     $wrapped->url() === $request->url() &&
                     $wrapped->method() === $request->method() &&
                     $wrapped->protocolVersion() === $request->protocolVersion() &&
-                    (string) $wrapped->headers()->get('x-foo') === 'x-foo: ' &&
-                    (string) $wrapped->headers()->get('authorization') === 'Authorization: "Bearer" apikey' &&
+                    $wrapped->headers()->get('x-foo')->toString() === 'x-foo: ' &&
+                    $wrapped->headers()->get('authorization')->toString() === 'Authorization: "Bearer" apikey' &&
                     $wrapped->body() === $request->body();
             }))
             ->willReturn($expected = $this->createMock(Response::class));

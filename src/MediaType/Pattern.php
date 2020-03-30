@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace Crawler\MediaType;
 
 use Crawler\Exception\DomainException;
-use Innmind\Filesystem\{
+use Innmind\MediaType\{
     MediaType,
     Exception\InvalidMediaTypeString,
 };
@@ -87,7 +87,7 @@ final class Pattern
      */
     public static function of(string $string): self
     {
-        $string = new Str($string);
+        $string = Str::of($string);
         $pattern = '~[\w\-.*]+/[\w\-.*]+([;,] [\w\-.]+=[\w\-.]+)?~';
 
         if (!$string->matches($pattern)) {
@@ -105,22 +105,22 @@ final class Pattern
         $params = $splits
             ->drop(1)
             ->reduce(
-                new Map('string', 'string'),
+                Map::of('string', 'string'),
                 function(Map $carry, Str $param): Map {
                     $matches = $param->capture(
                         '~^(?<key>[\w\-.]+)=(?<value>[\w\-.]+)$~'
                     );
 
                     return $carry->put(
-                        (string) $matches->get('key'),
-                        (string) $matches->get('value')
+                        $matches->get('key')->toString(),
+                        $matches->get('value')->toString()
                     );
                 }
             );
 
         return new self(
-            (string) $topLevel,
-            (string) $subType,
+            $topLevel->toString(),
+            $subType->toString(),
             $params->contains('q') ? (float) $params->get('q') : 1
         );
     }

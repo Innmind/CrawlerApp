@@ -9,7 +9,7 @@ use Crawler\{
     Reference,
 };
 use Innmind\Rest\Client\Identity;
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;
 
 class ReferrerLinkerTest extends TestCase
@@ -32,12 +32,12 @@ class ReferrerLinkerTest extends TestCase
         $source = new Reference(
             $this->createMock(Identity::class),
             'foo',
-            $this->createMock(UrlInterface::class)
+            Url::of('example.com')
         );
         $target = new Reference(
             $this->createMock(Identity::class),
             'foo',
-            $this->createMock(UrlInterface::class)
+            Url::of('example.com')
         );
         $inner
             ->expects($this->once())
@@ -60,12 +60,12 @@ class ReferrerLinkerTest extends TestCase
         $source = new Reference(
             $this->createMock(Identity::class),
             'foo',
-            $this->createMock(UrlInterface::class)
+            Url::of('example.com')
         );
         $target = new Reference(
             $this->createMock(Identity::class),
             'foo',
-            $this->createMock(UrlInterface::class)
+            Url::of('example.com')
         );
         $inner
             ->expects($this->once())

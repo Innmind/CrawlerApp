@@ -16,8 +16,8 @@ use Innmind\Crawler\{
     HttpResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\UrlInterface;
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Immutable\{
     Set,
@@ -36,7 +36,7 @@ class DelegationTranslatorTest extends TestCase
     public function setUp(): void
     {
         $this->translator = new DelegationTranslator(
-            (new Map('string', PropertyTranslator::class))
+            Map::of('string', PropertyTranslator::class)
                 ->put(
                     'host',
                     $this->host = $this->createMock(PropertyTranslator::class)
@@ -50,14 +50,14 @@ class DelegationTranslatorTest extends TestCase
             'host',
             $this->createMock(Type::class),
             new Access,
-            new Set('string'),
+            Set::of('string'),
             false
         );
         $this->unknownProperty = new Property(
             'foo',
             $this->createMock(Type::class),
             new Access,
-            new Set('string'),
+            Set::of('string'),
             false
         );
     }
@@ -73,9 +73,9 @@ class DelegationTranslatorTest extends TestCase
     public function testSupports()
     {
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
         $this
@@ -105,9 +105,9 @@ class DelegationTranslatorTest extends TestCase
     public function testTranslate()
     {
         $resource = new HttpResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
         $this
@@ -126,8 +126,8 @@ class DelegationTranslatorTest extends TestCase
     public function testThrowWhenInvalidTranslatorMap()
     {
         $this->expectException(\TypeError::class);
-        $this->expectExceptionMessage('Argument 1 must be of type MapInterface<string, Crawler\Translator\PropertyTranslator>');
+        $this->expectExceptionMessage('Argument 1 must be of type Map<string, Crawler\Translator\PropertyTranslator>');
 
-        new DelegationTranslator(new Map('string', 'object'));
+        new DelegationTranslator(Map::of('string', 'object'));
     }
 }

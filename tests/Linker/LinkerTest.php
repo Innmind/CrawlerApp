@@ -16,7 +16,8 @@ use Innmind\Rest\Client\{
     Server,
 };
 use Innmind\Url\Url;
-use Innmind\Immutable\SetInterface;
+use Innmind\Immutable\Set;
+use function Innmind\Immutable\first;
 use PHPUnit\Framework\TestCase;
 
 class LinkerTest extends TestCase
@@ -45,12 +46,12 @@ class LinkerTest extends TestCase
                 $source = new Reference(
                     $this->createMock(Identity::class),
                     'foo',
-                    Url::fromString('foo')
+                    Url::of('foo')
                 ),
                 $target = new Reference(
                     $this->createMock(Identity::class),
                     'foo',
-                    Url::fromString('bar')
+                    Url::of('bar')
                 ),
                 'some rel',
                 []
@@ -82,15 +83,15 @@ class LinkerTest extends TestCase
             ->with(
                 'foo',
                 $source,
-                $this->callback(function(SetInterface $links) use ($target): bool {
+                $this->callback(function(Set $links) use ($target): bool {
                     return (string) $links->type() === Link::class &&
                         $links->size() === 1 &&
-                        $links->current()->definition() === 'bar' &&
-                        $links->current()->identity() === $target &&
-                        $links->current()->relationship() === 'some rel' &&
-                        $links->current()->parameters()->size() === 1 &&
-                        $links->current()->parameters()->get('some')->key() === 'some' &&
-                        $links->current()->parameters()->get('some')->value() === 'attribute';
+                        first($links)->definition() === 'bar' &&
+                        first($links)->identity() === $target &&
+                        first($links)->relationship() === 'some rel' &&
+                        first($links)->parameters()->size() === 1 &&
+                        first($links)->parameters()->get('some')->key() === 'some' &&
+                        first($links)->parameters()->get('some')->value() === 'attribute';
                 })
             );
 
@@ -98,12 +99,12 @@ class LinkerTest extends TestCase
             new Reference(
                 $source,
                 'foo',
-                Url::fromString('http://server.url/')
+                Url::of('http://server.url/')
             ),
             new Reference(
                 $target,
                 'bar',
-                Url::fromString('http://server.url/')
+                Url::of('http://server.url/')
             ),
             'some rel',
             [

@@ -13,12 +13,13 @@ use Innmind\Filesystem\{
     Directory\Directory,
     File\File,
     Stream\NullStream,
-    Stream\StringStream,
+    Name,
 };
+use Innmind\Stream\Readable\Stream;
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    PointInTimeInterface,
-    Format\ISO8601,
+    Clock,
+    PointInTime,
+    Earth\Format\ISO8601,
 };
 use Innmind\Url\{
     Url,
@@ -34,7 +35,7 @@ class CrawlTracerTest extends TestCase
             CrawlTracerInterface::class,
             new CrawlTracer(
                 $this->createMock(Adapter::class),
-                $this->createMock(TimeContinuumInterface::class)
+                $this->createMock(Clock::class)
             )
         );
     }
@@ -44,65 +45,65 @@ class CrawlTracerTest extends TestCase
         $filesystem = $this->createMock(Adapter::class);
         $filesystem
             ->expects($this->at(0))
-            ->method('has')
-            ->with('hits')
+            ->method('contains')
+            ->with(new Name('hits'))
             ->willReturn(false);
         $filesystem
             ->expects($this->at(1))
             ->method('add')
             ->with($this->callback(function(Directory $dir): bool {
-                return (string) $dir->name() === 'hits';
+                return $dir->name()->toString() === 'hits';
             }));
         $filesystem
             ->expects($this->at(2))
-            ->method('has')
-            ->with('urls.txt')
+            ->method('contains')
+            ->with(new Name('urls.txt'))
             ->willReturn(false);
         $filesystem
             ->expects($this->at(3))
             ->method('add')
             ->with($this->callback(function(File $file): bool {
-                return (string) $file->name() === 'urls.txt' &&
-                    (string) $file->content() === '';
+                return $file->name()->toString() === 'urls.txt' &&
+                    $file->content()->toString() === '';
             }));
         $filesystem
             ->expects($this->at(4))
             ->method('get')
-            ->with('hits')
-            ->willReturn(new Directory('hits'));
+            ->with(new Name('hits'))
+            ->willReturn(Directory::named('hits'));
         $filesystem
             ->expects($this->at(5))
             ->method('add')
             ->with($this->callback(function(Directory $dir): bool {
-                return $dir->has('www.example.com.txt') &&
-                    (string) $dir->get('www.example.com.txt')->content() === 'some date';
+                return $dir->contains(new Name('www.example.com.txt')) &&
+                    $dir->get(new Name('www.example.com.txt'))->content()->toString() === 'some date';
             }));
         $filesystem
             ->expects($this->at(6))
             ->method('get')
-            ->with('urls.txt')
-            ->willReturn(new File('urls.txt', new NullStream));
+            ->with(new Name('urls.txt'))
+            ->willReturn(File::named('urls.txt', new NullStream));
         $filesystem
             ->expects($this->at(7))
             ->method('get')
-            ->with('urls.txt')
-            ->willReturn(new File('urls.txt', new NullStream));
+            ->with(new Name('urls.txt'))
+            ->willReturn(File::named('urls.txt', new NullStream));
         $filesystem
             ->expects($this->at(8))
             ->method('add')
             ->with($this->callback(function(File $file): bool {
-                return (string) $file->name() === 'urls.txt' &&
-                    (string) $file->content() === 'http://www.example.com/foo?some'."\n";
+                return $file->name()->toString() === 'urls.txt' &&
+                    $file->content()->toString() === 'http://www.example.com/foo?some'."\n";
             }));
         $tracer = new CrawlTracer(
             $filesystem,
-            $clock = $this->createMock(TimeContinuumInterface::class)
+            $clock = $this->createMock(Clock::class)
         );
         $clock
             ->expects($this->once())
             ->method('now')
             ->willReturn(
-                $now = $this->createMock(PointInTimeInterface::class)
+                $now = $this->createMock(PointInTime::class)
             );
         $now
             ->expects($this->once())
@@ -112,7 +113,7 @@ class CrawlTracerTest extends TestCase
 
         $this->assertSame(
             $tracer,
-            $tracer->trace(Url::fromString('http://www.example.com/foo?some#fragment'))
+            $tracer->trace(Url::of('http://www.example.com/foo?some#fragment'))
         );
     }
 
@@ -121,47 +122,47 @@ class CrawlTracerTest extends TestCase
         $filesystem = $this->createMock(Adapter::class);
         $filesystem
             ->expects($this->at(0))
-            ->method('has')
-            ->with('hits')
+            ->method('contains')
+            ->with(new Name('hits'))
             ->willReturn(false);
         $filesystem
             ->expects($this->at(1))
             ->method('add')
             ->with($this->callback(function(Directory $dir): bool {
-                return (string) $dir->name() === 'hits';
+                return $dir->name()->toString() === 'hits';
             }));
         $filesystem
             ->expects($this->at(2))
-            ->method('has')
-            ->with('urls.txt')
+            ->method('contains')
+            ->with(new Name('urls.txt'))
             ->willReturn(false);
         $filesystem
             ->expects($this->at(3))
             ->method('add')
             ->with($this->callback(function(File $file): bool {
-                return (string) $file->name() === 'urls.txt' &&
-                    (string) $file->content() === '';
+                return $file->name()->toString() === 'urls.txt' &&
+                    $file->content()->toString() === '';
             }));
         $filesystem
             ->expects($this->at(4))
             ->method('get')
-            ->with('hits')
-            ->willReturn(new Directory('hits'));
+            ->with(new Name('hits'))
+            ->willReturn(Directory::named('hits'));
         $filesystem
             ->expects($this->at(5))
             ->method('add')
             ->with($this->callback(function(Directory $dir): bool {
-                return $dir->has('www.example.com.txt') &&
-                    (string) $dir->get('www.example.com.txt')->content() === 'some date';
+                return $dir->contains(new Name('www.example.com.txt')) &&
+                    $dir->get(new Name('www.example.com.txt'))->content()->toString() === 'some date';
             }));
         $filesystem
             ->expects($this->at(6))
             ->method('get')
-            ->with('urls.txt')
+            ->with(new Name('urls.txt'))
             ->willReturn(
-                new File(
+                File::named(
                     'urls.txt',
-                    new StringStream('http://www.example.com/foo?some#other-fragment'."\n")
+                    Stream::ofContent('http://www.example.com/foo?some#other-fragment'."\n")
                 )
             );
         $filesystem
@@ -169,13 +170,13 @@ class CrawlTracerTest extends TestCase
             ->method('add');
         $tracer = new CrawlTracer(
             $filesystem,
-            $clock = $this->createMock(TimeContinuumInterface::class)
+            $clock = $this->createMock(Clock::class)
         );
         $clock
             ->expects($this->once())
             ->method('now')
             ->willReturn(
-                $now = $this->createMock(PointInTimeInterface::class)
+                $now = $this->createMock(PointInTime::class)
             );
         $now
             ->expects($this->once())
@@ -185,7 +186,7 @@ class CrawlTracerTest extends TestCase
 
         $this->assertSame(
             $tracer,
-            $tracer->trace(Url::fromString('http://www.example.com/foo?some#fragment'))
+            $tracer->trace(Url::of('http://www.example.com/foo?some#fragment'))
         );
     }
 
@@ -193,55 +194,55 @@ class CrawlTracerTest extends TestCase
     {
         $tracer = new CrawlTracer(
             $filesystem = $this->createMock(Adapter::class),
-            $this->createMock(TimeContinuumInterface::class)
+            $this->createMock(Clock::class)
         );
         $filesystem
             ->expects($this->at(0))
             ->method('get')
-            ->with('urls.txt')
-            ->willReturn(new File('urls.txt', new NullStream));
+            ->with(new Name('urls.txt'))
+            ->willReturn(File::named('urls.txt', new NullStream));
         $filesystem
             ->expects($this->at(1))
             ->method('get')
-            ->with('urls.txt')
+            ->with(new Name('urls.txt'))
             ->willReturn(
-                new File(
+                File::named(
                     'urls.txt',
-                    new StringStream('/foo')
+                    Stream::ofContent('/foo')
                 )
             );
         $filesystem
             ->expects($this->at(2))
             ->method('get')
-            ->with('urls.txt')
+            ->with(new Name('urls.txt'))
             ->willReturn(
-                new File(
+                File::named(
                     'urls.txt',
-                    new StringStream('/foo')
+                    Stream::ofContent('/foo')
                 )
             );
 
-        $this->assertFalse($tracer->knows(Url::fromString('/foo')));
-        $this->assertTrue($tracer->knows(Url::fromString('/foo')));
-        $this->assertTrue($tracer->knows(Url::fromString('/foo#bar')));
+        $this->assertFalse($tracer->knows(Url::of('/foo')));
+        $this->assertTrue($tracer->knows(Url::of('/foo')));
+        $this->assertTrue($tracer->knows(Url::of('/foo#bar')));
     }
 
     public function testLastHit()
     {
         $tracer = new CrawlTracer(
             $filesystem = $this->createMock(Adapter::class),
-            $clock = $this->createMock(TimeContinuumInterface::class)
+            $clock = $this->createMock(Clock::class)
         );
         $filesystem
             ->expects($this->once())
             ->method('get')
-            ->with('hits')
+            ->with(new Name('hits'))
             ->willReturn(
-                (new Directory('hits'))
+                Directory::named('hits')
                     ->add(
-                        new File(
+                        File::named(
                             'example.com.txt',
-                            new StringStream('some date')
+                            Stream::ofContent('some date')
                         )
                     )
             );
@@ -249,27 +250,27 @@ class CrawlTracerTest extends TestCase
             ->expects($this->once())
             ->method('at')
             ->with('some date')
-            ->willReturn($expected = $this->createMock(PointInTimeInterface::class));
+            ->willReturn($expected = $this->createMock(PointInTime::class));
 
-        $this->assertSame($expected, $tracer->lastHit(new Host('example.com')));
+        $this->assertSame($expected, $tracer->lastHit(Host::of('example.com')));
     }
 
     public function testThrowWhenHostNeverHit()
     {
         $tracer = new CrawlTracer(
             $filesystem = $this->createMock(Adapter::class),
-            $clock = $this->createMock(TimeContinuumInterface::class)
+            $clock = $this->createMock(Clock::class)
         );
         $filesystem
             ->expects($this->once())
             ->method('get')
-            ->with('hits')
+            ->with(new Name('hits'))
             ->willReturn(
-                new Directory('hits')
+                Directory::named('hits')
             );
 
         $this->expectException(HostNeverHit::class);
 
-        $tracer->lastHit(new Host('example.com'));
+        $tracer->lastHit(Host::of('example.com'));
     }
 }

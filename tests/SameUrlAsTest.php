@@ -20,7 +20,7 @@ class SameUrlAsTest extends TestCase
         $this
             ->forAll($this->urls())
             ->then(function(Url $url): void {
-                $sameAs = new SameUrlAs(Url::fromString('https://en.wikipedia.org/wiki/H2g2'));
+                $sameAs = new SameUrlAs(Url::of('https://en.wikipedia.org/wiki/H2g2'));
 
                 $this->assertTrue($sameAs($url));
             });
@@ -31,7 +31,7 @@ class SameUrlAsTest extends TestCase
         $this
             ->forAll($this->urls())
             ->then(function(Url $url): void {
-                $sameAs = new SameUrlAs(Url::fromString('https://en.wikipedia.org/'));
+                $sameAs = new SameUrlAs(Url::of('https://en.wikipedia.org/'));
 
                 $this->assertFalse($sameAs($url));
             });
@@ -40,12 +40,12 @@ class SameUrlAsTest extends TestCase
     private function urls(): Generator
     {
         return Generator\elements(
-            Url::fromString('https://en.wikipedia.org/wiki/H2g2#History'),
-            Url::fromString('https://en.wikipedia.org/wiki/H2g2#Terms_and_conditions'),
-            Url::fromString('https://en.wikipedia.org/wiki/H2g2#DNA'),
-            Url::fromString('https://en.wikipedia.org/wiki/H2g2#See_also'),
-            Url::fromString('https://en.wikipedia.org/wiki/H2g2#References'),
-            Url::fromString('https://en.wikipedia.org/wiki/H2g2#Further_reading')
+            Url::of('https://en.wikipedia.org/wiki/H2g2#History'),
+            Url::of('https://en.wikipedia.org/wiki/H2g2#Terms_and_conditions'),
+            Url::of('https://en.wikipedia.org/wiki/H2g2#DNA'),
+            Url::of('https://en.wikipedia.org/wiki/H2g2#See_also'),
+            Url::of('https://en.wikipedia.org/wiki/H2g2#References'),
+            Url::of('https://en.wikipedia.org/wiki/H2g2#Further_reading')
         );
     }
 }
