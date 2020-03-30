@@ -12,7 +12,6 @@ final class UrlCannotBeCrawled extends DomainException
     public function __construct(Url $url)
     {
         $this->url = $url;
-        parent::__construct();
     }
 
     public function url(): Url

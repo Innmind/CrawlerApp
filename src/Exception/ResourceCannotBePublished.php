@@ -12,7 +12,6 @@ final class ResourceCannotBePublished extends RuntimeException
     public function __construct(HttpResource $resource)
     {
         $this->resource = $resource;
-        parent::__construct();
     }
 
     public function resource(): HttpResource

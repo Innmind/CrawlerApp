@@ -26,7 +26,7 @@ final class Negotiator
                 return $b->quality() <=> $a->quality();
             });
 
-        if ($pattterns->size() === 0) {
+        if ($pattterns->empty()) {
             throw new MediaTypeDoesntMatchAny;
         }
 

@@ -53,7 +53,7 @@ final class RobotsTxtAwareDelayer implements Delayer
                         $directives->hasCrawlDelay();
                 });
 
-            if ($directives->size() === 0) {
+            if ($directives->empty()) {
                 return;
             }
 

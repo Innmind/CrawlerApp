@@ -14,7 +14,6 @@ final class CantLinkResourceAcrossServers extends RuntimeException
     {
         $this->source = $source;
         $this->target = $target;
-        parent::__construct();
     }
 
     public function source(): Reference
