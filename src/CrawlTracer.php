@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace Crawler;
 
+use Crawler\Exception\HostNeverHit;
 use Innmind\Url\{
     Url,
     Authority\Host,
@@ -15,7 +16,7 @@ interface CrawlTracer
     public function knows(Url $url): bool;
 
     /**
-     * @throws HostNeverHitException
+     * @throws HostNeverHit
      */
     public function lastHit(Host $host): PointInTime;
 }

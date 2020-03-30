@@ -16,6 +16,7 @@ use Innmind\Crawler\{
 };
 use Innmind\Url\Url;
 use Innmind\AMQP\Producer;
+use Innmind\Immutable\Map;
 
 final class AlternatesAwarePublisher implements PublisherInterface
 {
@@ -41,24 +42,25 @@ final class AlternatesAwarePublisher implements PublisherInterface
             $resource->attributes()->get('alternates') instanceof Alternates
         ) {
             $sameAs = new SameUrlAs($resource->url());
-            $resource
+            /** @var Map<string, Alternate> */
+            $alternates = $resource
                 ->attributes()
                 ->get('alternates')
-                ->content()
-                ->foreach(function(string $language, Alternate $alternate) use ($sameAs, $reference): void {
-                    $alternate
-                        ->content()
-                        ->filter(function(Url $url) use ($sameAs): bool {
-                            return !$sameAs($url);
-                        })
-                        ->foreach(function(Url $url) use ($language, $reference): void {
-                            ($this->produce)(new Message(
-                                $url,
-                                $reference,
-                                $language
-                            ));
-                        });
-                });
+                ->content();
+            $alternates->foreach(function(string $language, Alternate $alternate) use ($sameAs, $reference): void {
+                $alternate
+                    ->content()
+                    ->filter(function(Url $url) use ($sameAs): bool {
+                        return !$sameAs($url);
+                    })
+                    ->foreach(function(Url $url) use ($language, $reference): void {
+                        ($this->produce)(new Message(
+                            $url,
+                            $reference,
+                            $language
+                        ));
+                    });
+            });
         }
 
         return $reference;

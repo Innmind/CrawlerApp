@@ -31,10 +31,12 @@ final class CanonicalAwarePublisher implements PublisherInterface
     ): Reference {
         $reference = ($this->publisher)($resource, $server);
 
+        /** @psalm-suppress MixedMethodCall */
         if (
             $resource->attributes()->contains('canonical') &&
             $resource->attributes()->get('canonical')->content()->toString() !== $resource->url()->toString()
         ) {
+            /** @psalm-suppress MixedArgument */
             ($this->produce)(new Canonical(
                 $resource->attributes()->get('canonical')->content(),
                 $reference

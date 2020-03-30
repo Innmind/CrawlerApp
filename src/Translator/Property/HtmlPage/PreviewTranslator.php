@@ -6,6 +6,8 @@ namespace Crawler\Translator\Property\HtmlPage;
 use Crawler\Translator\PropertyTranslator;
 use Innmind\Crawler\HttpResource;
 use Innmind\Rest\Client\Definition\Property;
+use Innmind\Url\Url;
+use Innmind\Immutable\Set;
 use function Innmind\Immutable\first;
 
 final class PreviewTranslator implements PropertyTranslator
@@ -17,10 +19,12 @@ final class PreviewTranslator implements PropertyTranslator
 
     public function translate(HttpResource $resource, Property $property)
     {
-        return first($resource
+        /** @var Set<Url> */
+        $previews = $resource
             ->attributes()
             ->get('preview')
-            ->content())
-            ->toString();
+            ->content();
+
+        return first($previews)->toString();
     }
 }

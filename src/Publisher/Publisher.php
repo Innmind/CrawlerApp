@@ -52,6 +52,10 @@ final class Publisher implements PublisherInterface
             ->reduce(
                 Set::of('string'),
                 function(Set $carry, string $name, Definition $definition): Set {
+                    /**
+                     * @psalm-suppress PossiblyInvalidIterator
+                     * @var string $value
+                     */
                     foreach ($definition->metas()->get('allowed_media_types') as $value) {
                         $carry = $carry->add($value);
                     }
@@ -78,6 +82,7 @@ final class Publisher implements PublisherInterface
         $definition = $definitions
             ->values()
             ->filter(function(Definition $definition) use ($best): bool {
+                /** @psalm-suppress PossiblyInvalidArgument */
                 return \in_array(
                     (string) $best,
                     $definition->metas()->get('allowed_media_types')

@@ -102,6 +102,7 @@ final class Pattern
         $topLevel = $matches->get('topLevel');
         $subType = $matches->get('subType');
 
+        /** @var Map<string, string> */
         $params = $splits
             ->drop(1)
             ->reduce(

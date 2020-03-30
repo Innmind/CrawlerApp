@@ -39,6 +39,7 @@ final class Resource implements Message
     private Message $inner;
     private Url $resource;
     private ?string $relationship;
+    /** @var array<string, string> */
     private array $attributes;
     private Reference $reference;
 
@@ -51,6 +52,7 @@ final class Resource implements Message
             throw new DomainException;
         }
 
+        /** @var array{resource: string, relationship?: string, attributes?: array<string, string>, origin: string, definition: string, server: string} */
         $payload = Json::decode($message->body()->toString());
 
         $this->inner = $message;
@@ -74,11 +76,16 @@ final class Resource implements Message
         return \is_string($this->relationship);
     }
 
+    /** @psalm-suppress InvalidNullableReturnType */
     public function relationship(): string
     {
+        /** @psalm-suppress NullableReturnStatement */
         return $this->relationship;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function attributes(): array
     {
         return $this->attributes;

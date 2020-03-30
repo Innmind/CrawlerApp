@@ -11,8 +11,12 @@ use function Innmind\Immutable\assertMap;
 
 final class DelegationTranslator implements PropertyTranslator
 {
+    /** @var Map<string, PropertyTranslator> */
     private Map $translators;
 
+    /**
+     * @param Map<string, PropertyTranslator> $translators
+     */
     public function __construct(Map $translators)
     {
         assertMap('string', PropertyTranslator::class, $translators, 1);

@@ -37,7 +37,8 @@
         "giorgiosironi/eris": "^0.11.0",
         "infection/infection": "^0.15",
         "roave/security-advisories": "dev-master",
-        "innmind/debug": "~2.0"
+        "innmind/debug": "~2.0",
+        "vimeo/psalm": "^3.10"
     },
     "extra": {
         "gene": {

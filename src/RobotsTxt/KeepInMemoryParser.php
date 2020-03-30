@@ -13,11 +13,13 @@ use Innmind\Immutable\Map;
 final class KeepInMemoryParser implements Parser
 {
     private Parser $parser;
+    /** @var Map<string, RobotsTxt> */
     private Map $cache;
 
     public function __construct(Parser $parser)
     {
         $this->parser = $parser;
+        /** @var Map<string, RobotsTxt> */
         $this->cache = Map::of('string', RobotsTxt::class);
     }
 

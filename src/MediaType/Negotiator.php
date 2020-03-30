@@ -5,7 +5,10 @@ namespace Crawler\MediaType;
 
 use Crawler\Exception\MediaTypeDoesntMatchAny;
 use Innmind\MediaType\MediaType;
-use Innmind\Immutable\Set;
+use Innmind\Immutable\{
+    Set,
+    Sequence,
+};
 
 final class Negotiator
 {
@@ -14,6 +17,7 @@ final class Negotiator
      */
     public function best(MediaType $mediaType, Set $pattterns): Pattern
     {
+        /** @var Sequence<Pattern> */
         $pattterns = $pattterns
             ->filter(function(Pattern $pattern) use ($mediaType): bool {
                 return $pattern->matches($mediaType);

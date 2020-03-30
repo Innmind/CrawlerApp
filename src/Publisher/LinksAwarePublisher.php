@@ -12,6 +12,7 @@ use Crawler\{
 use Innmind\Crawler\HttpResource;
 use Innmind\Url\Url;
 use Innmind\AMQP\Producer;
+use Innmind\Immutable\Set;
 
 final class LinksAwarePublisher implements PublisherInterface
 {
@@ -34,10 +35,12 @@ final class LinksAwarePublisher implements PublisherInterface
 
         if ($resource->attributes()->contains('links')) {
             $sameAs = new SameUrlAs($resource->url());
-            $resource
+            /** @var Set<Url> */
+            $links = $resource
                 ->attributes()
                 ->get('links')
-                ->content()
+                ->content();
+            $links
                 ->filter(function(Url $url) use ($sameAs): bool {
                     return !$sameAs($url);
                 })

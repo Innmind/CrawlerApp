@@ -53,7 +53,7 @@ final class CrawlConsumer
 
     public function __invoke(Message $message): void
     {
-        $message = new Resource($message);
+        $message = new Resource(new Message\Locked($message));
 
         try {
             $resource = ($this->crawl)(

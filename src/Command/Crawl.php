@@ -106,6 +106,10 @@ USAGE;
                 break;
 
             case $attribute->content() instanceof Map:
+                /**
+                 * @psalm-suppress MixedMethodCall
+                 * @psalm-suppress MixedArgument
+                 */
                 $output->write(
                     Str::of('%s: map<%s, %s>[%s]')
                         ->sprintf(
@@ -119,6 +123,10 @@ USAGE;
                 break;
 
             case $attribute->content() instanceof Set:
+                /**
+                 * @psalm-suppress MixedMethodCall
+                 * @psalm-suppress MixedArgument
+                 */
                 $output->write(
                     Str::of('%s: set<%s>[%s]')
                         ->sprintf(

@@ -57,8 +57,10 @@ final class CrawlTracer implements CrawlTracerInterface
 
     public function trace(Url $url): CrawlTracerInterface
     {
+        /** @var Directory */
+        $hits = $this->filesystem->get(new Name(self::HITS));
         $this->filesystem->add(
-            $this->filesystem->get(new Name(self::HITS))->add(
+            $hits->add(
                 new File(
                     $this->name($url->authority()->host()),
                     Stream::ofContent(
@@ -100,6 +102,7 @@ final class CrawlTracer implements CrawlTracerInterface
     public function lastHit(Host $host): PointInTime
     {
         $name = $this->name($host);
+        /** @var Directory */
         $directory = $this->filesystem->get(new Name(self::HITS));
 
         if (!$directory->contains($name)) {

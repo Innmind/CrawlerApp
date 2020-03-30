@@ -25,6 +25,7 @@ final class HttpResourceTranslator
         CrawledResource $resource,
         Definition $definition
     ): HttpResource {
+        /** @var Map<string, Property> */
         $properties = $definition
             ->properties()
             ->filter(function(string $name, PropertyDefinition $definition) use ($resource): bool {

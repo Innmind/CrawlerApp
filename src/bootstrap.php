@@ -40,6 +40,7 @@ use Innmind\Socket\Internet\Transport as Socket;
 use Innmind\AMQP\{
     Model\Exchange,
     Model\Queue,
+    Client,
 };
 use Innmind\TimeWarp\Halt\Usleep;
 use Innmind\IPC\Process\Name;
@@ -88,6 +89,7 @@ function bootstrap(
         $restCache
     );
 
+    /** @var Set<Factor> */
     $factors = Set::of(
         Factor::class,
         Homeostasis\Factors::cpu($os->clock(), $serverStatus),
@@ -136,10 +138,14 @@ function bootstrap(
 
     $amqpClient = stack(
         $amqp['client']['auto_declare']($exchanges, $queues, $bindings),
-        static function($client) use ($amqp, $os) {
-            return $amqp['client']['signal_aware']($client, $os->process()->signals());
-        },
-        fn($client) => $amqp['client']['logger']($client, $amqpLogger),
+        static fn(Client $client): Client => $amqp['client']['signal_aware'](
+            $client,
+            $os->process()->signals(),
+        ),
+        static fn(Client $client): Client => $amqp['client']['logger'](
+            $client,
+            $amqpLogger,
+        ),
         $amqp['client']['fluent']
     )($amqpClient);
     $producer = $amqp['producers']($exchanges)($amqpClient)->get('urls');
@@ -193,6 +199,10 @@ function bootstrap(
         )
     );
 
+    /**
+     * @psalm-suppress InvalidArgument
+     * @psalm-suppress InvalidScalarArgument
+     */
     $publisher = new Publisher\LinksAwarePublisher(
         new Publisher\ImagesAwarePublisher(
             new Publisher\AlternatesAwarePublisher(
@@ -202,24 +212,24 @@ function bootstrap(
                         new Translator\HttpResourceTranslator(
                             new Translator\Property\DelegationTranslator(
                                 Map::of('string', Translator\PropertyTranslator::class)
-                                    ('host', new Translator\Property\HostTranslator)
-                                    ('path', new Translator\Property\PathTranslator)
-                                    ('query', new Translator\Property\QueryTranslator)
-                                    ('languages', new Translator\Property\LanguagesTranslator)
-                                    ('charset', new Translator\Property\CharsetTranslator)
-                                    ('dimension', new Translator\Property\Image\DimensionTranslator)
-                                    ('weight', new Translator\Property\Image\WeightTranslator)
-                                    ('anchors', new Translator\Property\HtmlPage\AnchorsTranslator)
-                                    ('android', new Translator\Property\HtmlPage\AndroidAppLinkTranslator)
-                                    ('description', new Translator\Property\HtmlPage\DescriptionTranslator)
-                                    ('ios', new Translator\Property\HtmlPage\IosAppLinkTranslator)
-                                    ('journal', new Translator\Property\HtmlPage\IsJournalTranslator)
-                                    ('mainContent', new Translator\Property\HtmlPage\MainContentTranslator)
-                                    ('themeColour', new Translator\Property\HtmlPage\ThemeColourTranslator)
-                                    ('title', new Translator\Property\HtmlPage\TitleTranslator)
-                                    ('preview', new Translator\Property\HtmlPage\PreviewTranslator)
-                                    ('author', new Translator\Property\HtmlPage\AuthorTranslator)
-                                    ('citations', new Translator\Property\HtmlPage\CitationsTranslator)
+                                    ->put('host', new Translator\Property\HostTranslator)
+                                    ->put('path', new Translator\Property\PathTranslator)
+                                    ->put('query', new Translator\Property\QueryTranslator)
+                                    ->put('languages', new Translator\Property\LanguagesTranslator)
+                                    ->put('charset', new Translator\Property\CharsetTranslator)
+                                    ->put('dimension', new Translator\Property\Image\DimensionTranslator)
+                                    ->put('weight', new Translator\Property\Image\WeightTranslator)
+                                    ->put('anchors', new Translator\Property\HtmlPage\AnchorsTranslator)
+                                    ->put('android', new Translator\Property\HtmlPage\AndroidAppLinkTranslator)
+                                    ->put('description', new Translator\Property\HtmlPage\DescriptionTranslator)
+                                    ->put('ios', new Translator\Property\HtmlPage\IosAppLinkTranslator)
+                                    ->put('journal', new Translator\Property\HtmlPage\IsJournalTranslator)
+                                    ->put('mainContent', new Translator\Property\HtmlPage\MainContentTranslator)
+                                    ->put('themeColour', new Translator\Property\HtmlPage\ThemeColourTranslator)
+                                    ->put('title', new Translator\Property\HtmlPage\TitleTranslator)
+                                    ->put('preview', new Translator\Property\HtmlPage\PreviewTranslator)
+                                    ->put('author', new Translator\Property\HtmlPage\AuthorTranslator)
+                                    ->put('citations', new Translator\Property\HtmlPage\CitationsTranslator)
                             )
                         )
                     ),
@@ -236,6 +246,10 @@ function bootstrap(
         new Linker\Linker($rest)
     );
 
+    /**
+     * @psalm-suppress InvalidArgument
+     * @psalm-suppress InvalidScalarArgument
+     */
     $consumers = Map::of('string', 'callable')
         ('crawler', new AMQP\Consumer\CrawlConsumer(
             $crawler,

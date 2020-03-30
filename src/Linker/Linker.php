@@ -37,6 +37,7 @@ final class Linker implements LinkerInterface
             throw new CantLinkResourceAcrossServers($source, $target);
         }
 
+        /** @var Map<string, Parameter> */
         $map = Map::of('string', Parameter::class);
 
         foreach ($attributes as $key => $value) {
