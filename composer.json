@@ -40,9 +40,6 @@
         "roave/security-advisories": "dev-master",
         "innmind/debug": "^1.1"
     },
-    "scripts": {
-        "test" : "bin/simple-phpunit"
-    },
     "extra": {
         "gene": {
             "expression": [
