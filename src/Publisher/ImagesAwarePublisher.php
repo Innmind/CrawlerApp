@@ -9,13 +9,14 @@ use Crawler\{
     AMQP\Message\Image,
 };
 use Innmind\Crawler\HttpResource;
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\AMQP\Producer;
+use Innmind\Immutable\Map;
 
 final class ImagesAwarePublisher implements PublisherInterface
 {
-    private $publisher;
-    private $produce;
+    private PublisherInterface $publisher;
+    private Producer $produce;
 
     public function __construct(
         PublisherInterface $publisher,
@@ -27,22 +28,23 @@ final class ImagesAwarePublisher implements PublisherInterface
 
     public function __invoke(
         HttpResource $resource,
-        UrlInterface $server
+        Url $server
     ): Reference {
         $reference = ($this->publisher)($resource, $server);
 
         if ($resource->attributes()->contains('images')) {
-            $resource
+            /** @var Map<Url, string> */
+            $images = $resource
                 ->attributes()
                 ->get('images')
-                ->content()
-                ->foreach(function(UrlInterface $image, string $description) use ($reference): void {
-                    ($this->produce)(new Image(
-                        $image,
-                        $reference,
-                        $description
-                    ));
-                });
+                ->content();
+            $images->foreach(function(Url $image, string $description) use ($reference): void {
+                ($this->produce)(new Image(
+                    $image,
+                    $reference,
+                    $description
+                ));
+            });
         }
 
         return $reference;

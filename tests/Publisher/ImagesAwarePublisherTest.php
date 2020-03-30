@@ -13,17 +13,13 @@ use Innmind\Crawler\{
     HttpResource as CrawledResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\{
-    UrlInterface,
-    Url,
-};
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
 use Innmind\AMQP\Producer;
 use Innmind\Immutable\{
     Map,
-    SetInterface,
     Set,
 };
 use PHPUnit\Framework\TestCase;
@@ -53,12 +49,12 @@ class ImagesAwarePublisherTest extends TestCase
     public function testDoesntPublishWhenNoImage()
     {
         $resource = new CrawledResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
-        $server = $this->createMock(UrlInterface::class);
+        $server = Url::of('example.com');
         $this
             ->inner
             ->expects($this->once())
@@ -82,20 +78,20 @@ class ImagesAwarePublisherTest extends TestCase
     public function testPublish()
     {
         $resource = new CrawledResource(
-            Url::fromString('http://example.com/'),
-            $this->createMock(MediaType::class),
+            Url::of('http://example.com/'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 (
                     'images',
                     new Attribute\Attribute(
                         'images',
-                        Map::of(UrlInterface::class, 'string')
-                            ($published = Url::fromString('http://example.com/foo'), 'some desc')
+                        Map::of(Url::class, 'string')
+                            ($published = Url::of('http://example.com/foo'), 'some desc')
                     )
                 ),
             $this->createMock(Readable::class)
         );
-        $server = Url::fromString('http://server.url/');
+        $server = Url::of('http://server.url/');
         $this
             ->inner
             ->expects($this->once())
@@ -110,7 +106,7 @@ class ImagesAwarePublisherTest extends TestCase
             );
         $identity
             ->expects($this->once())
-            ->method('__toString')
+            ->method('toString')
             ->willReturn('some identity');
         $this
             ->producer

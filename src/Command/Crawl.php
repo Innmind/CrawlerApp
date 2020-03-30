@@ -13,9 +13,9 @@ use Innmind\CLI\{
 use Innmind\Crawler\Crawler;
 use Innmind\Http\{
     Message\Request\Request,
-    Message\Method\Method,
-    ProtocolVersion\ProtocolVersion,
-    Headers\Headers,
+    Message\Method,
+    ProtocolVersion,
+    Headers,
     Header,
     Header\Value\Value,
 };
@@ -27,16 +27,15 @@ use Innmind\Crawler\HttpResource\{
 use Innmind\Stream\Writable;
 use Innmind\Immutable\{
     Set,
-    MapInterface,
-    SetInterface,
+    Map,
     Str,
 };
 
 final class Crawl implements Command
 {
-    private $crawl;
-    private $userAgent;
-    private $publish;
+    private Crawler $crawl;
+    private string $userAgent;
+    private Publisher $publish;
 
     public function __construct(
         Crawler $crawl,
@@ -52,8 +51,8 @@ final class Crawl implements Command
     {
         $resource = ($this->crawl)(
             new Request(
-                Url::fromString($arguments->get('url')),
-                new Method(Method::GET),
+                Url::of($arguments->get('url')),
+                Method::get(),
                 new ProtocolVersion(2, 0),
                 Headers::of(
                     new Header\Header(
@@ -75,12 +74,12 @@ final class Crawl implements Command
         if ($arguments->contains('publish')) {
             ($this->publish)(
                 $resource,
-                Url::fromString($arguments->get('publish'))
+                Url::of($arguments->get('publish'))
             );
         }
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return <<<USAGE
 crawl url [publish]
@@ -106,7 +105,11 @@ USAGE;
                     });
                 break;
 
-            case $attribute->content() instanceof MapInterface:
+            case $attribute->content() instanceof Map:
+                /**
+                 * @psalm-suppress MixedMethodCall
+                 * @psalm-suppress MixedArgument
+                 */
                 $output->write(
                     Str::of('%s: map<%s, %s>[%s]')
                         ->sprintf(
@@ -119,7 +122,11 @@ USAGE;
                 );
                 break;
 
-            case $attribute->content() instanceof SetInterface:
+            case $attribute->content() instanceof Set:
+                /**
+                 * @psalm-suppress MixedMethodCall
+                 * @psalm-suppress MixedArgument
+                 */
                 $output->write(
                     Str::of('%s: set<%s>[%s]')
                         ->sprintf(

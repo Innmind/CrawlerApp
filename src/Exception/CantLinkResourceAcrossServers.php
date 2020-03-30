@@ -7,14 +7,13 @@ use Crawler\Reference;
 
 final class CantLinkResourceAcrossServers extends RuntimeException
 {
-    private $source;
-    private $target;
+    private Reference $source;
+    private Reference $target;
 
     public function __construct(Reference $source, Reference $target)
     {
         $this->source = $source;
         $this->target = $target;
-        parent::__construct();
     }
 
     public function source(): Reference

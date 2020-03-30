@@ -15,8 +15,8 @@ use Innmind\Http\Message\Request;
 
 final class TracerAwareCrawler implements Crawler
 {
-    private $tracer;
-    private $crawl;
+    private CrawlTracer $tracer;
+    private Crawler $crawl;
 
     public function __construct(
         CrawlTracer $tracer,

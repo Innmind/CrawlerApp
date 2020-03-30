@@ -8,7 +8,7 @@ use Innmind\Homeostasis\Factor\{
     Cpu,
     Log,
 };
-use Innmind\TimeContinuum\TimeContinuumInterface;
+use Innmind\TimeContinuum\Clock;
 use Innmind\Server\Status\Server;
 use Innmind\Filesystem\Adapter;
 use Innmind\LogReader\Reader;
@@ -21,7 +21,7 @@ class FactorsTest extends TestCase
         $this->assertInstanceOf(
             Cpu::class,
             Factors::cpu(
-                $this->createMock(TimeContinuumInterface::class),
+                $this->createMock(Clock::class),
                 $this->createMock(Server::class)
             )
         );
@@ -32,7 +32,7 @@ class FactorsTest extends TestCase
         $this->assertInstanceOf(
             Log::class,
             Factors::log(
-                $this->createMock(TimeContinuumInterface::class),
+                $this->createMock(Clock::class),
                 $this->createMock(Reader::class),
                 $this->createMock(Adapter::class)
             )

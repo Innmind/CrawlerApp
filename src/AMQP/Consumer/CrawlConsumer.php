@@ -15,10 +15,10 @@ use Crawler\{
 use Innmind\Crawler\Crawler;
 use Innmind\Http\{
     Message\Request\Request,
-    Message\Method\Method,
-    Message\StatusCode\StatusCode,
-    ProtocolVersion\ProtocolVersion,
-    Headers\Headers,
+    Message\Method,
+    Message\StatusCode,
+    ProtocolVersion,
+    Headers,
     Header,
     Header\Value\Value,
 };
@@ -34,10 +34,10 @@ use Innmind\AMQP\{
 
 final class CrawlConsumer
 {
-    private $crawl;
-    private $publish;
-    private $link;
-    private $userAgent;
+    private Crawler $crawl;
+    private Publisher $publish;
+    private Linker $link;
+    private string $userAgent;
 
     public function __construct(
         Crawler $crawl,
@@ -53,13 +53,13 @@ final class CrawlConsumer
 
     public function __invoke(Message $message): void
     {
-        $message = new Resource($message);
+        $message = new Resource(new Message\Locked($message));
 
         try {
             $resource = ($this->crawl)(
                 new Request(
                     $message->resource(),
-                    new Method(Method::GET),
+                    Method::get(),
                     new ProtocolVersion(2, 0),
                     Headers::of(
                         new Header\Header(

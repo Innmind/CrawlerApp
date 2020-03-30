@@ -10,14 +10,11 @@ use Innmind\Rest\Client\{
     HttpResource,
     HttpResource\Property,
 };
-use Innmind\Immutable\{
-    MapInterface,
-    Map,
-};
+use Innmind\Immutable\Map;
 
 final class HttpResourceTranslator
 {
-    private $translator;
+    private PropertyTranslator $translator;
 
     public function __construct(PropertyTranslator $translator)
     {
@@ -28,14 +25,15 @@ final class HttpResourceTranslator
         CrawledResource $resource,
         Definition $definition
     ): HttpResource {
+        /** @var Map<string, Property> */
         $properties = $definition
             ->properties()
             ->filter(function(string $name, PropertyDefinition $definition) use ($resource): bool {
                 return $this->translator->supports($resource, $definition);
             })
             ->reduce(
-                new Map('string', Property::class),
-                function(MapInterface $carry, string $name, PropertyDefinition $definition) use ($resource): MapInterface {
+                Map::of('string', Property::class),
+                function(Map $carry, string $name, PropertyDefinition $definition) use ($resource): Map {
                     return $carry->put(
                         $name,
                         new Property(

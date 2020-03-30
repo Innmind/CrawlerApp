@@ -10,29 +10,27 @@ use Innmind\RobotsTxt\{
     Exception\FileNotFound,
 };
 use Innmind\Url\{
-    UrlInterface,
+    Url,
     Path,
-    NullQuery,
-    NullFragment,
 };
 use Innmind\TimeWarp\Halt;
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    Period\Earth\Second,
+    Clock,
+    Earth\Period\Second,
 };
 
 final class RobotsTxtAwareDelayer implements Delayer
 {
-    private $parser;
-    private $userAgent;
-    private $halt;
-    private $clock;
+    private Parser $parser;
+    private string $userAgent;
+    private Halt $halt;
+    private Clock $clock;
 
     public function __construct(
         Parser $parser,
         string $userAgent,
         Halt $halt,
-        TimeContinuumInterface $clock
+        Clock $clock
     ) {
         $this->parser = $parser;
         $this->userAgent = $userAgent;
@@ -40,14 +38,14 @@ final class RobotsTxtAwareDelayer implements Delayer
         $this->clock = $clock;
     }
 
-    public function __invoke(UrlInterface $url): void
+    public function __invoke(Url $url): void
     {
         try {
             $directives = ($this->parser)(
                 $url
-                    ->withPath(new Path('/robots.txt'))
-                    ->withQuery(new NullQuery)
-                    ->withFragment(new NullFragment)
+                    ->withPath(Path::of('/robots.txt'))
+                    ->withoutQuery()
+                    ->withoutFragment()
             )
                 ->directives()
                 ->filter(function(Directives $directives): bool {
@@ -55,7 +53,7 @@ final class RobotsTxtAwareDelayer implements Delayer
                         $directives->hasCrawlDelay();
                 });
 
-            if ($directives->size() === 0) {
+            if ($directives->empty()) {
                 return;
             }
 

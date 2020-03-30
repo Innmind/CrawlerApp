@@ -7,15 +7,14 @@ use Innmind\HttpTransport\Transport;
 use Innmind\Http\{
     Message\Request,
     Message\Response,
-    Headers\Headers,
     Header\Authorization,
     Header\AuthorizationValue,
 };
 
 final class Authentified implements Transport
 {
-    private $fulfill;
-    private $header;
+    private Transport $fulfill;
+    private Authorization $header;
 
     public function __construct(Transport $fulfill, string $apiKey)
     {
@@ -25,15 +24,11 @@ final class Authentified implements Transport
 
     public function __invoke(Request $request): Response
     {
-        $headers = \iterator_to_array($request->headers());
-        $headers = \array_values($headers);
-        $headers[] = $this->header;
-
         $request = new Request\Request(
             $request->url(),
             $request->method(),
             $request->protocolVersion(),
-            Headers::of(...$headers),
+            $request->headers()->add($this->header),
             $request->body()
         );
 

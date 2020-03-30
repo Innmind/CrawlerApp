@@ -7,28 +7,30 @@ use Innmind\RobotsTxt\{
     Parser,
     RobotsTxt,
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\Immutable\Map;
 
 final class KeepInMemoryParser implements Parser
 {
-    private $parser;
-    private $cache;
+    private Parser $parser;
+    /** @var Map<string, RobotsTxt> */
+    private Map $cache;
 
     public function __construct(Parser $parser)
     {
         $this->parser = $parser;
-        $this->cache = new Map('string', RobotsTxt::class);
+        /** @var Map<string, RobotsTxt> */
+        $this->cache = Map::of('string', RobotsTxt::class);
     }
 
-    public function __invoke(UrlInterface $url): RobotsTxt
+    public function __invoke(Url $url): RobotsTxt
     {
-        if ($this->cache->contains((string) $url)) {
-            return $this->cache->get((string) $url);
+        if ($this->cache->contains($url->toString())) {
+            return $this->cache->get($url->toString());
         }
 
         $robots = ($this->parser)($url);
-        $this->cache = $this->cache->put((string) $url, $robots);
+        $this->cache = $this->cache->put($url->toString(), $robots);
 
         return $robots;
     }

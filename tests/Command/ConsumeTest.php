@@ -3,7 +3,10 @@ declare(strict_types = 1);
 
 namespace Tests\Crawler\Command;
 
-use Crawler\Command\Consume;
+use Crawler\{
+    Command\Consume,
+    Homeostasis\Regulator\Regulate,
+};
 use Innmind\CLI\{
     Command,
     Command\Arguments,
@@ -11,9 +14,9 @@ use Innmind\CLI\{
     Environment,
     Environment\ExitCode,
 };
-use Innmind\Homeostasis\{
-    Regulator,
-    Strategy,
+use Innmind\IPC\{
+    IPC,
+    Process\Name,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -25,7 +28,10 @@ class ConsumeTest extends TestCase
             Command::class,
             new Consume(
                 $this->createMock(Command::class),
-                $this->createMock(Regulator::class)
+                new Regulate(
+                    $this->createMock(IPC::class),
+                    new Name('foo')
+                )
             )
         );
     }
@@ -34,21 +40,27 @@ class ConsumeTest extends TestCase
     {
         $command = new Consume(
             $mock = $this->createMock(Command::class),
-            $this->createMock(Regulator::class)
+            new Regulate(
+                $this->createMock(IPC::class),
+                new Name('foo')
+            )
         );
         $mock
             ->expects($this->once())
-            ->method('__toString')
+            ->method('toString')
             ->willReturn('innmind:amqp:consume queue [number] [prefetch]');
 
-        $this->assertSame('consume queue [number] [prefetch]', (string) $command);
+        $this->assertSame('consume queue [number] [prefetch]', $command->toString());
     }
 
     public function testInvokation()
     {
         $consume = new Consume(
             $mock = $this->createMock(Command::class),
-            $regulator = $this->createMock(Regulator::class)
+            new Regulate(
+                $ipc = $this->createMock(IPC::class),
+                new Name('foo')
+            )
         );
         $env = $this->createMock(Environment::class);
         $arguments = new Arguments;
@@ -61,10 +73,9 @@ class ConsumeTest extends TestCase
             ->expects($this->once())
             ->method('exitCode')
             ->willReturn(new ExitCode(0));
-        $regulator
+        $ipc
             ->expects($this->once())
-            ->method('__invoke')
-            ->willReturn(Strategy::holdSteady());
+            ->method('wait');
 
         $this->assertNull($consume($env, $arguments, $options));
     }
@@ -73,7 +84,10 @@ class ConsumeTest extends TestCase
     {
         $consume = new Consume(
             $mock = $this->createMock(Command::class),
-            $regulator = $this->createMock(Regulator::class)
+            new Regulate(
+                $ipc = $this->createMock(IPC::class),
+                new Name('foo')
+            )
         );
         $env = $this->createMock(Environment::class);
         $arguments = new Arguments;
@@ -86,9 +100,9 @@ class ConsumeTest extends TestCase
             ->expects($this->once())
             ->method('exitCode')
             ->willReturn(new ExitCode(1));
-        $regulator
+        $ipc
             ->expects($this->never())
-            ->method('__invoke');
+            ->method('wait');
 
         $this->assertNull($consume($env, $arguments, $options));
     }

@@ -11,21 +11,17 @@ use Innmind\RobotsTxt\{
 use Innmind\Filesystem\{
     Adapter,
     File\File,
-    Stream\StringStream,
+    Name,
 };
-use Innmind\Url\{
-    UrlInterface,
-    NullScheme,
-    NullPath,
-    Authority\NullUserInformation,
-};
+use Innmind\Stream\Readable\Stream;
+use Innmind\Url\Url;
 use Innmind\Immutable\Str;
 
 final class CacheParser implements Parser
 {
-    private $parser;
-    private $walker;
-    private $filesystem;
+    private Parser $parser;
+    private Walker $walker;
+    private Adapter $filesystem;
 
     public function __construct(
         Parser $parser,
@@ -37,17 +33,19 @@ final class CacheParser implements Parser
         $this->filesystem = $filesystem;
     }
 
-    public function __invoke(UrlInterface $url): RobotsTxt
+    public function __invoke(Url $url): RobotsTxt
     {
         $name = $this->name($url);
 
-        if ($this->filesystem->has($name)) {
-            $directives = ($this->walker)(new Str(
-                (string) $this
+        if ($this->filesystem->contains($name)) {
+            $directives = ($this->walker)(
+                $this
                     ->filesystem
                     ->get($name)
                     ->content()
-            ));
+                    ->read()
+                    ->split("\n")
+            );
 
             return new RobotsTxt\RobotsTxt($url, $directives);
         }
@@ -56,24 +54,25 @@ final class CacheParser implements Parser
         $this->filesystem->add(
             new File(
                 $name,
-                new StringStream((string) $robots)
+                Stream::ofContent($robots->toString())
             )
         );
 
         return $robots;
     }
 
-    private function name(UrlInterface $url): string
+    private function name(Url $url): Name
     {
-        $name = (string) $url
-            ->withScheme(new NullScheme)
+        $name = $url
+            ->withoutScheme()
             ->withAuthority(
                 $url
                     ->authority()
-                    ->withUserInformation(new NullUserInformation)
+                    ->withoutUserInformation()
             )
-            ->withPath(new NullPath);
+            ->withoutPath()
+            ->toString();
 
-        return \rtrim($name, '/').'.txt';
+        return new Name(\rtrim($name, '/').'.txt');
     }
 }

@@ -16,9 +16,10 @@ final class HostTranslator implements PropertyTranslator
 
     public function translate(HttpResource $resource, Property $property)
     {
-        return (string) $resource
+        return $resource
             ->url()
             ->authority()
-            ->host();
+            ->host()
+            ->toString();
     }
 }

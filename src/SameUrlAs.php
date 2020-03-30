@@ -3,22 +3,19 @@ declare(strict_types = 1);
 
 namespace Crawler;
 
-use Innmind\Url\{
-    UrlInterface,
-    NullFragment,
-};
+use Innmind\Url\Url;
 
 final class SameUrlAs
 {
-    private $url;
+    private string $url;
 
-    public function __construct(UrlInterface $url)
+    public function __construct(Url $url)
     {
-        $this->url = $url->withFragment(new NullFragment);
+        $this->url = $url->withoutFragment()->toString();
     }
 
-    public function __invoke(UrlInterface $url): bool
+    public function __invoke(Url $url): bool
     {
-        return (string) $this->url === (string) $url->withFragment(new NullFragment);
+        return $this->url === $url->withoutFragment()->toString();
     }
 }

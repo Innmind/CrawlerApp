@@ -4,18 +4,18 @@ declare(strict_types = 1);
 namespace Crawler;
 
 use Innmind\Rest\Client\Identity;
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 
 final class Reference
 {
-    private $identity;
-    private $definition;
-    private $server;
+    private Identity $identity;
+    private string $definition;
+    private Url $server;
 
     public function __construct(
         Identity $identity,
         string $definition,
-        UrlInterface $server
+        Url $server
     ) {
         $this->identity = $identity;
         $this->definition = $definition;
@@ -32,7 +32,7 @@ final class Reference
         return $this->definition;
     }
 
-    public function server(): UrlInterface
+    public function server(): Url
     {
         return $this->server;
     }

@@ -10,15 +10,11 @@ use Crawler\{
     Exception\HostNeverHit,
 };
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    PointInTimeInterface,
-    ElapsedPeriod,
+    Clock,
+    PointInTime,
+    Earth\ElapsedPeriod,
 };
-use Innmind\Url\{
-    UrlInterface,
-    AuthorityInterface,
-    Authority\HostInterface,
-};
+use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;
 
 class TracerAwareDelayerTest extends TestCase
@@ -30,7 +26,7 @@ class TracerAwareDelayerTest extends TestCase
             new TracerAwareDelayer(
                 $this->createMock(CrawlTracer::class),
                 $this->createMock(Delayer::class),
-                $this->createMock(TimeContinuumInterface::class)
+                $this->createMock(Clock::class)
             )
         );
     }
@@ -40,34 +36,22 @@ class TracerAwareDelayerTest extends TestCase
         $delayer = new TracerAwareDelayer(
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Delayer::class),
-            $clock = $this->createMock(TimeContinuumInterface::class),
+            $clock = $this->createMock(Clock::class),
             new ElapsedPeriod(5000)
         );
-        $url = $this->createMock(UrlInterface::class);
-        $url
-            ->expects($this->once())
-            ->method('authority')
-            ->willReturn(
-                $authority = $this->createMock(AuthorityInterface::class)
-            );
-        $authority
-            ->expects($this->once())
-            ->method('host')
-            ->willReturn(
-                $host = $this->createMock(HostInterface::class)
-            );
+        $url = Url::of('example.com');
         $tracer
             ->expects($this->once())
             ->method('lastHit')
-            ->with($host)
+            ->with($url->authority()->host())
             ->willReturn(
-                $lastHit = $this->createMock(PointInTimeInterface::class)
+                $lastHit = $this->createMock(PointInTime::class)
             );
         $clock
             ->expects($this->once())
             ->method('now')
             ->willReturn(
-                $now = $this->createMock(PointInTimeInterface::class)
+                $now = $this->createMock(PointInTime::class)
             );
         $now
             ->expects($this->once())
@@ -87,34 +71,22 @@ class TracerAwareDelayerTest extends TestCase
         $delayer = new TracerAwareDelayer(
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Delayer::class),
-            $clock = $this->createMock(TimeContinuumInterface::class),
+            $clock = $this->createMock(Clock::class),
             new ElapsedPeriod(5000)
         );
-        $url = $this->createMock(UrlInterface::class);
-        $url
-            ->expects($this->once())
-            ->method('authority')
-            ->willReturn(
-                $authority = $this->createMock(AuthorityInterface::class)
-            );
-        $authority
-            ->expects($this->once())
-            ->method('host')
-            ->willReturn(
-                $host = $this->createMock(HostInterface::class)
-            );
+        $url = Url::of('example.com');
         $tracer
             ->expects($this->once())
             ->method('lastHit')
-            ->with($host)
+            ->with($url->authority()->host())
             ->willReturn(
-                $lastHit = $this->createMock(PointInTimeInterface::class)
+                $lastHit = $this->createMock(PointInTime::class)
             );
         $clock
             ->expects($this->once())
             ->method('now')
             ->willReturn(
-                $now = $this->createMock(PointInTimeInterface::class)
+                $now = $this->createMock(PointInTime::class)
             );
         $now
             ->expects($this->once())
@@ -133,26 +105,14 @@ class TracerAwareDelayerTest extends TestCase
         $delayer = new TracerAwareDelayer(
             $tracer = $this->createMock(CrawlTracer::class),
             $inner = $this->createMock(Delayer::class),
-            $clock = $this->createMock(TimeContinuumInterface::class),
+            $clock = $this->createMock(Clock::class),
             new ElapsedPeriod(5000)
         );
-        $url = $this->createMock(UrlInterface::class);
-        $url
-            ->expects($this->once())
-            ->method('authority')
-            ->willReturn(
-                $authority = $this->createMock(AuthorityInterface::class)
-            );
-        $authority
-            ->expects($this->once())
-            ->method('host')
-            ->willReturn(
-                $host = $this->createMock(HostInterface::class)
-            );
+        $url = Url::of('example.com');
         $tracer
             ->expects($this->once())
             ->method('lastHit')
-            ->with($host)
+            ->with($url->authority()->host())
             ->will(
                 $this->throwException(new HostNeverHit)
             );

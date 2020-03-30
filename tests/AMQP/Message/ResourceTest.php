@@ -25,13 +25,10 @@ use Innmind\AMQP\{
     Exception\MessageLocked,
 };
 use Innmind\Rest\Client\Identity;
-use Innmind\Url\{
-    UrlInterface,
-    Url,
-};
+use Innmind\Url\Url;
 use Innmind\TimeContinuum\{
-    ElapsedPeriod,
-    PointInTimeInterface,
+    Earth\ElapsedPeriod,
+    PointInTime,
 };
 use Innmind\Immutable\Str;
 use PHPUnit\Framework\TestCase;
@@ -44,7 +41,7 @@ class ResourceTest extends TestCase
             Message::class,
             $message = new Resource(
                 new Locked(
-                    (new Generic(new Str(\json_encode([
+                    (new Generic(Str::of(\json_encode([
                         'resource' => '/foo',
                         'origin' => 'uuid',
                         'relationship' => 'referrer',
@@ -55,12 +52,12 @@ class ResourceTest extends TestCase
                 )
             )
         );
-        $this->assertInstanceOf(UrlInterface::class, $message->resource());
-        $this->assertSame('/foo', (string) $message->resource());
+        $this->assertInstanceOf(Url::class, $message->resource());
+        $this->assertSame('/foo', $message->resource()->toString());
         $this->assertInstanceOf(Reference::class, $message->reference());
-        $this->assertSame('uuid', (string) $message->reference()->identity());
+        $this->assertSame('uuid', $message->reference()->identity()->toString());
         $this->assertSame('def', $message->reference()->definition());
-        $this->assertSame('/server', (string) $message->reference()->server());
+        $this->assertSame('/server', $message->reference()->server()->toString());
         $this->assertTrue($message->hasRelationship());
         $this->assertSame('referrer', $message->relationship());
     }
@@ -69,7 +66,7 @@ class ResourceTest extends TestCase
     {
         $this->expectException(DomainException::class);
 
-        new Resource(new Locked(new Generic(new Str(''))));
+        new Resource(new Locked(new Generic(Str::of(''))));
     }
 
     public function testThrowWhenInvalidContentType()
@@ -77,7 +74,7 @@ class ResourceTest extends TestCase
         $this->expectException(DomainException::class);
 
         new Resource(new Locked(
-            (new Generic(new Str('')))
+            (new Generic(Str::of('')))
                 ->withContentType(new ContentType('application', 'octet-stream'))
         ));
     }
@@ -86,7 +83,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -98,7 +95,7 @@ class ResourceTest extends TestCase
         );
 
         $this->assertTrue($message->hasContentType());
-        $this->assertSame('application/json', (string) $message->contentType());
+        $this->assertSame('application/json', $message->contentType()->toString());
         $this->expectException(MessageLocked::class);
         $message->withContentType(new ContentType('application', 'octet-stream'));
     }
@@ -107,7 +104,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -127,7 +124,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -147,7 +144,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -167,7 +164,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -187,7 +184,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -207,7 +204,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -227,7 +224,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -247,7 +244,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -267,7 +264,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -280,14 +277,14 @@ class ResourceTest extends TestCase
 
         $this->assertFalse($message->hasTimestamp());
         $this->expectException(MessageLocked::class);
-        $message->withTimestamp($this->createMock(PointInTimeInterface::class));
+        $message->withTimestamp($this->createMock(PointInTime::class));
     }
 
     public function testType()
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -307,7 +304,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -327,7 +324,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -347,7 +344,7 @@ class ResourceTest extends TestCase
     {
         $message = new Resource(
             new Locked(
-                (new Generic(new Str(\json_encode([
+                (new Generic(Str::of(\json_encode([
                     'resource' => '/',
                     'origin' => 'uuid',
                     'relationship' => 'referrer',
@@ -366,7 +363,7 @@ class ResourceTest extends TestCase
                 'definition' => 'def',
                 'server' => 'server',
             ]),
-            (string) $message->body()
+            $message->body()->toString()
         );
     }
 }

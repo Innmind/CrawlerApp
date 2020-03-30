@@ -12,8 +12,8 @@ use Innmind\Http\Message\Request;
 
 final class XmlReaderAwareCrawler implements Crawler
 {
-    private $storage;
-    private $crawl;
+    private Storage $storage;
+    private Crawler $crawl;
 
     public function __construct(
         Storage $storage,

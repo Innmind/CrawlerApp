@@ -17,17 +17,14 @@ use Innmind\Rest\Client\{
     Definition\HttpResource as Definition,
 };
 use Innmind\Crawler\HttpResource;
-use Innmind\Url\UrlInterface;
-use Innmind\Immutable\{
-    SetInterface,
-    Set,
-};
+use Innmind\Url\Url;
+use Innmind\Immutable\Set;
 
 final class Publisher implements PublisherInterface
 {
-    private $client;
-    private $translator;
-    private $negotiator;
+    private Client $client;
+    private HttpResourceTranslator $translator;
+    private Negotiator $negotiator;
 
     public function __construct(
         Client $client,
@@ -40,9 +37,9 @@ final class Publisher implements PublisherInterface
 
     public function __invoke(
         HttpResource $resource,
-        UrlInterface $server
+        Url $server
     ): Reference {
-        $server = $this->client->server((string) $server);
+        $server = $this->client->server($server->toString());
         $definitions = $server
             ->capabilities()
             ->definitions()
@@ -53,8 +50,12 @@ final class Publisher implements PublisherInterface
 
         $mediaTypes = $definitions
             ->reduce(
-                new Set('string'),
-                function(SetInterface $carry, string $name, Definition $definition): SetInterface {
+                Set::of('string'),
+                function(Set $carry, string $name, Definition $definition): Set {
+                    /**
+                     * @psalm-suppress PossiblyInvalidIterator
+                     * @var string $value
+                     */
                     foreach ($definition->metas()->get('allowed_media_types') as $value) {
                         $carry = $carry->add($value);
                     }
@@ -63,9 +64,9 @@ final class Publisher implements PublisherInterface
                 }
             )
             ->reduce(
-                new Set(Pattern::class),
-                function(SetInterface $carry, string $mediaType): SetInterface {
-                    return $carry->add(Pattern::fromString($mediaType));
+                Set::of(Pattern::class),
+                function(Set $carry, string $mediaType): Set {
+                    return $carry->add(Pattern::of($mediaType));
                 }
             );
 
@@ -79,13 +80,15 @@ final class Publisher implements PublisherInterface
         }
 
         $definition = $definitions
-            ->filter(function(string $name, Definition $definition) use ($best): bool {
+            ->values()
+            ->filter(function(Definition $definition) use ($best): bool {
+                /** @psalm-suppress PossiblyInvalidArgument */
                 return \in_array(
                     (string) $best,
                     $definition->metas()->get('allowed_media_types')
                 );
             })
-            ->current();
+            ->first();
 
         return new Reference(
             $server->create(

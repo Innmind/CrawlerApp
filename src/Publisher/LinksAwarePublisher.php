@@ -10,13 +10,14 @@ use Crawler\{
     SameUrlAs,
 };
 use Innmind\Crawler\HttpResource;
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\AMQP\Producer;
+use Innmind\Immutable\Set;
 
 final class LinksAwarePublisher implements PublisherInterface
 {
-    private $publisher;
-    private $produce;
+    private PublisherInterface $publisher;
+    private Producer $produce;
 
     public function __construct(
         PublisherInterface $publisher,
@@ -28,20 +29,22 @@ final class LinksAwarePublisher implements PublisherInterface
 
     public function __invoke(
         HttpResource $resource,
-        UrlInterface $server
+        Url $server
     ): Reference {
         $reference = ($this->publisher)($resource, $server);
 
         if ($resource->attributes()->contains('links')) {
             $sameAs = new SameUrlAs($resource->url());
-            $resource
+            /** @var Set<Url> */
+            $links = $resource
                 ->attributes()
                 ->get('links')
-                ->content()
-                ->filter(function(UrlInterface $url) use ($sameAs): bool {
+                ->content();
+            $links
+                ->filter(function(Url $url) use ($sameAs): bool {
                     return !$sameAs($url);
                 })
-                ->foreach(function(UrlInterface $url) use ($reference, $resource): void {
+                ->foreach(function(Url $url) use ($reference, $resource): void {
                     ($this->produce)(new Link(
                         $resource->url(),
                         $url,

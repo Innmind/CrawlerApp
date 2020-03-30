@@ -20,7 +20,7 @@ use Innmind\Immutable\{
 
 final class Linker implements LinkerInterface
 {
-    private $client;
+    private Client $client;
 
     public function __construct(Client $client)
     {
@@ -33,11 +33,12 @@ final class Linker implements LinkerInterface
         string $relationship,
         array $attributes
     ): void {
-        if ((string) $source->server() !== (string) $target->server()) {
+        if ($source->server()->toString() !== $target->server()->toString()) {
             throw new CantLinkResourceAcrossServers($source, $target);
         }
 
-        $map = new Map('string', Parameter::class);
+        /** @var Map<string, Parameter> */
+        $map = Map::of('string', Parameter::class);
 
         foreach ($attributes as $key => $value) {
             $map = $map->put($key, new Parameter\Parameter($key, $value));
@@ -45,7 +46,7 @@ final class Linker implements LinkerInterface
 
         $this
             ->client
-            ->server((string) $source->server())
+            ->server($source->server()->toString())
             ->link(
                 $source->definition(),
                 $source->identity(),

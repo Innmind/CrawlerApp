@@ -13,25 +13,36 @@ use Innmind\Url\{
 use Innmind\Filesystem\Adapter;
 use Innmind\Socket\Internet\Transport;
 use Innmind\TimeContinuum\TimeContinuumInterface;
+use Innmind\Server\Status\Server;
 use PHPUnit\Framework\TestCase;
 
 class BootstrapTest extends TestCase
 {
     public function testBootstrap()
     {
+        $os = $this->createMock(OperatingSystem::class);
+        $os
+            ->expects($this->any())
+            ->method('status')
+            ->willReturn($status = $this->createMock(Server::class));
+        $status
+            ->expects($this->any())
+            ->method('tmp')
+            ->willReturn(Path::of(\getcwd().'/var/'));
+
         $commands = bootstrap(
-            $this->createMock(OperatingSystem::class),
-            Url::fromString('file:///tmp/app.log'),
-            Url::fromString('file:///tmp/amqp.log'),
+            $os,
+            Url::of('file:///tmp/app.log'),
+            Url::of('file:///tmp/amqp.log'),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
             $this->createMock(Adapter::class),
-            new Path('/tmp'),
+            Path::of('/tmp'),
             Transport::tcp(),
-            Url::fromString('amqp://user:pwd@localhost:5672/'),
+            Url::of('amqp://user:pwd@localhost:5672/'),
             'apikey',
             'Innmind Robot'
         );

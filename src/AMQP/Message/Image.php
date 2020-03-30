@@ -7,7 +7,7 @@ use Crawler\{
     Reference,
     Exception\LogicException
 };
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\AMQP\Model\Basic\{
     Message,
     Message\AppId,
@@ -23,24 +23,24 @@ use Innmind\AMQP\Model\Basic\{
     Message\UserId
 };
 use Innmind\TimeContinuum\{
-    PointInTimeInterface,
+    PointInTime,
     ElapsedPeriod
 };
 use Innmind\Json\Json;
 use Innmind\Immutable\{
-    MapInterface,
+    Map,
     Str
 };
 
 final class Image implements Message
 {
-    private $inner;
-    private $resource;
-    private $reference;
-    private $description;
+    private Message $inner;
+    private Url $resource;
+    private Reference $reference;
+    private string $description;
 
     public function __construct(
-        UrlInterface $resource,
+        Url $resource,
         Reference $reference,
         string $description
     ) {
@@ -49,23 +49,23 @@ final class Image implements Message
         $this->description = $description;
 
         $payload = [
-            'resource' => (string) $resource,
-            'origin' => (string) $reference->identity(),
+            'resource' => $resource->toString(),
+            'origin' => $reference->identity()->toString(),
             'relationship' => 'referrer',
             'attributes' => [
                 'description' => $description,
             ],
             'definition' => $reference->definition(),
-            'server' => (string) $reference->server(),
+            'server' => $reference->server()->toString(),
         ];
 
-        $this->inner = (new Generic(new Str(Json::encode($payload))))
+        $this->inner = (new Generic(Str::of(Json::encode($payload))))
             ->withContentType(new ContentType('application', 'json'))
             ->withAppId(new AppId('crawler'))
             ->withDeliveryMode(DeliveryMode::persistent());
     }
 
-    public function resource(): UrlInterface
+    public function resource(): Url
     {
         return $this->resource;
     }
@@ -116,14 +116,14 @@ final class Image implements Message
     }
 
     /**
-     * @return MapInterface<string, mixed>
+     * @return Map<string, mixed>
      */
-    public function headers(): MapInterface
+    public function headers(): Map
     {
         return $this->inner->headers();
     }
 
-    public function withHeaders(MapInterface $headers): Message
+    public function withHeaders(Map $headers): Message
     {
         throw new LogicException;
     }
@@ -223,12 +223,12 @@ final class Image implements Message
         return $this->inner->hasTimestamp();
     }
 
-    public function timestamp(): PointInTimeInterface
+    public function timestamp(): PointInTime
     {
         return $this->inner->timestamp();
     }
 
-    public function withTimestamp(PointInTimeInterface $timestamp): Message
+    public function withTimestamp(PointInTime $timestamp): Message
     {
         $self = clone $this;
         $self->inner = $this->inner->withTimestamp($timestamp);

@@ -11,7 +11,7 @@ use Innmind\HttpTransport\Transport;
 use Innmind\Http\{
     Message\Request,
     Message\Response,
-    Headers\Headers,
+    Headers,
     Header\ContentType,
     Header\ContentTypeValue,
 };

@@ -8,23 +8,23 @@ use Crawler\{
     Delay,
 };
 use Innmind\OperatingSystem\CurrentProcess;
-use Innmind\TimeContinuum\PeriodInterface;
-use Innmind\Url\UrlInterface;
+use Innmind\TimeContinuum\Period;
+use Innmind\Url\Url;
 
 final class FixDelayer implements Delayer
 {
-    private $process;
-    private $period;
+    private CurrentProcess $process;
+    private Period $period;
 
     public function __construct(
         CurrentProcess $process,
-        PeriodInterface $period = null
+        Period $period = null
     ) {
         $this->process = $process;
         $this->period = $period ?? Delay::default();
     }
 
-    public function __invoke(UrlInterface $url): void
+    public function __invoke(Url $url): void
     {
         $this->process->halt($this->period);
     }

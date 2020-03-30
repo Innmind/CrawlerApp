@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace Crawler;
 
 use Innmind\TimeContinuum\{
-    PeriodInterface,
-    Period\Earth\Second,
-    ElapsedPeriod,
+    Period,
+    Earth\Period\Second,
+    Earth\ElapsedPeriod,
 };
 
 final class Delay
@@ -14,7 +14,7 @@ final class Delay
     /**
      * Period by default to wait before hitting a server
      */
-    public static function default(): PeriodInterface
+    public static function default(): Period
     {
         return new Second(6);
     }

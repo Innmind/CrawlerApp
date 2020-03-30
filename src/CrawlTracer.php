@@ -3,19 +3,20 @@ declare(strict_types = 1);
 
 namespace Crawler;
 
+use Crawler\Exception\HostNeverHit;
 use Innmind\Url\{
-    UrlInterface,
-    Authority\HostInterface,
+    Url,
+    Authority\Host,
 };
-use Innmind\TimeContinuum\PointInTimeInterface;
+use Innmind\TimeContinuum\PointInTime;
 
 interface CrawlTracer
 {
-    public function trace(UrlInterface $url): self;
-    public function knows(UrlInterface $url): bool;
+    public function trace(Url $url): self;
+    public function knows(Url $url): bool;
 
     /**
-     * @throws HostNeverHitException
+     * @throws HostNeverHit
      */
-    public function lastHit(HostInterface $host): PointInTimeInterface;
+    public function lastHit(Host $host): PointInTime;
 }

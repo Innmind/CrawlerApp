@@ -11,18 +11,18 @@ use Innmind\Filesystem\{
     Adapter,
     Directory\Directory,
     File\File,
-    Stream\StringStream,
     Stream\NullStream,
+    Name,
 };
+use Innmind\Stream\Readable\Stream;
 use Innmind\TimeContinuum\{
-    TimeContinuumInterface,
-    PointInTimeInterface,
-    Format\ISO8601,
+    Clock,
+    PointInTime,
+    Earth\Format\ISO8601,
 };
 use Innmind\Url\{
-    UrlInterface,
-    Authority\HostInterface,
-    NullFragment,
+    Url,
+    Authority\Host,
 };
 use Innmind\Immutable\Str;
 
@@ -31,23 +31,23 @@ final class CrawlTracer implements CrawlTracerInterface
     private const URLS = 'urls.txt';
     private const HITS = 'hits';
 
-    private $filesystem;
-    private $clock;
+    private Adapter $filesystem;
+    private Clock $clock;
 
     public function __construct(
         Adapter $filesystem,
-        TimeContinuumInterface $clock
+        Clock $clock
     ) {
         $this->filesystem = $filesystem;
         $this->clock = $clock;
 
-        if (!$filesystem->has(self::HITS)) {
-            $filesystem->add(new Directory(self::HITS));
+        if (!$filesystem->contains(new Name(self::HITS))) {
+            $filesystem->add(Directory::named(self::HITS));
         }
 
-        if (!$filesystem->has(self::URLS)) {
+        if (!$filesystem->contains(new Name(self::URLS))) {
             $filesystem->add(
-                new File(
+                File::named(
                     self::URLS,
                     new NullStream
                 )
@@ -55,17 +55,16 @@ final class CrawlTracer implements CrawlTracerInterface
         }
     }
 
-    public function trace(UrlInterface $url): CrawlTracerInterface
+    public function trace(Url $url): CrawlTracerInterface
     {
+        /** @var Directory */
+        $hits = $this->filesystem->get(new Name(self::HITS));
         $this->filesystem->add(
-            $this->filesystem->get(self::HITS)->add(
+            $hits->add(
                 new File(
                     $this->name($url->authority()->host()),
-                    new StringStream(
-                        $this
-                            ->clock
-                            ->now()
-                            ->format(new ISO8601)
+                    Stream::ofContent(
+                        $this->clock->now()->format(new ISO8601)
                     )
                 )
             )
@@ -75,48 +74,51 @@ final class CrawlTracer implements CrawlTracerInterface
             return $this;
         }
 
-        $file = $this->filesystem->get(self::URLS);
+        $file = $this->filesystem->get(new Name(self::URLS));
 
         $this->filesystem->add(
-            new File(
+            File::named(
                 self::URLS,
-                new StringStream($file->content().$url->withFragment(new NullFragment)."\n")
+                Stream::ofContent(
+                    $file->content()->toString().$url->withoutFragment()->toString()."\n"
+                )
             )
         );
 
         return $this;
     }
 
-    public function knows(UrlInterface $url): bool
+    public function knows(Url $url): bool
     {
-        $urls = new Str(
-            (string) $this
-                ->filesystem
-                ->get(self::URLS)
-                ->content()
-        );
+        $urls = $this
+            ->filesystem
+            ->get(new Name(self::URLS))
+            ->content()
+            ->read();
 
-        return $urls->contains((string) $url->withFragment(new NullFragment));
+        return $urls->contains($url->withoutFragment()->toString());
     }
 
-    public function lastHit(HostInterface $host): PointInTimeInterface
+    public function lastHit(Host $host): PointInTime
     {
         $name = $this->name($host);
-        $directory = $this->filesystem->get(self::HITS);
+        /** @var Directory */
+        $directory = $this->filesystem->get(new Name(self::HITS));
 
-        if (!$directory->has($name)) {
+        if (!$directory->contains($name)) {
             throw new HostNeverHit;
         }
 
         return $this->clock->at(
-            (string) $directory
+            $directory
                 ->get($name)
                 ->content()
+                ->toString()
         );
     }
 
-    private function name(HostInterface $host): string
+    private function name(Host $host): Name
     {
-        return $host.'.txt';
+        return new Name($host->toString().'.txt');
     }
 }

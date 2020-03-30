@@ -16,9 +16,11 @@ final class AndroidAppLinkTranslator implements PropertyTranslator
 
     public function translate(HttpResource $resource, Property $property)
     {
-        return (string) $resource
+        /** @psalm-suppress MixedMethodCall */
+        return $resource
             ->attributes()
             ->get('android')
-            ->content();
+            ->content()
+            ->toString();
     }
 }

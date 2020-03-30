@@ -8,7 +8,7 @@ use Crawler\{
     MediaType\Pattern,
     Exception\MediaTypeDoesntMatchAny,
 };
-use Innmind\Filesystem\MediaType\MediaType;
+use Innmind\MediaType\MediaType;
 use Innmind\Immutable\Set;
 use PHPUnit\Framework\TestCase;
 
@@ -17,13 +17,13 @@ class NegotiatorTest extends TestCase
     public function testBest()
     {
         $best = (new Negotiator)->best(
-            MediaType::fromString('image/png'),
+            MediaType::of('image/png'),
             Set::of(
                 Pattern::class,
-                Pattern::fromString('*/*; q=0.1'),
-                $expected = Pattern::fromString('image/*'),
-                Pattern::fromString('image/png; q=0.5'),
-                Pattern::fromString('text/html')
+                Pattern::of('*/*; q=0.1'),
+                $expected = Pattern::of('image/*'),
+                Pattern::of('image/png; q=0.5'),
+                Pattern::of('text/html')
             )
         );
 
@@ -33,11 +33,11 @@ class NegotiatorTest extends TestCase
     public function testBestIsFullWildcard()
     {
         $best = (new Negotiator)->best(
-            MediaType::fromString('image/png'),
+            MediaType::of('image/png'),
             Set::of(
                 Pattern::class,
-                $expected = Pattern::fromString('*/*; q=0.1'),
-                Pattern::fromString('text/html')
+                $expected = Pattern::of('*/*; q=0.1'),
+                Pattern::of('text/html')
             )
         );
 
@@ -47,12 +47,12 @@ class NegotiatorTest extends TestCase
     public function testBestIsWildcard()
     {
         $best = (new Negotiator)->best(
-            MediaType::fromString('image/png'),
+            MediaType::of('image/png'),
             Set::of(
                 Pattern::class,
-                Pattern::fromString('*/*; q=0.1'),
-                $expected = Pattern::fromString('image/*'),
-                Pattern::fromString('text/html')
+                Pattern::of('*/*; q=0.1'),
+                $expected = Pattern::of('image/*'),
+                Pattern::of('text/html')
             )
         );
 
@@ -62,12 +62,12 @@ class NegotiatorTest extends TestCase
     public function testBestIsSpecific()
     {
         $best = (new Negotiator)->best(
-            MediaType::fromString('image/png'),
+            MediaType::of('image/png'),
             Set::of(
                 Pattern::class,
-                Pattern::fromString('*/*; q=0.1'),
-                $expected = Pattern::fromString('image/png'),
-                Pattern::fromString('text/html')
+                Pattern::of('*/*; q=0.1'),
+                $expected = Pattern::of('image/png'),
+                Pattern::of('text/html')
             )
         );
 
@@ -79,8 +79,8 @@ class NegotiatorTest extends TestCase
         $this->expectException(MediaTypeDoesntMatchAny::class);
 
         (new Negotiator)->best(
-            MediaType::fromString('image/png'),
-            Set::of(Pattern::class, Pattern::fromString('text/html'))
+            MediaType::of('image/png'),
+            Set::of(Pattern::class, Pattern::of('text/html'))
         );
     }
 }

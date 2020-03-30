@@ -15,11 +15,14 @@ use Innmind\InstallationMonitor\{
     Event,
 };
 use Innmind\Stream\Writable;
-use Innmind\Filesystem\Adapter;
+use Innmind\Filesystem\{
+    Adapter,
+    Name,
+};
 use Innmind\Immutable\{
     Map,
     Str,
-    Stream,
+    Sequence,
 };
 use PHPUnit\Framework\TestCase;
 
@@ -48,10 +51,10 @@ USAGE;
 
         $this->assertSame(
             $usage,
-            (string) new Install(
+            (new Install(
                 $this->createMock(Client::class),
                 $this->createMock(Adapter::class)
-            )
+            ))->toString()
         );
     }
 
@@ -64,36 +67,36 @@ USAGE;
         $client
             ->expects($this->once())
             ->method('events')
-            ->willReturn(Stream::of(
+            ->willReturn(Sequence::of(
                 Event::class,
                 new Event(
                     new Event\Name('library_installed'),
-                    Map::of('string', 'variable')
+                    Map::of('string', 'scalar|array')
                         ('apiKey', 'somethings3cret')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    Map::of('string', 'variable')
+                    Map::of('string', 'scalar|array')
                         ('name', 'monitor')
                         ('password', 'foo')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    Map::of('string', 'variable')
+                    Map::of('string', 'scalar|array')
                         ('name', 'consumer')
                         ('password', 'bar')
                 )
             ));
         $config
             ->expects($this->once())
-            ->method('has')
+            ->method('contains')
             ->willReturn(false);
         $config
             ->expects($this->once())
             ->method('add')
             ->with($this->callback(static function($file): bool {
-                return (string) $file->name() === '.env' &&
-                    (string) $file->content() === "API_KEY=somethings3cret\nAMQP_SERVER=amqp://consumer:bar@localhost:5672/";
+                return $file->name()->toString() === '.env' &&
+                    $file->content()->toString() === "API_KEY=somethings3cret\nAMQP_SERVER=amqp://consumer:bar@localhost:5672/";
             }));
 
         $this->assertNull($install(
@@ -127,8 +130,8 @@ USAGE;
             ->with(1);
         $config
             ->expects($this->once())
-            ->method('has')
-            ->with('.env')
+            ->method('contains')
+            ->with(new Name('.env'))
             ->willReturn(true);
         $config
             ->expects($this->never())
@@ -150,17 +153,17 @@ USAGE;
         $client
             ->expects($this->once())
             ->method('events')
-            ->willReturn(Stream::of(
+            ->willReturn(Sequence::of(
                 Event::class,
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    Map::of('string', 'variable')
+                    Map::of('string', 'scalar|array')
                         ('name', 'monitor')
                         ('password', 'foo')
                 ),
                 new Event(
                     new Event\Name('amqp.user_added'),
-                    Map::of('string', 'variable')
+                    Map::of('string', 'scalar|array')
                         ('name', 'consumer')
                         ('password', 'bar')
                 )
@@ -180,8 +183,8 @@ USAGE;
             ->with(1);
         $config
             ->expects($this->once())
-            ->method('has')
-            ->with('.env')
+            ->method('contains')
+            ->with(new Name('.env'))
             ->willReturn(false);
         $config
             ->expects($this->never())
@@ -203,11 +206,11 @@ USAGE;
         $client
             ->expects($this->once())
             ->method('events')
-            ->willReturn(Stream::of(
+            ->willReturn(Sequence::of(
                 Event::class,
                 new Event(
                     new Event\Name('library_installed'),
-                    Map::of('string', 'variable')
+                    Map::of('string', 'scalar|array')
                         ('apiKey', 'somethings3cret')
                 )
             ));
@@ -226,8 +229,8 @@ USAGE;
             ->with(1);
         $config
             ->expects($this->once())
-            ->method('has')
-            ->with('.env')
+            ->method('contains')
+            ->with(new Name('.env'))
             ->willReturn(false);
         $config
             ->expects($this->never())

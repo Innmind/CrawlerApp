@@ -13,11 +13,8 @@ use Innmind\Crawler\{
     HttpResource as CrawledResource,
     HttpResource\Attribute,
 };
-use Innmind\Url\{
-    UrlInterface,
-    Url,
-};
-use Innmind\Filesystem\MediaType;
+use Innmind\Url\Url;
+use Innmind\MediaType\MediaType;
 use Innmind\Stream\Readable;
 use Innmind\Rest\Client\Identity;
 use Innmind\AMQP\Producer;
@@ -49,12 +46,12 @@ class CanonicalAwarePublisherTest extends TestCase
     public function testDoesntPublishWhenNoCanonical()
     {
         $resource = new CrawledResource(
-            $this->createMock(UrlInterface::class),
-            $this->createMock(MediaType::class),
-            new Map('string', Attribute::class),
+            Url::of('example.com'),
+            MediaType::null(),
+            Map::of('string', Attribute::class),
             $this->createMock(Readable::class)
         );
-        $server = $this->createMock(UrlInterface::class);
+        $server = Url::of('example.com');
         $this
             ->inner
             ->expects($this->once())
@@ -64,7 +61,7 @@ class CanonicalAwarePublisherTest extends TestCase
                 $expected = new Reference(
                     $this->createMock(Identity::class),
                     'foo',
-                    $this->createMock(UrlInterface::class)
+                    Url::of('example.com')
                 )
             );
         $this
@@ -78,8 +75,8 @@ class CanonicalAwarePublisherTest extends TestCase
     public function testDoesntPublishWhenCanonicalIdenticalToResourceUrl()
     {
         $resource = new CrawledResource(
-            $url = Url::fromString('http://example.com/'),
-            $this->createMock(MediaType::class),
+            $url = Url::of('http://example.com/'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 (
                     'canonical',
@@ -87,7 +84,7 @@ class CanonicalAwarePublisherTest extends TestCase
                 ),
             $this->createMock(Readable::class)
         );
-        $server = $this->createMock(UrlInterface::class);
+        $server = Url::of('example.com');
         $this
             ->inner
             ->expects($this->once())
@@ -111,19 +108,19 @@ class CanonicalAwarePublisherTest extends TestCase
     public function testPublish()
     {
         $resource = new CrawledResource(
-            Url::fromString('http://example.com/'),
-            $this->createMock(MediaType::class),
+            Url::of('http://example.com/'),
+            MediaType::null(),
             Map::of('string', Attribute::class)
                 (
                     'canonical',
                     new Attribute\Attribute(
                         'canonical',
-                        $published = Url::fromString('http://example.com/foo')
+                        $published = Url::of('http://example.com/foo')
                     )
                 ),
             $this->createMock(Readable::class)
         );
-        $server = Url::fromString('http://server.url/');
+        $server = Url::of('http://server.url/');
         $this
             ->inner
             ->expects($this->once())
@@ -138,7 +135,7 @@ class CanonicalAwarePublisherTest extends TestCase
             );
         $identity
             ->expects($this->once())
-            ->method('__toString')
+            ->method('toString')
             ->willReturn('some identity');
         $this
             ->producer

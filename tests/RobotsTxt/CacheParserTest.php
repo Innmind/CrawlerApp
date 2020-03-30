@@ -12,8 +12,9 @@ use Innmind\RobotsTxt\{
 use Innmind\Filesystem\{
     Adapter,
     File\File,
-    Stream\StringStream,
+    Name,
 };
+use Innmind\Stream\Readable\Stream;
 use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;
 
@@ -45,18 +46,18 @@ class CacheParserTest extends TestCase
         $this
             ->filesystem
             ->expects($this->once())
-            ->method('has')
-            ->with('www.example.org.txt')
+            ->method('contains')
+            ->with(new Name('www.example.org.txt'))
             ->willReturn(true);
         $this
             ->filesystem
             ->expects($this->once())
             ->method('get')
-            ->with('www.example.org.txt')
+            ->with(new Name('www.example.org.txt'))
             ->willReturn(
                 new File(
-                    'foo',
-                    new StringStream($expected = 'User-agent: Bar'."\n".'Allow: /foo')
+                    new Name('foo'),
+                    Stream::ofContent($expected = 'User-agent: Bar'."\n".'Allow: /foo')
                 )
             );
         $this
@@ -65,21 +66,21 @@ class CacheParserTest extends TestCase
             ->method('__invoke');
 
         $robots = ($this->parser)(
-            Url::fromString('http://user:pwd@www.example.org/robots.txt')
+            Url::of('http://user:pwd@www.example.org/robots.txt')
         );
 
         $this->assertInstanceOf(RobotsTxt::class, $robots);
-        $this->assertSame($expected, (string) $robots);
+        $this->assertSame($expected, $robots->toString());
     }
 
     public function testParseFromWeb()
     {
-        $url = Url::fromString('http://user:pwd@www.example.org/robots.txt');
+        $url = Url::of('http://user:pwd@www.example.org/robots.txt');
         $this
             ->filesystem
             ->expects($this->once())
-            ->method('has')
-            ->with('www.example.org.txt')
+            ->method('contains')
+            ->with(new Name('www.example.org.txt'))
             ->willReturn(false);
         $this
             ->filesystem
@@ -90,8 +91,8 @@ class CacheParserTest extends TestCase
             ->expects($this->once())
             ->method('add')
             ->with($this->callback(function(File $file): bool {
-                return (string) $file->name() === 'www.example.org.txt' &&
-                    (string) $file->content() === 'whatever';
+                return $file->name()->toString() === 'www.example.org.txt' &&
+                    $file->content()->toString() === 'whatever';
             }));
         $this
             ->inner
@@ -103,7 +104,7 @@ class CacheParserTest extends TestCase
             );
         $expected
             ->expects($this->once())
-            ->method('__toString')
+            ->method('toString')
             ->willReturn('whatever');
 
         $robots = ($this->parser)($url);

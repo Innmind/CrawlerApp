@@ -10,7 +10,7 @@ use Crawler\{
 
 final class ReferrerLinker implements LinkerInterface
 {
-    private $linker;
+    private LinkerInterface $linker;
 
     public function __construct(LinkerInterface $linker)
     {

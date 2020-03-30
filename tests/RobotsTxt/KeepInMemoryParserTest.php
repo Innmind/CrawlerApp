@@ -28,7 +28,7 @@ class KeepInMemoryParserTest extends TestCase
         $parser = new KeepInMemoryParser(
             $inner = $this->createMock(Parser::class)
         );
-        $url = Url::fromString('http://example.com');
+        $url = Url::of('http://example.com');
         $inner
             ->expects($this->once())
             ->method('__invoke')

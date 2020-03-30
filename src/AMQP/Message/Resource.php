@@ -7,10 +7,7 @@ use Crawler\{
     Reference,
     Exception\DomainException
 };
-use Innmind\Url\{
-    UrlInterface,
-    Url
-};
+use Innmind\Url\Url;
 use Innmind\AMQP\Model\Basic\{
     Message,
     Message\AppId,
@@ -27,47 +24,49 @@ use Innmind\AMQP\Model\Basic\{
     Message\Locked
 };
 use Innmind\TimeContinuum\{
-    PointInTimeInterface,
+    PointInTime,
     ElapsedPeriod
 };
 use Innmind\Rest\Client\Identity\Identity;
 use Innmind\Json\Json;
 use Innmind\Immutable\{
-    MapInterface,
+    Map,
     Str
 };
 
 final class Resource implements Message
 {
-    private $inner;
-    private $resource;
-    private $relationship;
-    private $attributes;
-    private $reference;
+    private Message $inner;
+    private Url $resource;
+    private ?string $relationship;
+    /** @var array<string, string> */
+    private array $attributes;
+    private Reference $reference;
 
     public function __construct(Locked $message)
     {
         if (
             !$message->hasContentType() ||
-            (string) $message->contentType() !== 'application/json'
+            $message->contentType()->toString() !== 'application/json'
         ) {
             throw new DomainException;
         }
 
-        $payload = Json::decode((string) $message->body(), true);
+        /** @var array{resource: string, relationship?: string, attributes?: array<string, string>, origin: string, definition: string, server: string} */
+        $payload = Json::decode($message->body()->toString());
 
         $this->inner = $message;
-        $this->resource = Url::fromString($payload['resource']);
+        $this->resource = Url::of($payload['resource']);
         $this->relationship = $payload['relationship'] ?? null;
         $this->attributes = $payload['attributes'] ?? [];
         $this->reference = new Reference(
             new Identity($payload['origin']),
             $payload['definition'],
-            Url::fromString($payload['server'])
+            Url::of($payload['server'])
         );
     }
 
-    public function resource(): UrlInterface
+    public function resource(): Url
     {
         return $this->resource;
     }
@@ -77,11 +76,16 @@ final class Resource implements Message
         return \is_string($this->relationship);
     }
 
+    /** @psalm-suppress InvalidNullableReturnType */
     public function relationship(): string
     {
+        /** @psalm-suppress NullableReturnStatement */
         return $this->relationship;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function attributes(): array
     {
         return $this->attributes;
@@ -134,14 +138,14 @@ final class Resource implements Message
     }
 
     /**
-     * @return MapInterface<string, mixed>
+     * @return Map<string, mixed>
      */
-    public function headers(): MapInterface
+    public function headers(): Map
     {
         return $this->inner->headers();
     }
 
-    public function withHeaders(MapInterface $headers): Message
+    public function withHeaders(Map $headers): Message
     {
         $self = clone $this;
         $self->inner = $this->inner->withHeaders($headers);
@@ -262,12 +266,12 @@ final class Resource implements Message
         return $this->inner->hasTimestamp();
     }
 
-    public function timestamp(): PointInTimeInterface
+    public function timestamp(): PointInTime
     {
         return $this->inner->timestamp();
     }
 
-    public function withTimestamp(PointInTimeInterface $timestamp): Message
+    public function withTimestamp(PointInTime $timestamp): Message
     {
         $self = clone $this;
         $self->inner = $this->inner->withTimestamp($timestamp);

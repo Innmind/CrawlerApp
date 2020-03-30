@@ -6,7 +6,7 @@ namespace Tests\Crawler\Specification;
 use Crawler\Specification\Html;
 use Innmind\Http\{
     Message\Response,
-    Headers\Headers,
+    Headers,
     Header\ContentType,
     Header\ContentTypeValue,
 };

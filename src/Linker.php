@@ -5,6 +5,9 @@ namespace Crawler;
 
 interface Linker
 {
+    /**
+     * @param array<string, string> $attributes
+     */
     public function __invoke(
         Reference $source,
         Reference $target,

@@ -9,13 +9,13 @@ use Crawler\{
     AMQP\Message\Canonical,
 };
 use Innmind\Crawler\HttpResource;
-use Innmind\Url\UrlInterface;
+use Innmind\Url\Url;
 use Innmind\AMQP\Producer;
 
 final class CanonicalAwarePublisher implements PublisherInterface
 {
-    private $publisher;
-    private $produce;
+    private PublisherInterface $publisher;
+    private Producer $produce;
 
     public function __construct(
         PublisherInterface $publisher,
@@ -27,14 +27,16 @@ final class CanonicalAwarePublisher implements PublisherInterface
 
     public function __invoke(
         HttpResource $resource,
-        UrlInterface $server
+        Url $server
     ): Reference {
         $reference = ($this->publisher)($resource, $server);
 
+        /** @psalm-suppress MixedMethodCall */
         if (
             $resource->attributes()->contains('canonical') &&
-            (string) $resource->attributes()->get('canonical')->content() !== (string) $resource->url()
+            $resource->attributes()->get('canonical')->content()->toString() !== $resource->url()->toString()
         ) {
+            /** @psalm-suppress MixedArgument */
             ($this->produce)(new Canonical(
                 $resource->attributes()->get('canonical')->content(),
                 $reference

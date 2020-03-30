@@ -7,12 +7,11 @@ use Innmind\Crawler\HttpResource;
 
 final class ResourceCannotBePublished extends RuntimeException
 {
-    private $resource;
+    private HttpResource $resource;
 
     public function __construct(HttpResource $resource)
     {
         $this->resource = $resource;
-        parent::__construct();
     }
 
     public function resource(): HttpResource

@@ -3,34 +3,36 @@ declare(strict_types = 1);
 
 namespace Crawler\Homeostasis\Regulator;
 
-use Innmind\Homeostasis\{
-    Regulator,
-    Actuator,
-    Strategy,
-    State,
-    Exception\HomeostasisAlreadyInProcess,
+use Innmind\IPC\{
+    IPC,
+    Process\Name,
+    Message,
 };
-use Innmind\Immutable\Stream;
+use Innmind\MediaType\MediaType;
+use Innmind\Immutable\Str;
 
-final class Regulate implements Regulator
+final class Regulate
 {
-    private $regulate;
-    private $actuator;
+    private IPC $ipc;
+    private Name $name;
 
-    public function __construct(Regulator $regulator, Actuator $actuator)
+    public function __construct(IPC $ipc, Name $name)
     {
-        $this->regulate = $regulator;
-        $this->actuator = $actuator;
+        $this->ipc = $ipc;
+        $this->name = $name;
     }
 
-    public function __invoke(): Strategy
+    public function __invoke(): void
     {
-        try {
-            return ($this->regulate)();
-        } catch (HomeostasisAlreadyInProcess $e) {
-            $this->actuator->holdSteady(Stream::of(State::class));
-        }
+        $this->ipc->wait($this->name);
 
-        return Strategy::holdSteady();
+        if ($this->ipc->exist($this->name)) {
+            $daemon = $this->ipc->get($this->name);
+            $daemon->send(new Message\Generic(
+                MediaType::of('text/plain'),
+                Str::of('')
+            ));
+            $daemon->close();
+        }
     }
 }
