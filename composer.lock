@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffbb42e1bd0f3b34b322273206ed94eb",
+    "content-hash": "daaa6cd083a892960d8824c51376cce9",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -311,6 +311,57 @@
             "time": "2020-02-10T19:11:14+00:00"
         },
         {
+            "name": "innmind/cli-framework",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/CLIFramework.git",
+                "reference": "0903333bf4558418e29ed472df3fcb9e3c4b2589"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/CLIFramework/zipball/0903333bf4558418e29ed472df3fcb9e3c4b2589",
+                "reference": "0903333bf4558418e29ed472df3fcb9e3c4b2589",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/cli": "~2.0",
+                "innmind/debug": "^2.0",
+                "innmind/operating-system": "^2.1",
+                "innmind/silent-cartographer": "^2.0",
+                "php": "~7.4",
+                "symfony/dotenv": "^5.0"
+            },
+            "require-dev": {
+                "innmind/black-box": "^4.3",
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "^3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\CLI\\Framework\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "CLI framework",
+            "homepage": "http://github.com/Innmind/CLIFramework",
+            "keywords": [
+                "cli",
+                "framework"
+            ],
+            "time": "2020-05-17T13:10:30+00:00"
+        },
+        {
             "name": "innmind/colour",
             "version": "3.1.0",
             "source": {
@@ -367,6 +418,58 @@
             "time": "2020-01-05T17:19:48+00:00"
         },
         {
+            "name": "innmind/command-bus",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/CommandBus.git",
+                "reference": "6400859c139b228b1bc8066c36815560920079fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/CommandBus/zipball/6400859c139b228b1bc8066c36815560920079fb",
+                "reference": "6400859c139b228b1bc8066c36815560920079fb",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "~3.0",
+                "innmind/reflection": "~4.0",
+                "php": "~7.4",
+                "psr/log": "^1.0",
+                "ramsey/uuid": "^3.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "~3.7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\CommandBus\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Command Bus library",
+            "homepage": "http://github.com/Innmind/CommandBus",
+            "keywords": [
+                "command bus",
+                "ddd"
+            ],
+            "time": "2020-01-28T17:18:01+00:00"
+        },
+        {
             "name": "innmind/crawler",
             "version": "6.0.0",
             "source": {
@@ -421,6 +524,65 @@
                 "crawler"
             ],
             "time": "2020-02-15T14:30:14+00:00"
+        },
+        {
+            "name": "innmind/debug",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Debug.git",
+                "reference": "7dcdfe4f3bbc69b71792d2b1fc7feec9fb6d5919"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Debug/zipball/7dcdfe4f3bbc69b71792d2b1fc7feec9fb6d5919",
+                "reference": "7dcdfe4f3bbc69b71792d2b1fc7feec9fb6d5919",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/cli": "~2.0",
+                "innmind/command-bus": "~4.0",
+                "innmind/event-bus": "~4.0",
+                "innmind/http-framework": "~2.0",
+                "innmind/immutable": "~3.5",
+                "innmind/json": "^1.1",
+                "innmind/object-graph": "~2.0",
+                "innmind/operating-system": "~2.0",
+                "innmind/rest-client": "~8.0",
+                "innmind/stack-trace": "~3.0",
+                "php": "~7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "^3.10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Debug\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Set of tools to help debug applications",
+            "homepage": "http://github.com/Innmind/Debug",
+            "keywords": [
+                "cli",
+                "debug",
+                "http"
+            ],
+            "time": "2020-03-26T16:20:55+00:00"
         },
         {
             "name": "innmind/event-bus",
@@ -572,6 +734,55 @@
                 "filesystem"
             ],
             "time": "2019-12-15T12:31:22+00:00"
+        },
+        {
+            "name": "innmind/genome",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Genome.git",
+                "reference": "c1c2ec26c98e5311e8739a425faab57153e45e77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Genome/zipball/c1c2ec26c98e5311e8739a425faab57153e45e77",
+                "reference": "c1c2ec26c98e5311e8739a425faab57153e45e77",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/cli-framework": "^1.2",
+                "innmind/operating-system": "^2.1",
+                "php": "~7.4"
+            },
+            "require-dev": {
+                "innmind/black-box": "^4.9",
+                "phpunit/phpunit": "~9.0",
+                "vimeo/psalm": "^3.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Genome\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Tool to deploy projects and libraries on a machine",
+            "homepage": "http://github.com/Innmind/Genome",
+            "keywords": [
+                "deploy",
+                "library",
+                "project"
+            ],
+            "time": "2020-06-06T13:04:29+00:00"
         },
         {
             "name": "innmind/graphviz",
@@ -774,6 +985,111 @@
                 "http"
             ],
             "time": "2020-02-15T14:50:57+00:00"
+        },
+        {
+            "name": "innmind/http-authentication",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/HttpAuthentication.git",
+                "reference": "0ddadd01fc643855813de11b263125b95bffc154"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/HttpAuthentication/zipball/0ddadd01fc643855813de11b263125b95bffc154",
+                "reference": "0ddadd01fc643855813de11b263125b95bffc154",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/http": "~4.2",
+                "php": "~7.4"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.11.0",
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "^3.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\HttpAuthentication\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "HTTP authentication",
+            "homepage": "http://github.com/Innmind/HttpAuthentication",
+            "keywords": [
+                "Authentication",
+                "http"
+            ],
+            "time": "2020-03-29T15:03:33+00:00"
+        },
+        {
+            "name": "innmind/http-framework",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/HttpFramework.git",
+                "reference": "ec1f8cb802553339f52814a1459ebf02f8e3d32c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/ec1f8cb802553339f52814a1459ebf02f8e3d32c",
+                "reference": "ec1f8cb802553339f52814a1459ebf02f8e3d32c",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/filesystem": "~4.0",
+                "innmind/http": "~4.2",
+                "innmind/http-authentication": "~2.0",
+                "innmind/rest-server": "~8.0",
+                "innmind/router": "~2.0",
+                "php": "~7.4",
+                "symfony/dotenv": "~5.0"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.11.0",
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "^3.10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\HttpFramework\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "HTTP framework",
+            "homepage": "http://github.com/Innmind/HttpFramework",
+            "keywords": [
+                "framework",
+                "http"
+            ],
+            "time": "2020-03-23T17:09:30+00:00"
         },
         {
             "name": "innmind/http-transport",
@@ -1302,17 +1618,67 @@
             "time": "2020-01-05T17:28:55+00:00"
         },
         {
-            "name": "innmind/operating-system",
+            "name": "innmind/object-graph",
             "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Innmind/OperatingSystem.git",
-                "reference": "23aa7294511eb253a730b1b27bf912b14819f520"
+                "url": "https://github.com/Innmind/ObjectGraph.git",
+                "reference": "91c5122058fce57869c1646b1099cf07df475731"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/OperatingSystem/zipball/23aa7294511eb253a730b1b27bf912b14819f520",
-                "reference": "23aa7294511eb253a730b1b27bf912b14819f520",
+                "url": "https://api.github.com/repos/Innmind/ObjectGraph/zipball/91c5122058fce57869c1646b1099cf07df475731",
+                "reference": "91c5122058fce57869c1646b1099cf07df475731",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/graphviz": "~2.0",
+                "innmind/immutable": "~3.0",
+                "innmind/reflection": "~4.0",
+                "innmind/url": "~3.0",
+                "php": "~7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "~3.7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\ObjectGraph\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Extract object graph out of a root object",
+            "homepage": "http://github.com/Innmind/ObjectGraph",
+            "keywords": [
+                "dot",
+                "graphviz",
+                "object graph"
+            ],
+            "time": "2020-01-08T20:18:31+00:00"
+        },
+        {
+            "name": "innmind/operating-system",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/OperatingSystem.git",
+                "reference": "6b288a204879ff6032b2702853e579499653e96c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/OperatingSystem/zipball/6b288a204879ff6032b2702853e579499653e96c",
+                "reference": "6b288a204879ff6032b2702853e579499653e96c",
                 "shasum": ""
             },
             "require": {
@@ -1328,11 +1694,11 @@
                 "php": "~7.4"
             },
             "require-dev": {
-                "giorgiosironi/eris": "^0.11.0",
+                "innmind/black-box": "^4.8",
                 "innmind/ip": "~2.0",
                 "innmind/url": "~3.0",
                 "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "~3.7.0"
+                "vimeo/psalm": "~3.7"
             },
             "type": "library",
             "autoload": {
@@ -1356,7 +1722,52 @@
                 "abstraction",
                 "operating system"
             ],
-            "time": "2020-01-19T12:25:56+00:00"
+            "time": "2020-05-17T12:37:42+00:00"
+        },
+        {
+            "name": "innmind/reflection",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Reflection.git",
+                "reference": "3ef2ca0fb00d5a02132047af336423bc1efd3b5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Reflection/zipball/3ef2ca0fb00d5a02132047af336423bc1efd3b5b",
+                "reference": "3ef2ca0fb00d5a02132047af336423bc1efd3b5b",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "~3.0",
+                "php": "~7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "^3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Reflection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to build objects and extract data out of them",
+            "homepage": "http://github.com/Innmind/Reflection",
+            "keywords": [
+                "reflection"
+            ],
+            "time": "2019-12-12T20:06:22+00:00"
         },
         {
             "name": "innmind/rest-client",
@@ -1417,6 +1828,66 @@
             "time": "2020-03-23T15:39:17+00:00"
         },
         {
+            "name": "innmind/rest-server",
+            "version": "8.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/rest-server.git",
+                "reference": "999103d19013c0e71e4422856ac5167d451b1eeb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/rest-server/zipball/999103d19013c0e71e4422856ac5167d451b1eeb",
+                "reference": "999103d19013c0e71e4422856ac5167d451b1eeb",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/filesystem": "~4.0",
+                "innmind/http": "~4.2",
+                "innmind/immutable": "~3.5",
+                "innmind/json": "^1.0",
+                "innmind/specification": "~2.0",
+                "innmind/url-template": "~2.0",
+                "php": "~7.4",
+                "willdurand/negotiation": "^2.0"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.11.0",
+                "innmind/time-continuum": "~2.2",
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "^3.9"
+            },
+            "suggest": {
+                "innmind/time-continuum": "In order to use point in time type"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Rest\\Server\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Library to easily expose REST APIs",
+            "homepage": "http://github.com/Innmind/rest-server",
+            "keywords": [
+                "api",
+                "rest"
+            ],
+            "time": "2020-03-15T16:24:49+00:00"
+        },
+        {
             "name": "innmind/robots-txt",
             "version": "5.0.0",
             "source": {
@@ -1452,6 +1923,60 @@
             ],
             "description": "Robots.txt parser",
             "time": "2020-02-05T18:40:32+00:00"
+        },
+        {
+            "name": "innmind/router",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/Router.git",
+                "reference": "17f22f6313c0cfedf15870a4d69d9820b6ab343c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/Router/zipball/17f22f6313c0cfedf15870a4d69d9820b6ab343c",
+                "reference": "17f22f6313c0cfedf15870a4d69d9820b6ab343c",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/http": "~4.0",
+                "innmind/immutable": "~3.3",
+                "innmind/url": "~3.0",
+                "innmind/url-template": "~2.0",
+                "php": "~7.4",
+                "symfony/yaml": "^4.1|~5.0"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.11.0",
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "~3.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\Router\\": "src/"
+                },
+                "files": [
+                    "src/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "HTTP router",
+            "homepage": "http://github.com/Innmind/Router",
+            "keywords": [
+                "http",
+                "router"
+            ],
+            "time": "2020-02-01T17:52:02+00:00"
         },
         {
             "name": "innmind/server-control",
@@ -2093,6 +2618,54 @@
                 "url"
             ],
             "time": "2020-01-30T17:40:05+00:00"
+        },
+        {
+            "name": "innmind/url-template",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Innmind/UrlTemplate.git",
+                "reference": "7057c1efaf9bb7e43af2ede4f49624248e6103a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Innmind/UrlTemplate/zipball/7057c1efaf9bb7e43af2ede4f49624248e6103a9",
+                "reference": "7057c1efaf9bb7e43af2ede4f49624248e6103a9",
+                "shasum": ""
+            },
+            "require": {
+                "innmind/immutable": "~3.1",
+                "innmind/url": "~3.0",
+                "php": "~7.4"
+            },
+            "require-dev": {
+                "giorgiosironi/eris": "^0.11.0",
+                "phpunit/phpunit": "~8.0",
+                "vimeo/psalm": "~3.7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Innmind\\UrlTemplate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
+                }
+            ],
+            "description": "Url template expansion processor",
+            "homepage": "http://github.com/Innmind/UrlTemplate",
+            "keywords": [
+                "rfc6570",
+                "url template"
+            ],
+            "time": "2020-01-05T10:03:52+00:00"
         },
         {
             "name": "innmind/xml",
@@ -3400,6 +3973,65 @@
             "time": "2020-03-23T12:42:46+00:00"
         },
         {
+            "name": "symfony/yaml",
+            "version": "v5.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "d45d73e4e079efdb6ec9990752c44c30ca0d6347"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/d45d73e4e079efdb6ec9990752c44c30ca0d6347",
+                "reference": "d45d73e4e079efdb6ec9990752c44c30ca0d6347",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "conflict": {
+                "symfony/console": "<4.4"
+            },
+            "require-dev": {
+                "symfony/console": "^4.4|^5.0"
+            },
+            "suggest": {
+                "symfony/console": "For validating YAML files using the lint command"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2020-03-16T12:10:54+00:00"
+        },
+        {
             "name": "willdurand/negotiation",
             "version": "v2.3.1",
             "source": {
@@ -3893,479 +4525,6 @@
             ],
             "description": "PHP library for property-based testing. Integrates with PHPUnit.",
             "time": "2018-09-16T08:41:41+00:00"
-        },
-        {
-            "name": "innmind/command-bus",
-            "version": "4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/CommandBus.git",
-                "reference": "6400859c139b228b1bc8066c36815560920079fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/CommandBus/zipball/6400859c139b228b1bc8066c36815560920079fb",
-                "reference": "6400859c139b228b1bc8066c36815560920079fb",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/immutable": "~3.0",
-                "innmind/reflection": "~4.0",
-                "php": "~7.4",
-                "psr/log": "^1.0",
-                "ramsey/uuid": "^3.5"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "~3.7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\CommandBus\\": "src/"
-                },
-                "files": [
-                    "src/bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "Command Bus library",
-            "homepage": "http://github.com/Innmind/CommandBus",
-            "keywords": [
-                "command bus",
-                "ddd"
-            ],
-            "time": "2020-01-28T17:18:01+00:00"
-        },
-        {
-            "name": "innmind/debug",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/Debug.git",
-                "reference": "7dcdfe4f3bbc69b71792d2b1fc7feec9fb6d5919"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Debug/zipball/7dcdfe4f3bbc69b71792d2b1fc7feec9fb6d5919",
-                "reference": "7dcdfe4f3bbc69b71792d2b1fc7feec9fb6d5919",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/cli": "~2.0",
-                "innmind/command-bus": "~4.0",
-                "innmind/event-bus": "~4.0",
-                "innmind/http-framework": "~2.0",
-                "innmind/immutable": "~3.5",
-                "innmind/json": "^1.1",
-                "innmind/object-graph": "~2.0",
-                "innmind/operating-system": "~2.0",
-                "innmind/rest-client": "~8.0",
-                "innmind/stack-trace": "~3.0",
-                "php": "~7.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "^3.10"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\Debug\\": "src/"
-                },
-                "files": [
-                    "src/bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "Set of tools to help debug applications",
-            "homepage": "http://github.com/Innmind/Debug",
-            "keywords": [
-                "cli",
-                "debug",
-                "http"
-            ],
-            "time": "2020-03-26T16:20:55+00:00"
-        },
-        {
-            "name": "innmind/http-authentication",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/HttpAuthentication.git",
-                "reference": "0ddadd01fc643855813de11b263125b95bffc154"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpAuthentication/zipball/0ddadd01fc643855813de11b263125b95bffc154",
-                "reference": "0ddadd01fc643855813de11b263125b95bffc154",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/http": "~4.2",
-                "php": "~7.4"
-            },
-            "require-dev": {
-                "giorgiosironi/eris": "^0.11.0",
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "^3.9"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\HttpAuthentication\\": "src/"
-                },
-                "files": [
-                    "src/bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "HTTP authentication",
-            "homepage": "http://github.com/Innmind/HttpAuthentication",
-            "keywords": [
-                "Authentication",
-                "http"
-            ],
-            "time": "2020-03-29T15:03:33+00:00"
-        },
-        {
-            "name": "innmind/http-framework",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/HttpFramework.git",
-                "reference": "ec1f8cb802553339f52814a1459ebf02f8e3d32c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/HttpFramework/zipball/ec1f8cb802553339f52814a1459ebf02f8e3d32c",
-                "reference": "ec1f8cb802553339f52814a1459ebf02f8e3d32c",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/filesystem": "~4.0",
-                "innmind/http": "~4.2",
-                "innmind/http-authentication": "~2.0",
-                "innmind/rest-server": "~8.0",
-                "innmind/router": "~2.0",
-                "php": "~7.4",
-                "symfony/dotenv": "~5.0"
-            },
-            "require-dev": {
-                "giorgiosironi/eris": "^0.11.0",
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "^3.10"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\HttpFramework\\": "src/"
-                },
-                "files": [
-                    "src/bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "HTTP framework",
-            "homepage": "http://github.com/Innmind/HttpFramework",
-            "keywords": [
-                "framework",
-                "http"
-            ],
-            "time": "2020-03-23T17:09:30+00:00"
-        },
-        {
-            "name": "innmind/object-graph",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/ObjectGraph.git",
-                "reference": "91c5122058fce57869c1646b1099cf07df475731"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/ObjectGraph/zipball/91c5122058fce57869c1646b1099cf07df475731",
-                "reference": "91c5122058fce57869c1646b1099cf07df475731",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/graphviz": "~2.0",
-                "innmind/immutable": "~3.0",
-                "innmind/reflection": "~4.0",
-                "innmind/url": "~3.0",
-                "php": "~7.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "~3.7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\ObjectGraph\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "Extract object graph out of a root object",
-            "homepage": "http://github.com/Innmind/ObjectGraph",
-            "keywords": [
-                "dot",
-                "graphviz",
-                "object graph"
-            ],
-            "time": "2020-01-08T20:18:31+00:00"
-        },
-        {
-            "name": "innmind/reflection",
-            "version": "4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/Reflection.git",
-                "reference": "3ef2ca0fb00d5a02132047af336423bc1efd3b5b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Reflection/zipball/3ef2ca0fb00d5a02132047af336423bc1efd3b5b",
-                "reference": "3ef2ca0fb00d5a02132047af336423bc1efd3b5b",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/immutable": "~3.0",
-                "php": "~7.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "^3.7"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\Reflection\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "Library to build objects and extract data out of them",
-            "homepage": "http://github.com/Innmind/Reflection",
-            "keywords": [
-                "reflection"
-            ],
-            "time": "2019-12-12T20:06:22+00:00"
-        },
-        {
-            "name": "innmind/rest-server",
-            "version": "8.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/rest-server.git",
-                "reference": "999103d19013c0e71e4422856ac5167d451b1eeb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/rest-server/zipball/999103d19013c0e71e4422856ac5167d451b1eeb",
-                "reference": "999103d19013c0e71e4422856ac5167d451b1eeb",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/filesystem": "~4.0",
-                "innmind/http": "~4.2",
-                "innmind/immutable": "~3.5",
-                "innmind/json": "^1.0",
-                "innmind/specification": "~2.0",
-                "innmind/url-template": "~2.0",
-                "php": "~7.4",
-                "willdurand/negotiation": "^2.0"
-            },
-            "require-dev": {
-                "giorgiosironi/eris": "^0.11.0",
-                "innmind/time-continuum": "~2.2",
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "^3.9"
-            },
-            "suggest": {
-                "innmind/time-continuum": "In order to use point in time type"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\Rest\\Server\\": "src/"
-                },
-                "files": [
-                    "src/bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "Library to easily expose REST APIs",
-            "homepage": "http://github.com/Innmind/rest-server",
-            "keywords": [
-                "api",
-                "rest"
-            ],
-            "time": "2020-03-15T16:24:49+00:00"
-        },
-        {
-            "name": "innmind/router",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/Router.git",
-                "reference": "17f22f6313c0cfedf15870a4d69d9820b6ab343c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Router/zipball/17f22f6313c0cfedf15870a4d69d9820b6ab343c",
-                "reference": "17f22f6313c0cfedf15870a4d69d9820b6ab343c",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/http": "~4.0",
-                "innmind/immutable": "~3.3",
-                "innmind/url": "~3.0",
-                "innmind/url-template": "~2.0",
-                "php": "~7.4",
-                "symfony/yaml": "^4.1|~5.0"
-            },
-            "require-dev": {
-                "giorgiosironi/eris": "^0.11.0",
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "~3.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\Router\\": "src/"
-                },
-                "files": [
-                    "src/bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "HTTP router",
-            "homepage": "http://github.com/Innmind/Router",
-            "keywords": [
-                "http",
-                "router"
-            ],
-            "time": "2020-02-01T17:52:02+00:00"
-        },
-        {
-            "name": "innmind/url-template",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Innmind/UrlTemplate.git",
-                "reference": "7057c1efaf9bb7e43af2ede4f49624248e6103a9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/UrlTemplate/zipball/7057c1efaf9bb7e43af2ede4f49624248e6103a9",
-                "reference": "7057c1efaf9bb7e43af2ede4f49624248e6103a9",
-                "shasum": ""
-            },
-            "require": {
-                "innmind/immutable": "~3.1",
-                "innmind/url": "~3.0",
-                "php": "~7.4"
-            },
-            "require-dev": {
-                "giorgiosironi/eris": "^0.11.0",
-                "phpunit/phpunit": "~8.0",
-                "vimeo/psalm": "~3.7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Innmind\\UrlTemplate\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Baptiste Langlade",
-                    "email": "langlade.baptiste@gmail.com"
-                }
-            ],
-            "description": "Url template expansion processor",
-            "homepage": "http://github.com/Innmind/UrlTemplate",
-            "keywords": [
-                "rfc6570",
-                "url template"
-            ],
-            "time": "2020-01-05T10:03:52+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -6382,65 +6541,6 @@
                 "standards"
             ],
             "time": "2019-11-18T17:27:11+00:00"
-        },
-        {
-            "name": "symfony/yaml",
-            "version": "v5.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "d45d73e4e079efdb6ec9990752c44c30ca0d6347"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/d45d73e4e079efdb6ec9990752c44c30ca0d6347",
-                "reference": "d45d73e4e079efdb6ec9990752c44c30ca0d6347",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2.5",
-                "symfony/polyfill-ctype": "~1.8"
-            },
-            "conflict": {
-                "symfony/console": "<4.4"
-            },
-            "require-dev": {
-                "symfony/console": "^4.4|^5.0"
-            },
-            "suggest": {
-                "symfony/console": "For validating YAML files using the lint command"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Yaml\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Yaml Component",
-            "homepage": "https://symfony.com",
-            "time": "2020-03-16T12:10:54+00:00"
         },
         {
             "name": "theseer/tokenizer",
