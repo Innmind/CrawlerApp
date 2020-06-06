@@ -49,6 +49,6 @@ class BootstrapTest extends TestCase
 
         $this->assertInstanceOf(Command\Consume::class, $commands[0]);
         $this->assertInstanceOf(Command\Crawl::class, $commands[1]);
-        $this->assertInstanceOf(Command\Install::class, $commands[2]);
+        $this->assertInstanceOf(Command\Homeostasis::class, $commands[2]);
     }
 }
