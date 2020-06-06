@@ -11,7 +11,6 @@ use function Innmind\Rest\Client\bootstrap as rest;
 use function Innmind\Homeostasis\bootstrap as homeostasis;
 use function Innmind\AMQP\bootstrap as amqp;
 use function Innmind\Logger\bootstrap as logger;
-use function Innmind\InstallationMonitor\bootstrap as monitor;
 use function Innmind\Stack\stack;
 use function Innmind\IPC\bootstrap as ipc;
 use Innmind\OperatingSystem\OperatingSystem;
@@ -258,8 +257,6 @@ function bootstrap(
             $userAgent
         ));
 
-    $clients = monitor($os)['client'];
-
     $ipc = ipc($os);
     $homeostasis = new Name('crawler-homeostasis');
 
@@ -275,12 +272,6 @@ function bootstrap(
             $crawler,
             $userAgent,
             $publisher
-        ),
-        new Command\Install(
-            $clients['silence'](
-                $clients['ipc']()
-            ),
-            $os->filesystem()->mount(Path::of(__DIR__.'/../config/'))
         ),
         new Command\Homeostasis(
             $ipc->listen($homeostasis),
