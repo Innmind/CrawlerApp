@@ -21,6 +21,7 @@ use Innmind\Debug\{
     Profiler\Section\CaptureAppGraph,
 };
 use Innmind\Immutable\Set;
+use function Innmind\Immutable\unwrap;
 use function Innmind\CLI\variables;
 use function Innmind\Debug\bootstrap as debug;
 use function Innmind\SilentCartographer\bootstrap as cartographer;
@@ -32,7 +33,7 @@ new class extends Main {
 
         $variables = variables(
             $env->variables(),
-            $os->filesystem()->mount(new Path(__DIR__.'/../config'))
+            $os->filesystem()->mount(Path::of(__DIR__.'/../config/'))
         );
 
         if ($variables->contains('debug')) {
@@ -51,21 +52,21 @@ new class extends Main {
             $os,
             Url::of("file://{$dir}var/logs/app.log"),
             Url::of("file://{$dir}var/logs/amqp/amqp.log"),
-            $os->filesystem()->mount(new Path($dir.'var/cache/rest')),
-            $os->filesystem()->mount(new Path($dir.'var/logs')),
-            $os->filesystem()->mount(new Path($dir.'var/data/states')),
-            $os->filesystem()->mount(new Path($dir.'var/data/actions')),
-            $os->filesystem()->mount(new Path($dir.'var/cache/traces')),
-            $os->filesystem()->mount(new Path($dir.'var/cache/robots_txts')),
+            $os->filesystem()->mount(Path::of($dir.'var/cache/rest/')),
+            $os->filesystem()->mount(Path::of($dir.'var/logs/')),
+            $os->filesystem()->mount(Path::of($dir.'var/data/states/')),
+            $os->filesystem()->mount(Path::of($dir.'var/data/actions/')),
+            $os->filesystem()->mount(Path::of($dir.'var/cache/traces/')),
+            $os->filesystem()->mount(Path::of($dir.'var/cache/robots_txts/')),
             $env->workingDirectory(),
             Transport::tcp(),
-            Url::of($variables['amqpServer'] ?? 'amqp://guest:guest@localhost:5672/'),
-            $variables['apiKey'],
+            Url::of($variables->get('amqpServer')),
+            $variables->get('apiKey'),
             'Innmind Robot'
         );
 
         if ($variables->contains('debug')) {
-            $commands = $debug['cli'](...$commands);
+            $commands = unwrap($debug['cli'](...$commands));
         }
 
         $run = new Commands(...$commands);
