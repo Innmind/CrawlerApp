@@ -5,71 +5,42 @@ declare(strict_types = 1);
 require __DIR__.'/../vendor/autoload.php';
 
 use function Crawler\bootstrap;
-use Innmind\CLI\{
+use Innmind\CLI\Framework\{
     Main,
-    Environment,
-    Commands,
+    Application,
 };
 use Innmind\Url\{
     Url,
     Path,
 };
 use Innmind\Socket\Internet\Transport;
-use Innmind\OperatingSystem\OperatingSystem;
-use Innmind\Debug\{
-    CodeEditor,
-    Profiler\Section\CaptureAppGraph,
-};
-use Innmind\Immutable\Set;
-use function Innmind\Immutable\unwrap;
-use function Innmind\CLI\variables;
-use function Innmind\Debug\bootstrap as debug;
-use function Innmind\SilentCartographer\bootstrap as cartographer;
+use Innmind\Debug\Profiler\Section\CaptureAppGraph;
 
 new class extends Main {
-    protected function main(Environment $env, OperatingSystem $os): void
+    protected function configure(Application $app): Application
     {
-        $os = cartographer($os)['cli'](Url::of(__DIR__));
+        return $app
+            ->configAt(Path::of(__DIR__.'/../config/'))
+            ->disableProfilerSection(CaptureAppGraph::class)
+            ->commands(static function($env, $os) {
+                $dir = __DIR__.'/../';
 
-        $variables = variables(
-            $env->variables(),
-            $os->filesystem()->mount(Path::of(__DIR__.'/../config/'))
-        );
-
-        if ($variables->contains('debug')) {
-            $debug = debug(
-                $os,
-                Url::of($variables->get('profiler')),
-                $variables,
-                CodeEditor::sublimeText(),
-                Set::of('string', CaptureAppGraph::class)
-            );
-            $os = $debug['os']();
-        }
-
-        $dir = __DIR__.'/../';
-        $commands = bootstrap(
-            $os,
-            Url::of("file://{$dir}var/logs/app.log"),
-            Url::of("file://{$dir}var/logs/amqp/amqp.log"),
-            $os->filesystem()->mount(Path::of($dir.'var/cache/rest/')),
-            $os->filesystem()->mount(Path::of($dir.'var/logs/')),
-            $os->filesystem()->mount(Path::of($dir.'var/data/states/')),
-            $os->filesystem()->mount(Path::of($dir.'var/data/actions/')),
-            $os->filesystem()->mount(Path::of($dir.'var/cache/traces/')),
-            $os->filesystem()->mount(Path::of($dir.'var/cache/robots_txts/')),
-            $env->workingDirectory(),
-            Transport::tcp(),
-            Url::of($variables->get('amqpServer')),
-            $variables->get('apiKey'),
-            'Innmind Robot'
-        );
-
-        if ($variables->contains('debug')) {
-            $commands = unwrap($debug['cli'](...$commands));
-        }
-
-        $run = new Commands(...$commands);
-        $run($env);
+                return bootstrap(
+                    $os,
+                    Url::of("file://{$dir}var/logs/app.log"),
+                    Url::of("file://{$dir}var/logs/amqp/amqp.log"),
+                    $os->filesystem()->mount(Path::of($dir.'var/cache/rest/')),
+                    $os->filesystem()->mount(Path::of($dir.'var/logs/')),
+                    $os->filesystem()->mount(Path::of($dir.'var/data/states/')),
+                    $os->filesystem()->mount(Path::of($dir.'var/data/actions/')),
+                    $os->filesystem()->mount(Path::of($dir.'var/cache/traces/')),
+                    $os->filesystem()->mount(Path::of($dir.'var/cache/robots_txts/')),
+                    $env->workingDirectory(),
+                    Transport::tcp(),
+                    Url::of($env->variables()->get('AMQP_SERVER')),
+                    $env->variables()->get('API_KEY'),
+                    'Innmind Robot',
+                );
+            });
     }
 };
