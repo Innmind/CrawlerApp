@@ -31,7 +31,8 @@
         "innmind/silent-cartographer": "~2.0",
         "innmind/stack": "^1.0",
         "innmind/ipc": "~3.0",
-        "innmind/genome": "^3.0"
+        "innmind/genome": "^3.0",
+        "innmind/cli-framework": "^1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~8.0",
