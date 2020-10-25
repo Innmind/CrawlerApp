@@ -15,10 +15,10 @@ final class Negotiator
     /**
      * @param Set<Pattern> $patterns
      */
-    public function best(MediaType $mediaType, Set $pattterns): Pattern
+    public function best(MediaType $mediaType, Set $patterns): Pattern
     {
         /** @var Sequence<Pattern> */
-        $pattterns = $pattterns
+        $patterns = $patterns
             ->filter(function(Pattern $pattern) use ($mediaType): bool {
                 return $pattern->matches($mediaType);
             })
@@ -26,10 +26,10 @@ final class Negotiator
                 return $b->quality() <=> $a->quality();
             });
 
-        if ($pattterns->empty()) {
+        if ($patterns->empty()) {
             throw new MediaTypeDoesntMatchAny;
         }
 
-        return $pattterns->first();
+        return $patterns->first();
     }
 }

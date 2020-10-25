@@ -48,6 +48,7 @@ final class Publisher implements PublisherInterface
                     \is_array($definition->metas()->get('allowed_media_types'));
             });
 
+        /** @var Set<Pattern> */
         $mediaTypes = $definitions
             ->reduce(
                 Set::of('string'),
@@ -66,6 +67,7 @@ final class Publisher implements PublisherInterface
             ->reduce(
                 Set::of(Pattern::class),
                 function(Set $carry, string $mediaType): Set {
+                    /** @psalm-suppress MixedArgument */
                     return $carry->add(Pattern::of($mediaType));
                 }
             );
