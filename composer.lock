@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f399c43f054adf30fc3fddd3131e3e8",
+    "content-hash": "83bc84b02c37d6773a070178b7d5ffce",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -5499,39 +5499,38 @@
             "time": "2021-02-22T14:02:09+00:00"
         },
         {
-            "name": "giorgiosironi/eris",
-            "version": "0.11.0",
+            "name": "innmind/black-box",
+            "version": "4.17.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/giorgiosironi/eris.git",
-                "reference": "fe03babc632c4e10961e98e2f62fb2b8250e6171"
+                "url": "https://github.com/Innmind/BlackBox.git",
+                "reference": "c62f734dac0662edac91d945e16d76601b25dd0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giorgiosironi/eris/zipball/fe03babc632c4e10961e98e2f62fb2b8250e6171",
-                "reference": "fe03babc632c4e10961e98e2f62fb2b8250e6171",
+                "url": "https://api.github.com/repos/Innmind/BlackBox/zipball/c62f734dac0662edac91d945e16d76601b25dd0b",
+                "reference": "c62f734dac0662edac91d945e16d76601b25dd0b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5"
+                "innmind/json": "^1.1",
+                "php": "~7.4|~8.0",
+                "phpunit/phpunit": "~8.0 || ~9.0",
+                "symfony/var-dumper": "~4.0|~5.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "icomefromthenet/reverse-regex": "v0.0.6.3",
-                "phpunit/phpunit": ">4,<8"
+                "innmind/coding-standard": "^1.1",
+                "ramsey/uuid": "^4.1",
+                "vimeo/psalm": "~4.1"
             },
             "suggest": {
-                "icomefromthenet/reverse-regex": "v0.0.6.3 for the regex() Generator",
-                "phpunit/phpunit": "Standard way to run generated test cases"
+                "icomefromthenet/reverse-regex": "To be able to use Set\\Regex"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Eris\\": "src/"
-                },
-                "files": [
-                    "src/Generator/functions.php"
-                ]
+                    "Innmind\\BlackBox\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5539,24 +5538,22 @@
             ],
             "authors": [
                 {
-                    "name": "Gabriele Lana",
-                    "email": "gabriele.lana@gmail.com"
-                },
-                {
-                    "name": "Giorgio Sironi",
-                    "email": "info@giorgiosironi.com"
-                },
-                {
-                    "name": "Mirko Bonadei",
-                    "email": "mirko.bonadei@gmail.com"
+                    "name": "Baptiste Langlade",
+                    "email": "langlade.baptiste@gmail.com"
                 }
             ],
-            "description": "PHP library for property-based testing. Integrates with PHPUnit.",
+            "description": "Test library",
+            "homepage": "http://github.com/Innmind/BlackBox",
+            "keywords": [
+                "fixtures",
+                "property based testing",
+                "test"
+            ],
             "support": {
-                "issues": "https://github.com/giorgiosironi/eris/issues",
-                "source": "https://github.com/giorgiosironi/eris/tree/master"
+                "issues": "http://github.com/Innmind/BlackBox/issues",
+                "source": "https://github.com/Innmind/BlackBox/tree/4.17.0"
             },
-            "time": "2018-09-16T08:41:41+00:00"
+            "time": "2021-03-01T10:09:01+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -8119,6 +8116,94 @@
                 }
             ],
             "time": "2021-03-17T17:12:15+00:00"
+        },
+        {
+            "name": "symfony/var-dumper",
+            "version": "v5.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-dumper.git",
+                "reference": "89412a68ea2e675b4e44f260a5666729f77f668e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/89412a68ea2e675b4e44f260a5666729f77f668e",
+                "reference": "89412a68ea2e675b4e44f260a5666729f77f668e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php80": "^1.15"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<5.4.3",
+                "symfony/console": "<4.4"
+            },
+            "require-dev": {
+                "ext-iconv": "*",
+                "symfony/console": "^4.4|^5.0",
+                "symfony/process": "^4.4|^5.0",
+                "twig/twig": "^2.13|^3.0.4"
+            },
+            "suggest": {
+                "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
+                "ext-intl": "To show region name in time zone dump",
+                "symfony/console": "To use the ServerDumpCommand and/or the bin/var-dump-server script"
+            },
+            "bin": [
+                "Resources/bin/var-dump-server"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Resources/functions/dump.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\VarDumper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides mechanisms for walking through any arbitrary PHP variable",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "debug",
+                "dump"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/var-dumper/tree/v5.2.6"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-03-28T09:42:18+00:00"
         },
         {
             "name": "theseer/tokenizer",

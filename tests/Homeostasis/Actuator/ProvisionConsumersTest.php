@@ -155,7 +155,7 @@ class ProvisionConsumersTest extends TestCase
             ->method('kill')
             ->with(
                 $this->callback(static function($pid): bool {
-                    return $pid->toInt() === 4;
+                    return $pid->toInt() === 3;
                 }),
                 Signal::terminate()
             );
@@ -164,7 +164,7 @@ class ProvisionConsumersTest extends TestCase
             ->method('kill')
             ->with(
                 $this->callback(static function($pid): bool {
-                    return $pid->toInt() === 3;
+                    return $pid->toInt() === 4;
                 }),
                 Signal::terminate()
             );

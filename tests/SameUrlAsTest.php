@@ -6,14 +6,14 @@ namespace Tests\Crawler;
 use Crawler\SameUrlAs;
 use Innmind\Url\Url;
 use PHPUnit\Framework\TestCase;
-use Eris\{
-    Generator,
-    TestTrait,
+use Innmind\BlackBox\{
+    PHPUnit\BlackBox,
+    Set,
 };
 
 class SameUrlAsTest extends TestCase
 {
-    use TestTrait;
+    use BlackBox;
 
     public function testSame()
     {
@@ -37,9 +37,9 @@ class SameUrlAsTest extends TestCase
             });
     }
 
-    private function urls(): Generator
+    private function urls(): Set
     {
-        return Generator\elements(
+        return Set\Elements::of(
             Url::of('https://en.wikipedia.org/wiki/H2g2#History'),
             Url::of('https://en.wikipedia.org/wiki/H2g2#Terms_and_conditions'),
             Url::of('https://en.wikipedia.org/wiki/H2g2#DNA'),
