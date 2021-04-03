@@ -151,20 +151,11 @@ class ProvisionConsumersTest extends TestCase
             ->method('processes')
             ->willReturn($processes = $this->createMock(ControlProcesses::class));
         $processes
-            ->expects($this->at(0))
+            ->expects($this->exactly(2))
             ->method('kill')
             ->with(
                 $this->callback(static function($pid): bool {
-                    return $pid->toInt() === 3;
-                }),
-                Signal::terminate()
-            );
-        $processes
-            ->expects($this->at(1))
-            ->method('kill')
-            ->with(
-                $this->callback(static function($pid): bool {
-                    return $pid->toInt() === 4;
+                    return \in_array($pid->toInt(), [3, 4], true);
                 }),
                 Signal::terminate()
             );
