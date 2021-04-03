@@ -44,7 +44,7 @@ final class Publisher implements PublisherInterface
         $definitions = $server
             ->capabilities()
             ->definitions()
-            ->filter(function(string $name, Definition $definition): bool {
+            ->filter(static function(string $name, Definition $definition): bool {
                 return $definition->metas()->contains('allowed_media_types') &&
                     \is_array($definition->metas()->get('allowed_media_types'));
             });
@@ -56,7 +56,7 @@ final class Publisher implements PublisherInterface
         $mediaTypes = $definitions
             ->reduce(
                 Set::of('string'),
-                function(Set $carry, string $name, Definition $definition): Set {
+                static function(Set $carry, string $name, Definition $definition): Set {
                     /**
                      * @psalm-suppress PossiblyInvalidIterator
                      * @var string $value
@@ -70,7 +70,7 @@ final class Publisher implements PublisherInterface
             )
             ->reduce(
                 Set::of(Pattern::class),
-                function(Set $carry, string $mediaType): Set {
+                static function(Set $carry, string $mediaType): Set {
                     /** @psalm-suppress MixedArgument */
                     return $carry->add(Pattern::of($mediaType));
                 }
@@ -87,11 +87,12 @@ final class Publisher implements PublisherInterface
 
         $definition = $definitions
             ->values()
-            ->filter(function(Definition $definition) use ($best): bool {
+            ->filter(static function(Definition $definition) use ($best): bool {
                 /** @psalm-suppress PossiblyInvalidArgument */
                 return \in_array(
-                    (string) $best,
-                    $definition->metas()->get('allowed_media_types')
+                    $best->toString(),
+                    $definition->metas()->get('allowed_media_types'),
+                    true,
                 );
             })
             ->first();

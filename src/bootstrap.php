@@ -277,6 +277,6 @@ function bootstrap(
             $ipc->listen($homeostasis),
             $regulator,
             $os->control()->processes()
-        )
+        ),
     ];
 }

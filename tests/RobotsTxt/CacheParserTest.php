@@ -90,7 +90,7 @@ class CacheParserTest extends TestCase
             ->filesystem
             ->expects($this->once())
             ->method('add')
-            ->with($this->callback(function(File $file): bool {
+            ->with($this->callback(static function(File $file): bool {
                 return $file->name()->toString() === 'www.example.org.txt' &&
                     $file->content()->toString() === 'whatever';
             }));

@@ -24,7 +24,6 @@ use Innmind\AMQP\{
     Model\Basic\Message\Generic,
     Exception\MessageLocked,
 };
-use Innmind\Rest\Client\Identity;
 use Innmind\Url\Url;
 use Innmind\TimeContinuum\{
     Earth\ElapsedPeriod,

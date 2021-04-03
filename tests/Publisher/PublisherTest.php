@@ -213,7 +213,7 @@ class PublisherTest extends TestCase
         $server
             ->expects($this->once())
             ->method('create')
-            ->with($this->callback(function(HttpResource $resource): bool {
+            ->with($this->callback(static function(HttpResource $resource): bool {
                 return $resource->name() === 'foo' &&
                     $resource->properties()->size() === 0;
             }))

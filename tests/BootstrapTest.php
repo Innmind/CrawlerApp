@@ -12,7 +12,6 @@ use Innmind\Url\{
 };
 use Innmind\Filesystem\Adapter;
 use Innmind\Socket\Internet\Transport;
-use Innmind\TimeContinuum\TimeContinuumInterface;
 use Innmind\Server\Status\Server;
 use PHPUnit\Framework\TestCase;
 

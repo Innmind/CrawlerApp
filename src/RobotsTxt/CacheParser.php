@@ -15,7 +15,6 @@ use Innmind\Filesystem\{
 };
 use Innmind\Stream\Readable\Stream;
 use Innmind\Url\Url;
-use Innmind\Immutable\Str;
 
 final class CacheParser implements Parser
 {

@@ -24,7 +24,6 @@ use Innmind\Url\{
     Url,
     Authority\Host,
 };
-use Innmind\Immutable\Str;
 
 final class CrawlTracer implements CrawlTracerInterface
 {

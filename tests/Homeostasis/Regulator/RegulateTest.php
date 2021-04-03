@@ -36,7 +36,7 @@ class RegulateTest extends TestCase
         $process
             ->expects($this->once())
             ->method('send')
-            ->with($this->callback(function() {
+            ->with($this->callback(static function() {
                 return true; //assert that at least one message is sent
             }));
         $process

@@ -50,7 +50,7 @@ final class AlternatesAwarePublisher implements PublisherInterface
             $alternates->foreach(function(string $language, Alternate $alternate) use ($sameAs, $reference): void {
                 $alternate
                     ->content()
-                    ->filter(function(Url $url) use ($sameAs): bool {
+                    ->filter(static function(Url $url) use ($sameAs): bool {
                         return !$sameAs($url);
                     })
                     ->foreach(function(Url $url) use ($language, $reference): void {

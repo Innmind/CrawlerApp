@@ -292,7 +292,7 @@ class AlternateTest extends TestCase
         );
 
         $this->assertSame(
-            json_encode([
+            \json_encode([
                 'resource' => '/foo',
                 'origin' => 'uuid',
                 'relationship' => 'alternate',

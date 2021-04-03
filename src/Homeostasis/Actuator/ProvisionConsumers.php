@@ -47,9 +47,6 @@ final class ProvisionConsumers implements Actuator
             ->withWorkingDirectory(Path::of($workingDirectory));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dramaticDecrease(Sequence $states): void
     {
         $running = $this->processes();
@@ -77,25 +74,16 @@ final class ProvisionConsumers implements Actuator
             });
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function decrease(Sequence $states): void
     {
         //let the consumers finish by themselves
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function holdSteady(Sequence $states): void
     {
         $this->spawn(1);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function increase(Sequence $states): void
     {
         $running = $this->processes();
@@ -109,9 +97,6 @@ final class ProvisionConsumers implements Actuator
         $this->spawn($running->count());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function dramaticIncrease(Sequence $states): void
     {
         $running = $this->processes();
@@ -142,7 +127,7 @@ final class ProvisionConsumers implements Actuator
             ->status
             ->processes()
             ->all()
-            ->filter(function(int $pid, Process $process): bool {
+            ->filter(static function(int $pid, Process $process): bool {
                 return Str::of($process->command()->toString())->contains(
                     'crawler consume crawler'
                 );

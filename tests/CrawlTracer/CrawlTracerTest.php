@@ -51,7 +51,7 @@ class CrawlTracerTest extends TestCase
         $filesystem
             ->expects($this->at(1))
             ->method('add')
-            ->with($this->callback(function(Directory $dir): bool {
+            ->with($this->callback(static function(Directory $dir): bool {
                 return $dir->name()->toString() === 'hits';
             }));
         $filesystem
@@ -62,7 +62,7 @@ class CrawlTracerTest extends TestCase
         $filesystem
             ->expects($this->at(3))
             ->method('add')
-            ->with($this->callback(function(File $file): bool {
+            ->with($this->callback(static function(File $file): bool {
                 return $file->name()->toString() === 'urls.txt' &&
                     $file->content()->toString() === '';
             }));
@@ -74,7 +74,7 @@ class CrawlTracerTest extends TestCase
         $filesystem
             ->expects($this->at(5))
             ->method('add')
-            ->with($this->callback(function(Directory $dir): bool {
+            ->with($this->callback(static function(Directory $dir): bool {
                 return $dir->contains(new Name('www.example.com.txt')) &&
                     $dir->get(new Name('www.example.com.txt'))->content()->toString() === 'some date';
             }));
@@ -91,7 +91,7 @@ class CrawlTracerTest extends TestCase
         $filesystem
             ->expects($this->at(8))
             ->method('add')
-            ->with($this->callback(function(File $file): bool {
+            ->with($this->callback(static function(File $file): bool {
                 return $file->name()->toString() === 'urls.txt' &&
                     $file->content()->toString() === 'http://www.example.com/foo?some'."\n";
             }));
@@ -128,7 +128,7 @@ class CrawlTracerTest extends TestCase
         $filesystem
             ->expects($this->at(1))
             ->method('add')
-            ->with($this->callback(function(Directory $dir): bool {
+            ->with($this->callback(static function(Directory $dir): bool {
                 return $dir->name()->toString() === 'hits';
             }));
         $filesystem
@@ -139,7 +139,7 @@ class CrawlTracerTest extends TestCase
         $filesystem
             ->expects($this->at(3))
             ->method('add')
-            ->with($this->callback(function(File $file): bool {
+            ->with($this->callback(static function(File $file): bool {
                 return $file->name()->toString() === 'urls.txt' &&
                     $file->content()->toString() === '';
             }));
@@ -151,7 +151,7 @@ class CrawlTracerTest extends TestCase
         $filesystem
             ->expects($this->at(5))
             ->method('add')
-            ->with($this->callback(function(Directory $dir): bool {
+            ->with($this->callback(static function(Directory $dir): bool {
                 return $dir->contains(new Name('www.example.com.txt')) &&
                     $dir->get(new Name('www.example.com.txt'))->content()->toString() === 'some date';
             }));

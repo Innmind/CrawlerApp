@@ -48,7 +48,7 @@ final class Pattern
         return $this->quality;
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return \sprintf(
             '%s/%s%s',
@@ -80,10 +80,6 @@ final class Pattern
 
     /**
      * Build an object out of a string
-     *
-     * @param string $string
-     *
-     * @return self
      */
     public static function of(string $string): self
     {
@@ -107,7 +103,7 @@ final class Pattern
             ->drop(1)
             ->reduce(
                 Map::of('string', 'string'),
-                function(Map $carry, Str $param): Map {
+                static function(Map $carry, Str $param): Map {
                     $matches = $param->capture(
                         '~^(?<key>[\w\-.]+)=(?<value>[\w\-.]+)$~'
                     );

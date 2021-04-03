@@ -11,7 +11,6 @@ use Innmind\MediaType\{
     MediaType,
     Exception\InvalidMediaTypeString,
 };
-use Innmind\Immutable\Map;
 use PHPUnit\Framework\TestCase;
 
 class PatternTest extends TestCase
@@ -27,7 +26,7 @@ class PatternTest extends TestCase
         $this->assertSame('application', $pattern->topLevel());
         $this->assertSame('json', $pattern->subType());
         $this->assertSame(0.5, $pattern->quality());
-        $this->assertSame('application/json; q=0.5', (string) $pattern);
+        $this->assertSame('application/json; q=0.5', $pattern->toString());
     }
 
     public function testDefaultQuality()
@@ -67,11 +66,11 @@ class PatternTest extends TestCase
         $this->assertSame(1.0, $pattern->quality());
         $this->assertSame(
             'application/tree.octet-stream',
-            (string) $pattern
+            $pattern->toString(),
         );
 
-        $this->assertSame('*/*; q=0.1', (string) Pattern::of('*/*; q=0.1'));
-        $this->assertSame('image/*; q=0.1', (string) Pattern::of('image/*; q=0.1'));
+        $this->assertSame('*/*; q=0.1', Pattern::of('*/*; q=0.1')->toString());
+        $this->assertSame('image/*; q=0.1', Pattern::of('image/*; q=0.1')->toString());
     }
 
     public function testThrowWhenInvalidString()

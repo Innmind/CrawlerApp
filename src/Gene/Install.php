@@ -18,7 +18,6 @@ use Innmind\Server\Control\{
     Exception\ScriptFailed,
 };
 use Innmind\Url\Path;
-use Innmind\Immutable\Map;
 
 final class Install implements Gene
 {

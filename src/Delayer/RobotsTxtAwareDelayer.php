@@ -60,7 +60,7 @@ final class RobotsTxtAwareDelayer implements Delayer
             $period = new Second(
                 $directives->reduce(
                     0,
-                    function(int $carry, Directives $directives): int {
+                    static function(int $carry, Directives $directives): int {
                         return \max($carry, $directives->crawlDelay()->toInt());
                     }
                 )

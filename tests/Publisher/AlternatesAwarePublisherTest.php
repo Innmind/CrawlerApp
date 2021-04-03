@@ -203,7 +203,7 @@ class AlternatesAwarePublisherTest extends TestCase
             ->producer
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Message $message) use ($published, $expected) {
+            ->with($this->callback(static function(Message $message) use ($published, $expected) {
                 return $message->resource() === $published &&
                     $message->reference() === $expected &&
                     $message->language() === 'en';

@@ -156,7 +156,7 @@ class LinksAwarePublisherTest extends TestCase
             ->producer
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Link $message) use ($published, $expected) {
+            ->with($this->callback(static function(Link $message) use ($published, $expected) {
                 return $message->resource() === $published &&
                     $message->reference() === $expected;
             }));

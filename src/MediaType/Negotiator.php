@@ -18,10 +18,10 @@ final class Negotiator
     public function best(MediaType $mediaType, Set $patterns): Pattern
     {
         $patterns = $patterns
-            ->filter(function(Pattern $pattern) use ($mediaType): bool {
+            ->filter(static function(Pattern $pattern) use ($mediaType): bool {
                 return $pattern->matches($mediaType);
             })
-            ->sort(function(Pattern $a, Pattern $b): int {
+            ->sort(static function(Pattern $a, Pattern $b): int {
                 return $b->quality() <=> $a->quality();
             });
 

@@ -49,7 +49,7 @@ class CrawlConsumerTest extends TestCase
     public function testInterface()
     {
         $this->assertTrue(
-            is_callable(new CrawlConsumer(
+            \is_callable(new CrawlConsumer(
                 $this->createMock(Crawler::class),
                 $this->createMock(Publisher::class),
                 $this->createMock(Linker::class),
@@ -67,7 +67,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -121,7 +121,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -157,7 +157,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -193,7 +193,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -231,7 +231,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -266,7 +266,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'definition' => 'definition',
@@ -297,7 +297,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -341,7 +341,7 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $reference,
-                $this->callback(function(Reference $reference): bool {
+                $this->callback(static function(Reference $reference): bool {
                     return $reference->identity()->toString() === 'origin' &&
                         $reference->definition() === 'definition' &&
                         $reference->server()->toString() === 'server';
@@ -362,7 +362,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -422,7 +422,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -484,7 +484,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -537,7 +537,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -581,7 +581,7 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $reference,
-                $this->callback(function(Reference $reference): bool {
+                $this->callback(static function(Reference $reference): bool {
                     return $reference->identity()->toString() === 'origin' &&
                         $reference->definition() === 'definition' &&
                         $reference->server()->toString() === 'server';
@@ -605,7 +605,7 @@ class CrawlConsumerTest extends TestCase
             'ua'
         );
         $message = new Locked(
-            (new Generic(Str::of(json_encode([
+            (new Generic(Str::of(\json_encode([
                 'resource' => 'foo',
                 'origin' => 'origin',
                 'relationship' => 'referrer',
@@ -649,7 +649,7 @@ class CrawlConsumerTest extends TestCase
             ->method('__invoke')
             ->with(
                 $reference,
-                $this->callback(function(Reference $reference): bool {
+                $this->callback(static function(Reference $reference): bool {
                     return $reference->identity()->toString() === 'origin' &&
                         $reference->definition() === 'definition' &&
                         $reference->server()->toString() === 'server';

@@ -83,7 +83,7 @@ class LinkerTest extends TestCase
             ->with(
                 'foo',
                 $source,
-                $this->callback(function(Set $links) use ($target): bool {
+                $this->callback(static function(Set $links) use ($target): bool {
                     return (string) $links->type() === Link::class &&
                         $links->size() === 1 &&
                         first($links)->definition() === 'bar' &&

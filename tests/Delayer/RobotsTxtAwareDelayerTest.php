@@ -53,9 +53,9 @@ class RobotsTxtAwareDelayerTest extends TestCase
             ->method('__invoke')
             ->will($this->throwException(new FileNotFound));
 
-        $start = microtime(true);
+        $start = \microtime(true);
         $this->assertNull($delayer(Url::of('http://example.com/')));
-        $this->assertTrue(microtime(true) - $start < 1);
+        $this->assertTrue(\microtime(true) - $start < 1);
     }
 
     public function testDoesntWaitWhenNoDirectivesApply()
@@ -69,7 +69,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Url $url): bool {
+            ->with($this->callback(static function(Url $url): bool {
                 return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
@@ -83,9 +83,9 @@ class RobotsTxtAwareDelayerTest extends TestCase
                 )
             );
 
-        $start = microtime(true);
+        $start = \microtime(true);
         $this->assertNull($delayer(Url::of('http://example.com/')));
-        $this->assertTrue(microtime(true) - $start < 1);
+        $this->assertTrue(\microtime(true) - $start < 1);
     }
 
     public function testDoesntWaitAsSpecifiedByRobotsTxt()
@@ -99,7 +99,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Url $url): bool {
+            ->with($this->callback(static function(Url $url): bool {
                 return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
@@ -113,9 +113,9 @@ class RobotsTxtAwareDelayerTest extends TestCase
                 )
             );
 
-        $start = microtime(true);
+        $start = \microtime(true);
         $this->assertNull($delayer(Url::of('http://example.com/')));
-        $this->assertTrue(microtime(true) - $start < 1);
+        $this->assertTrue(\microtime(true) - $start < 1);
     }
 
     public function testWait()
@@ -129,7 +129,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Url $url): bool {
+            ->with($this->callback(static function(Url $url): bool {
                 return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
@@ -161,7 +161,7 @@ class RobotsTxtAwareDelayerTest extends TestCase
         $parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Url $url): bool {
+            ->with($this->callback(static function(Url $url): bool {
                 return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(

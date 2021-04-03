@@ -39,7 +39,8 @@
         "roave/security-advisories": "dev-master",
         "innmind/debug": "~2.0",
         "vimeo/psalm": "~4.0",
-        "innmind/black-box": "^4.17"
+        "innmind/black-box": "^4.17",
+        "innmind/coding-standard": "^1.1"
     },
     "provide": {
         "innmind/genome-genes": "3.0"

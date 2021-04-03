@@ -71,12 +71,12 @@ class ReferrerLinkerTest extends TestCase
             ->expects($this->once())
             ->method('__invoke')
             ->with(
-                $this->callback(function(Reference $altered) use ($source): bool {
+                $this->callback(static function(Reference $altered) use ($source): bool {
                     return $altered->identity() === $source->identity() &&
                         $altered->definition() === 'web.resource' &&
                         $altered->server() === $source->server();
                 }),
-                $this->callback(function(Reference $altered) use ($target): bool {
+                $this->callback(static function(Reference $altered) use ($target): bool {
                     return $altered->identity() === $target->identity() &&
                         $altered->definition() === 'web.resource' &&
                         $altered->server() === $target->server();

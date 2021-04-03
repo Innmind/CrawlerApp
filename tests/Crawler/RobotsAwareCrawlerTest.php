@@ -53,7 +53,7 @@ class RobotsAwareCrawlerTest extends TestCase
             ->parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Url $url): bool {
+            ->with($this->callback(static function(Url $url): bool {
                 return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->will(
@@ -94,7 +94,7 @@ class RobotsAwareCrawlerTest extends TestCase
             ->parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Url $url): bool {
+            ->with($this->callback(static function(Url $url): bool {
                 return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
@@ -135,7 +135,7 @@ class RobotsAwareCrawlerTest extends TestCase
             ->parser
             ->expects($this->once())
             ->method('__invoke')
-            ->with($this->callback(function(Url $url): bool {
+            ->with($this->callback(static function(Url $url): bool {
                 return $url->toString() === 'http://example.com/robots.txt';
             }))
             ->willReturn(
