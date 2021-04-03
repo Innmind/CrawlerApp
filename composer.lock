@@ -1116,16 +1116,16 @@
         },
         {
             "name": "innmind/http",
-            "version": "4.5.0",
+            "version": "4.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Innmind/Http.git",
-                "reference": "a762333f3ead3e9fa720d55064ccd7eea46dba10"
+                "reference": "1b614dbb7df61c0c7826cf02e1e3561c55f31ba1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Innmind/Http/zipball/a762333f3ead3e9fa720d55064ccd7eea46dba10",
-                "reference": "a762333f3ead3e9fa720d55064ccd7eea46dba10",
+                "url": "https://api.github.com/repos/Innmind/Http/zipball/1b614dbb7df61c0c7826cf02e1e3561c55f31ba1",
+                "reference": "1b614dbb7df61c0c7826cf02e1e3561c55f31ba1",
                 "shasum": ""
             },
             "require": {
@@ -1170,9 +1170,9 @@
             ],
             "support": {
                 "issues": "http://github.com/Innmind/Http/issues",
-                "source": "https://github.com/Innmind/Http/tree/4.5.0"
+                "source": "https://github.com/Innmind/Http/tree/4.5.1"
             },
-            "time": "2021-02-06T16:12:50+00:00"
+            "time": "2021-04-03T09:45:54+00:00"
         },
         {
             "name": "innmind/http-authentication",
