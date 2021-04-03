@@ -184,11 +184,7 @@ function bootstrap(Application $app): Application
         )($service('basicAmqpClient')))
         ->service(
             'producer',
-            static fn($env, $os, $service) => amqp()
-                ['producers']
-                ($service('exchanges'))
-                ($service('amqpClient'))
-                ->get('urls'),
+            static fn($env, $os, $service) => amqp()['producers']($service('exchanges'))($service('amqpClient'))->get('urls'),
         )
         ->service('tracer', static fn($env, $os, $service) => new CrawlTracer\CrawlTracer(
             $service('traces'),

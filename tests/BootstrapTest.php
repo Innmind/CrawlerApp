@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Tests\Crawler;
 
 use function Crawler\bootstrap;
-use Crawler\Command;
 use Innmind\CLI\{
     Environment,
     Framework\Application,
