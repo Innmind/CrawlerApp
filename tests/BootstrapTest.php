@@ -5,14 +5,21 @@ namespace Tests\Crawler;
 
 use function Crawler\bootstrap;
 use Crawler\Command;
-use Innmind\OperatingSystem\OperatingSystem;
-use Innmind\Url\{
-    Url,
-    Path,
+use Innmind\CLI\{
+    Environment,
+    Framework\Application,
 };
-use Innmind\Filesystem\Adapter;
-use Innmind\Socket\Internet\Transport;
-use Innmind\Server\Status\Server;
+use Innmind\OperatingSystem\{
+    OperatingSystem,
+    CurrentProcess,
+};
+use Innmind\Url\Path;
+use Innmind\Server\Status;
+use Innmind\Server\Control;
+use Innmind\Immutable\{
+    Sequence,
+    Map,
+};
 use PHPUnit\Framework\TestCase;
 
 class BootstrapTest extends TestCase
@@ -21,33 +28,34 @@ class BootstrapTest extends TestCase
     {
         $os = $this->createMock(OperatingSystem::class);
         $os
-            ->expects($this->any())
             ->method('status')
-            ->willReturn($status = $this->createMock(Server::class));
+            ->willReturn($status = $this->createMock(Status\Server::class));
         $status
-            ->expects($this->any())
             ->method('tmp')
             ->willReturn(Path::of(\getcwd().'/var/'));
+        $os
+            ->method('process')
+            ->willReturn($process = $this->createMock(CurrentProcess::class));
+        $process
+            ->method('id')
+            ->willReturn(new Control\Server\Process\Pid(42));
+        $env = $this->createMock(Environment::class);
+        $env
+            ->method('arguments')
+            ->willReturn(Sequence::strings('crawler'));
+        $env
+            ->method('variables')
+            ->willReturn(
+                Map::of('string', 'string')
+                    ('AMQP_SERVER', '')
+                    ('API_KEY', '')
+            );
+        $env
+            ->method('workingDirectory')
+            ->willReturn(Path::of(__DIR__.'/../'));
 
-        $commands = bootstrap(
-            $os,
-            Url::of('file:///tmp/app.log'),
-            Url::of('file:///tmp/amqp.log'),
-            $this->createMock(Adapter::class),
-            $this->createMock(Adapter::class),
-            $this->createMock(Adapter::class),
-            $this->createMock(Adapter::class),
-            $this->createMock(Adapter::class),
-            $this->createMock(Adapter::class),
-            Path::of('/tmp'),
-            Transport::tcp(),
-            Url::of('amqp://user:pwd@localhost:5672/'),
-            'apikey',
-            'Innmind Robot'
-        );
+        $app = bootstrap(Application::of($env, $os));
 
-        $this->assertInstanceOf(Command\Consume::class, $commands[0]);
-        $this->assertInstanceOf(Command\Crawl::class, $commands[1]);
-        $this->assertInstanceOf(Command\Homeostasis::class, $commands[2]);
+        $this->assertNull($app->run());
     }
 }

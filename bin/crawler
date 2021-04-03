@@ -9,38 +9,16 @@ use Innmind\CLI\Framework\{
     Main,
     Application,
 };
-use Innmind\Url\{
-    Url,
-    Path,
-};
-use Innmind\Socket\Internet\Transport;
+use Innmind\Url\Path;
 use Innmind\Debug\Profiler\Section\CaptureAppGraph;
 
 new class extends Main {
     protected function configure(Application $app): Application
     {
-        return $app
-            ->configAt(Path::of(__DIR__.'/../config/'))
-            ->disableProfilerSection(CaptureAppGraph::class)
-            ->commands(static function($env, $os) {
-                $dir = __DIR__.'/../';
-
-                return bootstrap(
-                    $os,
-                    Url::of("file://{$dir}var/logs/app.log"),
-                    Url::of("file://{$dir}var/logs/amqp/amqp.log"),
-                    $os->filesystem()->mount(Path::of($dir.'var/cache/rest/')),
-                    $os->filesystem()->mount(Path::of($dir.'var/logs/')),
-                    $os->filesystem()->mount(Path::of($dir.'var/data/states/')),
-                    $os->filesystem()->mount(Path::of($dir.'var/data/actions/')),
-                    $os->filesystem()->mount(Path::of($dir.'var/cache/traces/')),
-                    $os->filesystem()->mount(Path::of($dir.'var/cache/robots_txts/')),
-                    $env->workingDirectory(),
-                    Transport::tcp(),
-                    Url::of($env->variables()->get('AMQP_SERVER')),
-                    $env->variables()->get('API_KEY'),
-                    'Innmind Robot',
-                );
-            });
+        return bootstrap(
+            $app
+                ->configAt(Path::of(__DIR__.'/../config/'))
+                ->disableProfilerSection(CaptureAppGraph::class),
+        );
     }
 };
