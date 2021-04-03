@@ -60,7 +60,10 @@ final class Install implements Gene
             throw new PreConditionFailed('No amqp user provided');
         }
 
-        /** @var Event */
+        /**
+         * @psalm-suppress UnusedClosureParam
+         * @var Event
+         */
         $library = $library->reduce(
             null,
             static fn(?Event $last, Event $event): Event => $event,

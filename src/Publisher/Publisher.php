@@ -40,6 +40,7 @@ final class Publisher implements PublisherInterface
         Url $server
     ): Reference {
         $server = $this->client->server($server->toString());
+        /** @psalm-suppress UnusedClosureParam */
         $definitions = $server
             ->capabilities()
             ->definitions()
@@ -48,7 +49,10 @@ final class Publisher implements PublisherInterface
                     \is_array($definition->metas()->get('allowed_media_types'));
             });
 
-        /** @var Set<Pattern> */
+        /**
+         * @psalm-suppress UnusedClosureParam
+         * @var Set<Pattern>
+         */
         $mediaTypes = $definitions
             ->reduce(
                 Set::of('string'),

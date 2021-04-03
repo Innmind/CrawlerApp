@@ -17,7 +17,6 @@ final class Negotiator
      */
     public function best(MediaType $mediaType, Set $patterns): Pattern
     {
-        /** @var Sequence<Pattern> */
         $patterns = $patterns
             ->filter(function(Pattern $pattern) use ($mediaType): bool {
                 return $pattern->matches($mediaType);

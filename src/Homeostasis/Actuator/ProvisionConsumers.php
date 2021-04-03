@@ -137,6 +137,7 @@ final class ProvisionConsumers implements Actuator
      */
     private function processes(): Map
     {
+        /** @psalm-suppress UnusedClosureParam */
         return $this
             ->status
             ->processes()
