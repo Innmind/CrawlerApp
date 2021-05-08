@@ -40,7 +40,7 @@ class PublisherTest extends TestCase
     private $publisher;
     private $client;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->publisher = new Publisher(
             $this->client = $this->createMock(Client::class),

@@ -35,7 +35,7 @@ class AlternatesAwarePublisherTest extends TestCase
     private $inner;
     private $producer;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->publisher = new AlternatesAwarePublisher(
             $this->inner = $this->createMock(Publisher::class),
