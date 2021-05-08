@@ -33,7 +33,7 @@ class DelegationTranslatorTest extends TestCase
     private $host;
     private $foo;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = new DelegationTranslator(
             Map::of('string', PropertyTranslator::class)

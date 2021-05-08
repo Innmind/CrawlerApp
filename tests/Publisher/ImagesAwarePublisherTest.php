@@ -30,7 +30,7 @@ class ImagesAwarePublisherTest extends TestCase
     private $inner;
     private $producer;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->publisher = new ImagesAwarePublisher(
             $this->inner = $this->createMock(Publisher::class),

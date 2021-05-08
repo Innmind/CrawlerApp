@@ -24,7 +24,7 @@ class CacheParserTest extends TestCase
     private $inner;
     private $filesystem;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->parser = new CacheParser(
             $this->inner = $this->createMock(Parser::class),

@@ -30,7 +30,7 @@ class RobotsAwareCrawlerTest extends TestCase
     private $parser;
     private $inner;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->crawl = new RobotsAwareCrawler(
             $this->parser = $this->createMock(Parser::class),
