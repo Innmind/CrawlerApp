@@ -31,7 +31,7 @@ class ThemeColourTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = new ThemeColourTranslator;
         $this->property = new Property(

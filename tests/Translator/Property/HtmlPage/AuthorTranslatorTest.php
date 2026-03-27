@@ -30,7 +30,7 @@ class AuthorTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = new AuthorTranslator;
         $this->property = new Property(

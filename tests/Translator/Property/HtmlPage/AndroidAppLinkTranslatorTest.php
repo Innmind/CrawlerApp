@@ -30,7 +30,7 @@ class AndroidAppLinkTranslatorTest extends TestCase
     private $translator;
     private $property;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->translator = new AndroidAppLinkTranslator;
         $this->property = new Property(
